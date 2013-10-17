@@ -1,0 +1,207 @@
+<?php $this->load->view('l/general/header_view', $this->data); ?>
+
+        <div class="main_container">
+        	        	
+        	<!-- navigation -->
+        	
+        	<?php $this->load->view('l/general/menu_view', $this->data); ?>
+        	
+        	<?php  
+        	$order_msg_data = $this->session->userdata('order_msg_data');
+			if (!empty($order_msg_data)){
+				$this->session->unset_userdata('order_msg_data');
+        	?>
+        	<div class="message message_error" style="display:block;">
+        		<p><?php echo $order_msg_data; ?></p>
+        	</div>
+        	<?php 
+			}
+        	?>
+        	
+        	<div class="content" style="margin-top:30px;">
+        		
+        		<div class="content_area">
+        			<div class="content_area_info">
+        				<div class="content_cover">
+        					<img src="<?php echo cdn_url() . $this->business->business_primary_photo; ?>" alt="" />
+        				</div>
+        				<div class="content_section" style="margin-bottom:0;">
+        					<?php $this->load->view('l/general/sidebar_view', $this->data); ?>
+        					        					
+        					<div class="detail_info">
+        						
+        						<form method="post" action="">
+        						
+	        						<div class="tiket_register">
+	        							
+	        							<div class="table_register" style="margin-bottom:30px;">
+	        								<table>
+	        									<tbody>
+	        										<tr>
+	        											<td style="border-top:0;padding-bottom:0;"><h3><?php echo translate("order_confirmation_1", $session_lang); ?></h3></td>
+	        										</tr>
+	        										<tr>
+	        											<td style="border-top:0;padding-top:0;"><?php echo translate("order_confirmation_2", $session_lang); ?> <a target="_blank" href="<?php echo base_url() . $this->business->business_uri; ?>/confirmpayment"><?php echo translate("order_confirmation_4", $session_lang); ?></a> <?php echo translate("order_confirmation_3", $session_lang); ?>. <?php echo translate("order_confirmation_5", $session_lang); ?> <?php echo date('d M Y', strtotime($order_cart->expire)); ?>.</td>
+	        										</tr>
+	        									</tbody>
+	        								</table>
+	        							</div>
+	        							
+	        							<div class="table_register" style="margin-bottom:30px;">
+	        								<table>
+	        									<tbody>
+	        										<tr>
+	        											<td style="border-top:0;padding-bottom:0;">
+	        												<h3>Order Status : <?php echo strtoupper( $order_cart->order_status ); ?></h3>
+	        												<h3>Order Id : #<?php echo strtoupper( $order_cart->order_barcode ); ?></h3>
+	        											</td>
+	        										</tr>
+	        									</tbody>
+	        								</table>
+	        							</div>
+	        							
+	        							<div class="table_register" style="margin-bottom:30px;">
+	        								<table>
+	        									<tbody>
+	        										<tr>
+	        											<td style="border-top:0;padding-bottom:0;"><h3><?php echo ucwords( $business->business_name ); ?></h3></td>
+	        										</tr>
+	        										<tr>
+	        											<td style="border-top:0;padding-top:0;"><?php echo translate("Event_ini_akan_diadakan_di", $session_lang); ?> <?php echo $business->business_address; ?> , <?php echo translate("pada_tanggal", $session_lang); ?> <?php echo date("d M Y, H:i", strtotime($event_profile->event_startdate)); ?>. <?php echo translate("tetapi_pintu_di_buka", $session_lang); ?> 15.00. <?php echo translate("Jadi_jangan_sampai_terlambat", $session_lang); ?>.
+								</td>
+	        										</tr>
+	        									</tbody>
+	        								</table>
+	        							</div>
+	        							
+	        							<table>
+	        								<thead>
+	        									<tr>
+	        										<td><?php echo translate("Ticket_Type", $session_lang); ?></td>
+	        										<td><?php echo translate("Price", $session_lang); ?></td>
+	        										<td><?php echo translate("Quantity", $session_lang); ?></td>
+	        									</tr>
+	        								</thead>
+	        								<tbody>
+	        									<?php foreach($orders as $k=>$v) { ?>
+	        									<tr>
+	        										<td class="tiket_name">
+	        											<?php echo $v->tiket_name; ?>
+	        											<div><?php echo $v->tiket_description; ?></div>
+	        										</td>
+	        										<td>IDR <?php echo number_format($v->tiket_price, 2, ",", "."); ?></td>
+	        										<td><?php echo $v->tiket_qty; ?></td>
+	        										<td>IDR <?php echo number_format($v->total_tiket_price, 2, ",", "."); ?></td>
+	        									</tr>
+	        									<?php } ?>
+	        									<tr>
+	        										<td class=""></td>
+	        										<td></td>
+	        										<td><b><?php echo translate("Total_Amount", $session_lang); ?></b></td>
+	        										<td><b>IDR <?php echo number_format($order_cart->total_customer_price, 2, ",", "."); ?></b></td>
+	        									</tr>
+	        								</tbody>
+	        							</table>
+	        							
+	        							<div class="table_register" style="margin-top:30px;">
+	        								<table>
+	        									<tbody>
+	        										<tr>
+	        											<td colspan="3" style="border-top:0;"><h3><?php echo translate("Ticket_Buyer", $session_lang); ?></h3></td>
+	        										</tr>
+	        										<tr>
+	        											<td align="right"><?php echo translate("first_name", $session_lang); ?>:</td>
+	        											<td><span class="error">*</span></td>
+	        											<td><?php echo ucwords( $order_cart->customer_firstname ); ?></td>
+	        										</tr>
+	        										<tr>
+	        											<td align="right"><?php echo translate("last_name", $session_lang); ?>:</td>
+	        											<td><span class="error">*</span></td>
+	        											<td><?php echo ucwords( $order_cart->customer_lastname ); ?></td>
+	        										</tr>
+	        										<tr>
+	        											<td align="right"><?php echo translate("email", $session_lang); ?>:</td>
+	        											<td><span class="error">*</span></td>
+	        											<td><?php echo ( $order_cart->customer_email ); ?></td>
+	        										</tr>
+	        										<tr>
+	        											<td align="right"><?php echo translate("Phone_Number", $session_lang); ?>:</td>
+	        											<td><span class="error">*</span></td>
+	        											<td><?php echo ( $order_cart->customer_phone ); ?></td>
+	        										</tr>
+	        										<tr>
+	        											<td align="right" style="font-size:15px;"><?php echo translate("Passkey", $session_lang); ?>:</td>
+	        											<td><span class="error">*</span></td>
+	        											<td style="font-size:15px;">
+	        												<i>(<?php echo translate("Passkey_note", $session_lang); ?>)</i><br />
+	        												<?php foreach($orders as $k=>$v) { ?>
+	        													<b><?php echo strtoupper( $v->order_barcode ); ?> <i>(<?php echo $v->tiket_name; ?>)</i></b><br />
+	        												<?php } ?>
+	        											</td>
+	        										</tr>
+	        									</tbody>
+	        								</table>
+	        							</div>
+	        							
+	        							<div class="table_register" style="margin-top:30px;">
+	        								<table>
+	        									<tbody>
+	        										<tr>
+	        											<td style="border-top:0;"><h3><?php echo translate("Method_Payment", $session_lang); ?></h3></td>
+	        										</tr>
+	        										<tr>
+	        											<td align="left">
+	        												
+	        												<?php if ($order_cart->payment_method == 'banktransfer') { ?>
+	        												
+	        												<label>
+	        													<img style="display:block;margin-top:8px;" src="<?php echo cdn_url(); ?>img/bank-mandiri-logo.png" alt="Bank Transfer" />
+	        												</label>
+	        												
+	        												
+	        												<table>
+					        									<tbody>
+					        										<tr>
+					        											<td align="" style="border-top:0;padding-top:0;padding-bottom:0;">Nama Bank: <?php echo BANK1_NAMA; ?></td>
+					        										</tr>
+					        										<tr>
+					        											<td align="" style="border-top:0;padding-top:0;padding-bottom:0;">Nomor Rekening: <?php echo BANK1_NOMOR; ?></td>
+					        										</tr>
+					        										<tr>
+					        											<td align="" style="border-top:0;padding-top:0;padding-bottom:0;">Atas Nama: <?php echo BANK1_ATASNAMA; ?></td>
+					        										</tr>
+					        									</tbody>
+					        								</table>
+					        								
+					        								<?php }else if ($order_cart->payment_method == 'ipaymu') { ?>
+	        												
+	        												<label>
+																<img style="display:block;margin-top:8px;" src="<?php echo cdn_url(); ?>img/logo_ipaymu.jpg" alt="IPAYMU" />
+	        												</label>
+	        												
+	        												<?php } ?>
+	        												
+	        											</td>
+	        										</tr>
+	        									</tbody>
+	        								</table>
+	        							</div>
+	        							
+	        							<div class="btn_buy_container" style="margin-top:10px;">
+	        								<a target="_blank" href="<?php echo base_url() . $this->business->business_uri; ?>/confirmpayment" id="confirm_payment" class="big_btn btn_header buy_tike_btn"><?php echo translate("confirm_payment", $session_lang); ?>!</a>
+	        							</div>
+	        							
+	        						</div>
+
+        						</form>
+        						
+        					</div>
+        					
+        					<div class="clearfix"></div>
+        					
+        				</div>
+        			</div>
+        		</div>
+
+
+<?php $this->load->view('l/general/footer_view', $this->data); ?>
