@@ -65,7 +65,7 @@ class MY_Controller extends CI_Controller{
 		$this->data['css_tags'] = implode('', $css);
 		$this->data['js_tags'] = implode('', $js);
 		$this->data['meta_tags'] = $default_meta;
-		$this->data['title'] = $title . " | " . default_title;
+		$this->data['title'] = $title . " - " . default_title;
 	}
 
 }
