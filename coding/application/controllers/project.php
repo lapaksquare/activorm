@@ -24,7 +24,7 @@ class Project extends MY_Controller{
 			$this->data['submenu'] = 'create';
 			
 			$css = array(
-				'<link href="css/jquery.tagbox.css" rel="stylesheet">'
+				'<link href="'.cdn_url().'css/jquery.tagbox.css" rel="stylesheet">'
 			);
 			$js = array(
 				'<script src="'.cdn_url().'js/bootstrap-slider.min.js"></script>',
@@ -58,6 +58,10 @@ class Project extends MY_Controller{
 			$view = 'project_grid_view';
 			$this->data['submenu'] = 'grid';
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "list"){
+			$title = 'Projects List';
+			$view = 'project_list_view';
+			$this->data['submenu'] = 'list';
+		}else{
 			$title = 'Projects List';
 			$view = 'project_list_view';
 			$this->data['submenu'] = 'list';

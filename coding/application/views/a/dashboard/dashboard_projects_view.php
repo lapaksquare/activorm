@@ -1,6 +1,6 @@
 <?php $this->load->view('a/general/header_view', $this->data); ?>
 
-		<div id="main" class="container">
+		<div id="main" class="container" style="padding-top:50px;">
 
 			<div class="page-header">
 				<h1 class="pull-left page-title">Business</h1>

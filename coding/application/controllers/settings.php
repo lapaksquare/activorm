@@ -42,6 +42,8 @@ class Settings extends MY_Controller{
 			$title = 'Delete Account';
 			$view = 'deleteaccount_view';
 			$this->data['submenu'] = 'deleteaccount';
+		}else{
+			redirect(base_url() . '404');
 		}
 		
 		$this->_default_param($css, $js, $meta, $title);

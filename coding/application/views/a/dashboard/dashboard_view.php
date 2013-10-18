@@ -173,4 +173,6 @@
 
 		<!-- #main --></div>
 
+<?php $this->load->view('a/dashboard/dashboard_project_modal_view', $this->data); ?>		
+
 <?php $this->load->view('a/general/footer_view', $this->data); ?>

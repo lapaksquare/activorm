@@ -5,7 +5,7 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					</div>
 
-					<div id="user-signup" class="modal-body">
+					<div id="user-signup" class="modal-body" style="display:block;">
 						<h4 class="modal-title">Signup for Activorm</h4>
 						<a class="btn btn-big btn-fb" href="#"><i class="icon-facebook"></i> Sign Up with Facebook</a>
 
@@ -38,7 +38,7 @@
 						</form>
 					<!-- #user-signup --></div>
 
-					<div id="user-activation" class="modal-body">
+					<div id="user-activation" class="modal-body" style="display:none;">
 						<h4 class="modal-title">Activation</h4>
 						<p class="activation-check">Please kindly check your email to activate your account at Activorm</p>
 
@@ -62,7 +62,7 @@
 						<p class="activation-spam">If you don't receive the message please check your spam folder</p>
 					<!-- #user-activation --></div>
 
-					<div id="user-result" class="modal-body">
+					<div id="user-result" class="modal-body" style="display:none;">
 						<h4 class="modal-title">Congratulation!</h4>
 						<p>You have registered in Activorm.<br /> Please complete your profile information.</p>
 
@@ -77,7 +77,7 @@
 						<a class="btn btn-big btn-yellow" href="#">Continue</a>
 					<!-- #user-result --></div>
 
-					<div id="user-signin" class="modal-body">
+					<div id="user-signin" class="modal-body" style="display:none;">
 						<h4 class="modal-title">Log In for Activorm</h4>
 						<a class="btn btn-big btn-fb" href="#"><i class="icon-facebook"></i> Log in with Facebook</a>
 

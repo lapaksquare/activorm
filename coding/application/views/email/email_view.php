@@ -21,7 +21,7 @@
 								<tr>
 									<td width="300" style="border-collapse: collapse;color: #fff;font-size: 14px;">
 										<a href="#" style="color: #20b396;">
-											<img class="image_fix" src="img/logo.png" alt="activorm" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;border: none;display: block;">
+											<img class="image_fix" src="<?php echo cdn_url(); ?>img/logo.png" alt="activorm" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;border: none;display: block;">
 										</a>
 									</td>
 									<td width="220" align="right" style="border-collapse: collapse;color: #fff;font-size: 14px;">

@@ -20,13 +20,7 @@ class Business extends MY_Controller{
 		$meta = array();
 		$title = '';
 		
-		if (!empty($this->segments[2]) && $this->segments[2] == 'contact'){
-			$business_view = 'business_contact_view';
-			$js = array(
-				'<script src="'.cdn_url().'js/contact.edit.js"></script>'
-			);
-			$title = 'Contact Information';
-		}else if (!empty($this->segments[2]) && $this->segments[2] == 'profile'){
+		if (!empty($this->segments[2]) && $this->segments[2] == 'profile'){
 			$title = 'Business Profile';
 			$business_view = 'business_profile_view';
 		}else if (!empty($this->segments[2]) && $this->segments[2] == 'register'){
