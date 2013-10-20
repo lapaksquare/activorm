@@ -25,6 +25,10 @@ class MY_Controller extends CI_Controller{
 		}
 		
 		$this->data['session_lang'] = $this->session_lang = $this->session->userdata('session_lang');
+		
+		// access user
+		$this->load->library('access');
+		$this->access->accessUser();
 	}
 	
 	function detect_mobile(){

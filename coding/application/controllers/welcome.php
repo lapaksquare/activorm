@@ -47,7 +47,19 @@ class Welcome extends CI_Controller {
 	{
 		//echo date('Y-m-d H:i:s', mktime(date('H'), date('i'), date('s'), date('m'), date('d') + 3, date('Y')));
 		//die();
-		$this->load->view('welcome_message');
+		//$this->load->view('welcome_message');
+		
+		
+		
+		/*
+		$file = "http://codeigniter.com/user_guide/database/helpers.jpg";
+		$file = pathinfo($file);
+		print_r($file);
+		echo '<br /><br />';
+		$file = "user_guide/database/helpers.jpg";
+		$file = pathinfo($file);
+		print_r($file);
+		 */
 	}
 	
 }

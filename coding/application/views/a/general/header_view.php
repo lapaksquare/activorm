@@ -55,7 +55,7 @@
 								<a href="#">want to learn?</a>
 							</li>
 							<li class="dropdown navbar-user navbar-login">
-								<a href="#"><i class="icon-lock"></i> Log In</a>
+								<a href="#" id="navbar-login-button"><i class="icon-lock"></i> Log In</a>
 							</li>
 						</ul>
 					<!--.nav-collapse --></div>

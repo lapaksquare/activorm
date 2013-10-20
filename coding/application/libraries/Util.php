@@ -48,6 +48,11 @@ class Util {
 		return $pass;
 	}
 	
+	function get_raw_avatar_url($url){
+	    $array = get_headers($url, 1);
+	    return (isset($array['Location']) ? $array['Location'] : FALSE);
+	}
+	
 	function create_service($filename, $data){
 		$data = json_encode($data);
 		if ( ! write_file('./services/' . $filename . '.json', $data))

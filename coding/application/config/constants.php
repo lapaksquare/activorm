@@ -87,5 +87,9 @@ date_default_timezone_set('Asia/Jakarta');
 
 define('WEB_VERSION', 1);
 
+/* API FACEBOOK */
+define('FACEBOOK_APP_ID', '1425256081020066');
+define('FACEBOOK_APP_SECRET', '2c60fb1f43e8b851385dfdc4d866fa7f');
+
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
