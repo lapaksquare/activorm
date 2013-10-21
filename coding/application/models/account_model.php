@@ -7,7 +7,7 @@ class Account_model extends CI_Model{
 		$where = '';
 		if (!empty($filter) && !empty($q)){
 			$where .= " AND " . $filter . " = '" . $q ."' ";
-		}
+		}else return FALSE;
 		
 		$sql = "
 		SELECT

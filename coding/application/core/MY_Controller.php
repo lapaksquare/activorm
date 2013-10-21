@@ -60,7 +60,8 @@ class MY_Controller extends CI_Controller{
 			'<script src="'.cdn_url().'js/bootstrap.min.js"></script>',
 			'<script src="'.cdn_url().'js/checkable.min.js"></script>',
 			'<script src="'.cdn_url().'js/dropkick.min.js"></script>',
-			'<script src="'.cdn_url().'js/settings.js"></script>'
+			'<script src="'.cdn_url().'js/settings.js"></script>',
+			'<script src="'.cdn_url().'js/home.js"></script>'
 		);
 		
 		if (!empty($js)) $js = array_merge($default_js, $js);

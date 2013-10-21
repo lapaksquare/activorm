@@ -154,7 +154,7 @@
 							<strong><?php echo $this->access->member_account->account_name; ?></strong>
 						</div>
 
-						<a class="btn btn-big btn-yellow" href="#">Continue</a>
+						<a class="btn btn-big btn-yellow" href="<?php echo base_url(); ?>auth/register_completed?vc=<?php echo $this->access->member_account->verification_code; ?>&hash=<?php echo sha1($this->access->member_account->verification_code . date('Y-m-d')); ?>">Continue</a>
 					<!-- #user-result --></div>
 					<?php } ?>
 

@@ -5,6 +5,8 @@ class Settings extends MY_Controller{
 	
 	function __construct(){
 		parent::__construct();
+		$account_id = $this->session->userdata('account_id');
+		if (empty($account_id)) redirect(base_url());
 	}
 	
 	var $segments;
@@ -23,8 +25,14 @@ class Settings extends MY_Controller{
 			$title = 'Contact Information';
 			$view = 'contact_information_view';
 			$this->data['submenu'] = 'contact';
+			$css = array(
+				'<link href="'.cdn_url().'css/font-awesome.css" rel="stylesheet" type="text/css">',
+				'<link rel="stylesheet" type="text/css" href="'.cdn_url().'css/bootstrap.datepicker.css" />'
+			);
 			$js = array(
-				'<script src="'.cdn_url().'js/contact.edit.js"></script>'
+				'<script src="'.cdn_url().'js/bootstrap.datepicker.js"></script>',
+				'<script src="'.cdn_url().'js/contact.edit.js"></script>',
+				'<script src="'.cdn_url().'js/setting_contact.js"></script>'
 			);
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "socialmedia"){
 			$title = 'Social Media Connect';

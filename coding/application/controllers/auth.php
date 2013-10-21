@@ -33,22 +33,28 @@ class Auth extends MY_Controller {
 		$user = $this->account_model->getAccount("ma.account_email", $this->dataFB['email']);
 		if (!empty($user)){
 						
+			if ($user->account_active == 0) redirect(base_url());			
+												
+			// redirect ke halaman depan lagi utk register tombol tekan
+			$this->access->register_session($user->account_id, array(
+				'account_id' => $user->account_id,
+				'fullname' => $user->account_name,
+				'email' => $user->account_email,
+				'step' => $user->register_step
+			));
+			
+			// ip address
+			$this->access->logIpAddress($user->account_id);									
+												
 			// offline berarti belum verifikasi dan belum masuk ke dashboard usernya
 			if ($user->account_live == "Offline"){
-			
-				// redirect ke halaman depan lagi utk register tombol tekan
-				$this->access->register_session($user->account_id, array(
-					'account_id' => $user->account_id,
-					'fullname' => $user->account_name,
-					'email' => $user->account_email,
-					'step' => $user->register_step
-				));
-				
-				// ip address
-				$this->access->logIpAddress($user->account_id);
 					
 				redirect(base_url());
 						
+			}else{
+				
+				if ($user->register_step == 4) redirect(base_url() . 'settings/contact');
+				
 			}
 			
 		}else{
@@ -68,7 +74,8 @@ class Auth extends MY_Controller {
 				'account_primary_photo' => $avatar_facebook,
 				'gender' => $this->dataFB['gender'],
 				'birthday' => $birthday,
-				'avatar' => $avatar_facebook
+				'avatar' => $avatar_facebook,
+				'account_type' => 'user'
 			);
 									
 			// masukkan data log fb di database
@@ -145,7 +152,8 @@ class Auth extends MY_Controller {
 					'account_email' => $email,
 					'account_password' => $salt_password,
 					'verification_code' => $verification_code,
-					'register_step' => $register_step
+					'register_step' => $register_step,
+					'account_type' => 'user'
 				);
 				
 				$this->load->model('account_model');
@@ -209,21 +217,48 @@ class Auth extends MY_Controller {
 			if (empty($user)){
 				$this->session->set_userdata('message_register_error', "Email dan Password yang Anda tulis terdapat kesalahan.");
 			}else{
+				
+				if ($user->account_active == 0) redirect(base_url());			
+				
+				// redirect ke halaman depan lagi utk register tombol tekan
+				$this->access->register_session($user->account_id, array(
+					'account_id' => $user->account_id,
+					'fullname' => $user->account_name,
+					'email' => $user->account_email,
+					'step' => $user->register_step
+				));
+				
+				// ip address
+				$this->access->logIpAddress($user->account_id);
+				
 				if ($user->account_live == "Offline"){
-			
-					// redirect ke halaman depan lagi utk register tombol tekan
-					$this->access->register_session($user->account_id, array(
-						'account_id' => $user->account_id,
-						'fullname' => $user->account_name,
-						'email' => $user->account_email,
-						'step' => $user->register_step
-					));
-					
-					// ip address
-					$this->access->logIpAddress($user->account_id);
 							
+				}else{
+					
+					if ($user->register_step == 4) redirect(base_url() . 'settings/contact');
+					
 				}
 			}
+		}
+		redirect(base_url());
+	}
+	
+	function register_completed(){
+		$vc = $this->input->get_post('vc');
+		$hash = $this->input->get_post('hash');
+		$ori_hash = sha1($vc . date('Y-m-d'));
+		if ($hash == $ori_hash){
+			$register_step = 4;
+			$dataUser = array(
+				'register_step' => $register_step,
+				'account_live' => 'Online'
+			);
+			$this->load->model('account_model');
+			$account_id = $this->account_model->registerAccount($dataUser);
+			$register_temp = $this->session->userdata('register_temp');
+			$register_temp['step'] = $register_step;
+			$this->access->register_session($account_id, $register_temp);
+			redirect(base_url() . 'settings/contact');
 		}
 		redirect(base_url());
 	}

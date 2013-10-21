@@ -74,6 +74,7 @@
 	    	<?php $preview = $this->input->get_post('Preview'); ?>
 	    	var preview = <?php echo (empty($preview)) ? 0 : 1; ?>;
 	    	var base_url = "<?php echo base_url(); ?>";
+	    	var rs = <?php echo (!empty($this->access->member_account->register_step)) ? $this->access->member_account->register_step : 0; ?>;
 	    </script>
 	
 	</head>

@@ -12,12 +12,16 @@
 
 				<div id="content" class="col-md-9 col-md-push-3">
 
+					<?php 
+					if ($this->access->member_account->account_type == "user"){
+					?>
+
 					<form class="form-activorm form-user-contact" action="#" method="get">
 						<div class="box">
 							<div class="row">
 								<div class="col-sm-7">
-									<h2 class="acc-input account-title"><span>Karen Kamal</span> <a href="#"><i class="icon-pencil" data-edit="title"></i></a></h2>
-									<div class="acc-input account-email"><span>hello@karenkamal.com</span> <a href="#"><i class="icon-pencil" data-edit="email"></i></a></div>
+									<h2 class="acc-input account-title"><span><?php echo ucwords( $this->access->member_account->account_name ); ?></span> <a href="#"><i class="icon-pencil" data-edit="title"></i></a></h2>
+									<div class="acc-input account-email"><span><?php echo ucwords( $this->access->member_account->account_email ); ?></span> <a href="#"><i class="icon-pencil" data-edit="email"></i></a></div>
 
 									<div class="form-group file-upload">
 										<input type="file" name="account-avatar" class="real-file" style="display:none;" />
@@ -34,7 +38,13 @@
 
 								<div class="col-sm-5">
 									<div class="account-avatar">
-										<img src="<?php echo cdn_url(); ?>img/company-avatar.gif" alt="starbucks" />
+										
+										<?php 
+										$photo = (empty($this->access->member_account->account_primary_photo)) ? 'img/company-avatar.gif' : $this->access->member_account->account_primary_photo;
+										$photo = $this->mediamanager->getPhotoUrl($photo, "137x137");
+										?>
+										
+										<img src="<?php echo cdn_url() . $photo; ?>" alt="<?php echo ucwords( $this->access->member_account->account_name ); ?>" />
 									</div>
 								</div>
 
@@ -42,7 +52,7 @@
 
 								<div class="col-sm-6">
 									<div class="form-label">
-										<label for="account-location">Location <span class="req">*</span></label>
+										<label for="account-location">Province <span class="req">*</span></label>
 									</div>
 									<div class="form-group">
 										<div class="row">
@@ -57,6 +67,64 @@
 										</div>
 									</div>
 								</div>
+								
+								<div class="col-sm-6">
+									<div class="form-label">
+										<label for="account-location">Kabupaten <span class="req">*</span></label>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-xs-12">
+												<select name="account-location" class="custom-select light-select select-city">
+													<option>City</option>
+													<option>Jakarta</option>
+													<option>Bandung</option>
+													<option>Surabaya</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="clearfix row-divider"></div>
+								
+								<div class="col-sm-6">
+									<div class="form-label">
+										<label for="account-location">Kecamatan <span class="req">*</span></label>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-xs-12">
+												<select name="account-location" class="custom-select light-select select-city">
+													<option>City</option>
+													<option>Jakarta</option>
+													<option>Bandung</option>
+													<option>Surabaya</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-sm-6">
+									<div class="form-label">
+										<label for="account-location">Kelurahan <span class="req">*</span></label>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-xs-12">
+												<select name="account-location" class="custom-select light-select select-city">
+													<option>City</option>
+													<option>Jakarta</option>
+													<option>Bandung</option>
+													<option>Surabaya</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="clearfix row-divider"></div>
 
 								<div class="col-sm-6">
 									<div class="form-label">
@@ -67,56 +135,15 @@
 										<input type="radio" class="custom-checkgrey" value="2" name="gender" data-label="Female" />
 									</div>
 								</div>
+								
+								<div class="clearfix row-divider"></div>
 
 								<div class="col-sm-6">
 									<div class="form-label">
 										<label for="account-dob">Date of Birth <span class="req">*</span></label>
 									</div>
 									<div class="form-group">
-										<div class="row">
-											<div class="col-xs-4">
-												<select name="dob-date" class="custom-select light-select select-date">
-													<option>Date</option>
-													<option>1</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
-													<option>6</option>
-													<option>7</option>
-													<option>8</option>
-													<option>9</option>
-													<option>10</option>
-												</select>
-											</div>
-											<div class="col-xs-4">
-												<select name="dob-month" class="custom-select light-select select-month">
-													<option>Month</option>
-													<option>Jan</option>
-													<option>Feb</option>
-													<option>Mar</option>
-													<option>Apr</option>
-													<option>May</option>
-													<option>Jun</option>
-													<option>Jul</option>
-													<option>Aug</option>
-													<option>Sep</option>
-													<option>Oct</option>
-													<option>Nov</option>
-													<option>Dec</option>
-												</select>
-											</div>
-											<div class="col-xs-4">
-												<select name="dob-year" class="custom-select light-select select-year">
-													<option>Year</option>
-													<option>2010</option>
-													<option>2011</option>
-													<option>2012</option>
-													<option>2013</option>
-													<option>2014</option>
-												</select>
-											</div>
-										</div>
+										<input class="form-control form-light datepicker" placeholder="" type="text" name="birthday" value="" />
 									</div>
 								</div>
 
@@ -165,7 +192,7 @@
 						</div>
 					</form>
 					
-					
+					<?php }else if ($this->access->member_account->account_primary_photo == "business"){ ?>
 					
 					<form class="form-activorm" action="#" method="get">
 						<div class="box">
@@ -285,6 +312,8 @@
 							</div>
 						</div>
 					</form>
+					
+					<?php } ?>
 
 				<!-- #content --></div>
 

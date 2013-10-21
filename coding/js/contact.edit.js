@@ -11,7 +11,7 @@ live_edit = {
 				master = parent.html();
 			
 			if(!parent.find(".edit-area").is("span")){
-				parent.append('<span class="edit-area" data-edit="'+data_edit+'"><input type="text" class="form-control form-light" name="'+data_edit+'" id="input-'+data_edit+'" placeholder="Input your '+data_edit+'"><button class="btn-save-live">save</button><a href="#" class="close" aria-hidden="true">&times;</a></span>');
+				parent.append('<span class="edit-area" data-edit="'+data_edit+'"><input type="text" value="'+parent.find('span').text()+'" class="form-control form-light" name="'+data_edit+'" id="input-'+data_edit+'" placeholder="Input your '+data_edit+'"><button class="btn-save-live">save</button><a href="#" class="close" aria-hidden="true">&times;</a></span>');
 				
 				$(this).parent().find(".edit_area input[type=text]").focus();
 			}

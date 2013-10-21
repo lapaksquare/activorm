@@ -10,9 +10,7 @@ class Home extends MY_Controller{
 	function index(){
 		$this->data['menu'] = 'home';
 		$css = array();
-		$js = array(
-			'<script src="'.cdn_url().'js/home.js"></script>'
-		);
+		$js = array();
 		$meta = array();
 		$title = 'Home';
 		$this->_default_param($css, $js, $meta, $title);

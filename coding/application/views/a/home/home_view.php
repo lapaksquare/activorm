@@ -173,6 +173,4 @@
 			</div>
 		<!-- #merchant --></div>
 
-<?php $this->load->view('a/home/register_modal_view', $this->data); ?>
-
 <?php $this->load->view('a/general/footer_view', $this->data); ?>
