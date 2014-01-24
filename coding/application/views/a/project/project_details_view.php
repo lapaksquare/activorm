@@ -188,8 +188,18 @@
 							<h1 class="entry-title"><?php echo ucwords($this->project->project_name); ?></h1>
 							<span class="entry-meta">Posted on <?php echo date('d M Y', strtotime($this->project->project_posted)); ?></span>
 						<!-- .entry-header --></div>
-
 						
+						
+						<!-- TABBED START -->
+						<ul class="nav nav-tabs" id="project_tab">
+						  <li class="active"><a href="#description" data-rel="description">Description</a></li>
+						  <li><a href="#embed" data-rel="embed">Embed</a></li>
+						</ul>
+						<div id="myTabContent" class="tab-content">
+					        <div class="tab-pane fade active in project-tab-section" id="description">
+					        	
+					        	
+					        				
 						
 						<?php
 						
@@ -738,6 +748,12 @@
 						<div class="clearfix"></div>	
 
 						
+						
+							
+						
+							
+
+						
 						<?php /* */ 
 						$account_id = $this->session->userdata('account_id');
 						if (!empty($account_id)){
@@ -977,14 +993,28 @@
 							<!-- .list-comments --></ul>
 						<!-- .entry-comments --></div>
 						
-						
+							
 						<?php /* */
 
 						}
 						?>
 						
+							</div>
+						
+							<div class="tab-pane fade project-tab-section" id="embed">
+					          
+					          <textarea class="ttx-widget" id="ttx-widget" onclick="this.select()" readonly="readonly"><iframe src="<?php echo base_url(); ?>project/<?php echo $this->project->project_uri; ?>/widget" frameborder="0" scrolling="no" style="margin:0;padding:0; overflow:hidden;" width="300" height="660"></iframe></textarea>
+					          
+					          <p><small>*) CTRL+C in Windows or Command+C in Mac</small></p>
+					          
+					        </div>
+					   
+					      </div>
+						<!-- TABBED END -->	
 						
 					<!-- .entry-project --></div>
+						
+							
 
 				<!-- #content --></div>
 

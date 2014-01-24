@@ -30,7 +30,7 @@ class Activorm_api_library{
 		$project_actions_data = json_decode( $this->project['project_actions_data'] );
 		foreach($project_actions_data as $k=>$v){
 			$j = 'jml_action'.($k+1);
-			$project_actions_data_cols['project_actions'][] = array(
+			$project_actions_data_cols['project_actions']['action' . ($k+1)] = array(
 				'action_name' => ucwords($v->type_name),
 				'action_count' => $this->project['member_join'] 
 			);

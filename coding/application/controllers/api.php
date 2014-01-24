@@ -90,9 +90,33 @@ class Api extends CI_Controller {
 	}
 	
 	function resultsApi(){
+		$output = $this->input->get_post('output');
 		$preview = $this->input->get_post('preview');
 		$preview = (empty($preview)) ? 0 : $preview;
-		$results = (empty($preview)) ? json_encode( $this->data ) : $this->data;
+		//$results = (empty($preview)) ? json_encode( $this->data ) : $this->data;
+		$results = $this->data;
+		if (empty($preview)){
+			$output = (empty($output)) ? 'json' : $output;
+			switch($output){
+				case "json" :
+					$results = json_encode( $this->data );
+					break;
+				case "xml" :
+					$xml = $this->array_to_xml($this->data, new SimpleXMLElement('<root/>'))->asXML();
+			        //$results = $xml;
+			        
+			        $dom = new DOMDocument;
+			        $dom->preserveWhiteSpace = FALSE;
+			        $dom->loadXML($xml);
+			        $dom->formatOutput = TRUE;
+			        $results = $dom->saveXml();
+			        
+					break;
+				default :
+					$results = json_encode( $this->data );
+					break;
+			}
+		}
 		echo ($preview == 1) ? '<pre>' : '';
 		if ($preview == 0){
 			echo $results;
@@ -101,6 +125,44 @@ class Api extends CI_Controller {
 		}
 		echo ($preview == 1) ? '</pre>' : '';
 	}
+	function array_to_xml(array $arr, SimpleXMLElement $xml) {
+        foreach ($arr as $k => $v) {
+
+            $attrArr = array();
+            $kArray = explode(' ',$k);
+            $tag = array_shift($kArray);
+
+            if (count($kArray) > 0) {
+                foreach($kArray as $attrValue) {
+                    $attrArr[] = explode('=',$attrValue);                   
+                }
+            }
+
+            if (is_array($v)) {
+                if (is_numeric($k)) {
+                    $this->array_to_xml($v, $xml);
+                } else {
+                    $child = $xml->addChild($tag);
+                    if (isset($attrArr)) {
+                        foreach($attrArr as $attrArrV) {
+                            $child->addAttribute($attrArrV[0],$attrArrV[1]);
+                        }
+                    }                   
+                    $this->array_to_xml($v, $child);
+                }
+            } else {
+                $child = $xml->addChild($tag, $v);
+                if (isset($attrArr)) {
+                    foreach($attrArr as $attrArrV) {
+                        $child->addAttribute($attrArrV[0],$attrArrV[1]);
+                    }
+                }
+            }               
+        }
+
+        return $xml;
+    }
+	
 	/* CONFIG API ================== END ====================*/
 	
 }
