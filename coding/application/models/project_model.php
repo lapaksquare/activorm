@@ -222,13 +222,27 @@ class Project_model extends CI_Model{
 	}
 	
 	function insertProjectContact($dataCP = array(), $project_id = ''){
-		//if (empty($project_id)){
+		$project = $this->checkProjectContact($project_id);
+		if (empty($project)){
 			$this->db->insert('project__contact', $dataCP);
-		/*}else{
+		}else{
 			$this->db->update('project__contact', $dataCP, array(
 				'project_id' => $project_id
 			));
-		}*/
+		}
+		
+	}
+	
+	function checkProjectContact($project_id){
+		$sql = "
+		SELECT
+		pc.*
+		FROM
+		project__contact pc
+		WHERE 1
+		AND pc.project_id = ?
+		";
+		return $this->db->query($sql, array($project_id))->row();
 	}
 	
 	public function countGetdata()	
