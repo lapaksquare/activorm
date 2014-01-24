@@ -190,13 +190,7 @@
 						<!-- .entry-header --></div>
 						
 						
-						<!-- TABBED START -->
-						<ul class="nav nav-tabs" id="project_tab">
-						  <li class="active"><a href="#description" data-rel="description">Description</a></li>
-						  <li><a href="#embed" data-rel="embed">Embed</a></li>
-						</ul>
-						<div id="myTabContent" class="tab-content">
-					        <div class="tab-pane fade active in project-tab-section" id="description">
+						
 					        	
 					        	
 					        				
@@ -704,8 +698,16 @@
 						<!-- .wizard-project --></div>
 						*/ ?>
 						
+						<!-- TABBED START -->
+						<ul class="nav nav-tabs project_tab" id="project_tab">
+						  <li class="active"><a href="#description" data-rel="description">Program Description</a></li>
+						  <li><a href="#embed" data-rel="embed">Embed</a></li>
+						</ul>
+						<div id="myTabContent" class="tab-content">
+					        <div class="tab-pane fade active in project-tab-section" id="description">
+						
+						
 						<div class="entry-content">
-							<h3 class="green">Program Description</h3>
 							<p>
 								<?php echo nl2br( ucfirst($this->project->project_description) ); ?>
 							</p>
@@ -722,6 +724,20 @@
 							 * 
 							 */ ?>
 						<!-- .entry-content --></div>
+						
+							</div>
+						
+							<div class="tab-pane fade project-tab-section" id="embed">
+					          
+					          <textarea class="ttx-widget" id="ttx-widget" onclick="this.select()" readonly="readonly"><iframe src="<?php echo base_url(); ?>project/<?php echo $this->project->project_uri; ?>/widget" frameborder="0" scrolling="no" style="margin:0;padding:0; overflow:hidden;" width="300" height="660"></iframe></textarea>
+					          
+					          <p><small>*) CTRL+C in Windows or Command+C in Mac</small></p>
+					          
+					        </div>
+					   
+					      </div>
+						<!-- TABBED END -->	
+						
 						
 						<div class="clearfix"></div>	
 
@@ -999,18 +1015,7 @@
 						}
 						?>
 						
-							</div>
-						
-							<div class="tab-pane fade project-tab-section" id="embed">
-					          
-					          <textarea class="ttx-widget" id="ttx-widget" onclick="this.select()" readonly="readonly"><iframe src="<?php echo base_url(); ?>project/<?php echo $this->project->project_uri; ?>/widget" frameborder="0" scrolling="no" style="margin:0;padding:0; overflow:hidden;" width="300" height="660"></iframe></textarea>
-					          
-					          <p><small>*) CTRL+C in Windows or Command+C in Mac</small></p>
-					          
-					        </div>
-					   
-					      </div>
-						<!-- TABBED END -->	
+							
 						
 					<!-- .entry-project --></div>
 						
