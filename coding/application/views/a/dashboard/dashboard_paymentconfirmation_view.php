@@ -12,8 +12,19 @@
 
 				<div id="content" class="col-md-9 col-md-push-3">
 
-					<form action="#" method="get">
+					<form action="<?php echo base_url(); ?>dashboard/submit_paymentconfirmation" method="post">
 						<div class="box">
+							
+							<?php 
+							$message_paymentconfirmation = $this->session->userdata('message_paymentconfirmation');
+							$this->session->unset_userdata('message_paymentconfirmation');
+							if ($message_paymentconfirmation == 1){
+							?>
+							<div class="alert alert-danger">Terjadi kesalahan dalam pengiriman data.</div>
+							<?php }else if ($message_paymentconfirmation == 2){ ?>
+							<div class="alert alert-success">Terima Kasih, Pembayaran Anda akan kami cek segera.</div>
+							<?php } ?>
+								
 							<div class="box-header">
 								<h2 class="box-title">Payment Confirmation</h2>
 							</div>
@@ -25,47 +36,8 @@
 									</div>
 									<div class="form-group">
 										<div class="row">
-											<div class="col-xs-4">
-												<select name="transaction-date" class="custom-select light-select select-date">
-													<option>Date</option>
-													<option>1</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
-													<option>6</option>
-													<option>7</option>
-													<option>8</option>
-													<option>9</option>
-													<option>10</option>
-												</select>
-											</div>
-											<div class="col-xs-4">
-												<select name="transaction-month" class="custom-select light-select select-month">
-													<option>Month</option>
-													<option>Jan</option>
-													<option>Feb</option>
-													<option>Mar</option>
-													<option>Apr</option>
-													<option>May</option>
-													<option>Jun</option>
-													<option>Jul</option>
-													<option>Aug</option>
-													<option>Sep</option>
-													<option>Oct</option>
-													<option>Nov</option>
-													<option>Dec</option>
-												</select>
-											</div>
-											<div class="col-xs-4">
-												<select name="transaction-year" class="custom-select light-select select-year">
-													<option>Year</option>
-													<option>2010</option>
-													<option>2011</option>
-													<option>2012</option>
-													<option>2013</option>
-													<option>2014</option>
-												</select>
+											<div class="col-xs-12">
+												<input class="form-control form-light datepicker" placeholder="" type="text" name="payment_date" value="" autocomplete="none" />
 											</div>
 										</div>
 									</div>
@@ -76,12 +48,15 @@
 										<label for="transaction-number">Transaction Number</label>
 									</div>
 									<div class="form-group clearfix">
-										<select name="transaction-number" class="custom-select light-select transaction-number">
-											<option>14512121548</option>
-											<option>14518415215</option>
-											<option>14508454567</option>
-											<option>14508411215</option>
+										<?php if (!empty($payment_checkout)){ ?>
+										<select name="transaction_number" class="custom-select light-select transaction-number">
+											<?php foreach($payment_checkout as $k=>$v){ ?>
+											<option value="<?php echo $v->order_barcode; ?>"><?php echo strtoupper($v->order_barcode); ?></option>
+											<?php } ?>
 										</select>
+										<?php }else{ ?>
+											<p>Tidak Ada Transaksi.</p>
+										<?php } ?>
 									</div>
 								</div>
 
@@ -90,7 +65,7 @@
 										<label for="transaction-amount">Amount</label>
 									</div>
 									<div class="form-group">
-										<input type="text" name="transaction-amount" placeholder="" class="form-control form-light" />
+										<input type="text" name="transaction_amount" placeholder="" class="form-control form-light" />
 									</div>
 								</div>
 
@@ -99,7 +74,7 @@
 										<label for="transaction-bank">Payment to Bank</label>
 									</div>
 									<div class="form-group">
-										<select name="transaction-bank" class="custom-select light-select transaction-bank">
+										<select name="transaction_bank" class="custom-select light-select transaction-bank">
 											<option>BCA</option>
 											<option>BNI</option>
 											<option>BRI</option>
@@ -118,7 +93,7 @@
 										<label for="sender-bank">From Bank</label>
 									</div>
 									<div class="form-group">
-										<input type="text" name="sender-bank" placeholder="" class="form-control form-light" />
+										<input type="text" name="sender_bank" placeholder="" class="form-control form-light" />
 									</div>
 								</div>
 
@@ -127,7 +102,7 @@
 										<label for="sender-name">Account Holder Name</label>
 									</div>
 									<div class="form-group">
-										<input type="text" name="sender-name" placeholder="" class="form-control form-light" />
+										<input type="text" name="sender_name" placeholder="" class="form-control form-light" />
 									</div>
 								</div>
 
@@ -136,13 +111,13 @@
 										<label for="sender-account">Account Number</label>
 									</div>
 									<div class="form-group">
-										<input type="text" name="sender-account" placeholder="" class="form-control form-light" />
+										<input type="text" name="sender_account" placeholder="" class="form-control form-light" />
 									</div>
 								</div>
 
 								<div class="col-sm-6">
 									<div class="form-group clearfix" style="margin:40px 0 0;">
-										<button type="submit" class="btn btn-big btn-green pull-right">Continue</button>
+										<input type="submit" name="btn_continue" class="btn btn-big btn-green pull-right" value="Continue" />
 									</div>
 								</div>
 							</div>

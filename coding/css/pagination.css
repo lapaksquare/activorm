@@ -1,0 +1,38 @@
+
+.pagination{
+	text-transform:capitalize;
+	display:block;
+	margin:10px 0;
+	clear:both;
+}
+
+.pagination a,
+.pagination a:visited,
+.pagination span{
+	background-color:#f2f2f2;
+	color:#545454;
+	display:inline;
+	float:left;
+	margin:3px 5px 0 0;
+	padding:4px 6px;
+	text-decoration:none;
+	border-radius:5px;
+}
+
+.pagination a:hover{
+	background-color:#e4e4e4;
+	color:#444;
+}
+
+.pagination span{
+	background-color:#4db011;
+	color:#fff;
+	top:0;
+}
+.pagination span.current {
+}
+
+.pagination .disabled {
+    background-color:#ECF0F1;
+    color: #bdc3c7;
+}

@@ -18,15 +18,60 @@
 					?>
 					
 					<div class="navbar-collapse collapse">
+						
+						<ul class="nav navbar-nav">
+						
+							<?php /*
+							<li><a href="<?php echo base_url(); ?>guestlist"><span class="navbar-gl">Guest List</span></a></li> */ ?>
+						<?php 
+						if ($this->access->member_account->account_type == "business" || ( !empty($menu) && $menu == 'business' ) ){
+						?>
+						
+							
+							<?php /*
+							<li><a href="#">Benefits</a></li>
+							<li><a href="#">Plans &amp; Pricing</a></li>
+							<li><a href="#">Our Clients</a></li> */ ?>
+							<li><a href="<?php echo base_url(); ?>benefits">Benefits</a></li>
+							<li><a href="<?php echo base_url(); ?>about">About</a></li>
+							
+								
+						<?php } ?>
+							
+						<?php if (!empty($this->access->member_account)){ ?>	
+							<li><a href="<?php echo base_url(); ?>report/bug">Report Bugs</a></li>
+						<?php } ?>	
+							
+						</ul>
+						
 						<ul class="nav navbar-nav navbar-right">
+							
+							
+							<?php /*
 							<li>
 								<form action="#" method="get">
 									<div class="form-group">
 										<input type="text" placeholder="" class="form-control">
 									</div>
 								</form>
+							</li> */ ?>
+							
+							<?php if ($this->access->member_account->account_type == "business"){ ?>
+							<li class="navbar-learn">
+								<a href="<?php echo base_url(); ?>project/create">Create Project</a>
 							</li>
+							<?php } ?>
+							
 							<li class="dropdown navbar-user navbar-logout">
+								
+								<?php  
+								$register_temp = $this->session->userdata('register_temp');
+								$flag = 0;
+								if (empty($register_temp) || ($register_temp['step'] > 0 && $register_temp['step'] < 4)){
+									$flag = 1;
+								}
+								?>
+								
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 									
 									<?php 
@@ -38,23 +83,47 @@
 									<span><?php echo $this->access->member_account->account_name; ?></span>
 									<i class="icon-down-dir"></i>
 								</a>
+								
+								<?php if ($flag == 0){ ?>
 								<ul class="dropdown-menu">
 									
 									<?php 
-									$menus = array(
-										'profile' => array(
-											'name' => 'profile',
-											'uri' => base_url()
-										),
-										'tickets' => array(
-											'name' => 'Tickets',
-											'uri' => base_url()
-										),
-										'settings' => array(
-											'name' => 'Settings',
-											'uri' => base_url() . 'settings/contact'
-										)
-									);
+									
+									if ($this->access->member_account->account_type == "user"){
+									
+										$menus = array(
+											/*'profile' => array(
+												'name' => 'profile',
+												'uri' => base_url() 
+											),*/
+											'tickets' => array(
+												'name' => 'Tickets',
+												'uri' => base_url() . 'tickets'
+											),
+											'settings' => array(
+												'name' => 'Settings',
+												'uri' => base_url() . 'settings/contact'
+											)
+										);
+									
+									}else if ($this->access->member_account->account_type == "business"){
+										
+										$menus = array(
+											'profile' => array(
+												'name' => 'profile',
+												'uri' => base_url() . $this->access->business_account->business_uri
+											),
+											'dashboard' => array(
+												'name' => 'Dashboard',
+												'uri' => base_url() . 'dashboard/projects'
+											),
+											'settings' => array(
+												'name' => 'Settings',
+												'uri' => base_url() . 'settings/contact'
+											)
+										);
+										
+									}
 									
 									foreach($menus as $k=>$v){
 										$class = ($k == $menu) ? 'active' : '';
@@ -68,6 +137,12 @@
 									?>
 									<li><a href="<?php echo base_url(); ?>auth/logout">Log Out</a></li>
 								</ul>
+								<?php }else{ ?>
+								<ul class="dropdown-menu">	
+									<li><a href="<?php echo base_url(); ?>auth/logout">Log Out</a></li>
+								</ul>
+								<?php } ?>	
+								
 							</li>
 						</ul>
 					<!--.nav-collapse --></div>
@@ -76,14 +151,34 @@
 					
 					<div class="navbar-collapse collapse">
 						
-						<?php /*
 						<ul class="nav navbar-nav">
-							<li><a href="#">Benefits</a></li>
-							<li><a href="#">Plans &amp; Pricing</a></li>
+							
+							<?php /*
+							<li><a href="<?php echo base_url(); ?>guestlist"><span class="navbar-gl">Guest List</span></a></li>
+							*/ ?>
+							
+						<?php 
+						if (!empty($menu) && $menu == 'business'){
+						?>
+						
+							
+							<li><a href="<?php echo base_url(); ?>benefits">Benefits</a></li>
+							
+							<?php /*
+							<li><a href="<?php echo base_url(); ?>planspricing">Plans &amp; Pricing</a></li>
 							<li><a href="#">Our Clients</a></li>
-							<li><a href="#">About</a></li>
-						</ul> */ ?>
-	
+							*/ ?>
+							<li><a href="<?php echo base_url(); ?>about">About</a></li>
+							
+						
+						<?php } ?>
+						
+						<?php if (!empty($this->access->member_account)){ ?>	
+							<li><a href="<?php echo base_url(); ?>report/bug">Report Bugs</a></li>
+						<?php } ?>	
+							
+						</ul>
+		
 						<ul class="nav navbar-nav navbar-right">
 							
 							<?php /*

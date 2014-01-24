@@ -11,6 +11,14 @@
 						<a class="btn btn-big btn-fb" href="<?php echo $this->access->loginUrl; ?>"><i class="icon-facebook"></i> Log in with Facebook</a>
 
 						<div class="signup-alt"><strong>or</strong></div>
+						
+						<?php 
+						$message_login_error = $this->session->userdata('message_login_error');
+						if (!empty($message_login_error)){
+							$this->session->unset_userdata('message_login_error');
+						?>
+						<div class="alert alert-danger"><?php echo $message_login_error; ?></div>
+						<?php } ?>
 
 						<form class="clearfix form-activorm" action="<?php echo base_url(); ?>auth/login" method="post">
 							<div class="form-group">
@@ -23,7 +31,7 @@
 
 							<div class="row">
 								<div class="col-xs-6">
-									<p class="help-block"><a href="#"><em>Forgot Password</em></a></p>
+									<p class="help-block"><a href="<?php echo base_url(); ?>auth/forgotpassword"><em>Forgot Password</em></a></p>
 									<input type="checkbox" class="custom-checksmall" name="remember" value="yes" data-label="Remember Me" />
 								</div>
 
@@ -52,7 +60,7 @@
 
 					<?php  
 					$register_temp = $this->session->userdata('register_temp');
-					if (empty($register_temp) && ($register_temp['step'] == 1 || empty($register_temp['step']))){
+					if (empty($register_temp) || (!empty($register_temp) && ($register_temp['step'] == 1))){
 					?>
 					<div id="user-signup" class="modal-body" style="display:block;">
 						<h4 class="modal-title">Signup for Activorm</h4>
@@ -60,9 +68,10 @@
 						<?php 
 						$message_register_error = $this->session->userdata('message_register_error');
 						if (!empty($message_register_error)){
+							$message_register_error = '<li>' . implode('</li><li>', $message_register_error) . '</li>';
 							$this->session->unset_userdata('message_register_error');
 						?>
-						<div class="alert alert-danger"><?php echo $message_register_error; ?></div>
+						<div class="alert alert-danger" style="text-align:left;"><?php echo $message_register_error; ?></div>
 						<?php } ?>
 						
 						<?php  
@@ -114,6 +123,24 @@
 						<div class="alert alert-danger"><?php echo $message_register_error; ?></div>
 						<?php } ?>
 						
+						<?php 
+						$msg_resend_activationcode = $this->session->userdata('msg_resend_activationcode');
+						if (!empty($msg_resend_activationcode)){
+							$this->session->unset_userdata('msg_resend_activationcode');
+							if ($msg_resend_activationcode == 1){
+						?>
+						<div class="alert alert-danger">Failed to send a verification code</div>
+						<?php }else if ($msg_resend_activationcode == 2){ ?>
+						<div class="alert alert-success">Verification code has been sent successfully</div>
+						<?php } ?>
+						<?php } ?>
+						
+						<?php 
+						//echo '<pre>';
+						//print_r((array)$this->access->member_account);
+						//echo '</pre>';
+						?>
+						
 						<p class="activation-check">Please kindly check your email to activate your account at Activorm</p>
 
 						<form class="clearfix form-activorm" action="<?php echo base_url(); ?>auth/verify_code" method="post">
@@ -132,7 +159,7 @@
 							</div>
 						</form>
 
-						<p class="activation-error">Error: Activation code is wrong<br /> Click <a href="#">here</a> to resend activation email</p>
+						<p class="activation-error">Error: Activation code is wrong<br /> Click <a href="<?php echo base_url(); ?>auth/resend_activationcode?h=<?php echo sha1(SALT . $this->access->member_account->verification_code); ?>&c=<?php echo $this->access->member_account->verification_code; ?>">here</a> to resend activation email</p>
 						<p class="activation-spam">If you don't receive the message please check your spam folder</p>
 					<!-- #user-activation --></div>
 					<?php } ?>

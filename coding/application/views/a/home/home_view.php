@@ -1,13 +1,38 @@
 <?php $this->load->view('a/general/header_view', $this->data); ?>
-
+		
+<style type="text/css">
+	.list-merchant .item {
+		margin-bottom: 20px;
+		position: relative;
+		height: 100px;
+	}
+	.list-merchant .item img {
+		display: block;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		margin: auto;
+		left: 50%;
+		margin-left: -80px;
+	}
+</style>		
+		
+		<?php 
+		if (empty($this->access->member_account)){
+		?>
+		
 		<div id="banner" class="block block-green">
 			<div class="container">
 
 				<h2 class="block-title">Select which prize you want and follow the quiz</h2>
-				<a class="btn btn-big btn-yellow" href="#">Sign Up for Free</a>
+				<a class="btn btn-big btn-yellow" href="#" id="signup_btn">Sign Up for Free</a>
 
 			</div>
 		<!-- #banner --></div>
+		
+		<?php 
+		}
+		?>
 
 		<?php $this->load->view('a/home/searchbar_view', $this->data); ?>
 
@@ -15,16 +40,36 @@
 			<div class="container">
 
 				<div class="row list-items">
+					
+					<?php  
+					foreach($product_prize as $k=>$v){
+						
+						$prize_name = $prize_uri = $photo = "";
+						if ($featured_type == 3){
+							$prize_name = $v->prize_name;
+							$prize_uri = base_url() . 'prize/' . $v->prize_uri;
+							$photo = $this->mediamanager->getPhotoUrl($v->prize_primary_photo, "211x155");
+						}else if ($featured_type == 1){
+							$prize_name = $v->project_name;
+							$prize_uri = base_url() . 'project/' . $v->project_uri;
+							$photo = $this->mediamanager->getPhotoUrl($v->prize_primary_photo, "211x155");
+						}
+						
+						$project_name = $v->project_name;
+						
+					?>
 					<div class="col-md-3 col-sm-4 item">
 						<div class="item-thumbnail">
-							<img class="img-responsive" src="<?php echo cdn_url(); ?>img/content/item-01.jpg" alt="#" />
+							<img class="img-responsive" src="<?php echo cdn_url() . $photo; ?>" alt="<?php echo $prize_name; ?>" style="margin:0 auto;" />
 						</div>
 
-						<h3 class="item-title">Win a Macbook Pro</h3>
+						<h3 class="item-title"><?php echo ucwords($project_name); ?></h3>
 
-						<a class="btn btn-green" href="#">Enter Now</a>
+						<a class="btn btn-green btn-prize-c" href="<?php echo $prize_uri; ?>">Enter Now</a>
 					<!-- .item --></div>
-
+					<?php } ?>
+					
+					<?php /*	
 					<div class="col-md-3 col-sm-4 item">
 						<div class="item-thumbnail">
 							<img class="img-responsive" src="<?php echo cdn_url(); ?>img/content/item-02.jpg" alt="#" />
@@ -32,7 +77,7 @@
 
 						<h3 class="item-title">Win a Macbook Pro</h3>
 
-						<a class="btn btn-green" href="#">Enter Now</a>
+						<a class="btn btn-green" href="<?php echo base_url(); ?>project/list">Enter Now</a>
 					<!-- .item --></div>
 
 					<div class="col-md-3 col-sm-4 item">
@@ -42,7 +87,7 @@
 
 						<h3 class="item-title">Win a Macbook Pro</h3>
 
-						<a class="btn btn-green" href="#">Enter Now</a>
+						<a class="btn btn-green" href="<?php echo base_url(); ?>project/list">Enter Now</a>
 					<!-- .item --></div>
 
 					<div class="col-md-3 col-sm-4 item">
@@ -52,7 +97,7 @@
 
 						<h3 class="item-title">Win a Macbook Pro</h3>
 
-						<a class="btn btn-green" href="#">Enter Now</a>
+						<a class="btn btn-green" href="<?php echo base_url(); ?>project/list">Enter Now</a>
 					<!-- .item --></div>
 
 					<div class="col-md-3 col-sm-4 item">
@@ -62,7 +107,7 @@
 
 						<h3 class="item-title">Win a Macbook Pro</h3>
 
-						<a class="btn btn-green" href="#">Enter Now</a>
+						<a class="btn btn-green" href="<?php echo base_url(); ?>project/list">Enter Now</a>
 					<!-- .item --></div>
 
 					<div class="col-md-3 col-sm-4 item">
@@ -72,7 +117,7 @@
 
 						<h3 class="item-title">Win a Macbook Pro</h3>
 
-						<a class="btn btn-green" href="#">Enter Now</a>
+						<a class="btn btn-green" href="<?php echo base_url(); ?>project/list">Enter Now</a>
 					<!-- .item --></div>
 
 					<div class="col-md-3 col-sm-4 item">
@@ -82,7 +127,7 @@
 
 						<h3 class="item-title">Win a Macbook Pro</h3>
 
-						<a class="btn btn-green" href="#">Enter Now</a>
+						<a class="btn btn-green" href="<?php echo base_url(); ?>project/list">Enter Now</a>
 					<!-- .item --></div>
 
 					<div class="col-md-3 col-sm-4 item">
@@ -92,13 +137,15 @@
 
 						<h3 class="item-title">Win a Macbook Pro</h3>
 
-						<a class="btn btn-green" href="#">Enter Now</a>
+						<a class="btn btn-green" href="<?php echo base_url(); ?>project/list">Enter Now</a>
 					<!-- .item --></div>
+					 * 
+					 */ ?>
 
 					<div class="clearfix"></div>
 
 					<div class="col-xs-12">
-						<a class="item-more-link" href="#">view more</a>
+						<a class="item-more-link" href="<?php echo base_url() . 'prize'; ?>">view more</a>
 					</div>
 				<!-- .list-items --></div>
 
@@ -111,10 +158,22 @@
 				<h2 class="block-title">Our Merchants</h2>
 
 				<div class="row list-merchant">
-					<div class="col-md-3 col-sm-4 col-xs-6 item">
-						<img class="img-responsive" src="<?php echo cdn_url(); ?>img/content/merchant-01.gif" alt="#" />
+					
+					<?php foreach($merchants as $k=>$v){
+						//$photos = (empty($v->merchant_logo)) ? $v->account_primary_photo : $v->merchant_logo;
+						//if (empty($photos)) continue; 
+						//$photo = $this->mediamanager->getPhotoUrl($photos, "185x90");
+						//$photo = 'images/merchant/email-logo-'.$v->business_uri.'.png';
+						//if (!is_file($photo)) continue;
+						$photo = $v->merchant_logo;
+						$photo = $this->mediamanager->getPhotoUrl($photo, "185x90");
+						?>
+					<div class="col-md-3 col-sm-4 col-xs-6 item" style="background:url('<?php echo cdn_url() . $photo; ?>') no-repeat center center;">
+						<?php /*<img class="img-responsive" src="<?php echo cdn_url() . $photo; ?>" alt="<?php echo ucwords($v->business_name); ?>" />*/ ?>
 					</div>
+					<?php } ?>
 
+					<?php /*
 					<div class="col-md-3 col-sm-4 col-xs-6 item">
 						<img class="img-responsive" src="<?php echo cdn_url(); ?>img/content/merchant-02.gif" alt="#" />
 					</div>
@@ -142,8 +201,11 @@
 					<div class="col-md-3 col-sm-4 col-xs-6 item">
 						<img class="img-responsive" src="<?php echo cdn_url(); ?>img/content/merchant-08.gif" alt="#" />
 					</div>
+					 */ ?> 
 				</div>
 
+
+				<?php /*
 				<div class="row list-testi">
 					<div class="col-sm-6">
 						<div class="media item">
@@ -168,7 +230,7 @@
 							</div>
 						<!-- .media --></div>
 					</div>
-				<!-- .list-testi --></div>
+				<!-- .list-testi --></div> */ ?>
 
 			</div>
 		<!-- #merchant --></div>

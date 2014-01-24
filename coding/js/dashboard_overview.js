@@ -3,32 +3,14 @@ google.setOnLoadCallback(drawChart);
 function drawChart() {
 
 	var data1 = new google.visualization.DataTable();
-	data1.addColumn('date', 'Date');
-	data1.addColumn('number', 'Visitor');
-	data1.addColumn('number', 'Viewer');
+	data1.addColumn($gchart_type, 'Date');
+	data1.addColumn('number', 'Visits');
+	data1.addColumn('number', 'Visitors');
 
-	data1.addRows([
-		[new Date(2013, 7, 1), 100, 70],
-		[new Date(2013, 7, 2), 140, 85],
-		[new Date(2013, 7, 3), 300, 65],
-		[new Date(2013, 7, 4), 220, 175],
-		[new Date(2013, 7, 5), 330, 195],
-		[new Date(2013, 7, 6), 350, 170],
-		[new Date(2013, 7, 7), 480, 350],
-		[new Date(2013, 7, 8), 490, 310],
-	]);
+	data1.addRows($chart_traffic);
 
-	var data2 = google.visualization.arrayToDataTable([
-		['Source', 'Amount'],
-		['Direct',		205],
-		['Referral',	492],
-		['Organic',		381]
-	]);
-	var data3 = google.visualization.arrayToDataTable([
-		['Type', 'Amount'],
-		['New Visitors',		350],
-		['Returning Visitors',	891],
-	]);
+	var data2 = google.visualization.arrayToDataTable($chart_source);
+	var data3 = google.visualization.arrayToDataTable($chart_type);
 
 	var options1 = {
 		hAxis: {
@@ -74,3 +56,10 @@ function drawChart() {
 	var chart = new google.visualization.PieChart(document.getElementById('chart-type'));
 	chart.draw(data3, options3);
 }
+
+
+$('#aldate').bind('change', function(){
+	var el = $(this);
+	var v = el.val();
+	window.location = base_url + 'dashboard/overview?' + v;
+});

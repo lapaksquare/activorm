@@ -42,8 +42,18 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
- $server = stripos($_SERVER['HTTP_HOST'], "activorm.com");
-	define('ENVIRONMENT', ($server !== FALSE) ? "production" : 'development');
+ //$server = stripos($_SERVER['HTTP_HOST'], "activorm.com");
+ //define('ENVIRONMENT', ($server !== FALSE) ? "production" : 'development');
+ 
+ $server = $_SERVER['HTTP_HOST'];
+ if ($server == "activorm.com"){
+ 	$server_name = "production";
+ }else if ($server == "master18.activorm.com"){
+ 	$server_name = "development_server";
+ }else{
+ 	$server_name = "development";
+ }
+ define('ENVIRONMENT', $server_name);
 
 /*
  *---------------------------------------------------------------
@@ -55,6 +65,7 @@
  */
 switch (ENVIRONMENT)
 {
+	case 'development_server':
 	case 'development':
 		error_reporting(-1);
 		ini_set('display_errors', 1);

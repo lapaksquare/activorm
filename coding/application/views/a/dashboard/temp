@@ -1,0 +1,46 @@
+'dashboard' => array(
+					'id' => 'dashboard',
+					'name' => 'Dashboard',
+					'link' => base_url() . 'dashboard/overview',
+					'childs' => array(
+						'overview' => array(
+							'name' => 'Overview',
+							'link' => base_url() . 'dashboard/overview'
+						),
+						'allproject' => array(
+							'name' => 'All Project',
+							'link' => base_url() . 'dashboard/allproject'
+						),
+						/*
+						'demographic' => array(
+							'name' => 'All Project',
+							'link' => base_url()
+						),*/
+						'searchengine' => array(
+							'name' => 'Search Engine',
+							'link' => base_url() . 'dashboard/searchengine'
+						),
+						'survey' => array(
+							'name' => 'Survey',
+							'link' => base_url() . 'dashboard/survey'
+						)
+					)
+				),
+				'points_topup' => array(
+					'id' => 'points_topup',
+					'name' => 'Points &amp; Top Up',
+					'link' => base_url() . 'dashboard/pointstopup',
+					'childs' => array()	
+				),
+				'payment_confirmation' => array(
+					'id' => 'payment_confirmation',
+					'name' => 'Payment Confirmation',
+					'link' => base_url() . 'dashboard/paymentconfirmation',
+					'childs' => array()		
+				),
+				'payment_history' => array(
+					'id' => 'payment_history',
+					'name' => 'Payment History',
+					'link' => base_url() . 'dashboard/paymenthistory',
+					'childs' => array()
+				)

@@ -9,7 +9,7 @@
 		}
 		
 		function validateUsername($Username){
-			if (!preg_match('/^[A-Za-z0-9_]{5,100}$/', $Username)) return 1;
+			if (!preg_match('/^[A-Za-z0-9_]{4,100}$/', $Username)) return 1;
 			else return 0;
 		}
 		
@@ -19,7 +19,7 @@
 		}
 			
 		function validateName($Name){
-			if (!preg_match('/^[A-Za-z0-9 ]{5,100}$/', $Name)) return 1;
+			if (!preg_match('/^[A-Za-z0-9 ]{4,100}$/', $Name)) return 1;
 			else return 0;
 		}
 		
@@ -27,6 +27,17 @@
 			if (!preg_match('/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i', $Email)) return 1;
 			else return 0;
 		}
+		
+		function valid_url($str){
+
+           $pattern = "/^(http|https|ftp):\/\/([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?/i";
+            if (!preg_match($pattern, $str))
+            {
+                return FALSE;
+            }
+
+            return TRUE;
+	    }
 		
 	}
 

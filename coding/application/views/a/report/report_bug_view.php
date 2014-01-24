@@ -13,7 +13,26 @@
 				<div id="content" class="col-md-9">
 
 					<div class="box">
-						<form class="form-activorm form-bugs" action="#" method="get">
+						
+						<?php 
+						$message_report_bug = $this->session->userdata('message_report_bug');
+						$this->session->unset_userdata('message_report_bug');
+						if (!empty($message_report_bug) && $message_report_bug == 1){
+						?>
+						
+						<div class="alert alert-danger">There is an error while submitting message. Please try again.</div>
+						
+						<?php
+						}else if (!empty($message_report_bug) && $message_report_bug == 2){
+						?>
+						
+						<div class="alert alert-success">Message sent successfully. Thank you!</div>
+						
+						<?php
+						}
+						?>
+						
+						<form class="form-activorm form-bugs" action="<?php echo base_url(); ?>report/submit_bug" method="post">
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-label">
@@ -51,23 +70,30 @@
 										<textarea name="bug-message" placeholder="write message..." class="form-control form-light" rows="5"></textarea>
 									</div>
 								</div>
+								
+								<div class="clearfix"></div>
+
 
 								<div class="col-sm-6">
+									<div class="form-label">
+										<label for="bug-url">Enter the contents of image <img src="<?php echo base_url(); ?>ajax/captcha" alt="recaptcha goes here"></label>
+									</div>
 									<div class="form-group">
-										<div class="recaptcha">
-											<img src="<?php echo cdn_url(); ?>img/content/recaptcha.gif" alt="recaptcha goes here" />
-										</div>
+										<input type="text" name="captcha" placeholder="" class="form-control form-light" />	
 									</div>
 								</div>
+								
 
 								<div class="col-sm-6">
 									<div class="form-submit">
-										<button type="submit" class="btn btn-big btn-wd btn-green">Send</button>
+										<input type="submit" name="submit_bug" class="btn btn-big btn-wd btn-green" value="Send" />
 									</div>
 								</div>
 							</div>
 						</form>
 
+
+						<?php /*
 						<div class="entry-comments">
 							<ul class="list-unstyled list-comments">
 								<li class="clearfix comment">
@@ -156,16 +182,18 @@
 									</div>
 								<!-- .comment --></li>
 							<!-- .list-comments --></ul>
-						<!-- .entry-comments --></div>
+						<!-- .entry-comments --></div> */ ?>
+						
 						<!-- .box --></div>
 
 				<!-- #content --></div>
 
+				<?php /*
 				<div id="sidebar" class="col-md-3">
 					<div class="widget widget-ads">
 						<a href="#"><img class="img-responsive" src="<?php echo cdn_url(); ?>img/content/ad-1.jpg" alt="#" /></a>
 					<!-- .widget --></div>
-				<!-- #sidebar --></div>
+				<!-- #sidebar --></div>*/ ?>
 
 			<!-- .row --></div>
 

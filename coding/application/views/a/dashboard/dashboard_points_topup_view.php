@@ -12,10 +12,18 @@
 
 				<div id="content" class="col-md-9 col-md-push-3">
 
-					<form action="#" method="get">
+					<form action="<?php echo base_url(); ?>dashboard/submit_pointtopup" method="post">
 						<div class="box">
-							<h2 class="box-title">Your Point Balance Now <span class="green">1000 Points</span></h2>
+							<h2 class="box-title">Your Point Balance Now <span class="green"><?php echo $points_user; ?> Points</span></h2>
 						<!-- .box --></div>
+
+						<?php 
+						$pointtopup_error = $this->session->userdata('pointtopup_error');
+						$this->session->unset_userdata('pointtopup_error');
+						if ($pointtopup_error == 1){
+						?>
+						<div class="alert alert-danger">Terjadi kesalahan dalam pengiriman data.</div>
+						<?php } ?>
 
 						<div class="box">
 							<div class="box-header">
@@ -23,47 +31,68 @@
 							</div>
 
 							<div class="table-responsive">
-								<table class="table table-activorm">
+								<table class="table table-activorm" id="table_point">
 									<thead>
 										<tr>
+											<th width="5%"></th>
 											<th width="20%">Points</th>
 											<th class="table-darker" width="25%">Price</th>
 											<th width="25%">Period</th>
-											<th class="table-darker" width="30%">Quantity</th>
 										</tr>
 									</thead>
 									<tbody>
+										
+										<?php 
+										foreach($points as $k=>$v){
+										?>
+										
 										<tr>
-											<td>200</td>
-											<td	class="table-darker">200.000</td>
-											<td>1 Month</td>
-											<td class="table-darker"><input type="text" name="quantity-200" placeholder="" class="form-control input-sm input-nr"></td>
+											<td class="table-darker">
+												<div>
+													<input type="hidden" name="pid[<?php echo $v->point_id; ?>]" id="pid" value="<?php echo $v->point_id; ?>" />
+													<input type="hidden" name="pid_hash[<?php echo $v->point_id; ?>]" id="pid_hash" value="<?php echo sha1($v->point_id . SALT); ?>" />
+													
+													<?php /*	
+													<input type="text" name="quantity[<?php echo $v->point_id; ?>]" placeholder="" id="point_qty" class="form-control input-sm input-nr">
+													*/ ?>
+													
+													<input type="radio" value="<?php echo $v->point_id; ?>" name="choice_pid" placeholder="" id="choice_pid" class="input-sm input-nr" 
+													 <?php echo ($k==0) ? 'checked="checked"' : ''; ?>
+													 />
+												
+												</div>
+											</td>
+											<td><?php echo $v->point_name; ?></td>
+											<td	class="table-darker">IDR <?php echo number_format($v->point_price, 2, ",", "."); ?></td>
+											<td><?php echo $v->point_period; ?> Month</td>
 										</tr>
-										<tr>
-											<td>500 <small>free + 25 points</small></td>
-											<td class="table-darker">500.000</td>
-											<td>2 Month</td>
-											<td class="table-darker"><input type="text" name="quantity-500" placeholder="" class="form-control input-sm input-nr"></td>
-										</tr>
-										<tr>
-											<td>1000 <small>free + 100 points</small></td>
-											<td class="table-darker">1.000.000</td>
-											<td>3 Month</td>
-											<td class="table-darker"><input type="text" name="quantity-1000" placeholder="" class="form-control input-sm input-nr"></td>
-										</tr>
+										
+										<?php 
+										}
+										?>
+										
 									</tbody>
 								</table>
 							</div>
 
-							<a data-toggle="modal" class="btn btn-block btn-blue more-topup" href="#modal-topup">Need more points than listed above?</a>
-
+							<br />
 							<ul class="list-unstyled list-details">
+								<li class="row">
+									<div class="col-xs-5">
+										Quantity:
+									</div>
+									<div class="col-xs-7">
+										<span class="pull-right">
+											<input type="text" name="quantity" placeholder="" value="" id="point_qty" class="form-control input-sm input-nr" autocomplete="off"  />
+										</span>
+									</div>
+								</li>
 								<li class="row">
 									<div class="col-xs-5">
 										Total Amount:
 									</div>
 									<div class="col-xs-7">
-										<span class="pull-right">2.000.000</span>
+										<span class="pull-right" id="totalamount" data-totalamount="0">IDR <?php echo number_format(0, 2, ",", "."); ?></span>
 									</div>
 								</li>
 								<li class="row">
@@ -71,7 +100,7 @@
 										Service Charge 5%:
 									</div>
 									<div class="col-xs-7">
-										<span class="pull-right">100.000</span>
+										<span class="pull-right" id="servicecharge" data-servicecharge="0">IDR <?php echo number_format(0, 2, ",", "."); ?></span>
 									</div>
 								</li>
 								<li class="row">
@@ -79,7 +108,7 @@
 										Government Tax 10%:
 									</div>
 									<div class="col-xs-7">
-										<span class="pull-right">200.000</span>
+										<span class="pull-right" id="governmenttax" data-governmenttax="0">IDR <?php echo number_format(0, 2, ",", "."); ?></span>
 									</div>
 								</li>
 								<li class="row list-total">
@@ -87,10 +116,12 @@
 										<strong>Total Payment:</strong>
 									</div>
 									<div class="col-xs-7">
-										<span class="pull-right"><strong class="green">2.300.000</strong></span>
+										<span class="pull-right"><strong class="green" id="totalpayment" data-totalpayment="0">IDR <?php echo number_format(0, 2, ",", "."); ?></strong></span>
 									</div>
 								</li>
 							<!-- .transaction-details --></ul>
+							
+							<a data-toggle="modal" class="btn btn-block btn-blue more-topup" href="#modal-topup" id="btn-modal-topup">Need more points than listed above?</a>
 
 							<div class="topup-payment">
 								<strong>Choose Payment Method</strong>
@@ -100,10 +131,13 @@
 									<img src="<?php echo cdn_url(); ?>img/bank-bca.gif" alt="bca" />
 								</div>
 							</div>
-
+							
 							<div class="clearfix">
-								<button type="submit" class="btn btn-green pull-right">Continue</button>
+								<input type="submit" name="btn_submit_topup" class="btn btn-blue pull-right" value="Okay, Submit!" />
 							</div>
+							
+							<?php $this->load->view('a/dashboard/pointstopup_modal_view', $this->data); ?>
+							
 						<!-- .box --></div>
 					</form>
 
@@ -113,6 +147,8 @@
 
 			<!-- .row --></div>
 
-		<!-- #main --></div>
+		<!-- #main --></div>	
+
+<?php $this->load->view('a/dashboard/pointstopup_confirmation_modal_view', $this->data); ?>
 
 <?php $this->load->view('a/general/footer_view', $this->data); ?>

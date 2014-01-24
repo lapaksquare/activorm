@@ -12,6 +12,7 @@
 
 				<div id="content" class="col-md-9 col-md-push-3">
 
+					<?php /*
 					<div class="box">
 						<div class="box-header">
 							<h2 class="box-title">Billing Summary</h2>
@@ -31,11 +32,12 @@
 								IDR 10.000.000,-
 							</div>
 						</div>
-					<!-- .box --></div>
+					<!-- .box --></div> */ ?>
 
 					<div class="box">
 						<div class="row box-header">
 							<div class="col-xs-8">
+								<?php /*
 								<form class="transaction-select" action="#" method="get">
 									<label for="month" class="pull-left">Month:</label>
 									<select name="month" class="custom-select dark-select small-select">
@@ -52,7 +54,7 @@
 										<option value="11">November 2013</option>
 										<option value="12">December 2013</option>
 									</select>
-								</form>
+								</form> */ ?>
 							</div>
 							<div class="col-xs-4">
 								<strong class="pull-right">All currency in IDR</strong>
@@ -68,40 +70,50 @@
 										<th>Total</th>
 									</tr>
 								</thead>
+								
+								<tbody>
+									<?php 
+									$total = 0;
+									foreach($payment_history as $k=>$v){ 
+										$total += $v->order_total_price;
+									?>
+									<tr>
+										<td><a href="<?php echo base_url(); ?>dashboard/paymenthistory?oid=<?php echo $v->order_barcode; ?>&h=<?php echo sha1($v->order_barcode . SALT); ?>"><?php echo strtoupper($v->order_barcode); ?></a></td>
+										<td><?php echo ucfirst($v->order_status); ?></td>
+										<td>IDR <?php echo number_format($v->order_total_price, 2, ",", "."); ?></td>
+									</tr>
+									<?php } ?>
+								</tbody>
+								
 								<tfoot>
 									<tr>
 										<td class="cspan">Total</td>
 										<td></td>
-										<td>2.000.000</td>
+										<td>IDR <?php echo number_format($total, 2, ",", "."); ?></td>
 									</tr>
 								</tfoot>
-								<tbody>
-									<tr>
-										<td><a href="#">126281910</a></td>
-										<td>Paid/Pending</td>
-										<td>1.000.000</td>
-									</tr>
-									<tr>
-										<td><a href="#">126281846</a></td>
-										<td>Paid/Pending</td>
-										<td>1.000.000</td>
-									</tr>
-								</tbody>
+								
 							</table>
 						</div>
 					<!-- .box --></div>
 
+					
+					
+					<?php if (!empty($order_cart)){ ?>
 					<div class="box">
 						<div class="row box-header">
 							<div class="col-xs-9">
-								<h2 class="box-title">Transaction # 126281910</h2>
+								<h2 class="box-title">Transaction # <?php echo strtoupper($order_cart->order_barcode); ?></h2>
 							</div>
+							<?php /*
 							<div class="col-xs-3">
 								<a class="pull-right btn btn-blue" href="#">Download PDF</a>
-							</div>
+							</div> */ ?>
 						</div>
 
 						<ul class="list-unstyled list-details">
+							
+							<?php /*
 							<li class="row">
 								<div class="col-xs-5">
 									<strong>Campaign Title</strong>
@@ -109,13 +121,14 @@
 								<div class="col-xs-7">
 									<strong>:</strong> Win a Macbook Pro
 								</div>
-							</li>
+							</li> */ ?>
+							
 							<li class="row">
 								<div class="col-xs-5">
 									<strong>Business</strong>
 								</div>
 								<div class="col-xs-7">
-									<strong>:</strong> ABCD
+									<strong>:</strong> <?php echo ucwords($order_cart->account_name); ?>
 								</div>
 							</li>
 							<li class="row">
@@ -123,7 +136,7 @@
 									<strong>Invoice Date</strong>
 								</div>
 								<div class="col-xs-7">
-									<strong>:</strong> 1 Agustus 2013
+									<strong>:</strong> <?php echo date('d M Y, H:i', strtotime($order_cart->order_datetime)); ?>
 								</div>
 							</li>
 							<li class="row">
@@ -131,7 +144,7 @@
 									<strong>Total Payment</strong>
 								</div>
 								<div class="col-xs-7">
-									<strong>:</strong> IDR 1.000.000
+									<strong>:</strong> IDR <?php echo number_format($order_cart->order_total_price, 2, ",", "."); ?>
 								</div>
 							</li>
 							<li class="row">
@@ -139,7 +152,7 @@
 									<strong>Payment Method</strong>
 								</div>
 								<div class="col-xs-7">
-									<strong>:</strong> Bank Transfer
+									<strong>:</strong> <?php echo strtoupper($order_cart->payment_type); ?>
 								</div>
 							</li>
 							<li class="row">
@@ -147,7 +160,7 @@
 									<strong>Status</strong>
 								</div>
 								<div class="col-xs-7">
-									<strong>:</strong> Payment Complete
+									<strong>:</strong> <?php echo strtoupper($order_cart->order_status); ?>
 								</div>
 							</li>
 						<!-- .transaction-details --></ul>
@@ -156,23 +169,26 @@
 							<table class="table table-activorm">
 								<thead>
 									<tr>
-										<th width="35%">Date</th>
-										<th width="65%">Activity</th>
+										<th width="35%">Item</th>
+										<th width="35%">Quantity</th>
+										<th width="65%">Total</th>
 									</tr>
 								</thead>
 								<tbody>
+									<?php foreach($order_cart_detail as $k=>$v){ ?>
 									<tr>
-										<td>25/07/2013</td>
-										<td>ABC Buys 200 Points</td>
+										<td><?php echo $v->order_name; ?></td>
+										<td><?php echo $v->order_qty; ?></td>
+										<td>IDR <?php echo number_format($v->order_total_price, 2, ",", "."); ?></td>
 									</tr>
-									<tr>
-										<td>08/11/2013</td>
-										<td>ABC Buys 1000 Points</td>
-									</tr>
+									<?php } ?>
 								</tbody>
 							</table>
 						</div>
-					<!-- .box --></div>
+					<!-- .box --></div> 
+				
+				<?php } ?>
+
 
 				<!-- #content --></div>
 

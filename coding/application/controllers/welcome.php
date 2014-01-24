@@ -60,6 +60,42 @@ class Welcome extends CI_Controller {
 		$file = pathinfo($file);
 		print_r($file);
 		 */
+		 
+		/* 
+		$project_hashtags_text = 'bola, jersey, kompas';
+		$project_hashtags_text = explode(",",$project_hashtags_text);
+		$project_hashtags_text = array_map("trim", $project_hashtags_text);
+		echo "#" . implode(" #", $project_hashtags_text);*/
+		
+		/*
+		$data = (object) array(
+			'name' => 'a',
+			'detail' => 'b'
+		);
+		echo '<pre>';
+		print_r($data);
+		echo '</pre>';*/
+		
+		//$url = "http://www.example.com";
+		//$this->load->library('validate');
+		//$r = $this->validate->valid_url($url);
+		//var_dump($r);
+
+		//echo sha1(SALT . "5753");
+		
+		//$hash = "kjkw0738";
+		//echo base_url() . 'auth/resetpassword?h=' . $hash . '&hs=' . sha1(SALT . $hash);
+		
+	}
+	
+	function test_invite(){
+		//$this->load->model('invitation_model');
+		//$return = $this->invitation_model->getInvitationByCustom("merchant");
+		//echo '<pre>';
+		//print_r($return);
+		//echo '</pre>';
+		$this->load->view('email/invoice_view');
+		//var_dump( is_file('images/merchant/Email-Logo-activorm.png') );
 	}
 	
 }

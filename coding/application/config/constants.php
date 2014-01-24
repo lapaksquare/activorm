@@ -86,10 +86,26 @@ define('META_KEYWORDS', 'Activation Platform, Online Marketing Ads, Internet Mar
 date_default_timezone_set('Asia/Jakarta');
 
 define('WEB_VERSION', 1);
+define('DEV_INVITATION', 0);
+define('PREMIUM_PLAN', 0);
 
 /* API FACEBOOK */
 define('FACEBOOK_APP_ID', '1425256081020066');
 define('FACEBOOK_APP_SECRET', '2c60fb1f43e8b851385dfdc4d866fa7f');
+
+/* API TWITTER */
+define('TWITTER_CONSUMER_KEY', 'bihlqJfhrKq3reRCU1FmtQ');
+define('TWITTER_CONSUMER_SECRET', 'NVc184QzMzecjTZ8IPoNsTjuyYrwBQnvO4xOOgNU');
+
+if (ENVIRONMENT == "production"){
+	define('TWITTER_OAUTH_CALLBACK', 'http://activorm.com/auth/twitter_callback');
+}else{
+	define('TWITTER_OAUTH_CALLBACK', 'http://activorm.local/kkrf/auth/twitter_callback');
+}
+
+
+define('GA_CLIENT_ID', '802492281133.apps.googleusercontent.com');
+define('GA_CLIENT_SECRET', 'COpdo3DmaYhTFOmQ3pgwBphK');
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

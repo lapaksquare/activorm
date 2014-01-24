@@ -110,6 +110,100 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</div>
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
+
+	<table border="1">
+		<thead>
+			<tr>
+				<th>date</th>
+				<th>visitors</th>
+				<th>newVisits</th>
+				<th>visits</th>
+				<th>bounces</th>
+				<th>visitBounceRate</th>
+				<th>timeOnSite</th>
+				<th>avgTimeOnSite</th>
+				<th>percentNewVisits</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach($this->visits['rows'] as $k=>$v){ ?>
+				<tr>
+					<td><?php echo date("d M Y", strtotime($v[0])); ?></td>
+					<td><?php echo $v[1]; ?></td>
+					<td><?php echo $v[2]; ?></td>
+					<td><?php echo $v[3]; ?></td>
+					<td><?php echo $v[4]; ?></td>
+					<td><?php echo $v[5]; ?></td>
+					<td><?php echo $v[6]; ?></td>
+					<td><?php echo $v[7]; ?></td>
+					<td><?php echo $v[8]; ?></td>
+				</tr>
+			<?php } ?>	
+		</tbody>
+	</table>
+	
+	<hr />
+	
+	<table border="1">
+		<thead>
+			<tr>
+				<th>date</th>
+				<th>pageviews</th>
+				<th>pageviewsPerVisit</th>
+				<th>uniquePageviews</th>
+				<th>timeOnPage</th>
+				<th>avgTimeOnPage</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach($this->visits2['rows'] as $k=>$v){ ?>
+				<tr>
+					<td><?php echo date("d M Y", strtotime($v[0])); ?></td>
+					<td><?php echo $v[1]; ?></td>
+					<td><?php echo $v[2]; ?></td>
+					<td><?php echo $v[3]; ?></td>
+					<td><?php echo $v[4]; ?></td>
+					<td><?php echo $v[5]; ?></td>
+				</tr>
+			<?php } ?>	
+		</tbody>
+	</table>
+	
+	<hr />
+	
+	<table border="1">
+		<thead>
+			<tr>
+				<th>source</th>
+				<th>medium</th>
+				<th>visitors</th>
+				<th>percentNewVisits</th>
+				<th>newVisits</th>
+				<th>visits</th>
+				<th>visitBounceRate</th>
+				<th>avgTimeOnSite</th>
+				<th>timeOnSite</th>
+				<th>bounces</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach($this->visits3['rows'] as $k=>$v){ ?>
+				<tr>
+					<td><?php echo $v[0]; ?></td>
+					<td><?php echo $v[1]; ?></td>
+					<td><?php echo $v[2]; ?></td>
+					<td><?php echo $v[3]; ?></td>
+					<td><?php echo $v[4]; ?></td>
+					<td><?php echo $v[5]; ?></td>
+					<td><?php echo $v[6]; ?></td>
+					<td><?php echo $v[7]; ?></td>
+					<td><?php echo $v[8]; ?></td>
+					<td><?php echo $v[9]; ?></td>
+				</tr>
+			<?php } ?>	
+		</tbody>
+	</table>
+	
 </div>
 
 </body>

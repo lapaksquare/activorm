@@ -54,7 +54,8 @@ live_edit = {
 			 */
 			parent.remove();
 			$(".account-"+data_edit).find("span").html(post);
-			$(".navbar-user a span").html(post);
+			$('#account_'+data_edit).val(post);
+			//$(".navbar-user a span").html(post);
 				
 		});
 		

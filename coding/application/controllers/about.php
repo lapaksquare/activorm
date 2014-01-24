@@ -17,6 +17,20 @@ class About extends MY_Controller{
 		$this->load->view('a/about/about_view', $this->data);
 	}
 	
+	function guestlist(){
+		
+		$this->load->model('invitation_model');
+		$this->data['list'] = $this->invitation_model->guestInvitation();
+		
+		$this->data['menu'] = 'guestlist';
+		$css = array();
+		$js = array();
+		$meta = array();
+		$title = 'Guest List';
+		$this->_default_param($css, $js, $meta, $title);
+		$this->load->view('a/about/guestlist_view', $this->data);
+	}
+	
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){
 		/*$default_css = array(
 		);

@@ -12,17 +12,32 @@ class Access {
 		$this->ci->load->library('facebook_library');
 		$this->ci->facebook_library->connection();
 		$this->facebook = $this->ci->facebook_library->facebook;
-		// get user id
+		
+		$account_id = $this->ci->session->userdata('account_id');
+		
 		$this->user = $this->facebook->getUser();
-		$this->loginUrl = $this->facebook->getLoginUrl(array(
-			'scope' => 'email,user_hometown,user_location,user_photos,user_birthday,user_checkins,user_interests',
-			'redirect_uri' => base_url() . 'auth/register_facebook'
-		));
-		$this->logoutUrl = $this->facebook->getLogoutUrl();
+		//$accessToken = $this->facebook->getAccessToken();
+		
+		if (empty($account_id) || empty($this->user)){
+			// get user id
+			$this->loginUrl = $this->facebook->getLoginUrl(array(
+				'scope' => 'email,user_hometown,user_location,user_photos,user_birthday,user_checkins,user_interests,manage_pages,publish_actions,publish_stream,status_update',
+				'redirect_uri' => base_url() . 'auth/register_facebook'
+			));
+			$this->logoutUrl = $this->facebook->getLogoutUrl();
+		}
 		
 		$this->ci->load->model('account_model');
 		$account_id = $this->ci->session->userdata('account_id');
-		$this->member_account = $this->ci->account_model->getAccount("ma.account_id", $account_id);
+		if (!empty($account_id)){
+			$this->member_account = $this->ci->account_model->getAccount("ma.account_id", $account_id, 0);
+		}
+		
+		// for business saja
+		if (!empty($this->member_account) && $this->member_account->account_type == "business"){
+			$this->ci->load->model('business_model');
+			$this->business_account =  $this->ci->business_model->getBusiness("", "", $this->member_account->account_id);
+		}
 	}
 
 	function userLogin($dataUser){
@@ -37,7 +52,7 @@ class Access {
 				
 		// registe new user perlu verification_code	
 		if ($registerNewUser == 1){
-			$dataUser['verification_code'] = $this->ci->util->create_code(4, "number");
+			//$dataUser['verification_code'] = $this->ci->util->create_code(4, "number");
 			$dataUser['register_step'] = 1;
 		}		
 				
@@ -77,14 +92,37 @@ class Access {
 		$this->ci->account_model->logIpAddressUser($dataIpAddress);
 	}
 
-	function register_session($account_id, $data){
+	function register_session($account_id, $data, $business_id = ''){
 		$this->ci->session->set_userdata('account_id', $account_id);
 		$this->ci->session->set_userdata('register_temp', $data);
+		if ($business_id) $this->ci->session->set_userdata('business_id', $business_id);
 	}
 	
 	function remove_session(){
 		$this->ci->session->unset_userdata('account_id');
 		$this->ci->session->unset_userdata('register_temp');
+		$this->ci->session->unset_userdata('business_id');
+		$this->ci->session->unset_userdata('fbauth');
+		$this->ci->session->unset_userdata('invitation_only');
+	}
+
+	function remove_session_admin(){
+		$this->ci->session->unset_userdata('account_admin');
+	}
+	
+	/* ACCESS SOCIAL MEDIA*/
+	
+	// access facebook
+	function facebook_connect(){
+		$this->ci->load->library('facebook_library');
+		$this->ci->facebook_library->connection();
+		$this->facebook_connect = $this->ci->facebook_library->facebook;
+		// get user id
+		$this->user_connect = $this->facebook_connect->getUser();
+		$this->fb_connect_url = $this->facebook_connect->getLoginUrl(array(
+			'scope' => 'email,user_hometown,user_location,user_photos,user_birthday,user_checkins,user_interests,manage_pages,publish_actions,publish_stream,status_update',
+			'redirect_uri' => base_url() . 'auth/facebook_connect'
+		));
 	}
 
 }

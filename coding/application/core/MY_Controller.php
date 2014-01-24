@@ -11,6 +11,21 @@ class MY_Controller extends CI_Controller{
 	
 	function __construct(){
 		parent::__construct();
+		
+		// invitation
+		if (DEV_INVITATION == 1){
+			$this->segments = $this->uri->segment_array();
+						
+			// invitation only
+			$invitation_only = $this->session->userdata('invitation_only');
+			
+			//echo $invitation_only . ' aaa';die();
+			
+			if ( (!empty($this->segments) && empty($invitation_only)) && (!in_array($this->segments[1], array('business', 'benefits', 'about', 'auth', 'project', 'guestlist', 'admin', 'cron'))) ){
+				redirect(base_url());
+			}
+		}
+		
 		$this->data['default_title'] = default_title;
 		$this->data['css_tags'] = array();
 		$this->data['js_tags'] = array();
@@ -26,6 +41,11 @@ class MY_Controller extends CI_Controller{
 		
 		$this->data['session_lang'] = $this->session_lang = $this->session->userdata('session_lang');
 		
+		//$this->segments_uri = $this->uri->segment_array();
+		//if (!empty($this->segments[2]) && !in_array($this->segments[2], array('auth', 'ajax', 'actions'))){
+		//$this->session->set_userdata('current_uri', current_url());
+		//}
+				
 		// access user
 		$this->load->library('access');
 		$this->access->accessUser();
@@ -49,7 +69,8 @@ class MY_Controller extends CI_Controller{
 			'<link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic|PT+Sans+Caption:400,700" rel="stylesheet" type="text/css">',
 			'<link href="'.cdn_url().'css/settings.css" rel="stylesheet" type="text/css">',
 			'<link href="'.cdn_url().'css/activorm.css" rel="stylesheet" type="text/css">',
-			'<link rel="shortcut icon" href="'.cdn_url().'img/logo-icon.png">'
+			'<link href="'.cdn_url().'css/pagination.css" rel="stylesheet" type="text/css">',
+			'<link rel="shortcut icon" href="'.cdn_url().'img/75x75.png">'
 		);
 		
 		if (!empty($css)) $css = array_merge($default_css, $css);
@@ -109,8 +130,19 @@ class MY_Admin extends CI_Controller {
 		$default_meta = "";
 		if (!empty($meta)) $default_meta = implode("", $meta);
 		
+		$default_css = array(
+			'<link href="'.cdn_url().'css/admin/bootstrap.css" rel="stylesheet" type="text/css">',
+			'<link href="'.cdn_url().'css/pagination.css" rel="stylesheet" type="text/css">',
+			'<link href="'.cdn_url().'css/admin/style.css" rel="stylesheet" type="text/css">',
+		);
+		
 		if (!empty($css)) $css = array_merge($default_css, $css);
 		else $css = $default_css;
+		
+		$default_js = array(
+			'<script src="'.cdn_url().'js/jquery.min.js"></script>',
+			'<script src="'.cdn_url().'js/bootstrap.min.js"></script>'
+		);
 		
 		if (!empty($js)) $js = array_merge($default_js, $js);
 		else $js = $default_js;
@@ -126,8 +158,8 @@ class MY_Admin extends CI_Controller {
 class MY_Admin_Access extends MY_Admin {
 	function __construct(){
 		parent::__construct();
-		$account = $this->session->userdata('account');
-		if (empty($account)) redirect(base_url() . 'admin/login');
+		$this->account_admin = $account = $this->session->userdata('account_admin');
+		if (empty($account)) redirect(base_url() . 'admin/login');		
 	}
 }
 

@@ -61,7 +61,7 @@
 							</div>
 
 							<div class="col-sm-2">
-								<a class="btn btn-green project-join" href="#">Join Now!</a>
+								<a class="btn btn-green project-join" href="<?php echo base_url(); ?>project/activorm-demo-project">Join Now!</a>
 							</div>
 						</div>
 					</div>
@@ -82,7 +82,7 @@
 							</div>
 
 							<div class="col-sm-2">
-								<a class="btn btn-green project-join" href="#">Join Now!</a>
+								<a class="btn btn-green project-join" href="<?php echo base_url(); ?>project/activorm-demo-project">Join Now!</a>
 							</div>
 						</div>
 					</div>
@@ -103,7 +103,7 @@
 							</div>
 
 							<div class="col-sm-2">
-								<a class="btn btn-green project-join" href="#">Join Now!</a>
+								<a class="btn btn-green project-join" href="<?php echo base_url(); ?>project/activorm-demo-project">Join Now!</a>
 							</div>
 						</div>
 					</div>
@@ -124,7 +124,7 @@
 							</div>
 
 							<div class="col-sm-2">
-								<a class="btn btn-green project-join" href="#">Join Now!</a>
+								<a class="btn btn-green project-join" href="<?php echo base_url(); ?>project/activorm-demo-project">Join Now!</a>
 							</div>
 						</div>
 					</div>
@@ -145,7 +145,7 @@
 							</div>
 
 							<div class="col-sm-2">
-								<a class="btn btn-green project-join" href="#">Join Now!</a>
+								<a class="btn btn-green project-join" href="<?php echo base_url(); ?>project/activorm-demo-project">Join Now!</a>
 							</div>
 						</div>
 					</div>

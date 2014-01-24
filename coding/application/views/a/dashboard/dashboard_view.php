@@ -26,46 +26,19 @@
 									</tr>
 								</thead>
 								<tbody class="scrollable-area">
+									
+									<?php 
+									foreach($this->trendprizedata as $k=>$v){
+									?>
 									<tr>
-										<td>Macbook Pro</td>
-										<td>200 Fans</td>
+										<td><?php echo $v->prize_name; ?></td>
+										<td><?php echo $v->jml_click; ?> Fan<?php echo ($v->jml_click > 1) ? 's' : ''; ?></td>
 									</tr>
-									<tr>
-										<td>Samsung Galaxy Tab</td>
-										<td>200 Fans</td>
-									</tr>
-									<tr>
-										<td>iPhone 5S</td>
-										<td>200 Fans</td>
-									</tr>
-									<tr>
-										<td>Kursi Kantor</td>
-										<td>200 Fans</td>
-									</tr>
-									<tr>
-										<td>Tiket Nonton</td>
-										<td>200 Fans</td>
-									</tr>
-									<tr>
-										<td>Macbook Pro</td>
-										<td>200 Fans</td>
-									</tr>
-									<tr>
-										<td>Samsung Galaxy Tab</td>
-										<td>200 Fans</td>
-									</tr>
-									<tr>
-										<td>iPhone 5S</td>
-										<td>200 Fans</td>
-									</tr>
-									<tr>
-										<td>Kursi Kantor</td>
-										<td>200 Fans</td>
-									</tr>
-									<tr>
-										<td>Tiket Nonton</td>
-										<td>200 Fans</td>
-									</tr>
+									<?php
+									}
+									?>
+									
+									
 								</tbody>
 							</table>
 						</div>
@@ -73,21 +46,122 @@
 
 					<div class="box dashboard-traffic">
 						<div class="box-header">
-							<h2 class="box-title title-light">Traffic to Website</h2>
+							<h2 class="box-title title-light" style="float:left;">Traffic to Website</h2>
+							
+							<div class="pull-right">
+								<select id="aldate" class="form-control">
+									<?php
+									$date1 = date("Y-m-d", strtotime("- 7 days"));
+									$date2 = date("Y-m-d", strtotime("- 1 days")); 
+									for($i=1;$i<=4;$i++){
+										$h = sha1($date1 . $date2 . SALT);
+										$v = "s=".$date1."&e=".$date2."&h=".$h;
+										$class = ($v == $this->keyal) ? 'selected' : '';
+									?>
+									<option value="<?php echo $v; ?>" <?php echo $class; ?>><?php echo date("d M Y", strtotime($date1)).' s/d '.date("d M Y", strtotime($date2)); ?></option>
+									<?php	
+										$date2 = $date1;
+										$date1 = date("Y-m-d", strtotime($date2 . " - 7 days"));
+									}
+									?>
+								</select>
+							</div>
+							
+							<div class="clearfix"></div>
+							
 						</div>
 
+						<script type="text/javascript">
+							<?php 
+							$chart_traffic = array();
+							$gchart_type_js = "";
+							foreach($this->trafficwebsite as $k=>$v){
+								
+								$analytic_visit = $v->analytic_visit;
+								$analytic_visitors = $v->analytic_visitors;
+								
+								$y = date('Y', strtotime($v->analytic_date));
+								$m = date('m', strtotime($v->analytic_date));
+								$d = date('d', strtotime($v->analytic_date));
+								
+								if ($this->gchart_type == "daily"){
+									$tgl = 'new Date('.$y.', '.($m-1).', '.$d.')';
+									$gchart_type_js = "date";
+								}else if ($this->gchart_type == "monthly"){
+									$tgl = "'".date("d M Y", strtotime($v->analytic_date))."'";
+									$gchart_type_js = "string";
+								}else if ($this->gchart_type == "weekly"){
+									//$tgl1 = date("d M Y", strtotime($v->analytic_date . " - 7 days"));
+									//$tgl2 = date("d M Y", strtotime($v->analytic_date));
+									//$tgl = "'$tgl1 s/d $tgl2'";
+									$tgl = "'".date("d M Y", strtotime($v->analytic_date))."'";
+									$gchart_type_js = "string";
+								}
+								
+								$chart_traffic[] = '['.$tgl.', '.$analytic_visit.', '.$analytic_visitors.']';
+								
+							}
+							?>
+							var $gchart_type = '<?php echo $gchart_type_js; ?>';
+							var $chart_traffic = [
+								<?php echo implode(", ", $chart_traffic); ?>
+							];
+						</script>
 						<div id="chart-traffic"></div>
-
+						
+						<?php /*
 						<div class="btn-group">
-							<a class="btn btn-big btn-green" href="#">Daily</a>
-							<a class="btn btn-big btn-blue" href="#">Weekly</a>
-							<a class="btn btn-big btn-blue" href="#">Monthly</a>
-						</div>
+							<?php 
+							$btn_group = array(
+								"daily" => array(
+									'name' => 'Daily',
+									'url' => base_url() . 'dashboard/overview?ct=daily&ha=' . sha1("daily".SALT)
+								),
+								"weekly" => array(
+									'name' => 'Weekly',
+									'url' => base_url() . 'dashboard/overview?ct=weekly&ha=' . sha1("weekly".SALT)
+								),
+								"monthly" => array(
+									'name' => 'Monthly',
+									'url' => base_url() . 'dashboard/overview?ct=monthly&ha=' . sha1("monthly".SALT)
+								)
+							);
+							foreach($btn_group as $k=>$v){
+								$class = ($k == $this->gchart_type) ? "btn-green" : "btn-blue";
+							?>
+							<a class="btn btn-big <?php echo $class; ?>" href="<?php echo $v['url']; ?>"><?php echo ucwords($v['name']); ?></a>
+							<?php	
+							}
+							?>
+						</div> */ ?>
 
 						<div class="row">
 							<div class="col-sm-6">
+								<?php
+								$chart_source = array();
+								foreach($this->contentdata as $k=>$v){
+									$chart_source[] = "['".ucwords($v->medium)."', ".$v->visits."]"; 
+								}
+								$chart_type = array();
+								foreach($this->visitorsdata as $k=>$v){
+									$chart_type[] = "['".ucwords($v->visitor_type)."', ".$v->visits."]"; 
+								}
+								?>
+								<script type="text/javascript">
+									var $chart_source = [
+										['Source', 'Amount'],
+										<?php echo implode(", ", $chart_source); ?>
+									];
+									var $chart_type = [
+										['Type', 'Amount'],
+										<?php echo implode(", ", $chart_type); ?>
+									];
+								</script>
 								<div id="chart-source"></div>
 								<div id="chart-type"></div>
+								
+								<p style="line-height:20px;"><small>*) Move your mouse to the pie chart to see the percentage.</small></p>
+								
 							</div>
 
 							<div class="col-sm-6">
@@ -100,18 +174,12 @@
 											</tr>
 										</thead>
 										<tbody>
+											<?php foreach($this->reffererdata as $k=>$v){ ?>
 											<tr>
-												<td>Facebook</td>
-												<td>2820</td>
+												<td><?php echo $v->source; ?></td>
+												<td><?php echo $v->visits; ?></td>
 											</tr>
-											<tr>
-												<td>Twitter</td>
-												<td>1755</td>
-											</tr>
-											<tr>
-												<td>Pinterest</td>
-												<td>254</td>
-											</tr>
+											<?php } ?>
 										</tbody>
 									</table>
 								</div>
@@ -119,52 +187,6 @@
 						</div>
 					<!-- .box --></div>
 
-					<div class="box dashboard-projects">
-						<div class="box-header">
-							<h2 class="box-title title-light">All Projects</h2>
-						</div>
-
-						<div class="table-responsive">
-							<table class="table table-activorm">
-								<thead>
-									<tr>
-										<th width="10%">Date</th>
-										<th width="40%">Project Title</th>
-										<th width="10%">Views</th>
-										<th width="40%">Member Join</th>
-										<th width="10%">Paid</th>
-										<th width="10%">Status</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>20/11/2013</td>
-										<td><a data-toggle="modal" href="#modal-overview">Win an iPad</a></td>
-										<td>200</td>
-										<td>300</td>
-										<td>Free</td>
-										<td>Pending</td>
-									</tr>
-									<tr>
-										<td>20/11/2013</td>
-										<td><a href="#">Win a Sams...</a></td>
-										<td>200</td>
-										<td>300</td>
-										<td>100.000</td>
-										<td>Pending</td>
-									</tr>
-									<tr>
-										<td>20/11/2013</td>
-										<td><a href="#">Win an iPad</a></td>
-										<td>200</td>
-										<td>300</td>
-										<td>100.000</td>
-										<td>Pending</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					<!-- .box --></div>
 				<!-- #content --></div>
 
 				<?php $this->load->view('a/dashboard/dashboard_sidebar_view', $this->data); ?>
@@ -172,7 +194,5 @@
 			<!-- .row --></div>
 
 		<!-- #main --></div>
-
-<?php $this->load->view('a/dashboard/dashboard_project_modal_view', $this->data); ?>		
 
 <?php $this->load->view('a/general/footer_view', $this->data); ?>

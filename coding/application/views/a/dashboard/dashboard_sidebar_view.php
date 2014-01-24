@@ -7,51 +7,77 @@
 				'projects' => array(
 					'id' => 'projects',
 					'name' => 'Projects',
-					'link' => base_url(),
-					'childs' => array()
-				),
-				'dashboard' => array(
-					'id' => 'dashboard',
-					'name' => 'Dashboard',
-					'link' => base_url(),
-					'childs' => array(
-						'overview' => array(
-							'name' => 'Overview',
-							'link' => base_url()
-						),
-						'demographic' => array(
-							'name' => 'Demographic',
-							'link' => base_url()
-						),
-						'searchengine' => array(
-							'name' => 'Search Engine',
-							'link' => base_url()
-						),
-						'survey' => array(
-							'name' => 'Survey',
-							'link' => base_url()
-						)
-					)
-				),
-				'points_topup' => array(
-					'id' => 'points_topup',
-					'name' => 'Points &amp; Top Up',
-					'link' => base_url(),
-					'childs' => array()		
-				),
-				'payment_confirmation' => array(
-					'id' => 'payment_confirmation',
-					'name' => 'Payment Confirmation',
-					'link' => base_url(),
-					'childs' => array()		
-				),
-				'payment_history' => array(
-					'id' => 'payment_history',
-					'name' => 'Payment History',
-					'link' => base_url(),
+					'link' => base_url() . 'dashboard/projects',
 					'childs' => array()
 				)
 			);
+			
+			//if (PREMIUM_PLAN == 1){
+				
+				$menus_2 = array(
+					'dashboard' => array(
+						'id' => 'dashboard',
+						'name' => 'Dashboard',
+						'link' => base_url() . 'dashboard/overview',
+						'childs' => array(
+							'overview' => array(
+								'name' => 'Overview',
+								'link' => base_url() . 'dashboard/overview'
+							),
+							
+							'allproject' => array(
+								'name' => 'All Project',
+								'link' => base_url() . 'dashboard/allproject'
+							),
+							
+							 
+							/*
+							'demographic' => array(
+								'name' => 'All Project',
+								'link' => base_url()
+							),*/
+							
+							/*
+							'searchengine' => array(
+								'name' => 'Search Engine',
+								'link' => base_url() . 'dashboard/searchengine'
+							),
+							'survey' => array(
+								'name' => 'Survey',
+								'link' => base_url() . 'dashboard/survey'
+							)
+							 * 
+							 */
+						)
+					),
+					
+					/*
+					'points_topup' => array(
+						'id' => 'points_topup',
+						'name' => 'Points &amp; Top Up',
+						'link' => base_url() . 'dashboard/pointstopup',
+						'childs' => array()	
+					),
+					'payment_confirmation' => array(
+						'id' => 'payment_confirmation',
+						'name' => 'Payment Confirmation',
+						'link' => base_url() . 'dashboard/paymentconfirmation',
+						'childs' => array()		
+					),
+					'payment_history' => array(
+						'id' => 'payment_history',
+						'name' => 'Payment History',
+						'link' => base_url() . 'dashboard/paymenthistory',
+						'childs' => array()
+					)
+					 * 
+					 */
+				);
+				
+				$menus = array_merge($menus, $menus_2);
+				
+			//}
+			
 			?>
 			
 			<?php 

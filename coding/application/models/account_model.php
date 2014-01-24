@@ -2,7 +2,12 @@
 
 class Account_model extends CI_Model{
 	
-	function getAccount($filter = 'ma.account_email', $q){
+	function getAccount($filter = 'ma.account_email', $q, $account_type = 'user'){
+		
+		$where_account_type = '';
+		if ($account_type != 0){
+			$where_account_type = "AND ma.account_type = '$account_type'";
+		}
 		
 		$where = '';
 		if (!empty($filter) && !empty($q)){
@@ -14,11 +19,41 @@ class Account_model extends CI_Model{
 		ma.* 
 		FROM member__account ma
 		WHERE 1
+		$where_account_type
 		$where
 		";
 		
 		return $this->db->query($sql)->row();
 		
+	}
+	
+	function getAccountTaken($filter = 'ma.account_email', $q, $account_type = 'user', $account_id = ""){
+		$where_account_type = '';
+		if ($account_type != 0){
+			$where_account_type = "AND ma.account_type = '$account_type'";
+		}
+		
+		//$account_id = $this->session->userdata('account_id');
+		$account_id_session = $this->session->userdata('account_id');
+		if (empty($account_id)){
+			$account_id = $account_id_session;
+		}
+		
+		$where = '';
+		if (!empty($filter) && !empty($q)){
+			$where .= " AND " . $filter . " = '" . $q ."' AND ma.account_id != '$account_id' ";
+		}else return FALSE;
+		
+		$sql = "
+		SELECT
+		ma.* 
+		FROM member__account ma
+		WHERE 1
+		$where_account_type
+		$where
+		";
+		
+		return $this->db->query($sql)->row();
 	}
 	
 	function logIpAddressUser($data = array()){
@@ -35,8 +70,11 @@ class Account_model extends CI_Model{
 		return $this->db->insert_id();
 	}
 	
-	function registerAccount($data = array()){
-		$account_id = $this->session->userdata('account_id');
+	function registerAccount($data = array(), $account_id = ""){
+		$account_id_session = $this->session->userdata('account_id');
+		if (empty($account_id)){
+			$account_id = $account_id_session;
+		}
 		if (empty($account_id)){
 			$this->db->insert('member__account', $data);
 			$account_id = $this->db->insert_id();
@@ -46,6 +84,12 @@ class Account_model extends CI_Model{
 			));
 		}
 		return $account_id;
+	}
+
+	function updateAccount($data, $account_id){
+		$this->db->update('member__account', $data, array(
+			'account_id' => $account_id
+		));
 	}
 	
 	function getAccountLogin($email, $password){
@@ -59,6 +103,80 @@ class Account_model extends CI_Model{
 		";
 		return $this->db->query($sql, array($email, $password))->row();
 	}
+	
+	function registerFBUserInterests($data){
+		$interests = $this->checkFBUserInterests($data['cid']);
+		if (empty($interests)){
+			$this->db->insert('member__interests', $data);
+			$interests_id = $this->db->insert_id();
+		}else{
+			$this->db->update('member__interests', $data, array(
+				'interests_id' => $interests->interests_id
+			));
+			$interests_id = $interests->interests_id;
+		}
+		return $interests_id;
+	}
+	
+	function checkFBUserInterests($cid){
+		$sql = "
+		SELECT
+		mi.*
+		FROM
+		member__interests mi 
+		WHERE 1
+		AND mi.cid = ?
+		";
+		return $this->db->query($sql, array($cid))->row();
+	}
+	
+	function registerSettingEmail($data){
+		$sql = "REPLACE member__email SET
+		account_id = ?,
+		set1 = ?,
+		set2 = ?,
+		set3 = ?,
+		set4 = ?,
+		set5 = ?
+		";
+		$this->db->query($sql, array($data['account_id'],
+		$data['set1'],$data['set2'],$data['set3'],$data['set4'],$data['set5']));
+	}
+	
+	function getSettingMemberEmail($account_id){
+		$sql = "
+		SELECT
+		me.*
+		FROM
+		member__email me
+		WHERE 1
+		AND me.account_id = ?
+		";
+		return $this->db->query($sql, array($account_id))->row_array();
+	}
+	
+	function registerDeleteAccount($data){
+		$sql = "
+		REPLACE member__delete_account SET
+		account_id = ?,
+		reason = ?
+		";
+		$this->db->query($sql, array($data['account_id'], $data['reason']));
+	}
+		
+	function getAccountByHash($hash){
+		$sql = "
+		SELECT
+		ma.account_id,
+		ma.account_email,
+		ma.hash
+		FROM
+		member__account ma
+		WHERE 1
+		AND ma.hash = ?
+		";
+		return $this->db->query($sql, array($hash))->row();
+	}	
 		
 }
 

@@ -1,4 +1,5 @@
 <?php $this->load->view('a/general/header_view', $this->data); ?>	
+
 		
 		<div id="banner" class="block block-green">
 			<img class="img-responsive" src="<?php echo cdn_url(); ?>img/bg-header-about.jpg" alt="#" />
@@ -32,5 +33,6 @@
 
 			</div>
 		<!-- #partners --></div>
+		
 
 <?php $this->load->view('a/general/footer_view', $this->data); ?>

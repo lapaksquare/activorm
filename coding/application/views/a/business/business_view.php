@@ -6,7 +6,7 @@
 				<img class="block-logo" src="<?php echo cdn_url(); ?>img/logo-icon.png" alt="activorm" />
 				<h2 class="block-title"><strong>An Activation Platform for Your Social Media Network</strong></h2>
 				<p class="block-subtitle">Activorm will help your business improve more results</p>
-				<a class="btn btn-big btn-yellow" href="#">Sign Up for Free</a>
+				<a class="btn btn-big btn-yellow" href="<?php echo base_url(); ?>business/register">Sign Up for Free</a>
 
 			</div>
 		<!-- #banner --></div>

@@ -67,6 +67,24 @@
 $route['default_controller'] = 'home';
 $route['404_override'] = 'errors/errors404';
 
+$url_parts = explode('/',$_SERVER['REQUEST_URI']);
+$url_parts_str = $url_parts[1];
+if (!empty($url_parts)) {
+	$url_parts = explode('?', $url_parts[1]);
+	$url_parts_str = $url_parts[0];
+}
+$urls = array(
+	'about', 'actions', 'ajax', 'auth', 'benefits', 'blog',
+	'business', 'contact', 'dashboard', 'email', 'errors', 'home', 
+	'planspricing', 'press', 'prize', 'project', 'report', 'search',
+	'settings', 'terms', 'testimonial', 'tickets', 'welcome', 'cron', 
+	'admin', 'api', 'download'
+);
+
+if (!in_array($url_parts_str, $urls)) {    
+	$route['(.*)'] = "profile/index/$1";
+}
+
 $route['sitemap\.xml'] = "sitemap/index";
 $route['404'] = "errors/errors404";
 $route['business/(.*)'] = 'business/index/$1';
@@ -74,6 +92,16 @@ $route['blog/(.*)'] = 'blog/index/$1';
 $route['dashboard/(.*)'] = 'dashboard/index/$1';
 $route['project/(.*)'] = 'project/index/$1';
 $route['settings/(.*)'] = 'settings/index/$1';
+$route['prize/(.*)'] = 'prize/index/$1';
+
+$route['guestlist'] = 'about/guestlist';
+
+$route['admin'] = 'admin/login';
+
+$route['download'] = 'download/index';
+
+$route['api/getAnalyticProject/(.*)'] = 'api/getAnalyticProject/$1';
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

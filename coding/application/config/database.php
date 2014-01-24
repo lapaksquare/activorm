@@ -103,14 +103,14 @@ $db['default'] = array(
 	'failover' => array()
 );
 
-}else{
+}else if (ENVIRONMENT == "production"){
 	
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => '',
-	'password' => '',
-	'database' => 'activorm',
+	'username' => 'activor1_root',
+	'password' => 'activorm123',
+	'database' => 'activor1_activorm',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => TRUE,
@@ -127,6 +127,30 @@ $db['default'] = array(
 	'failover' => array()
 );	
 	
+}else if (ENVIRONMENT == "development_server"){
+
+$db['default'] = array(
+	'dsn'	=> '',
+	'hostname' => 'localhost',
+	'username' => 'activor1_root',
+	'password' => 'activorm123',
+	'database' => 'activor1_master18',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => TRUE,
+	'db_debug' => TRUE,
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'autoinit' => TRUE,
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array()
+);	
+
 }
 
 /* End of file database.php */

@@ -1,0 +1,159 @@
+body{
+	padding-top: 50px;
+}
+
+.bs-header{
+	padding: 30px 15px 40px;
+}
+
+.lp-header h2{
+	margin-top:0;
+}
+
+.badge{
+	font-weight:normal;
+	font-size:12px;
+	color: #428bca;
+	background-color: #fff;
+}
+
+.custom-select{
+	width:20%;
+	display:inline-block;
+	margin-right:5px;
+}
+
+
+
+
+
+.bs-callout {
+  margin: 20px 0;
+  padding: 15px 30px 15px 15px;
+  border-left: 5px solid #eee;
+}
+.bs-callout h4 {
+  margin-top: 0;
+}
+.bs-callout p:last-child {
+  margin-bottom: 0;
+}
+.bs-callout code,
+.bs-callout .highlight {
+  background-color: #fff;
+}
+
+/* Variations */
+.bs-callout-danger {
+  background-color: #fcf2f2;
+  border-color: #dFb5b4;
+}
+.bs-callout-warning {
+  background-color: #fefbed;
+  border-color: #f1e7bc;
+}
+.bs-callout-info {
+  background-color: #f0f7fd;
+  border-color: #d0e3f0;
+}
+
+
+.content-medium h2{
+	font-size:40px;
+}
+
+.content-medium{
+	padding-bottom:15px;
+}
+
+.td-sidebar.affix,
+.td-sidebar-reseller.affix {
+  position: static;
+}
+
+/* First level of nav */
+.td-sidenav {
+  margin-top: 0;
+  margin-bottom: 30px;
+  padding-top:    10px;
+  padding-bottom: 10px;
+  text-shadow: 0 1px 0 #fff;
+  background-color: rgb(240,242,244);
+  border-radius: 5px;
+}
+
+/* All levels of nav */
+.td-sidebar .nav > li > a {
+  display: block;
+  color: #999;
+  padding: 5px 20px;
+}
+.td-sidebar .nav > li > a:hover,
+.td-sidebar .nav > li > a:focus {
+  text-decoration: none;
+  background-color: #e5e3e9;
+  border-right: 1px solid #ddd;
+}
+.td-sidebar .nav > .active > a,
+.td-sidebar .nav > .active:hover > a,
+.td-sidebar .nav > .active:focus > a {
+  font-weight: bold;
+  color: #999;
+  background-color: transparent;
+  border-right: 1px solid #563d7c;
+}
+
+/* Nav: second level (shown on .active) */
+.td-sidebar .nav .nav {
+  display: block; /* Hide by default, but at >768px, show it */
+  margin-bottom: 8px;
+}
+.td-sidebar .nav .nav > li > a {
+  padding-top:    3px;
+  padding-bottom: 3px;
+  padding-left: 30px;
+  font-size: 90%;
+}
+
+/* Show and affix the side nav when space allows it */
+@media screen and (min-width: 992px) {
+  .td-sidebar .nav > .active > ul {
+    display: block;
+  }
+  /* Widen the fixed sidebar */
+  .td-sidebar.affix,
+  .td-sidebar.affix-bottom {
+    width: 213px;
+  }
+  .td-sidebar-reseller.affix,
+  .td-sidebar-reseller.affix-bottom{
+  	width:293px;
+  }
+  .td-sidebar.affix ,
+  .td-sidebar-reseller.affix{
+    position: fixed; /* Undo the static from mobile first approach */
+    top: 80px;
+  }
+  .td-sidebar.affix-bottom,
+  .td-sidebar-reseller.affix-bottom {
+    position: absolute; /* Undo the static from mobile first approach */
+  }
+  .td-sidebar.affix-bottom .td-sidenav,
+  .td-sidebar.affix .td-sidenav ,
+  .td-sidebar-reseller.affix-bottom .td-sidenav,
+  .td-sidebar-reseller.affix .td-sidenav{
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+@media screen and (min-width: 1200px) {
+  /* Widen the fixed sidebar again */
+  .td-sidebar.affix-bottom,
+  .td-sidebar.affix {
+    width: 263px;
+  }
+  .td-sidebar-reseller.affix,
+  .td-sidebar-reseller.affix-bottom{
+  	width:360px;
+  }
+}

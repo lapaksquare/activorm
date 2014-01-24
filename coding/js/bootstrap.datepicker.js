@@ -952,9 +952,9 @@
 		},
 		headTemplate: '<thead>'+
 							'<tr>'+
-								'<th class="prev"><i class="iconf-arrow-left"/></th>'+
+								'<th class="prev"><i class="iconf-arrow-left"/><</th>'+
 								'<th colspan="5" class="switch"></th>'+
-								'<th class="next"><i class="iconf-arrow-right"/></th>'+
+								'<th class="next"><i class="iconf-arrow-right"/>></th>'+
 							'</tr>'+
 						'</thead>',
 		contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>',

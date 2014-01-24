@@ -1,12 +1,14 @@
-		<div id="modal-overview" class="modal modal-activorm modal-white fade">
-			<div class="modal-dialog">
+		<div id="modal-overview" class="modal modal-activorm modal-white fade" style="background: rgba(0,0,0,.7);">
+			<div class="modal-dialog" style="margin-top:100px;">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<button type="button" id="btn-close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					</div>
 
-					<div class="modal-body">
-						<h4 class="modal-title">Macbook Pro Competition ASD</h4>
+					<div class="modal-body" id="modal-body">
+						<?php /*
+						 * 
+						 <h4 class="modal-title">Macbook Pro Competition ASD</h4>
 
 						<div class="row project-overview">
 							<div class="col-xs-5">
@@ -55,7 +57,9 @@
 								</li>
 							</ul>
 						<!-- .project-engagement --></div>
-
+						 * */ ?>
+						
+						<?php /*
 						<div class="row project-comments">
 							<div class="col-xs-4">
 								<strong>Comments:</strong>
@@ -76,7 +80,9 @@
 								<li class="col-xs-4"><a href="#">#Social</a></li>
 							</ul>
 						<!-- .project-topics --></div>
-					</div>
+						 * 
+						 */ ?>
+ 					</div>
 				</div>
 			</div>
 		<!-- .modal --></div>

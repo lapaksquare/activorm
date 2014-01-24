@@ -1,5 +1,7 @@
 $(function(){
 	$(window).load(function(){
-		$('#modal-signup').modal('show');
+		if (rs_business_register == 1 || msg_resend_businessaccount > 0){
+			$('#modal-signup').modal('show');
+		}
 	});
 });

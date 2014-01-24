@@ -131,7 +131,7 @@ abstract class BaseFacebook
    * Default options for curl.
    */
   public static $CURL_OPTS = array(
-    CURLOPT_CONNECTTIMEOUT => 10,
+    CURLOPT_CONNECTTIMEOUT => 60,
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_TIMEOUT        => 60,
     CURLOPT_USERAGENT      => 'facebook-php-3.2',
@@ -688,7 +688,7 @@ abstract class BaseFacebook
    *               code could not be determined.
    */
   protected function getCode() {
-    if (isset($_REQUEST['code'])) {
+    /*if (isset($_REQUEST['code'])) {
       if ($this->state !== null &&
           isset($_REQUEST['state']) &&
           $this->state === $_REQUEST['state']) {
@@ -699,6 +699,29 @@ abstract class BaseFacebook
         return $_REQUEST['code'];
       } else {
         self::errorLog('CSRF state token does not match one provided.');
+        return false;
+      }
+    }
+
+    return false;*/
+    if (isset($_REQUEST['code'])) {
+      if ($this->state !== null && isset($_REQUEST['state']) && $this->state == $_REQUEST['state']) {
+        // CSRF state has done its job, so clear it
+        //$this->state = null;
+        //$this->clearPersistentData('state');
+        return $_REQUEST['code'];
+      } else {
+        $add = '';
+        if($this->state == null){
+            $add .= ' state is null.';
+        }
+        if(!isset($_REQUEST['state'])){
+            $add .= ' state is not set.';
+        }
+        if($this->state !== $_REQUEST['state']){
+            $add .= ' states do not match.';
+        }
+        self::errorLog('CSRF state token does not match one provided.'. $add);
         return false;
       }
     }

@@ -14,6 +14,28 @@
 
 						<div class="box">
 							<div class="row">
+								
+								<?php 
+								$msg_cu_errors = $this->session->userdata('msg_cu_errors');
+								if (!empty($msg_cu_errors)){
+									$msg_cu_errors = '<li>' . implode('</li><li>', $msg_cu_errors) . '</li>';
+									$this->session->unset_userdata('msg_cu_errors');
+								?>
+								<div class="alert alert-danger"><?php echo $msg_cu_errors; ?></div>
+								<?php } ?>
+								
+								<?php 
+								$msg_cu_success = $this->session->userdata('msg_cu_success');
+								if (!empty($msg_cu_success)){
+									$this->session->unset_userdata('msg_cu_success');
+								?>
+								<div class="alert alert-success">Message sent successfully. Thank you!</div>
+								<?php
+								}
+								?>
+								
+								<form action="<?php echo base_url(); ?>contact/submit_contactus" method="post">
+								
 								<div class="col-sm-6">
 									<div class="form-label">
 										<label for="name">Name <span class="req">*</span></label>
@@ -34,7 +56,7 @@
 
 								<div class="col-sm-6">
 									<div class="form-label">
-										<label for="company">Company</label>
+										<label for="company">Company <span class="req">*</span></label>
 									</div>
 									<div class="form-group">
 										<input type="text" name="company" placeholder="" class="form-control form-light" />
@@ -43,7 +65,7 @@
 
 								<div class="col-sm-6">
 									<div class="form-label">
-										<label for="phone">Phone</label>
+										<label for="phone">Phone <span class="req">*</span></label>
 									</div>
 									<div class="form-group">
 										<input type="text" name="phone" placeholder="" class="form-control form-light" />
@@ -54,7 +76,7 @@
 
 								<div class="col-xs-12">
 									<div class="form-label">
-										<label for="subject">Subject</label>
+										<label for="subject">Subject <span class="req">*</span></label>
 									</div>
 									<div class="form-group">
 										<input type="text" name="subject" placeholder="" class="form-control form-light" />
@@ -69,9 +91,12 @@
 
 								<div class="col-xs-12">
 									<div class="form-submit">
-										<button type="submit" class="btn btn-big btn-wd btn-green">Send</button>
+										<input type="submit" name="send_contact" id="send_contact" class="btn btn-big btn-wd btn-green" value="Send" />
 									</div>
 								</div>
+								
+								</form>
+								
 							</div>
 						<!-- .box --></div>
 
@@ -82,12 +107,12 @@
 						<div id="office-map"></div>
 
 						<div id="office-address">
-							<strong>P. +102 2223 2333</strong>
+							<strong>P. (021) 2942 8723 ext. 208</strong>
 							<strong>E. Info@activorm.com</strong>
-							<span>Monday - Friday, 10.00 - 18.00</span>
+							<span>Monday - Friday, 10.00 - 16.00</span>
 
 							<strong>Office</strong>
-							Jl. Senopati No.122 Kav.3
+							Graha Tirtadi Floor 1. <br /> Jalan Senopati No.75
 						</div>
 					<!-- .widget --></div>
 				<!-- #sidebar --></div>

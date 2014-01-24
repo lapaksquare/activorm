@@ -4,7 +4,7 @@
 
 			<div class="page-header">
 				<h1 class="pull-left page-title">Settings</h1>
-				<span class="page-subtitle">If you want to delete your account fill this form.</span>
+				<!--<span class="page-subtitle">If you want to delete your account fill this form.</span>-->
 				<div class="clearfix"></div>
 			</div>
 
@@ -12,7 +12,25 @@
 
 				<div id="content" class="col-md-9 col-md-push-3">
 
-					<form class="form-activorm form-user-delete" action="#" method="get">
+					<?php 
+					$msg_deleteaccount_err = $this->session->userdata('msg_deleteaccount_err');
+					if (!empty($msg_deleteaccount_err)){
+						$this->session->unset_userdata('msg_deleteaccount_err');
+					?>
+					<div class="alert alert-danger">There is an error while transferring data. Please try again.</div>
+					<?php } ?>
+
+					<?php 
+					$msg_deleteaccount_succ = $this->session->userdata('msg_deleteaccount_succ');
+					if (!empty($msg_deleteaccount_succ)){
+						$this->session->unset_userdata('msg_deleteaccount_succ');
+					?>
+					<div class="alert alert-success">Account deletion request successfully submitted.</div>
+					<?php
+					}
+					?>
+
+					<form class="form-activorm form-user-delete" action="<?php echo base_url(); ?>settings/save_deleteaccount" method="post">
 						<div class="box">
 							<div class="box-header">
 								<h2 class="box-title">Are you sure you want to delete your account?</h2>
@@ -49,7 +67,7 @@
 
 								<div class="col-sm-4 col-sm-offset-2">
 									<div class="form-submit">
-										<button type="submit" class="btn btn-big btn-green pull-right">Delete Account</button>
+										<input type="submit" name="submit" value="Delete Account" class="btn btn-big btn-green pull-right" />
 									</div>
 								</div>
 							</div>
