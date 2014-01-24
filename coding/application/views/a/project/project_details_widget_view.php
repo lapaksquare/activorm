@@ -416,13 +416,23 @@
 			
 			if (!empty($project_win_tiket)){
 				
+				$wins = "";
+				$count_wins = count($project_win_tiket);
+				foreach($project_win_tiket as $k=>$v){
+					if ($k > 0){
+						if ($k != ($count_wins-1)) $wins .= ", ";
+						else $wins .= " and ";	
+					}
+					$wins .= ucwords( $v->account_name );
+				}
+				
 			?>
 			
 			<div class="widget-action-winner">
 				<div class="widget-action-winner-container">
 					<h3>Congratulations!</h3>
 					<span>The Winner of This Project is</span>
-					<span class="winneris"><?php echo ucwords( $project_win_tiket->account_name ); ?></span>
+					<span class="winneris"><?php echo $wins; ?></span>
 				</div>
 				<a href="<?php echo base_url(); ?>prize" target="_blank" class="btn-join-project">JOIN ANOTHER PROJECT</a>	
 			</div>

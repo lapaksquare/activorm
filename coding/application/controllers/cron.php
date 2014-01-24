@@ -479,8 +479,8 @@ ORDER BY `pp`.`project_name`  DESC
 	
 	/* crack sending email =================== start crack ==================== */
 	function crackSendingEmail(){
-		$subject = "WIN a Flashdisk HP 8GB from Juragan Gadget, 3 Vouchers BUY 1 GET 1 FREE Jersey from Lapaksquare, and Voucher IDR 250K from Yuka Photo Booth";
-		$tmpl = "newsletter/newsletter_22jan2014_view";
+		$subject = "WIN Alfabet Varsity Jacket from Tees.co.id, 100K Voucher from ESPA, and Durian Pancake from Tokocondet.com";
+		$tmpl = "newsletter/newsletter_27jan2014_view";
 		
 		$set = $this->input->get_post('set');
 		

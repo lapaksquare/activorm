@@ -137,3 +137,10 @@ $('#entry-comments').delegate('#close-reply-btn', 'click', function(){
 	el.data('working', false);
 	return false;
 });
+
+$('#ttx-widget').focus();
+$('#project_tab a').click(function (e) {
+  $('#ttx-widget').focus();
+  e.preventDefault();
+  $(this).tab('show');  
+});
