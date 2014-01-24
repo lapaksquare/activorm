@@ -235,7 +235,8 @@ class Project extends MY_Controller{
 			}
 			//print_r($errors);die();
 			
-			if ($validateProjectName == 1){
+			//if ($validateProjectName == 1){
+			if (strlen($project_name) < 5){	
 				$errors[] = "Project Title must contain words only (you may not use special characters e.g. - , > , % , $). Minimum 5 characters.";
 			}
 			//if ($validateProjectPrize == 1){
