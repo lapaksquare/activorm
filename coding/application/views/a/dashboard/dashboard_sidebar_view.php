@@ -33,8 +33,8 @@
 							 
 							
 							'demographic' => array(
-								'name' => 'All Project',
-								'link' => base_url()
+								'name' => 'Demographic',
+								'link' => base_url() . 'dashboard/demographic'
 							),
 							
 							
