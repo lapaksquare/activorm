@@ -31,13 +31,13 @@
 							),
 							
 							 
-							/*
+							
 							'demographic' => array(
 								'name' => 'All Project',
 								'link' => base_url()
-							),*/
+							),
 							
-							/*
+							
 							'searchengine' => array(
 								'name' => 'Search Engine',
 								'link' => base_url() . 'dashboard/searchengine'
@@ -46,8 +46,7 @@
 								'name' => 'Survey',
 								'link' => base_url() . 'dashboard/survey'
 							)
-							 * 
-							 */
+							 
 						)
 					),
 					
