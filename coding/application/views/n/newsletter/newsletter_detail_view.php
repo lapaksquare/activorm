@@ -66,7 +66,7 @@
 		  
 		  <div class="testing_email" id="testing_email" <?php if ((!empty($this->newsletter) && $this->newsletter->newsletter_target == "testing")){ ?>style="display:block;" <?php }else{ ?> style="display:none;" <?php } ?>>
 		  	<input type="text" class="form-control" id="testing_email_input" name="testing_email_input" 
-	      	value="<?php echo (!empty($this->newsletter)) ? $this->newsletter->newsletter_testing_email : ""; ?>" />
+	      	value="<?php echo (!empty($this->newsletter)) ? $this->newsletter->newsletter_testing_email : ""; ?>" placeholder="Your Email" />
 		  </div>
 		  
 	    </div>
@@ -306,7 +306,10 @@
 	    	<input type="hidden" name="form_type" value="<?php echo $this->form_type; ?>" />
 	    	<input type="hidden" name="newsletter_id" value="<?php echo (!empty($this->newsletter)) ? $this->newsletter->newsletter_id : ""; ?>" />
 	        <input type="submit" class="btn btn-default" name="submit" id="submit" value="Submit" />
+	        
+	        <?php if (!empty($this->newsletter)){ ?>
 	        <input type="submit" class="btn btn-default" name="preview" id="preview" value="Preview" />
+	        <?php } ?>
 	        
 	    </div>
 	  </div>

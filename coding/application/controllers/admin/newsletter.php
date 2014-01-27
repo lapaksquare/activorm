@@ -129,31 +129,61 @@ class Newsletter extends MY_Admin_Access{
 			$status = $this->input->get_post('status');
 			
 			$this->load->model('newsletter_model');
+			$this->load->library('validate');
 			
 			if (!empty($preview)){
 				$status = 'Preview';
 			}
-
-			$data = array(
-				'newsletter_subject' => $newsletter_subject,
-				'newsletter_body' => $newsletter_body,
-				'newsletter_target' => $newsletter_target,
-				'newsletter_testing_email' => $testing_email_input,
-				'newsletter_sending_schedule' => $newsletter_date,
-				'status' => $status
-			);
 			
-			$newsletter_id = $this->newsletter_model->registerNewsletter($data, $newsletter_id);
+			$errors = array();
 			
 			if ($newsletter_target == "testing"){
-				$data = array(
-					'subject_email' => $newsletter_subject,
-					'email' => $testing_email_input
-				);
-				$this->sending_email($data, $newsletter_body);	
+				$validateEmail = $this->validate->validateEmail($testing_email_input);
+				if ($validateEmail == 1) {
+					$errors[] = "Newsletter Email tidak boleh kosong";
+				}
+			}
+			if (empty($newsletter_subject)){
+				$errors[] = "Newsletter Subject tidak boleh kosong";
+			}
+			if (empty($newsletter_body)){
+				$errors[] = "Newsletter Body tidak boleh kosong";
 			}
 			
-			$this->session->set_userdata('a_message_success', 1);
+			if (count($errors) > 0){
+				
+				$this->session->set_userdata('a_message_error', $errors);
+				
+				if (!empty($newsletter_id)){
+					redirect(base_url() . 'admin/newsletter/details?nid='.$newsletter_id.'&nidh='.sha1($newsletter_id . SALT));
+				}else{
+					redirect(base_url() . 'admin/newsletter/add_newsletter');	
+				}
+				
+			}else{
+
+				$data = array(
+					'newsletter_subject' => $newsletter_subject,
+					'newsletter_body' => $newsletter_body,
+					'newsletter_target' => $newsletter_target,
+					'newsletter_testing_email' => $testing_email_input,
+					'newsletter_sending_schedule' => $newsletter_date,
+					'status' => $status
+				);
+				
+				$newsletter_id = $this->newsletter_model->registerNewsletter($data, $newsletter_id);
+				
+				if ($newsletter_target == "testing"){
+					$data = array(
+						'subject_email' => $newsletter_subject,
+						'email' => $testing_email_input
+					);
+					$this->sending_email($data, $newsletter_body);	
+				}
+				
+				$this->session->set_userdata('a_message_success', 1);
+				
+			}
 			
 		}
 		//if (!empty($submit)){

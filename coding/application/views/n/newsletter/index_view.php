@@ -33,7 +33,13 @@
         	?>
         	<tr>
         		<td><?php echo ucwords($v->newsletter_subject); ?></td>
-        		<td><?php echo ucwords($v->newsletter_target); ?></td>
+        		<td><?php echo ucwords($v->newsletter_target); ?>
+        			
+        			<?php if (!empty($v->newsletter_testing_email) && $v->newsletter_target == "testing") { ?>
+        			<p>Send Email to <b><i><?php echo $v->newsletter_testing_email; ?></i></b></p>
+        			<?php } ?>
+        			
+        		</td>
         		<td><?php echo date('d M Y', strtotime($v->newsletter_sending_schedule)); ?></td>
         		<td><?php echo ucwords($v->status); ?></td>
         		<td><a href="<?php echo base_url(); ?>admin/newsletter/details?nid=<?php echo $v->newsletter_id; ?>&nidh=<?php echo sha1($v->newsletter_id . SALT); ?>" class="btn btn-primary">Details</a></td>
