@@ -89,6 +89,10 @@
 		'rangking' => array(
 			'name' => 'Rangking',
 			'url' => base_url() . 'admin/rangking',
+		),
+		'newsletter' => array(
+			'name' => 'Newsletter',
+			'url' => base_url() . 'admin/newsletter',
 		)
 	);
 	
