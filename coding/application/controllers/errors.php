@@ -17,6 +17,16 @@ class Errors extends MY_Controller{
 		$this->load->view('errors/404_view', $this->data);
 	}
 	
+	function redirect(){
+		$ref = $_SERVER['HTTP_REFERER'];
+		//echo $ref;die();				
+		if (empty($ref)){
+			redirect(base_url());
+		}else{
+			redirect($ref);
+		}
+	}
+	
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){
 		/*$default_css = array(
 		);
