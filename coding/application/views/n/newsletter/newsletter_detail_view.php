@@ -262,7 +262,11 @@
 </html>';
 	      ?>
 	      
+	      
 	      <textarea class="form-control" name="newsletter_body" id="newsletter_body" style="height:400px;"><?php echo (!empty($this->newsletter)) ? $this->newsletter->newsletter_body : $newsletter_tmpl; ?></textarea>
+		   
+		   
+		   
 	    </div>
 	  </div>
 	  
@@ -279,9 +283,9 @@
 	    	
 	    	<?php 
 	    	$status = array(
-				'Preview' => 'Preview',
-				'Online' => 'Online',
+				//'Preview' => 'Preview',
 				'Offline' => 'Offline',
+				'Online' => 'Online',
 			);
 	    	?>
 	    	
@@ -307,14 +311,34 @@
 	    	<input type="hidden" name="newsletter_id" value="<?php echo (!empty($this->newsletter)) ? $this->newsletter->newsletter_id : ""; ?>" />
 	        <input type="submit" class="btn btn-default" name="submit" id="submit" value="Submit" />
 	        
-	        <?php if (!empty($this->newsletter)){ ?>
-	        <input type="submit" class="btn btn-default" name="preview" id="preview" value="Preview" />
-	        <?php } ?>
+	        <?php //if (!empty($this->newsletter)){ ?>
+	        <input type="submit" class="btn btn-default" name="preview" id="preview" value="Preview" data-toggle="modal" data-target="#myModal" />
+	        <?php //} ?>
 	        
 	    </div>
 	  </div>
 	  
 	</form>	  
+	
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" style="width:700px;">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="myModalLabel">Preview Email</h4>
+	      </div>
+	      <div class="modal-body">
+	      		<div class="overlay_modal"></div>
+	        	<p id="editme2"></p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
 		
 </div>
 

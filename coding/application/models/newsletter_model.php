@@ -44,6 +44,7 @@ class Newsletter_model extends CI_Model{
 		newsletter ns
 		WHERE 1
 		$where
+		AND ns.status IN ('Online', 'Offline', 'Preview')
 		ORDER BY ns.newsletter_sending_schedule DESC
 		" . $limited;
 		
@@ -85,6 +86,16 @@ class Newsletter_model extends CI_Model{
 		";
 		
 		return $this->db->query($sql, array($newsletter_id))->row();
+	}
+	
+	function removeNewsletter($newsletter_id){
+		$sql = "
+		UPDATE newsletter SET
+		status = 'Deleted'
+		WHERE 1
+		AND newsletter_id = ?
+		";
+		$this->db->query($sql, array($newsletter_id));
 	}
 	
 }

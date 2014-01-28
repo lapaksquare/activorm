@@ -132,7 +132,7 @@ class Cron extends MY_Controller{
 		$this->load->view('email/invitation_email_view', $this->data);
 	}
 	
-	function sending_email($data, $tmpl = "invitation_email_view"){
+	function sending_email($data, $tmpl = "invitation_email_view", $type_tmpl = "html"){
 		// sending email
 		require_once APPPATH.'libraries/swiftmailer/swift_required.php';
 		$transport = Swift_MailTransport::newInstance();
@@ -142,8 +142,12 @@ class Cron extends MY_Controller{
 		
 		$email = $data['email'];
 		$subject = $data['subject_email'];
-								
-		$data = $this->load->view('email/' . $tmpl, $data, true);
+		
+		if ($type_tmpl == "html"){						
+			$data = $this->load->view('email/' . $tmpl, $data, true);
+        }else if ($type_tmpl == "text"){
+        	$data = $tmpl;
+        }
         $message->setSubject($subject)
                 ->setFrom(array('info@activorm.com' => 'Activorm'))
                 ->setTo($email)
@@ -894,6 +898,119 @@ ORDER BY `pp`.`project_name`  DESC
 				$this->google_analytic_model->addTrafficData("source_data", $data);
 			}
 		}
+	}
+		
+		
+	/**** CRON SEND EMAIL NEWSLETTER NEW PROJECT 
+	 * CHECK PER DAY JAM 10:00 ****/	
+	function sendNewsletterNewProject_EmailDaily_10AM(){
+		
+		$sql = "
+		SELECT
+		ns.*
+		FROM newsletter ns
+		WHERE 1
+		AND ns.newsletter_sending_schedule = DATE_FORMAT(NOW(),'%Y-%m-%d')
+		AND ns.status = 'Online'
+		AND ns.newsletter_subject != ''
+		AND ns.newsletter_body != ''
+		";
+		
+		$results = $this->db->query($sql)->result();
+		
+		if (!empty($results)){
+			
+			foreach($results as $k=>$v){
+			
+				$emails = array();
+			
+				// business account	
+				if ($v->newsletter_target == "business"){
+							
+					$sql = "
+					SELECT
+					ma.account_email
+					FROM
+					member__account ma
+					WHERE 1
+					AND ma.account_type = 'business'
+					AND ma.account_active = 1
+					AND ma.account_live = 'Online'
+					ORDER BY ma.account_id ASC
+					";
+					$emails = $this->db->query($sql)->result_array();	
+								
+				// member account	
+				}else if ($v->newsletter_target == "user"){
+				
+					$sql = "
+					SELECT
+					ma.account_email
+					FROM
+					member__account ma
+					WHERE 1
+					AND ma.account_type = 'user'
+					AND ma.account_active = 1
+					AND ma.account_live = 'Online'
+					ORDER BY ma.account_id ASC
+					";
+					$emails = $this->db->query($sql)->result_array();
+				
+				// all member and business
+				}else if ($v->newsletter_target == "all"){
+					
+					$sql = "
+					SELECT
+					ma.account_email
+					FROM
+					member__account ma
+					WHERE 1
+					AND ma.account_active = 1
+					AND ma.account_live = 'Online'
+					ORDER BY ma.account_id ASC
+					";
+					$emails = $this->db->query($sql)->result_array();
+				
+				// testing	
+				}else if ($v->newsletter_target == "testing"){
+						
+					$email = $v->newsletter_testing_email;			
+					$email = explode(",", $email);
+					foreach($email as $c=>$d){
+						$emails[]['account_email'] = trim($d);
+					}
+					
+				}
+				
+				//echo '<pre>';print_r($emails);echo '</pre>';die();
+				
+				$this->load->library('validate');
+				
+				$subject = $v->newsletter_subject;
+				$tmpl = $v->newsletter_body;	
+										
+				foreach($emails as $a=>$b){
+							
+					$email = $b['account_email'];	
+					$validateEmail = $this->validate->validateEmail($email);
+					if ($validateEmail == 1) {
+						echo $email . '<br />';
+						continue;
+					}
+					
+					$data = array(
+						'subject_email' => $subject,
+						'email' => $email
+					);
+					
+					$this->sending_email($data, $tmpl, "text");	
+						
+				}
+				
+			}
+			
+		}
+		
 	}
 		
 }

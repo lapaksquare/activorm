@@ -57,6 +57,7 @@ class Newsletter extends MY_Admin_Access{
 				'<link rel="stylesheet" type="text/css" href="'.cdn_url().'css/bootstrap.datepicker.css" />'
 			),
 			array(
+				'<script src="'.cdn_url().'js/jquery.editinplace.js"></script>',
 				'<script src="'.cdn_url().'js/bootstrap.datepicker.js"></script>',
 				'<script src="'.cdn_url().'js/a_newsletter.js"></script>',
 			),
@@ -84,6 +85,7 @@ class Newsletter extends MY_Admin_Access{
 				'<link rel="stylesheet" type="text/css" href="'.cdn_url().'css/bootstrap.datepicker.css" />'
 			),
 			array(
+				'<script src="'.cdn_url().'js/jquery.editinplace.js"></script>',
 				'<script src="'.cdn_url().'js/bootstrap.datepicker.js"></script>',
 				'<script src="'.cdn_url().'js/a_newsletter.js"></script>',
 			),
@@ -132,14 +134,17 @@ class Newsletter extends MY_Admin_Access{
 			$this->load->library('validate');
 			
 			if (!empty($preview)){
-				$status = 'Preview';
+				$status = 'Offline';
 			}
 			
 			$errors = array();
 			
 			if ($newsletter_target == "testing"){
-				$validateEmail = $this->validate->validateEmail($testing_email_input);
-				if ($validateEmail == 1) {
+				//$validateEmail = $this->validate->validateEmail($testing_email_input);
+				//if ($validateEmail == 1) {
+				//	$errors[] = "Newsletter Email tidak boleh kosong";
+				//}
+				if (empty($testing_email_input)){
 					$errors[] = "Newsletter Email tidak boleh kosong";
 				}
 			}
@@ -174,11 +179,16 @@ class Newsletter extends MY_Admin_Access{
 				$newsletter_id = $this->newsletter_model->registerNewsletter($data, $newsletter_id);
 				
 				if ($newsletter_target == "testing"){
-					$data = array(
-						'subject_email' => $newsletter_subject,
-						'email' => $testing_email_input
-					);
-					$this->sending_email($data, $newsletter_body);	
+					//$emails = array();
+					$testing_email_input = explode(",", $testing_email_input);
+					foreach($testing_email_input as $k=>$v){
+						$emails = trim($v);
+						$data = array(
+							'subject_email' => $newsletter_subject,
+							'email' => $emails
+						);
+						$this->sending_email($data, $newsletter_body);	
+					}
 				}
 				
 				$this->session->set_userdata('a_message_success', 1);
@@ -221,6 +231,18 @@ class Newsletter extends MY_Admin_Access{
         
         //Send the message
         $result = $mailer->send($message);
+	}
+
+	function remove(){
+		$newsletter_id = $this->input->get_post('nid');
+		$hash = $this->input->get_post('nidh');
+		$hash_ori = sha1($newsletter_id . SALT);
+		if ($hash != $hash_ori) redirect(base_url() . 'admin/newsletter');
+		
+		$this->load->model('newsletter_model');
+		$this->newsletter_model->removeNewsletter($newsletter_id);
+		
+		redirect(base_url() . 'admin/newsletter');
 	}
 	
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){

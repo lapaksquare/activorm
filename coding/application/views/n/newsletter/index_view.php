@@ -42,7 +42,10 @@
         		</td>
         		<td><?php echo date('d M Y', strtotime($v->newsletter_sending_schedule)); ?></td>
         		<td><?php echo ucwords($v->status); ?></td>
-        		<td><a href="<?php echo base_url(); ?>admin/newsletter/details?nid=<?php echo $v->newsletter_id; ?>&nidh=<?php echo sha1($v->newsletter_id . SALT); ?>" class="btn btn-primary">Details</a></td>
+        		<td>
+        			<a href="<?php echo base_url(); ?>admin/newsletter/details?nid=<?php echo $v->newsletter_id; ?>&nidh=<?php echo sha1($v->newsletter_id . SALT); ?>" class="btn btn-primary">Details</a>
+        			<a href="<?php echo base_url(); ?>admin/newsletter/remove?nid=<?php echo $v->newsletter_id; ?>&nidh=<?php echo sha1($v->newsletter_id . SALT); ?>" class="btn btn-xs btn-danger">Remove</a>
+        		</td>
         	</tr>
         	<?php	
         	}
