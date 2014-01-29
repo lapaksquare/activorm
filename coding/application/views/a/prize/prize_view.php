@@ -43,7 +43,7 @@
 
 						<h3 class="item-title"><?php echo ucwords($v->project_name); ?></h3>
 
-						<a class="btn btn-green btn-prize-c" href="<?php echo base_url() . 'prize/' . $v->prize_uri; ?>"><?php echo $enter_now; ?></a>
+						<a class="btn btn-green btn-prize-c <?php echo "btn-prize-" . strtolower( $enter_now ); ?>" href="<?php echo base_url() . 'prize/' . $v->prize_uri; ?>"><?php echo $enter_now; ?></a>
 					<!-- .item --></div>
 					<?php } ?>
 					
