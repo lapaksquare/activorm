@@ -1,7 +1,11 @@
 <?php $this->load->view('a/general/head_view', $this->data); ?>
 		
 		<body class="<?php echo $menu; ?>">
-
+			
+			<div class="loading-bar-top" id="loading-bar-top">
+				<div class="loading-text">Loading <span class="loading-img"></span></div>
+			</div>
+			
 			<div id="header" class="navbar navbar-default navbar-static-top">
 				<div class="container">
 					<div class="navbar-header">

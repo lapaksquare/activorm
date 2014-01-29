@@ -48,7 +48,9 @@ class Search extends MY_Controller{
 		
 		$this->data['menu'] = 'search';
 		$css = array();
-		$js = array();
+		$js = array(
+			'<script type="text/javascript" src="'.cdn_url().'js/search.js"></script>'
+		);
 		$meta = array();
 		$title = 'Search';
 		$this->_default_param($css, $js, $meta, $title);

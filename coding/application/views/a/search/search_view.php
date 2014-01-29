@@ -219,6 +219,16 @@
 						Search Not Result for Category <i>"<?php echo ucwords( str_replace(array("-", "_"), " ", $this->category) ); ?>"</i>
 						<?php } ?>
 					</h1>
+					
+					<div class="" style="margin-top:10px;">
+						<p>Sorry, the prize or publisher you are looking for is unavailable at the moment.<br /> Do you want to submit a suggestion?</p>
+						<div>
+							<!--
+							<a class="btn btn-green" href="#" id="btn-suggest-submit">Submit</a> -->
+							<p><!-- Thanks for submit! :)--><a class="btn btn-green" href="#" id="btn-suggest-submit" data-sq="<?php echo $this->q; ?>">Submit</a></p>
+						</div>			
+					</div>
+					
 					<?php /*
 					<p>Sorry, the prize or publisher you are looking for is unavailable at the moment.<br /> Do you want to submit a suggestion?</p>
 					<a class="btn btn-green" href="#">Cancel</a>				
