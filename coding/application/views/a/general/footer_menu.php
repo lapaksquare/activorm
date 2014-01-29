@@ -74,11 +74,16 @@
 						<div class="widget">
 							<h3 class="widget-title">Our Merchants:</h3>
 							<ul class="list-unstyled">
-								<li>ESPA</li>
-								<li>Beauty Treats</li>
-								<li>Frans & Sky</li>
-								<li>Lolabox</li>
-								<li>Kipaskudingin</li>
+								<li><a href="<?php echo base_url(); ?>juragan-gadget">Juragan Gadget</a></li>
+								<li><a href="<?php echo base_url(); ?>pt-tees-pratama-indonesia">Tees.co.id</a></li>
+								<li><a href="<?php echo base_url(); ?>espa">ESPA</a></li>
+								<li><a href="<?php echo base_url(); ?>lolabox">Lolabox</a></li>
+								<li><a href="<?php echo base_url(); ?>noir-concept-store">NOIR</a></li>
+								<li><a href="<?php echo base_url(); ?>lomberg-bags">Lomberg Bags</a></li>
+								<li><a href="<?php echo base_url(); ?>kaca-kassidy">Kaca Kassidy</a></li>
+								<li><a href="<?php echo base_url(); ?>maindatashop">MAINDATAshop</a></li>
+								
+								
 							</ul>
 						<!-- .widget --></div>
 					</div>
@@ -101,7 +106,7 @@
 
 					<div class="col-md-3">
 						<div class="widget">
-							<p>Official Website of Activorm: Enter Prize Draws of Your Favorite Brands and Win Prizes.<br/><br/>Contact us at <h4>beta@activorm.com</h4></p>
+							<p>Official Website of Activorm: Enter Prize Draws of Your Favorite Brands and Win Prizes.<br/><br/>Contact us at <h4>info@activorm.com</h4></p>
 						<!-- .widget --></div>
 					</div>
 				</div>

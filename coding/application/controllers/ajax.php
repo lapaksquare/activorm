@@ -344,7 +344,7 @@ class Ajax extends CI_Controller {
 		$this->search_model->registerSuggest(trim($suggest_name));
 		echo json_encode(array(
 			'error' => 0,
-			'message' => 'Thanks for submit! :)'
+			'message' => 'Thanks for the submit! <a class="btn btn-green" href="'.base_url().'">Back to Homepage</a>'
 		));
 	}
 	
