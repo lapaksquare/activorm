@@ -8,6 +8,9 @@
 		<meta name="author" content="">
 		<title><?php echo $title; ?></title>
 		<?php echo $css_tags; ?>
+		<script type="text/javascript">
+			var base_url = "<?php echo base_url(); ?>";
+		</script>
 	</head>
 	<body>
 		
