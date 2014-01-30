@@ -835,7 +835,7 @@ ORDER BY `pp`.`project_name`  DESC
 			'metrics' => 'ga:visits',
 			'dimensions' => 'ga:medium',
 			'start-date' => "2013-10-27",
-			'filters' => 'ga:medium!=facebook;ga:medium!=twitter',
+			'filters' => 'ga:medium!=facebook;ga:medium!=twitter;ga:medium!=social',
 			'max-results' => 500
 		);
 		$this->traffics = $this->google_analytic_library->ga->query($params);
