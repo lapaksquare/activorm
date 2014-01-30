@@ -8,6 +8,10 @@ class Testimonial extends MY_Controller{
 	}
 	
 	function index(){
+		
+		$this->load->model('testimonial_model');
+		$this->testimonials = $this->testimonial_model->getTestimonials();
+
 		$this->data['menu'] = 'testimonial';
 		$css = array();
 		$js = array(

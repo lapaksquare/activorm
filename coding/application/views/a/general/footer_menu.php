@@ -64,6 +64,7 @@
 								<li><a href="<?php echo base_url(); ?>terms">Terms</a></li>
 								<li><a href="<?php echo base_url(); ?>about">FAQ</a></li>
 								<li><a href="<?php echo base_url(); ?>press">Press</a></li>
+								<li><a href="<?php echo base_url(); ?>testimonial">Testimonial</a></li>
 								<li><a href="<?php echo base_url(); ?>contact">Contact</a></li>
 								<li><a href="<?php echo base_url(); ?>report/bug">Report Bugs</a></li>
 							</ul>
