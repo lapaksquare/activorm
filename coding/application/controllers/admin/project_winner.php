@@ -8,15 +8,44 @@ class Project_winner extends MY_Admin_Access{
 		parent::__construct();
 	}
 	
+	var $offset = 10;
+	
 	function index(){
 		
+		$this->project_live = $this->input->get_post('project_live');
+		$this->project_live = (empty($this->project_live)) ? 'Online' : $this->project_live;
+		
+		$this->load->library('pagination_tmpl');
+		$page = intval($this->input->get_post('page'));
+		
+		$param_url = array(
+			'project_live' => $this->project_live,
+			'page' => ''
+		);
+		
 		$this->load->model('a_project_model');
-		$this->data['projects'] = $this->a_project_model->getProjectActiveWinner();
+		$this->data['projects'] = $this->a_project_model->getProjectActiveWinner($param_url, $this->offset, 0, $page);
+		
+		$param_url = http_build_query($param_url);
+		
+		$uri_page = 'admin/project_winner?'.$param_url;
+		$this->data['page'] = (!empty($page)) ? $page : $page+1;
+		$this->data['total_data'] = $total_data = $this->a_project_model->countGetdata();
+		$this->data['pagination'] = $this->pagination_tmpl->getPaginationString(
+			$page, 
+			$total_data, 
+			$this->offset, 
+			1, 
+			base_url(), 
+			$uri_page
+		);
 		
 		$this->data['menu'] = 'project_winner';
 		$this->_default_param(
 			"",
-			"",
+			array(
+				'<script type="text/javascript" src="'.cdn_url().'js/a_project_winner.js"></script>'
+			),
 			"",
 			"Admin Login");
 		$this->load->view('n/project/project_winner_view', $this->data);

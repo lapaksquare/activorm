@@ -103,9 +103,33 @@ class A_project_model extends CI_Model{
 		return $this->db->query($sql, array($project_id))->row();
 	}
 	
-	function getProjectActiveWinner(){
+	function getProjectActiveWinner($param_url = array(), $limit = 10, $start = 0, $page = 0, $nolimit = FALSE){
+		
+		if(empty($start)) {
+			$this->start = 0;
+		} else {
+			$this->start = $start;
+		}
+		if(empty($limit)) {
+			$this->limit = 20;
+		} else {
+			$this->limit = $limit;
+		}
+		if(!empty($page) && $page > 0) {
+			$this->page = $page;
+			$this->start = ($this->page - 1) * $this->limit;
+		} else {
+			$this->page = 1;
+		}	
+		
+		$limited = "";
+		if ($nolimit == FALSE){
+			$limited = " LIMIT " . $this->start . " , " .$this->limit;
+		}
+		
 		$sql = "
 		SELECT
+		SQL_CALC_FOUND_ROWS
 		pp.project_name,
 		pp.project_id,
 		bp.business_name,
@@ -131,12 +155,13 @@ class A_project_model extends CI_Model{
 				WHERE 1 GROUP BY project_id
 			) x ON x.project_id = pp.project_id
 		WHERE 1
-		AND pp.project_live IN ('Online', 'Closed')
+		AND pp.project_live = ?
 		AND pp.project_active = 1
         GROUP BY x.project_id
 		ORDER BY `pp`.`project_name`  ASC
-		";
-		$results = $this->db->query($sql)->result();
+		" . $limited;
+		
+		$results = $this->db->query($sql, array($param_url['project_live']))->result();
 		return $results;
 	}
 	

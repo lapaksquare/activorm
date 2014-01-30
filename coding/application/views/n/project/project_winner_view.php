@@ -8,7 +8,24 @@
 
 <div class="col-md-9 lp-header" role="main">
 	
-	<h2>Project Active</h2>	
+	<h2 style="float:left;">Project Winner</h2>	
+	
+	<div class="pull-right">
+		<select id="prize_drop" class="form-control">
+			<?php 
+			$prize_drop = array(
+				'Online' => 'On-Going Projects',
+				'Closed' => 'Closed'
+			);
+			foreach($prize_drop as $k=>$v){
+				$class = ($k == $this->project_live) ? 'selected' : '';
+			?>
+			<option value="<?php echo $k; ?>" <?php echo $class; ?>><?php echo $v; ?></option>
+			<?php } ?>
+		</select>
+	</div>
+	
+	<div class="clearfix"></div>
 	
 	<hr />
 	
@@ -53,6 +70,10 @@
         	
         </tbody>
     </table>
+	
+	<?php 
+	if (!empty($pagination)) echo $pagination;
+	?>
 	
 </div>
 
