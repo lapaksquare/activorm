@@ -55,7 +55,7 @@ class Prize extends MY_Controller{
 		$this->data['pagination'] = $this->pagination_tmpl->getPaginationString(
 			$page, 
 			$total_data, 
-			$this->offset, 
+			16, 
 			1, 
 			base_url(), 
 			$uri_page
@@ -82,7 +82,7 @@ class Prize extends MY_Controller{
 		$this->data['pagination'] = $this->pagination_tmpl->getPaginationString(
 			$page, 
 			$total_data, 
-			$this->offset, 
+			12, 
 			1, 
 			base_url(), 
 			$uri_page

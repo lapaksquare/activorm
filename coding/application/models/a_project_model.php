@@ -75,6 +75,7 @@ class A_project_model extends CI_Model{
 		$sql = "
 		SELECT
 		pp.project_id,
+		pp.project_uri,
 		pp.project_name,
 		pp.project_description,
 		pp.project_primary_photo,
