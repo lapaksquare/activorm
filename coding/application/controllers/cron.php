@@ -1011,6 +1011,16 @@ ORDER BY `pp`.`project_name`  DESC
 			
 		}
 		
+		// update newsletter expired
+		$sql = "
+		UPDATE newsletter SET
+		status = 'Offline'
+		WHERE 1
+		AND newsletter_sending_schedule < DATE_FORMAT( NOW( ) ,  '%Y-%m-%d' ) 
+		AND status =  'Online'
+		";
+		$this->db->query($sql);
+		
 	}
 		
 }

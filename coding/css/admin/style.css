@@ -167,3 +167,8 @@ body{
 	background: #000;
 	opacity: 0;
 }
+
+.chart-traffic {
+height: 350px;
+margin: 0 0 40px;
+}

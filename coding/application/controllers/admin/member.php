@@ -158,10 +158,10 @@ class Member extends MY_Admin_Access{
 				$errors[] = "Kecamatan can't be emptied";
 			}
 			$this->session->set_userdata('account_kecamatan', $account_kecamatan);
-			if ($account_kelurahan == 0){
-				$errors[] = "Kelurahan can't be emptied";
-			}
-			$this->session->set_userdata('account_kelurahan', $account_kelurahan);
+			//if ($account_kelurahan == 0){
+			//	$errors[] = "Kelurahan can't be emptied";
+			//}
+			//$this->session->set_userdata('account_kelurahan', $account_kelurahan);
 
 			if ($validateName == 1){
 				$errors[] = 'Your name must contain words only (you may not use special characters e.g. - , > , % , $). Minimum 4 characters.';
@@ -423,10 +423,10 @@ class Member extends MY_Admin_Access{
 				$errors[] = "Kecamatan can't be emptied";
 			}
 			$this->session->set_userdata('account_kecamatan', $account_kecamatan);
-			if ($account_kelurahan == 0){
-				$errors[] = "Kelurahan can't be emptied";
-			}
-			$this->session->set_userdata('account_kelurahan', $account_kelurahan);
+			//if ($account_kelurahan == 0){
+			//	$errors[] = "Kelurahan can't be emptied";
+			//}
+			//$this->session->set_userdata('account_kelurahan', $account_kelurahan);
 
 			if ($validateName == 1){
 				$errors[] = 'Your name must contain words only (you may not use special characters e.g. - , > , % , $). Minimum 4 characters.';

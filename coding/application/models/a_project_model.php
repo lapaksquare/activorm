@@ -172,10 +172,14 @@ class A_project_model extends CI_Model{
 		pt.tiket_barcode,
 		ma.account_id,
 		ma.account_name,
+		ma.phone_number,
 		pp.project_name,
 		ma.account_email,
 		cs.social_data,
-		cs.social_name
+		cs.social_name,
+		ma.address,
+		ap.province_name, 
+		ak.kecamatan_name
 		FROM
 		project__tiket pt
 		JOIN member__account ma ON
@@ -184,6 +188,10 @@ class A_project_model extends CI_Model{
 			pp.project_id = pt.project_id
 		JOIN connect__socialmedia cs ON
 			cs.account_id = ma.account_id
+		LEFT JOIN address__province ap ON 
+			ap.province_id = ma.province_id
+		LEFT JOIN address__kecamatan ak ON 
+			ak.kecamatan_id = ma.kecamatan_id
 		WHERE 1
 		AND pt.project_id = ?
 		ORDER BY ma.account_name ASC
@@ -206,13 +214,20 @@ class A_project_model extends CI_Model{
 		ma.account_type,
 		ma.account_name,
 		ma.account_email,
-		ma.address
+		ma.phone_number,
+		ma.address,
+		ap.province_name, 
+		ak.kecamatan_name
 		FROM
 		project__tiket pt
 		JOIN member__account ma ON
 			ma.account_id = pt.account_id
 		JOIN project__profile pp ON
 			pp.project_id = pt.project_id
+		LEFT JOIN address__province ap ON 
+			ap.province_id = ma.province_id
+		LEFT JOIN address__kecamatan ak ON 
+			ak.kecamatan_id = ma.kecamatan_id
 		WHERE 1
 		AND pt.project_id = ?
 		AND pt.iswin = 1
@@ -228,16 +243,23 @@ class A_project_model extends CI_Model{
 		ma.account_name,
 		pp.project_name,
 		ma.account_email,
+		ma.phone_number,
 		pt.tiket_id,
 		pp.project_id,
 		ma.account_id,
-		ma.address
+		ma.address,
+		ap.province_name, 
+		ak.kecamatan_name
 		FROM
 		project__tiket pt
 		JOIN member__account ma ON
 			ma.account_id = pt.account_id
 		JOIN project__profile pp ON
 			pp.project_id = pt.project_id
+		LEFT JOIN address__province ap ON 
+			ap.province_id = ma.province_id
+		LEFT JOIN address__kecamatan ak ON 
+			ak.kecamatan_id = ma.kecamatan_id
 		WHERE 1
 		AND pt.project_id = ?
 		AND ma.account_id != ?
