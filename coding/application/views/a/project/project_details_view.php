@@ -700,7 +700,7 @@
 						
 						<!-- TABBED START -->
 						<ul class="nav nav-tabs project_tab" id="project_tab">
-						  <li class="active"><a href="#description" data-rel="description">Program Description</a></li>
+						  <li class="active"><a href="#description" data-rel="description">Terms & Condition</a></li>
 						  <li><a href="#embed" data-rel="embed">Embed</a></li>
 						</ul>
 						<div id="myTabContent" class="tab-content">

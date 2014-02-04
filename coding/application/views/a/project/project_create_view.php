@@ -459,7 +459,7 @@
 				<!-- #step-5 --></div>
 
 				<div id="step-6" class="box step">
-					<h2 class="step-title">Step 6: <span class="green">Describe Program</span></h2>
+					<h2 class="step-title">Step 6: <span class="green">Terms & Condition</span></h2>
 
 					<div class="row">
 						<div class="col-sm-9">

@@ -116,7 +116,7 @@
 	    </div>
 	  </div> 
 	  <div class="form-group">
-	    <label for="account_contact" class="col-sm-2 control-label">Contact Person</label>
+	    <label for="account_contact" class="col-sm-2 control-label">Person In Charge</label>
 	    <div class="col-sm-10">
 	      <input type="text" class="form-control" id="account_contact" name="account_contact" value="<?php echo $this->member->contact_person; ?>" />
 	    </div>

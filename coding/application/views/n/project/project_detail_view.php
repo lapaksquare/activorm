@@ -159,7 +159,7 @@
 	  </div>  
 	  
 	  <div class="form-group">
-	    <label for="describe_project" class="col-sm-2 control-label">Describe Program</label>
+	    <label for="describe_project" class="col-sm-2 control-label">Terms & Condition</label>
 	    <div class="col-sm-10">
 	     	<textarea name="describe_project" id="describe_project" rows="5" class="form-control"><?php echo $this->project->project_description; ?></textarea>
 	    </div>

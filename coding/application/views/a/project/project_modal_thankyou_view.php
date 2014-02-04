@@ -11,7 +11,7 @@
 				<form method="post" action="<?php echo base_url(); ?>project/submit_contactproject">
 
 					<div class="form-group">
-						<input type="text" name="contact_name" placeholder="Contact Person" class="form-control form-green" />
+						<input type="text" name="contact_name" placeholder="Person In Charge" class="form-control form-green" />
 					</div>
 
 					<div class="form-group">

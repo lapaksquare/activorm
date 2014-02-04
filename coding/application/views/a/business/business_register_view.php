@@ -47,7 +47,7 @@
 
 								<div class="col-sm-6">
 									<div class="form-label">
-										<label for="business-contact">Contact Person <span class="req">*</span></label>
+										<label for="business-contact">Person In Charge <span class="req">*</span></label>
 									</div>
 									<div class="form-group">
 										<?php 
