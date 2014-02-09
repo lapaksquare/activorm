@@ -105,13 +105,13 @@
 											if ($project_period < $project_now) { $stoped = 1;
 									?>
 									
-									<h4>Project Closed</h4>		
+									<h4 class="project_details_h4">Project Closed</h4>		
 									
 									<div class="project-closed"></div>
 									
 									<?php }else{ ?>
 									
-									<h4><?php echo ucwords($this->project->project_name); ?>.</h4>
+									<h4 class="project_details_h4"><?php echo ucwords($this->project->project_name); ?>.</h4>
 									
 									<p>Project belum dimulai</p>
 									
@@ -128,7 +128,7 @@
 										}else{
 		        					?>
 		        					
-		        					<h4><?php echo ucwords($this->project->project_name); ?></h4>
+		        					<h4 class="project_details_h4"><?php echo ucwords($this->project->project_name); ?></h4>
 		        					
 		        					<script type="text/javascript">
 	        							var server_end = <?php echo $server_end * 1000; ?>;
@@ -513,7 +513,12 @@
 											);
 											$url = http_build_query($url);
 											
-											switch($v->type_step){
+											$type_step = $v->type_step;
+											if (property_exists($v, "custom_actions") && !empty($v->custom_actions)){
+												list($type_step, $type_step_key) = explode("_", $type_step);
+											}
+											
+											switch($type_step){
 												
 												// facebok
 												case "facebook-like" :
