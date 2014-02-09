@@ -899,6 +899,88 @@ ORDER BY `pp`.`project_name`  DESC
 			}
 		}
 	}
+
+	function cronGATrafficDataRegion(){
+		$this->load->library("google_analytic_library");	
+		$this->load->model("google_analytic_model");
+				
+		$ga_session = $this->gaAuth();
+		$accessToken = $ga_session->auth->access_token;
+		$this->google_analytic_library->ga->setAccessToken($accessToken);
+		$this->google_analytic_library->ga->setAccountId('ga:78298628');
+		// Set the default params. For example the start/end dates and max-results
+		$defaults = array(
+		    'end-date' => date('Y-m-d', strtotime('- 1 days')),
+		);
+		$this->google_analytic_library->ga->setDefaultQueryParams($defaults);
+		$params = array(
+			'metrics' => 'ga:visits',
+			'dimensions' => 'ga:region',
+			'start-date' => "2013-10-27",
+			'filters' => 'ga:region!=(not set)',
+			'max-results' => 5,
+			'sort' => '-ga:visits'
+		);
+		$this->traffics = $this->google_analytic_library->ga->query($params);
+		if (!empty($this->traffics['rows'])){
+			$data = array();
+			foreach($this->traffics['rows'] as $k=>$v){
+				
+				$region = $v[0];
+				$visits = $v[1];
+				
+				$data[] = array(
+					'region' => $region,
+					'visits' => $visits
+				);
+			}
+			if (!empty($data)){
+				$data = json_encode($data);
+				$this->google_analytic_model->addTrafficData("data_region", $data);
+			}
+		}
+	}
+	
+	function cronGATrafficDataCity(){
+		$this->load->library("google_analytic_library");	
+		$this->load->model("google_analytic_model");
+				
+		$ga_session = $this->gaAuth();
+		$accessToken = $ga_session->auth->access_token;
+		$this->google_analytic_library->ga->setAccessToken($accessToken);
+		$this->google_analytic_library->ga->setAccountId('ga:78298628');
+		// Set the default params. For example the start/end dates and max-results
+		$defaults = array(
+		    'end-date' => date('Y-m-d', strtotime('- 1 days')),
+		);
+		$this->google_analytic_library->ga->setDefaultQueryParams($defaults);
+		$params = array(
+			'metrics' => 'ga:visits',
+			'dimensions' => 'ga:city',
+			'start-date' => "2013-10-27",
+			'filters' => 'ga:city!=(not set)',
+			'max-results' => 5,
+			'sort' => '-ga:visits'
+		);
+		$this->traffics = $this->google_analytic_library->ga->query($params);
+		if (!empty($this->traffics['rows'])){
+			$data = array();
+			foreach($this->traffics['rows'] as $k=>$v){
+				
+				$city = $v[0];
+				$visits = $v[1];
+				
+				$data[] = array(
+					'city' => $city,
+					'visits' => $visits
+				);
+			}
+			if (!empty($data)){
+				$data = json_encode($data);
+				$this->google_analytic_model->addTrafficData("data_city", $data);
+			}
+		}
+	}
 		
 		
 	/**** CRON SEND EMAIL NEWSLETTER NEW PROJECT 

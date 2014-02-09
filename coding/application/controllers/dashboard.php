@@ -66,6 +66,9 @@ class Dashboard extends MY_Controller{
 			$view = 'dashboard_paymenthistory_view';
 			$this->data['menu'] = 'payment_history';
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "demographic"){
+			
+			$this->demographic();
+			
 			$view = 'dashboard_demographic_view';
 			$js = array(
 				'<script type="text/javascript" src="https://www.google.com/jsapi"></script>',
@@ -541,6 +544,14 @@ class Dashboard extends MY_Controller{
 		}
 		$this->keyal = "s=" . $startdate . "&e=" . $enddate . "&h=" . $hash;
 		$this->trafficwebsite = $this->google_analytic_model->getTrafficWebsite($this->gchart_type, $startdate, $enddate);
+	}
+	
+	function demographic(){
+		$this->load->model('project_analytic_model');
+		$this->load->model('google_analytic_model');
+		$this->gender_data = $this->project_analytic_model->getGenderTrafficData();
+		$this->region_data = $this->google_analytic_model->getTrafficData("data_region");
+		$this->city_data = $this->google_analytic_model->getTrafficData("data_city");
 	}
 	
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){

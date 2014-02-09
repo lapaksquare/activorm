@@ -133,6 +133,39 @@ class Search_model extends CI_Model{
 		return $this->db->query($sql, array($suggest_name))->row();
 	}
 	
+	function registerKeyword($q){
+		$cek_suggest = $this->checkSearchKeyword($q);
+		if (empty($cek_suggest)){
+			$this->db->insert('search__keywords', array(
+				'key_name' => $q,
+				'key_count' => 1
+			));
+			return $this->db->insert_id();
+		}else{
+			$key_count = $cek_suggest->key_count + 1;
+			$this->db->update('search__keywords', array(
+				'key_count' => $key_count 
+			), array(
+				'key_id' => $cek_suggest->key_id
+			));
+			return $cek_suggest->key_id;
+		}
+	}
+	
+	function checkSearchKeyword($q){
+		$sql = "
+		SELECT 
+		sk.key_id,
+		sk.key_name,
+		sk.key_count
+		FROM
+		search__keywords sk
+		WHERE 1
+		AND sk.key_name = ?
+		";
+		return $this->db->query($sql, array($q))->row();
+	}
+	
 }
 
 ?>
