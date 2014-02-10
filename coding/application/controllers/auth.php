@@ -304,7 +304,7 @@ class Auth extends MY_Controller {
 			$this->load->model('account_model');
 			$activation_code = $this->input->get_post('activation_code');
 			$register_temp = $this->session->userdata('register_temp');
-			$email = $register_temp['email'];
+			$email = $this->session->userdata('account_email'); //$register_temp['email'];
 			$user = $this->account_model->getAccount("ma.account_email", $email);
 			if (empty($user)){
 				$this->session->set_userdata('message_register_error', "Code aktivasi yang Anda masukkan salah.");

@@ -94,6 +94,7 @@ class Access {
 
 	function register_session($account_id, $data, $business_id = ''){
 		$this->ci->session->set_userdata('account_id', $account_id);
+		$this->ci->session->set_userdata('account_email', $data['email']);
 		$this->ci->session->set_userdata('register_temp', $data);
 		if ($business_id) $this->ci->session->set_userdata('business_id', $business_id);
 	}

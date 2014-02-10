@@ -414,6 +414,9 @@ class Project extends MY_Controller{
 			
 				$actions_step_data = $this->func_actions_step($actions_step);
 				
+				$project_actions_data = json_decode( $actions_step_data );
+				
+				/*
 				$project_actions_data_arr = array();
 				if (!empty($actions_step_data)){
 					$project_actions_data = json_decode( $actions_step_data );
@@ -426,10 +429,13 @@ class Project extends MY_Controller{
 				$this->session->set_userdata('pvc', $pvc);
 				$this->scache->write('project#'. $pvc . '#', json_encode( $project_actions_data_arr ), 60 * 60);
 				//$this->data['project_actions_data_arr'] = $project_actions_data_arr;
+				*/
 				
 				if (empty($actions_step_data)){
 					//$errors[] = 'Terjadi kesalahan dalam Social Media Connect. Koneksi '. $this->type_social . ' Anda mengalami masalah. Periksa kembali di menu <a href="'.base_url().'settings/socialmedia" target="_blank">Settings</a>.';
 					$errors[] = 'You must connect Facebook, Twitter to proceed this project. Connect your Social Network Account at <a href="'.base_url().'settings/socialmedia" target="_blank">Settings</a>.';
+				}else if (count($project_actions_data) < 3 || count($project_actions_data) >= 4){
+					$errors[] = 'You have to pick 3 Actions to create this project.';
 				}
 							
 			}
@@ -586,11 +592,6 @@ class Project extends MY_Controller{
 			
 		}
 		
-		/*
-		echo '<pre>';
-		print_r($return);
-		echo '</pre>';
-		*/
 		
 		/* CUSTOM ACTIONS ======= START ======= */
 		if (count($return) < 3 && $this->authActions() == 1){
@@ -663,7 +664,7 @@ class Project extends MY_Controller{
 				$return['type_name'] = "Share Content to Facebook";
 				break;
 		}
-		if ($account_id_selected > 0) $key = $key . "#customactions";
+		if ($account_id_selected > 0) $key = $key . "_customactions";
 		$return['type_step'] = $key;
 		return $return;
 	}
@@ -873,6 +874,7 @@ class Project extends MY_Controller{
 		if (!empty($this->project->project_actions_data)){
 			$project_actions_data = json_decode( $this->project->project_actions_data );
 			foreach($project_actions_data as $k=>$v){
+				if (!property_exists($v, "type_step")) continue;
 				$project_actions_data_arr[$v->type_step] = $v;
 			}
 		}
