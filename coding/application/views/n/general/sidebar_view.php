@@ -98,6 +98,10 @@
 			'name' => 'Graph',
 			'url' => base_url() . 'admin/graph',
 		),
+		'voucher_pdf' => array(
+			'name' => 'Voucher PDF',
+			'url' => base_url() . 'admin/voucherpdf',
+		),
 	);
 	
 	?>

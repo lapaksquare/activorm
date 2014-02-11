@@ -28,6 +28,34 @@ class Ajax extends CI_Controller {
 		}
 	}
 	
+	function getInfoBusinessAccount(){
+		$business_id = $this->input->get_post('business_id');
+		$this->load->model('a_featured_model');
+		$ds = $this->a_featured_model->getFeaturedBusinessSelected($business_id);
+		$return = array();
+		if (!empty($ds)){
+			$return = array(
+				'status' => 1,
+				'results' => $ds
+			);
+		}else{
+			$return = array(
+				'status' => 0,
+				'results' => array()
+			);
+		}
+		
+		$projects = $this->a_featured_model->getProjectAll($business_id);
+		$return_project_html = '<option value="0">Pilih Project</option>';
+		foreach($projects as $k=>$v){
+			$return_project_html .= '<option value="'.$v->project_id.'">'.ucwords( $v->project_name ).'</option>';
+		}		
+		
+		$return['projects'] = $return_project_html;
+		
+		echo json_encode($return);
+	}
+	
 }
 
 ?>
