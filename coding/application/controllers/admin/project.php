@@ -226,8 +226,8 @@ class Project extends MY_Admin_Access{
 					'project_name' => $project_name,
 					'project_description' => $describe_project,
 					'project_uri' => $project_uri,
-					'project_period' => date('Y-m-d H:i:s', strtotime("+" . $period . " days")),
-					'project_period_int' => $period,
+					//'project_period' => date('Y-m-d H:i:s', strtotime("+" . $period . " days")),
+					//'project_period_int' => $period,
 					'project_prize_detail' => $describe_prize,
 					'project_prize_category' => $prize_category,
 					'project_tags' => $project_tags,
@@ -235,6 +235,21 @@ class Project extends MY_Admin_Access{
 					'project_active' => $project_active,
 					'project_actions_data' => $actions_string
 				);
+				
+				if (!empty($project) && in_array($project->project_live, array('Offline', 'Draft', 'Closed')) && $project_live == "Online"){
+					$dataProject['project_period'] = date('Y-m-d H:i:s', strtotime("+" . $period . " days"));
+					$dataProject['project_period_int'] = $period;
+				}else{
+					if ($project->project_period_int > $period){
+						$pp = $project->project_period_int - $period;
+						$pp_string = "-" . $pp . " days";
+					}else{
+						$pp = $period - $project->project_period_int;
+						$pp_string = "+" . $pp . " days";
+					}
+					$dataProject['project_period'] = date('Y-m-d H:i:s', strtotime($project->project_period . $pp_string));
+					$dataProject['project_period_int'] = $period;
+				}
 				
 				if (!empty($project_primary_photo)) $dataProject['project_primary_photo'] = $project_primary_photo;
 				
