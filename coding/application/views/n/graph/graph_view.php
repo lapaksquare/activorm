@@ -54,6 +54,8 @@
 		<div id="chart-traffic-signup" class="chart-traffic"></div>
 	</div>
 	
+	
+	<?php /*
 	<div class="graph_signup">
 		<div class="box-header">
 			<h3 class="box-title title-light" style="float:left;margin:0;">Traffic SignIn</h3>
@@ -77,7 +79,7 @@
 			var $chart_traffic_signin = [<?php echo implode(", ", $chart_traffic_signin); ?>];
 		</script>
 		<div id="chart-traffic-signin" class="chart-traffic"></div>
-	</div>
+	</div> */ ?>
 	
 	<div class="graph_signup">
 		<div class="box-header">

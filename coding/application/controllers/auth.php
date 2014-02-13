@@ -454,7 +454,7 @@ class Auth extends MY_Controller {
 				$errors[] = "Company Name must contain words only (you may not use special characters e.g. - , > , % , $)";
 			}
 			if ($validateBusinessContact == 1){
-				$errors[] = "Contact Person must contain words only (you may not use special characters e.g. - , > , % , $)";
+				$errors[] = "Person In Charge must contain words only (you may not use special characters e.g. - , > , % , $)";
 			}
 			if ($validateBusinessEmail == 1){
 				$errors[] = "Please insert the correct email.";

@@ -52,7 +52,7 @@
 											<p style="margin: 1em 0;"><strong>Hi <?php echo $account_name; ?>!</strong></p>
 											<p style="margin: 1em 0;">Do activate your Activorm account, we need you to copy this activation code below and enter it to Activorm website.</p>
 											<p style="margin: 1em 0;">Verification Code : <b><?php echo $verification_code; ?></b></p>
-											<p style="margin: 1em 0;">Thank you for registering on Activorm. If you find any problems during signing up, please contact our support at <strong><a href="mailto:beta@activorm.com" style="color: #20b396;text-decoration: none;">beta@activorm.com</a></strong></p>
+											<p style="margin: 1em 0;">Thank you for registering on Activorm. If you find any problems during signing up, please contact our support at <strong><a href="mailto:info@activorm.com" style="color: #20b396;text-decoration: none;">info@activorm.com</a></strong></p>
 											<p class="signup" style="margin: 1em 0;"><a class="button" href="<?php echo base_url(); ?>auth/vcautoauth?vc=<?php echo $verification_code; ?>&vch=<?php echo sha1(SALT . $verification_code); ?>" style="padding: 10px 30px;display: inline-block;color: #fff;font-size: 18px;font-weight: bold;text-decoration: none;background: #20b396;border-bottom: 2px solid #1fa88c;border-radius: 5px;">Activate My Account</a></p>
 										</div>
 									</td>

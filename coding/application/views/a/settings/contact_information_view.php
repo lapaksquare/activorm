@@ -86,9 +86,14 @@
 										$this->session->unset_userdata('account_email');
 										$account_email = $sess_account_email;
 									}
+									
+									/*
+									 * <h2 class="acc-input account-title"><span><?php echo ucwords( $account_name ); ?></span> <a href="#"><i class="icon-pencil" data-edit="title"></i></a></h2>
+									 * */
+									
 									?>
 									
-									<h2 class="acc-input account-title"><span><?php echo ucwords( $account_name ); ?></span> <a href="#"><i class="icon-pencil" data-edit="title"></i></a></h2>
+									<h2 class="account-title"><span><?php echo ucwords( $account_name ); ?></span></h2>
 									<div class="acc-input account-email"><span><?php echo ucwords( $account_email ); ?></span> <a href="#"><i class="icon-pencil" data-edit="email"></i></a></div>
 									
 									<input type="hidden" name="account_title" id="account_title" value="<?php echo $account_name; ?>" />

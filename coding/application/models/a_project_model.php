@@ -206,6 +206,7 @@ class A_project_model extends CI_Model{
 		pt.tiket_id,
 		pt.tiket_barcode,
 		pt.voucher_data,
+		pt.voucher_data_int,
 		pp.project_id,
 		pp.project_name,
 		pp.project_description,

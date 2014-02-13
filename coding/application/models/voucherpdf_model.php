@@ -96,6 +96,27 @@ class Voucherpdf_model extends CI_Model{
 		return $results;
 	}
 
+	function getVoucherPDFDataByProjectId($project_id){
+		$sql = "
+		SELECT
+		vd.voucher_id,
+		vd.voucher_price_line1,
+		vd.voucher_price_line2,
+		vd.valid_until,
+		vd.voucher_merchant_data,
+		vd.business_id,
+		vd.project_id,
+		vd.syarat_dan_ketentuan,
+		vd.cara_penggunaan
+		FROM
+		voucher__data vd
+		WHERE 1
+		AND vd.project_id = ?
+		";
+		$results = $this->db->query($sql, array($project_id))->row();
+		return $results;
+	}
+	
 }
 
 ?>

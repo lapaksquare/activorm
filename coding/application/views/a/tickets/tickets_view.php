@@ -47,9 +47,18 @@
 								</span>
 								
 								<?php 
-								if ($v->iswin == 1 && !empty($v->voucher_data)){
+								if ($v->iswin == 1){
+								
+									$l = '';
+									if (!empty($v->voucher_data)){
+										$l = base_url() . 'download/claim_tiket?p='. $v->project_id .'&a='. $v->account_id .'&h='. sha1($v->project_id.$v->account_id.SALT); //'<a href="'. base_url() . 'download/claim_tiket?p='. $v->project_id .'&a='. $v->account_id .'&h='. sha1($v->project_id.$v->account_id.SALT) .'" target="_blank">KLIK</a>';
+									}
+									if (!empty($v->voucher_data_int)){
+										$l = base_url() . 'download/claim_tiket?p='. $v->project_id .'&a='. $v->account_id .'&v='.$v->voucher_data_int.'&h='. sha1($v->project_id.$v->account_id.$v->voucher_data_int.SALT); //'<a href="'. base_url() . 'download/claim_tiket?p='. $v->project_id .'&a='. $v->account_id .'&v='.$v->voucher_data_int.'&h='. sha1($v->project_id.$v->account_id.$v->voucher_data_int.SALT) .'" target="_blank">KLIK</a>';
+									}
+									
 								?>
-								<a class="btn btn-block btn-green project-claim" href="<?php echo base_url(); ?>download/claim_tiket?p=<?php echo $v->project_id; ?>&a=<?php echo $v->account_id; ?>&h=<?php echo sha1($v->project_id.$v->account_id.SALT); ?>">Claim</a>
+								<a class="btn btn-block btn-green project-claim" href="<?php echo $l; ?>">Claim</a>
 								<?php 
 								}
 								?>

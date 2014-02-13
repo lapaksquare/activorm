@@ -24,7 +24,7 @@ class Graph extends MY_Admin_Access{
 		$this->keyal = "s=" . $startdate . "&e=" . $enddate . "&h=" . $hash;
 		
 		$this->graph_signup = $this->a_graph_model->getTrafficGraphSignUp($startdate, $enddate);
-		$this->graph_signin = $this->a_graph_model->getTrafficGraphSignIn($startdate, $enddate);
+		//$this->graph_signin = $this->a_graph_model->getTrafficGraphSignIn($startdate, $enddate);
 		$this->avg_jml_project = $this->a_graph_model->getAVGJmlProjectDiIkutiUser();
 		$this->top3_user_active = $this->a_graph_model->getTop3UserActiveKontestProject();
 		

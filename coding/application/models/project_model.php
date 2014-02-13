@@ -213,7 +213,7 @@ class Project_model extends CI_Model{
 		WHERE 1
 		AND pp.business_id = ?
 		AND pp.project_active = 1
-		AND (pp.project_live = 'Online' || pp.project_live = 'Closed')
+		AND (pp.project_live = 'Online')
 		AND pp.project_period > NOW()
 		ORDER BY pp.project_posted DESC
 		" . $limited;

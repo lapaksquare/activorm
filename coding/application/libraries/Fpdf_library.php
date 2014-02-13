@@ -77,7 +77,7 @@ class Fpdf_library {
 		
 		// nomor order
 		$this->fpdf->SetFont('Arial', 'I', 23); 
-		$text = $data['no_voucher']; 
+		$text = strtoupper( $data['no_voucher'] ); 
 		$this->fpdf->Text(6, 2.45, $text); 
 		
 		$this->fpdf->SetTextColor(52,73,93);
@@ -99,15 +99,15 @@ class Fpdf_library {
 		
 		$image_merchant = $data['merchant_logo']; 
 		$this->ci->load->library('mediamanager');
-		$image_merchant = $this->ci->mediamanager->getPhotoUrl($image_merchant, "100x100");
-		$this->fpdf->Image(cdn_url() . $image_merchant, 25, 2.05);
+		$image_merchant = $this->ci->mediamanager->getPhotoUrl($image_merchant, "155x185");
+		$this->fpdf->Image(cdn_url() . $image_merchant, 24.3, 1.95);
 		
 		$this->fpdf->SetTextColor(0,0,0);
-		$this->fpdf->SetFont('helvetica', '', 17); 
+		$this->fpdf->SetFont('helvetica', '', 15); 
 		$text = $data['business_name']; 
 		$this->fpdf->Text(18.1, 7.6, $text); 
 		
-		if (!empty($data['voucher_website'])){
+		if (!empty($data['voucher_website']) && $data['voucher_website'] != "http://"){
 			$text = $data['voucher_website'];
 			$this->fpdf->Text(18.1, 8.8, $text); 
 			
@@ -115,14 +115,14 @@ class Fpdf_library {
 			$this->fpdf->Text(18.1, 9.9, $text); 
 			
 			if (!empty($data['voucher_phone'])){
-				$text = $data['voucher_phone'];
+				$text = 'Phone: '.$data['voucher_phone'];
 				$this->fpdf->Text(18.1, 11.1, $text); 
 			}
 		}else{
 			$text = $data['voucher_email'];
 			$this->fpdf->Text(18.1, 8.8, $text); 
 			
-			$text = $data['voucher_phone'];
+			$text = 'Phone: '.$data['voucher_phone'];
 			$this->fpdf->Text(18.1, 9.9, $text); 
 		}
 		

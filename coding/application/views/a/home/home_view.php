@@ -24,7 +24,7 @@
 		<div id="banner" class="block block-green">
 			<div class="container">
 
-				<h2 class="block-title">Select which prize you want and follow the quiz</h2>
+				<h2 class="block-title">Select the prize you want and enter the project</h2>
 				<a class="btn btn-big btn-yellow" href="#" id="signup_btn">Sign Up for Free</a>
 
 			</div>

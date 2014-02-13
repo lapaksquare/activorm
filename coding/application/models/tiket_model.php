@@ -38,6 +38,7 @@ class Tiket_model extends CI_Model{
 		pt.project_id,
 		pt.account_id,
 		pt.voucher_data,
+		pt.voucher_data_int,
 		pt.iswin,
 		pp.business_id,
 		pp.project_name,

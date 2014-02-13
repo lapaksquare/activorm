@@ -7,11 +7,13 @@ function drawChart() {
 	data1.addColumn('number', 'Visits');
 	data1.addRows($chart_traffic_signup);
 	
+	/*
 	var data2 = new google.visualization.DataTable();
 	data2.addColumn($gchart_type_signin, 'Date');
 	data2.addColumn('number', 'Visits');
 	data2.addRows($chart_traffic_signin);
-
+	*/
+	
 	//var data2 = google.visualization.arrayToDataTable($chart_source);
 	//var data3 = google.visualization.arrayToDataTable($chart_type);
 
@@ -56,8 +58,8 @@ function drawChart() {
 	var chart = new google.visualization.AreaChart(document.getElementById('chart-traffic-signup'));
 	chart.draw(data1, options1);
 	
-	var chart = new google.visualization.AreaChart(document.getElementById('chart-traffic-signin'));
-	chart.draw(data2, options1);
+	//var chart = new google.visualization.AreaChart(document.getElementById('chart-traffic-signin'));
+	//chart.draw(data2, options1);
 	
 	//var chart = new google.visualization.PieChart(document.getElementById('chart-source'));
 	//chart.draw(data2, options2);
