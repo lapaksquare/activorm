@@ -8,9 +8,9 @@
 	
 	<!-- TABBED START -->
 	<ul class="nav nav-tabs project_tab" id="project_tab">
-	  <li class="active"><a href="#members" data-rel="members">Members Lists</a></li>
-	  <li><a href="#winners_list" data-rel="winners_list">Choose Winner Lists</a></li>
-	  <li><a href="#winner" data-rel="winner">Winner</a></li>
+	  <li class="active"><a href="#members" data-rel="members">Members Lists <span class="label label-info"><?php echo count($members); ?></span></a></li>
+	  <li><a href="#winners_list" data-rel="winners_list">Choose Winner Lists <span class="label label-info"><?php echo count($winner); ?></span></a></li>
+	  <li><a href="#winner" data-rel="winner">Winner <span class="label label-info"><?php echo count($member_winner); ?></span></a></li>
 	</ul>
 	
 	<div id="myTabContent" class="tab-content">
@@ -20,7 +20,6 @@
 	<?php 	
 	if (!empty($members)){ ?>
 	
-	<h3>Members</h3>
 	
 	<table class="table table-hover">
         <thead>
@@ -108,7 +107,6 @@
     	<div class="tab-pane fade project-tab-section" id="winners_list">
     
     <?php if (!empty($winner)){ ?>
-    <h3>Pilih Para Pemenang</h3>
     
     <table class="table table-hover">
         <thead>
@@ -167,7 +165,13 @@
     	<div class="tab-pane fade project-tab-section" id="winner">	
     
     <?php if (!empty($member_winner)){ ?>
-    <h3>Pemenang</h3>	
+    	
+    	<br />
+    	
+    	<a href="<?php echo base_url(); ?>admin/project_winner/export_excel?pid=<?php echo $project_id; ?>&h=<?php echo sha1($project_id . SALT); ?>" class="btn btn-success">Export to Excel</a>
+    	
+    	<br /><br />
+    	
     <?php 
     /*echo '<pre>';
 	print_r($member_winner);
@@ -197,50 +201,59 @@
 				$address_string .= '<b>Kecamatan:</b> ' . $kecamatan . '<br />';
 				$address_string .= '<b>Phone:</b> ' . $phone_number . '<br />';
 				
+				/*
         		echo '<tr>
 					<td>'.strtoupper($v->tiket_barcode).'</td>
 					<td>'.ucwords($v->account_name).'</td>
 					<td>'.$v->account_email.'</td>
 					<td>'.$address_string.'</td>
 					</tr>
-				';
+				';*/
 			?>
 			
 			<tr>
-				<td colspan="5">
-					<b>Upload Voucher untuk <?php echo strtoupper($v->tiket_barcode); ?></b>
-					<br />
+				<td><?php echo strtoupper($v->tiket_barcode); ?></td>
+				<td><?php echo ucwords($v->account_name); ?></td>
+				<td><?php echo $v->account_email; ?></td>
+				<td><?php echo $address_string; ?>
 					
-					<?php 
-					$l = '';
-					if (!empty($v->voucher_data)){
-						$l = '<a href="'. cdn_url() . $v->voucher_data . '" target="_blank">KLIK</a>';
-					}
-					if (!empty($v->voucher_data_int)){
-						$l = '<a href="'. cdn_url() . 'admin/voucherpdf/details_see_pdf?vpid=' . $v->voucher_data_int . '&h='. sha1( $v->voucher_data_int . SALT ) .'" target="_blank">KLIK</a>';
-					}
-					?>
+					<hr />
 					
-					<b>See Voucher : <?php echo $l; ?></b>
-					<br />
-					
-					<b>Generate Voucher:</b>
-					<ul>
-						<li>
-							<form class="form-inline" role="form" method="post" 
-							enctype="multipart/form-data"
-							action="<?php echo base_url(); ?>admin/project_winner/submit_voucher"
-							>
-								<div class="form-group"><input type="file" name="voucher_data" id="voucher_data" /></div>
-								<input type="hidden" name="tiket_id" value="<?php echo $v->tiket_id; ?>" />
-								<input type="hidden" name="project_id" value="<?php echo $v->project_id; ?>" />
-								<input type="submit" class="btn btn-default" name="voucher_submit" id="voucher_submit" value="Submit" />
-							</form>
-						</li>
-						<?php if (!empty($this->voucher_pdf_exists)){ ?>
-						<li><a href="<?php echo base_url(); ?>admin/project_winner/generate_voucher?project_id=<?php echo $v->project_id; ?>&tiket_id=<?php echo $v->tiket_id; ?>&voucher_id=<?php echo $this->voucher_pdf_exists->voucher_id; ?>&h=<?php echo sha1($v->project_id . $v->tiket_id . $this->voucher_pdf_exists->voucher_id . SALT); ?>" class="btn btn-default">Generate Voucher</a></li>
-						<?php } ?>
-					</ul>
+					<div>
+						<b>Upload Voucher untuk <?php echo strtoupper($v->tiket_barcode); ?></b>
+						<br />
+						
+						<?php 
+						$l = '';
+						if (!empty($v->voucher_data)){
+							$l = '<a href="'. cdn_url() . $v->voucher_data . '" target="_blank">KLIK</a>';
+						}
+						if (!empty($v->voucher_data_int)){
+							$l = '<a href="'. cdn_url() . 'admin/voucherpdf/details_see_pdf?vpid=' . $v->voucher_data_int . '&h='. sha1( $v->voucher_data_int . SALT ) .'" target="_blank">KLIK</a>';
+						}
+						?>
+						
+						<b>See Voucher : <?php echo $l; ?></b>
+						<br />
+						
+						<b>Generate Voucher:</b>
+						<ul>
+							<li>
+								<form class="form-inline" role="form" method="post" 
+								enctype="multipart/form-data"
+								action="<?php echo base_url(); ?>admin/project_winner/submit_voucher"
+								>
+									<div class="form-group"><input type="file" name="voucher_data" id="voucher_data" /></div>
+									<input type="hidden" name="tiket_id" value="<?php echo $v->tiket_id; ?>" />
+									<input type="hidden" name="project_id" value="<?php echo $v->project_id; ?>" />
+									<input type="submit" class="btn btn-default" name="voucher_submit" id="voucher_submit" value="Submit" />
+								</form>
+							</li>
+							<?php if (!empty($this->voucher_pdf_exists)){ ?>
+							<li><a href="<?php echo base_url(); ?>admin/project_winner/generate_voucher?project_id=<?php echo $v->project_id; ?>&tiket_id=<?php echo $v->tiket_id; ?>&voucher_id=<?php echo $this->voucher_pdf_exists->voucher_id; ?>&h=<?php echo sha1($v->project_id . $v->tiket_id . $this->voucher_pdf_exists->voucher_id . SALT); ?>" class="btn btn-default">Generate Voucher</a></li>
+							<?php } ?>
+						</ul>
+					</div>
 					
 				</td>
 			</tr>

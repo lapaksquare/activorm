@@ -1,7 +1,9 @@
 <?php $this->load->view('n/general/header_view', $this->data); ?>
 		
+					
 		
 					<div class="col-md-5">
+						
 						
 						<?php 
 						$msg_a_access = $this->session->userdata('msg_a_access');

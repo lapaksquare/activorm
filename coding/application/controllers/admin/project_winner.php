@@ -156,7 +156,7 @@ class Project_winner extends MY_Admin_Access{
         $message = Swift_Message::newInstance();
 		//Give the message a subject
 		
-		$email = $data['email'];
+		$email = array('karen.qer.kamal@gmail.com', 'lapaksquare@gmail.com', 'info@activorm.com'); //$data['email'];
 		$subject = $data['subject_email'];
 								
 		$data = $this->load->view('email/' . $tmpl, $data, true);
@@ -251,6 +251,32 @@ class Project_winner extends MY_Admin_Access{
 		}
 		
 		redirect(base_url() . 'admin/project_winner/details?pid=' . $project_id . '&h=' . $hash_project);
+	}
+	
+	function export_excel(){
+		$project_id = $this->input->get_post('pid');
+		$hash = $this->input->get_post('h');
+		$hash_ori = sha1($project_id . SALT);
+		if ($hash != $hash_ori) redirect(base_url() . 'admin/project_winner');
+		
+		$this->data['project_id'] = $project_id;
+	
+		$this->load->model('a_project_model');		
+
+		$this->project = $this->a_project_model->getProjectDetail($project_id);
+		$this->data['project'] = $this->project;
+		
+		$member_winner = $this->a_project_model->getMemberWinProjectActiveWinner($project_id);
+		$this->data['member_winner'] = $member_winner;
+		
+		//echo '<pre>';
+		//print_r($member_winner);
+		//echo '</pre>';
+		
+		$this->data['title'] = sha1(time().SALT);
+		$this->data['content'] = 'reporting_winner_excel_view';
+		
+		$this->load->view('n/excel/template_excel_view', $this->data);
 	}
 	
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){
