@@ -55,7 +55,7 @@ class Featured extends MY_Admin_Access{
 				'<script src="'.cdn_url().'js/a_featured_prize.js"></script>',
 			),
 			"",
-			"Admin Login");
+			"Featured - Activorm Connect");
 		$this->load->view('n/featured/prize_homepage_view', $this->data);
 	}
 	
@@ -168,7 +168,7 @@ class Featured extends MY_Admin_Access{
 				'<script type="text/javascript" src="'.cdn_url().'js/a_featured_logo.js"></script>'
 			),
 			"",
-			"Admin Login");
+			"Featured - Activorm Connect");
 		$this->load->view('n/featured/logo_homepage_view', $this->data);
 	}
 	

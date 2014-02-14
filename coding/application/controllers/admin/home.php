@@ -19,7 +19,7 @@ class Home extends MY_Admin_Access{
 			"",
 			"",
 			"",
-			"Admin Login");
+			"Home - Activorm Connect");
 		$this->load->view('n/home/home_view', $this->data);
 	}
 	

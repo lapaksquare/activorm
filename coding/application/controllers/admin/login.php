@@ -17,7 +17,7 @@ class Login extends MY_Admin{
 			"",
 			"",
 			"",
-			"Admin Login");
+			"Login - Activorm Connect");
 		$this->load->view('n/login/login_view', $this->data);
 	}
 	

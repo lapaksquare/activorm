@@ -182,6 +182,16 @@ class Welcome extends CI_Controller {
 		echo base_url() . 'auth/vccode_next?acid=' . $account_id . '&vccode=' . $verify_code . '&h=' . sha1($account_id . $verify_code . SALT);
 	}
 	
+	function ujicoba_accesslist(){
+		$data = array(
+			'access_project_winner' => array(
+				'menu' => 'project_winner',
+				'business_id' => 1
+			)
+		);
+		echo json_encode($data);
+	}
+	
 }
 
 /* End of file welcome.php */

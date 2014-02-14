@@ -39,7 +39,7 @@ class Graph extends MY_Admin_Access{
 			$css,
 			$js,
 			"",
-			"Admin Login");
+			"Graph - Activorm Connect");
 		$this->load->view('n/graph/graph_view', $this->data);
 	}
 	

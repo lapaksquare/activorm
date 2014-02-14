@@ -6,6 +6,10 @@ class Project_winner extends MY_Admin_Access{
 	
 	function __construct(){
 		parent::__construct();
+		$this->data['menu'] = $menu = 'project_winner';
+		
+		$this->load->library('access');
+		$this->access->checkAdminAccess($menu);
 	}
 	
 	var $offset = 10;
@@ -19,6 +23,7 @@ class Project_winner extends MY_Admin_Access{
 		$page = intval($this->input->get_post('page'));
 		
 		$param_url = array(
+			'business_id' => $this->access->business_id,
 			'project_live' => $this->project_live,
 			'page' => ''
 		);
@@ -40,14 +45,13 @@ class Project_winner extends MY_Admin_Access{
 			$uri_page
 		);
 		
-		$this->data['menu'] = 'project_winner';
 		$this->_default_param(
 			"",
 			array(
 				'<script type="text/javascript" src="'.cdn_url().'js/a_project_winner.js"></script>'
 			),
 			"",
-			"Admin Login");
+			"Project Winner - Activorm Connect");
 		$this->load->view('n/project/project_winner_view', $this->data);
 	}
 	
@@ -70,20 +74,22 @@ class Project_winner extends MY_Admin_Access{
 		$member_winner = $this->a_project_model->getMemberWinProjectActiveWinner($project_id);
 		$this->data['member_winner'] = $member_winner;
 		
-		$limit = (count($member_winner) == 0) ? 3 : (3-count($member_winner));
-		
+		$jml_winner = $this->project->jml_winner;
+		$limit = (count($member_winner) == 0) ? $jml_winner : ($jml_winner - count($member_winner));
+				
 		$winner = $this->a_project_model->getRandomMemberWinner($project_id, $this->project->account_id, $limit);
 		$this->data['winner'] = $winner;
 		
 		$this->load->model('voucherpdf_model');
 		$this->voucher_pdf_exists = $this->voucherpdf_model->getVoucherPDFDataByProjectId($project_id);
 		
-		$this->data['menu'] = 'project_winner';
 		$this->_default_param(
 			"",
+			array(
+				'<script type="text/javascript" src="'.base_url().'js/a_project_winner_details.js"></script>'
+			),
 			"",
-			"",
-			"Admin Login");
+			"Project Winner Details - Activorm Connect");
 		$this->load->view('n/project/project_winner_details_view', $this->data);
 	}
 	

@@ -52,7 +52,7 @@ class Member extends MY_Admin_Access{
 			"",
 			"",
 			"",
-			"Admin Login");
+			"Member - Activorm Connect");
 		$this->load->view('n/member/member_account_view', $this->data);
 	}
 	
@@ -104,7 +104,7 @@ class Member extends MY_Admin_Access{
 				'<script src="'.cdn_url().'js/a_member_account.js"></script>'
 			),
 			"",
-			"Admin Login");
+			"Member Details - Activorm Connect");
 		$this->load->view('n/member/member_account_details_view', $this->data);
 	}
 
@@ -316,7 +316,7 @@ class Member extends MY_Admin_Access{
 			"",
 			"",
 			"",
-			"Admin Login");
+			"Business Account - Activorm Connect");
 		$this->load->view('n/member/business_account_view', $this->data);
 	}
 	function business_account_details(){
@@ -368,7 +368,7 @@ class Member extends MY_Admin_Access{
 				'<script src="'.cdn_url().'js/a_member_account.js"></script>'
 			),
 			"",
-			"Admin Login");
+			"Business Account Details - Activorm Connect");
 		$this->load->view('n/member/business_account_details_view', $this->data);
 	}
 	function update_business_account(){
@@ -624,7 +624,7 @@ class Member extends MY_Admin_Access{
 			"",
 			"",
 			"",
-			"Admin Login");
+			"Add Account - Activorm Connect");
 		$this->load->view('n/member/add_invite_member_view', $this->data);
 	}
 	function sending_invite_member(){

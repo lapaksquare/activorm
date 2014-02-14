@@ -45,7 +45,7 @@ class Prize extends MY_Admin_Access{
 			"",
 			"",
 			"",
-			"Admin Login");
+			"Prize - Activorm Connect");
 		$this->load->view('n/prize/index_view', $this->data);
 	}
 	
@@ -70,7 +70,7 @@ class Prize extends MY_Admin_Access{
 				'<script src="'.cdn_url().'js/a_prize.js"></script>',
 			),
 			"",
-			"Admin Login");
+			"Prize Details - Activorm Connect");
 		$this->load->view('n/prize/prize_detail_view', $this->data);
 	}
 	
@@ -87,7 +87,7 @@ class Prize extends MY_Admin_Access{
 				'<script src="'.cdn_url().'js/a_prize.js"></script>',
 			),
 			"",
-			"Admin Login");
+			"Add Prize - Activorm Connect");
 		$this->load->view('n/prize/prize_detail_view', $this->data);
 	}
 	

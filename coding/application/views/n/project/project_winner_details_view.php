@@ -2,9 +2,20 @@
 
 <div class="col-md-12 lp-header" role="main">
 	
-	<h2>Project Active - #<?php echo $this->project->project_id.'#'.ucwords($this->project->project_name); ?> - Members</h2>	
+	<h2><?php echo ucwords($this->project->project_name); ?></h2>	
 	
 	<hr />
+	
+	<!-- TABBED START -->
+	<ul class="nav nav-tabs project_tab" id="project_tab">
+	  <li class="active"><a href="#members" data-rel="members">Members Lists</a></li>
+	  <li><a href="#winners_list" data-rel="winners_list">Choose Winner Lists</a></li>
+	  <li><a href="#winner" data-rel="winner">Winner</a></li>
+	</ul>
+	
+	<div id="myTabContent" class="tab-content">
+		
+		<div class="tab-pane fade active in project-tab-section" id="members">
 	
 	<?php 	
 	if (!empty($members)){ ?>
@@ -80,7 +91,21 @@
         </tbody>
     </table>
     
-    <?php } ?>
+    <?php }else{
+    	
+	?>
+	
+	<div class="alert alert-warning" style="margin-top:10px;">
+		<p>Member Lists is Empty</p>
+	</div>
+	
+	<?php	
+		
+    } ?>
+    
+   		</div>
+    
+    	<div class="tab-pane fade project-tab-section" id="winners_list">
     
     <?php if (!empty($winner)){ ?>
     <h3>Pilih Para Pemenang</h3>
@@ -124,8 +149,22 @@
         	
         </tbody>
     </table>
-    <?php } ?>
+    <?php }else{
+    	
+	?>
+	
+	<div class="alert alert-warning" style="margin-top:10px;">
+		<p>Winner Lists is Empty</p>
+	</div>
+	
+	<?php	
+		
+    } ?>
     
+    	</div>
+    
+    
+    	<div class="tab-pane fade project-tab-section" id="winner">	
     
     <?php if (!empty($member_winner)){ ?>
     <h3>Pemenang</h3>	
@@ -212,8 +251,22 @@
         </tbody>
     </table>
     
-    <?php } ?>
+    <?php }else{
+    	
+	?>
+	
+	<div class="alert alert-warning" style="margin-top:10px;">
+		<p>Winner Lists is Empty</p>
+	</div>
+	
+	<?php	
+		
+    } ?>
     
+    	</div>
+    	
+    </div>	
+    	
     <?php 
 	/*
 	}else{

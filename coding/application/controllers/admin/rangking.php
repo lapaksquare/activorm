@@ -54,7 +54,7 @@ class Rangking extends MY_Admin_Access{
 				'<script type="text/javascript" src="'.cdn_url().'js/a_rangking.js"></script>'
 			),
 			"",
-			"Admin Login");
+			"Rangking - Activorm Connect");
 		$this->load->view('n/rangking/index_view', $this->data);
 	}
 	

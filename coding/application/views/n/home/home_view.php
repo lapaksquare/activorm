@@ -7,6 +7,11 @@
 </div>
 
 <div class="col-md-9 lp-header" role="main">
+
+	<?php  
+	$access_list = explode(",", $this->account_admin->access_list);
+	if (!empty($this->account_admin) && ($this->account_admin->access_list == "all" || in_array("admin_home", $access_list))){
+	?>
 	
 	<h2>Home</h2>	
 
@@ -57,6 +62,8 @@
 		</p>
 	  </div>
 	</div>
+	
+	<?php } ?>
 
 </div>	
 

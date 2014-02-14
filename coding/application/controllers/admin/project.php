@@ -48,7 +48,7 @@ class Project extends MY_Admin_Access{
 			"",
 			"",
 			"",
-			"Admin Login");
+			"Project - Activorm Connect");
 		$this->load->view('n/project/index_view', $this->data);
 	}
 
@@ -72,7 +72,7 @@ class Project extends MY_Admin_Access{
 				'<script src="'.cdn_url().'js/a_project.js"></script>'
 			),
 			"",
-			"Admin Login");
+			"Project Details - Activorm Connect");
 		$this->load->view('n/project/project_detail_view', $this->data);
 	}
 	
