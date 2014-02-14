@@ -42,7 +42,7 @@ class Newsletter extends MY_Admin_Access{
 			"",
 			"",
 			"",
-			"Admin Login");
+			"Newsletter - Activorm Connect");
 		$this->load->view('n/newsletter/index_view', $this->data);
 	}
 	
@@ -62,7 +62,7 @@ class Newsletter extends MY_Admin_Access{
 				'<script src="'.cdn_url().'js/a_newsletter.js"></script>',
 			),
 			"",
-			"Admin Login");
+			"Add Newsletter - Activorm Connect");
 		$this->load->view('n/newsletter/newsletter_detail_view', $this->data);
 	}
 	
@@ -90,7 +90,7 @@ class Newsletter extends MY_Admin_Access{
 				'<script src="'.cdn_url().'js/a_newsletter.js"></script>',
 			),
 			"",
-			"Admin Login");
+			"Add Newsletter Detail - Activorm Connect");
 		$this->load->view('n/newsletter/newsletter_detail_view', $this->data);
 		
 	}

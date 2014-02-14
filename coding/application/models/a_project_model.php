@@ -90,6 +90,7 @@ class A_project_model extends CI_Model{
 		pp.project_active,
 		pp.project_posted,
 		pp.business_id,
+		pp.jml_winner,
 		bp.business_name,
 		brm.account_id
 		FROM
@@ -128,6 +129,11 @@ class A_project_model extends CI_Model{
 			$limited = " LIMIT " . $this->start . " , " .$this->limit;
 		}
 		
+		$where = "";
+		if (!empty($param_url['business_id'])){
+			$where .= " AND bp.business_id = '". $param_url['business_id'] ."' ";
+		}
+		
 		$sql = "
 		SELECT
 		SQL_CALC_FOUND_ROWS
@@ -156,6 +162,7 @@ class A_project_model extends CI_Model{
 				WHERE 1 GROUP BY project_id
 			) x ON x.project_id = pp.project_id
 		WHERE 1
+		$where
 		AND pp.project_live = ?
 		AND pp.project_active = 1
         GROUP BY x.project_id

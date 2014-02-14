@@ -125,6 +125,26 @@ class Access {
 			'redirect_uri' => base_url() . 'auth/facebook_connect'
 		));
 	}
+	
+	var $business_id = "";
+	function checkAdminAccess($menu){
+		$session = $this->ci->session->userdata('account_admin');
+		$access_list = $session->access_list;
+		$access_list_detail = $session->access_list_detail;
+		if (!empty($access_list_detail)){
+			$access_list_detail = (array) json_decode($access_list_detail);
+			if (!empty($access_list_detail)){
+				/* echo '<pre>';
+				print_r($access_list_detail);
+				echo '</pre>'; */
+				if (!empty($access_list_detail['access_' . $menu])){
+					
+					$this->business_id = $access_list_detail['access_' . $menu]->business_id;
+					
+				}
+			}
+		}
+	}
 
 }
 

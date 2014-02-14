@@ -23,7 +23,7 @@
 		        <span class="icon-bar"></span>
 		        <span class="icon-bar"></span>
 		      </button>
-		      <a href="./" class="navbar-brand">Activorm Admin</a>
+		      <a href="./" class="navbar-brand">Activorm Connect</a>
 		    </div>
 		    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
 		      

@@ -10,7 +10,8 @@ class A_account_model extends CI_Model{
 		ma.account_email,
 		ma.account_primary_photo,
 		mrr.role_id,
-		mrr.access_list
+		mrr.access_list,
+		mrr.access_list_detail
 		FROM
 		member__account ma 
 		JOIN member__rel_role mrr ON

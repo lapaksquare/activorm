@@ -40,7 +40,7 @@ class Voucherpdf extends MY_Admin_Access{
 			"",
 			"",
 			"",
-			"Admin Login");
+			"Voucher PDF - Activorm Connect");
 		$this->load->view('n/voucherpdf/index_view', $this->data);
 	}
 	
@@ -61,7 +61,7 @@ class Voucherpdf extends MY_Admin_Access{
 				'<script src="'.cdn_url().'js/a_voucherpdf.js"></script>',
 			),
 			"",
-			"Admin Login");
+			"Add Voucher PDF - Activorm Connect");
 		$this->load->view('n/voucherpdf/add_voucher_pdf_view', $this->data);
 	}
 	
@@ -93,7 +93,7 @@ class Voucherpdf extends MY_Admin_Access{
 				'<script src="'.cdn_url().'js/a_voucherpdf.js"></script>',
 			),
 			"",
-			"Admin Login");
+			"Voucher PDF Details - Activorm Connect");
 		$this->load->view('n/voucherpdf/add_voucher_pdf_view', $this->data);
 	}
 	

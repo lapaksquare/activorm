@@ -50,7 +50,7 @@ class Payment extends MY_Admin_Access{
 			"",
 			"",
 			"",
-			"Admin Login");
+			"Payment - Activorm Connect");
 		$this->load->view('n/payment/index_view', $this->data);
 	}
 
@@ -126,7 +126,7 @@ class Payment extends MY_Admin_Access{
 				'<script src="'.cdn_url().'js/a_payment_detail.js"></script>',
 			),
 			"",
-			"Admin Login");
+			"Payment Details - Activorm Connect");
 		$this->load->view('n/payment/payment_detail_view', $this->data);
 	}
 	
