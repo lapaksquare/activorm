@@ -1,15 +1,7 @@
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(drawChart);
 function drawChart() {
-	var data = google.visualization.arrayToDataTable([
-		['Age', 'Male', 'Female'],
-		['13-17',  320, 640],
-		['18-23',  400, 600],
-		['24-30',  750, 320],
-		['31-40',  310, 260],
-		['41-50',  220, 160],
-		['51+',  110, 80],
-	]);
+	var data = google.visualization.arrayToDataTable($dataGAGender);
 
 	var options = {
 		bar: {groupWidth:'60%'},

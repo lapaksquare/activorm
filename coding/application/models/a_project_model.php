@@ -75,6 +75,7 @@ class A_project_model extends CI_Model{
 		$sql = "
 		SELECT
 		pp.project_id,
+		pp.project_uri,
 		pp.project_name,
 		pp.project_description,
 		pp.project_primary_photo,
@@ -103,9 +104,33 @@ class A_project_model extends CI_Model{
 		return $this->db->query($sql, array($project_id))->row();
 	}
 	
-	function getProjectActiveWinner(){
+	function getProjectActiveWinner($param_url = array(), $limit = 10, $start = 0, $page = 0, $nolimit = FALSE){
+		
+		if(empty($start)) {
+			$this->start = 0;
+		} else {
+			$this->start = $start;
+		}
+		if(empty($limit)) {
+			$this->limit = 20;
+		} else {
+			$this->limit = $limit;
+		}
+		if(!empty($page) && $page > 0) {
+			$this->page = $page;
+			$this->start = ($this->page - 1) * $this->limit;
+		} else {
+			$this->page = 1;
+		}	
+		
+		$limited = "";
+		if ($nolimit == FALSE){
+			$limited = " LIMIT " . $this->start . " , " .$this->limit;
+		}
+		
 		$sql = "
 		SELECT
+		SQL_CALC_FOUND_ROWS
 		pp.project_name,
 		pp.project_id,
 		bp.business_name,
@@ -131,12 +156,13 @@ class A_project_model extends CI_Model{
 				WHERE 1 GROUP BY project_id
 			) x ON x.project_id = pp.project_id
 		WHERE 1
-		AND pp.project_live IN ('Online', 'Closed')
+		AND pp.project_live = ?
 		AND pp.project_active = 1
         GROUP BY x.project_id
 		ORDER BY `pp`.`project_name`  ASC
-		";
-		$results = $this->db->query($sql)->result();
+		" . $limited;
+		
+		$results = $this->db->query($sql, array($param_url['project_live']))->result();
 		return $results;
 	}
 	
@@ -146,10 +172,14 @@ class A_project_model extends CI_Model{
 		pt.tiket_barcode,
 		ma.account_id,
 		ma.account_name,
+		ma.phone_number,
 		pp.project_name,
 		ma.account_email,
 		cs.social_data,
-		cs.social_name
+		cs.social_name,
+		ma.address,
+		ap.province_name, 
+		ak.kecamatan_name
 		FROM
 		project__tiket pt
 		JOIN member__account ma ON
@@ -158,6 +188,10 @@ class A_project_model extends CI_Model{
 			pp.project_id = pt.project_id
 		JOIN connect__socialmedia cs ON
 			cs.account_id = ma.account_id
+		LEFT JOIN address__province ap ON 
+			ap.province_id = ma.province_id
+		LEFT JOIN address__kecamatan ak ON 
+			ak.kecamatan_id = ma.kecamatan_id
 		WHERE 1
 		AND pt.project_id = ?
 		ORDER BY ma.account_name ASC
@@ -172,6 +206,7 @@ class A_project_model extends CI_Model{
 		pt.tiket_id,
 		pt.tiket_barcode,
 		pt.voucher_data,
+		pt.voucher_data_int,
 		pp.project_id,
 		pp.project_name,
 		pp.project_description,
@@ -180,13 +215,20 @@ class A_project_model extends CI_Model{
 		ma.account_type,
 		ma.account_name,
 		ma.account_email,
-		ma.address
+		ma.phone_number,
+		ma.address,
+		ap.province_name, 
+		ak.kecamatan_name
 		FROM
 		project__tiket pt
 		JOIN member__account ma ON
 			ma.account_id = pt.account_id
 		JOIN project__profile pp ON
 			pp.project_id = pt.project_id
+		LEFT JOIN address__province ap ON 
+			ap.province_id = ma.province_id
+		LEFT JOIN address__kecamatan ak ON 
+			ak.kecamatan_id = ma.kecamatan_id
 		WHERE 1
 		AND pt.project_id = ?
 		AND pt.iswin = 1
@@ -202,16 +244,23 @@ class A_project_model extends CI_Model{
 		ma.account_name,
 		pp.project_name,
 		ma.account_email,
+		ma.phone_number,
 		pt.tiket_id,
 		pp.project_id,
 		ma.account_id,
-		ma.address
+		ma.address,
+		ap.province_name, 
+		ak.kecamatan_name
 		FROM
 		project__tiket pt
 		JOIN member__account ma ON
 			ma.account_id = pt.account_id
 		JOIN project__profile pp ON
 			pp.project_id = pt.project_id
+		LEFT JOIN address__province ap ON 
+			ap.province_id = ma.province_id
+		LEFT JOIN address__kecamatan ak ON 
+			ak.kecamatan_id = ma.kecamatan_id
 		WHERE 1
 		AND pt.project_id = ?
 		AND ma.account_id != ?

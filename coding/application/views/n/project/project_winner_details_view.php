@@ -1,12 +1,6 @@
 <?php $this->load->view('n/general/header_view', $this->data); ?>
 
-<div class="col-md-3">
-
-<?php $this->load->view('n/general/sidebar_view', $this->data); ?>
-
-</div>
-
-<div class="col-md-9 lp-header" role="main">
+<div class="col-md-12 lp-header" role="main">
 	
 	<h2>Project Active - #<?php echo $this->project->project_id.'#'.ucwords($this->project->project_name); ?> - Members</h2>	
 	
@@ -21,9 +15,9 @@
         <thead>
           <tr>
 			<th>Tiket Barcode</th>
-			<th>Project Name</th>
 			<th>Account Name</th>
 			<th>Account Email</th>
+			<th>Address</th>
 			<th>Facebook</th>
 			<th>Twitter</th>
           </tr>
@@ -41,7 +35,11 @@
 						'project_name' => $v->project_name,
 						'account_name' => $v->account_name,
 						'account_email' => $v->account_email,
-						$v->social_name => $social_data
+						$v->social_name => $social_data,
+						'address' => $v->address,
+						'province_name' => $v->province_name,
+						'kecamatan_name' => $v->kecamatan_name,
+						'phone_number' => $v->phone_number
 					);
 				}else{
 					if (!empty($v->social_data)){
@@ -58,11 +56,20 @@
 				$twitter_url = (!empty($v['twitter'])) ? 'LINK : <a href="http://twitter.com/'.$v['twitter']->screen_name.'" target="_blank">LINK</a>' : "";
 				$twitter_followers_count = (!empty($v['twitter'])) ? '<br />Followers Count : '.$v['twitter']->followers_count : 0;
 				
+				$address = (empty($v['address'])) ? '-' : $v['address'];
+				$pronvince = (empty($v['province_name'])) ? '-' : $v['province_name'];
+				$kecamatan = (empty($v['kecamatan_name'])) ? '-' : $v['kecamatan_name'];
+				$phone_number = (empty($v['phone_number'])) ? '-' : $v['phone_number'];
+				$address_string = '<b>Address:</b> ' . $address . '<br />';
+				$address_string .= '<b>Province:</b> ' . $pronvince . '<br />';
+				$address_string .= '<b>Kecamatan:</b> ' . $kecamatan . '<br />';
+				$address_string .= '<b>Phone:</b> ' . $phone_number . '<br />';
+				
 				echo '<tr>
 					<td>'.strtoupper($v['tiket_barcode']).'</td>
-					<td>'.ucwords($v['project_name']).'</td>
 					<td>'.ucwords($v['account_name']).'</td>
 					<td>'.$v['account_email'].'</td>
+					<td>'.$address_string.'</td>
 					<td>'.$facebook_url.'</td>
 					<td>'.$twitter_url.$twitter_followers_count.'</td>
 				</tr>';	
@@ -82,7 +89,6 @@
         <thead>
           <tr>
 			<th>Tiket Barcode</th>
-			<th>Project Name</th>
 			<th>Account Name</th>
 			<th>Account Email</th>
 			<th>Account Address</th>
@@ -94,13 +100,21 @@
         	<?php 
         	
         	foreach($winner as $k=>$v){
+        		
+				$address = (empty($v->address)) ? '-' : $v->address;
+				$pronvince = (empty($v->province_name)) ? '-' : $v->province_name;
+				$kecamatan = (empty($v->kecamatan_name)) ? '-' : $v->kecamatan_name;
+				$phone_number = (empty($v->phone_number)) ? '-' : $v->phone_number;
+				$address_string = '<b>Address:</b> ' . $address . '<br />';
+				$address_string .= '<b>Province:</b> ' . $pronvince . '<br />';
+				$address_string .= '<b>Kecamatan:</b> ' . $kecamatan . '<br />';
+				$address_string .= '<b>Phone:</b> ' . $phone_number . '<br />';
 				
 				echo '<tr>
 					<td>'.strtoupper($v->tiket_barcode).'</td>
-					<td>'.ucwords($v->project_name).'</td>
 					<td>'.ucwords($v->account_name).'</td>
 					<td>'.$v->account_email.'</td>
-					<td>'.$v->address.'</td>
+					<td>'.$address_string.'</td>
 					<td><a href="'.base_url().'admin/project_winner/confirmWinnerProjectTiket?pid='.$v->project_id.'&tid='.$v->tiket_id.'&h='.sha1($v->project_id . $v->tiket_id . SALT).'">Confirm</a></td>
 				</tr>';	
 				
@@ -126,7 +140,6 @@
         <thead>
           <tr>
 			<th>Tiket Barcode</th>
-			<th>Project Name</th>
 			<th>Account Name</th>
 			<th>Account Email</th>
 			<th>Account Address</th>
@@ -135,12 +148,21 @@
         <tbody>
         	<?php 
         	foreach($member_winner as $k=>$v){
+        		
+				$address = (empty($v->address)) ? '-' : $v->address;
+				$pronvince = (empty($v->province_name)) ? '-' : $v->province_name;
+				$kecamatan = (empty($v->kecamatan_name)) ? '-' : $v->kecamatan_name;
+				$phone_number = (empty($v->phone_number)) ? '-' : $v->phone_number;
+				$address_string = '<b>Address:</b> ' . $address . '<br />';
+				$address_string .= '<b>Province:</b> ' . $pronvince . '<br />';
+				$address_string .= '<b>Kecamatan:</b> ' . $kecamatan . '<br />';
+				$address_string .= '<b>Phone:</b> ' . $phone_number . '<br />';
+				
         		echo '<tr>
 					<td>'.strtoupper($v->tiket_barcode).'</td>
-					<td>'.ucwords($v->project_name).'</td>
 					<td>'.ucwords($v->account_name).'</td>
 					<td>'.$v->account_email.'</td>
-					<td>'.$v->address.'</td>
+					<td>'.$address_string.'</td>
 					</tr>
 				';
 			?>
@@ -149,17 +171,38 @@
 				<td colspan="5">
 					<b>Upload Voucher untuk <?php echo strtoupper($v->tiket_barcode); ?></b>
 					<br />
-					<b>See Voucher : <?php echo (!empty($v->voucher_data)) ? '<a href="'. cdn_url() . $v->voucher_data . '" target="_blank">KLIK</a>' : '-'; ?></b>
+					
+					<?php 
+					$l = '';
+					if (!empty($v->voucher_data)){
+						$l = '<a href="'. cdn_url() . $v->voucher_data . '" target="_blank">KLIK</a>';
+					}
+					if (!empty($v->voucher_data_int)){
+						$l = '<a href="'. cdn_url() . 'admin/voucherpdf/details_see_pdf?vpid=' . $v->voucher_data_int . '&h='. sha1( $v->voucher_data_int . SALT ) .'" target="_blank">KLIK</a>';
+					}
+					?>
+					
+					<b>See Voucher : <?php echo $l; ?></b>
 					<br />
-					<form class="form-inline" role="form" method="post" 
-					enctype="multipart/form-data"
-					action="<?php echo base_url(); ?>admin/project_winner/submit_voucher"
-					>
-						<div class="form-group"><input type="file" name="voucher_data" id="voucher_data" /></div>
-						<input type="hidden" name="tiket_id" value="<?php echo $v->tiket_id; ?>" />
-						<input type="hidden" name="project_id" value="<?php echo $v->project_id; ?>" />
-						<input type="submit" class="btn btn-default" name="voucher_submit" id="voucher_submit" value="Submit" />
-					</form>
+					
+					<b>Generate Voucher:</b>
+					<ul>
+						<li>
+							<form class="form-inline" role="form" method="post" 
+							enctype="multipart/form-data"
+							action="<?php echo base_url(); ?>admin/project_winner/submit_voucher"
+							>
+								<div class="form-group"><input type="file" name="voucher_data" id="voucher_data" /></div>
+								<input type="hidden" name="tiket_id" value="<?php echo $v->tiket_id; ?>" />
+								<input type="hidden" name="project_id" value="<?php echo $v->project_id; ?>" />
+								<input type="submit" class="btn btn-default" name="voucher_submit" id="voucher_submit" value="Submit" />
+							</form>
+						</li>
+						<?php if (!empty($this->voucher_pdf_exists)){ ?>
+						<li><a href="<?php echo base_url(); ?>admin/project_winner/generate_voucher?project_id=<?php echo $v->project_id; ?>&tiket_id=<?php echo $v->tiket_id; ?>&voucher_id=<?php echo $this->voucher_pdf_exists->voucher_id; ?>&h=<?php echo sha1($v->project_id . $v->tiket_id . $this->voucher_pdf_exists->voucher_id . SALT); ?>" class="btn btn-default">Generate Voucher</a></li>
+						<?php } ?>
+					</ul>
+					
 				</td>
 			</tr>
 			

@@ -79,7 +79,8 @@ class Search_model extends CI_Model{
 			pp.project_name LIKE '%$q%' OR
 			pp.project_description LIKE '%$q%' OR 
 			pp.project_prize_detail LIKE '%$q%' OR
-			pp.project_tags LIKE '%$q%'
+			pp.project_tags LIKE '%$q%' OR
+			bp.business_name LIKE '%$q%'
 		) 
 		
 		$where_project_prize_category
@@ -97,6 +98,72 @@ class Search_model extends CI_Model{
 	public function countGetdata()	
 	{
 		 return (int) $this->db->query("SELECT FOUND_ROWS() AS total")->row()->total;	
+	}
+	
+	function registerSuggest($suggest_name){
+		$cek_suggest = $this->checkSuggest($suggest_name);
+		if (empty($cek_suggest)){
+			$this->db->insert('search__suggestions', array(
+				'suggest_name' => $suggest_name,
+				'suggest_count' => 1
+			));
+			return $this->db->insert_id();
+		}else{
+			$suggest_count = $cek_suggest->suggest_count + 1;
+			$this->db->update('search__suggestions', array(
+				'suggest_count' => $suggest_count 
+			), array(
+				'suggest_id' => $cek_suggest->suggest_id
+			));
+			return $cek_suggest->suggest_id;
+		}
+	}
+	
+	function checkSuggest($suggest_name){
+		$sql = "
+		SELECT 
+		ss.suggest_id,
+		ss.suggest_name,
+		ss.suggest_count
+		FROM
+		search__suggestions ss
+		WHERE 1
+		AND ss.suggest_name = ?
+		";
+		return $this->db->query($sql, array($suggest_name))->row();
+	}
+	
+	function registerKeyword($q){
+		$cek_suggest = $this->checkSearchKeyword($q);
+		if (empty($cek_suggest)){
+			$this->db->insert('search__keywords', array(
+				'key_name' => $q,
+				'key_count' => 1
+			));
+			return $this->db->insert_id();
+		}else{
+			$key_count = $cek_suggest->key_count + 1;
+			$this->db->update('search__keywords', array(
+				'key_count' => $key_count 
+			), array(
+				'key_id' => $cek_suggest->key_id
+			));
+			return $cek_suggest->key_id;
+		}
+	}
+	
+	function checkSearchKeyword($q){
+		$sql = "
+		SELECT 
+		sk.key_id,
+		sk.key_name,
+		sk.key_count
+		FROM
+		search__keywords sk
+		WHERE 1
+		AND sk.key_name = ?
+		";
+		return $this->db->query($sql, array($q))->row();
 	}
 	
 }

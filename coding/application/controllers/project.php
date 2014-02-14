@@ -398,7 +398,7 @@ class Project extends MY_Controller{
 			
 			
 			/*actions*/
-			if (empty($actions_step) || count($actions_step) < 3 || count($actions_step) >= 4){
+			if ( (empty($actions_step) || count($actions_step) < 3 || count($actions_step) >= 4) && $this->authActions() == 0){
 				$errors[] = 'You have to pick 3 Actions to create this project.';
 			}else{
 			
@@ -414,6 +414,9 @@ class Project extends MY_Controller{
 			
 				$actions_step_data = $this->func_actions_step($actions_step);
 				
+				$project_actions_data = json_decode( $actions_step_data );
+				
+				/*
 				$project_actions_data_arr = array();
 				if (!empty($actions_step_data)){
 					$project_actions_data = json_decode( $actions_step_data );
@@ -426,10 +429,13 @@ class Project extends MY_Controller{
 				$this->session->set_userdata('pvc', $pvc);
 				$this->scache->write('project#'. $pvc . '#', json_encode( $project_actions_data_arr ), 60 * 60);
 				//$this->data['project_actions_data_arr'] = $project_actions_data_arr;
+				*/
 				
 				if (empty($actions_step_data)){
 					//$errors[] = 'Terjadi kesalahan dalam Social Media Connect. Koneksi '. $this->type_social . ' Anda mengalami masalah. Periksa kembali di menu <a href="'.base_url().'settings/socialmedia" target="_blank">Settings</a>.';
 					$errors[] = 'You must connect Facebook, Twitter to proceed this project. Connect your Social Network Account at <a href="'.base_url().'settings/socialmedia" target="_blank">Settings</a>.';
+				}else if (count($project_actions_data) < 3 || count($project_actions_data) >= 4){
+					$errors[] = 'You have to pick 3 Actions to create this project.';
 				}
 							
 			}
@@ -585,6 +591,20 @@ class Project extends MY_Controller{
 			$return[] = $act;
 			
 		}
+		
+		
+		/* CUSTOM ACTIONS ======= START ======= */
+		if (count($return) < 3 && $this->authActions() == 1){
+			// follow twitter activorm
+			$act = $this->twitter_step("twitter-follow", 14);
+			$act['custom_actions'] = 'business_rel_to_action_twitter_follow_activorm';
+			$this->type_social = 'twitter';
+			$key = array_keys($return);
+			$key = end($key);
+			$return[($key+1)] = $act;
+		}
+		/* CUSTOM ACTIONS ======= END   ======= */
+		
 						
 		if ($break == 1){
 			
@@ -597,10 +617,21 @@ class Project extends MY_Controller{
 			return $return;
 		}
 	}
-	
-	function facebook_step($key){
-		$this->load->model('socialmedia_model');
+
+	function authActions(){
 		$account_id = $this->session->userdata('account_id');
+		$account_id_selected = array(962,4,14);
+		if (in_array($account_id, $account_id_selected)) return 1;
+		return 0;
+	}
+	
+	function facebook_step($key, $account_id_selected = 0){
+		$this->load->model('socialmedia_model');
+		if ($account_id_selected == 0){
+			$account_id = $this->session->userdata('account_id');
+		}else{
+			$account_id = $account_id_selected;
+		}
 		$socialmedia = $this->socialmedia_model->getSocialMediaConnect($account_id, 'facebook');
 		
 		if (empty($socialmedia) || empty($socialmedia->social_page_data) || empty($socialmedia->social_page_active)){
@@ -633,13 +664,18 @@ class Project extends MY_Controller{
 				$return['type_name'] = "Share Content to Facebook";
 				break;
 		}
+		if ($account_id_selected > 0) $key = $key . "_customactions";
 		$return['type_step'] = $key;
 		return $return;
 	}
 	
-	function twitter_step($key){
+	function twitter_step($key, $account_id_selected = 0){
 		$this->load->model('socialmedia_model');
-		$account_id = $this->session->userdata('account_id');
+		if ($account_id_selected == 0){
+			$account_id = $this->session->userdata('account_id');
+		}else{
+			$account_id = $account_id_selected;
+		}
 		$socialmedia = $this->socialmedia_model->getSocialMediaConnect($account_id, 'twitter');
 		
 		if (empty($socialmedia) || empty($socialmedia->social_oauth_data)){
@@ -671,9 +707,9 @@ class Project extends MY_Controller{
 				break;
 			case "twitter-follow" :
 				$return = (array) json_decode( $socialmedia->social_data );
-				$socialmedia_name = "Activorm"; //$return['screen_name'];
+				$socialmedia_name = $return['screen_name']; //"Activorm"; //$return['screen_name'];
 				$return['social_oauth_data'] = $social_oauth_data;
-				$return['type_name'] = "Follow Twitter";
+				$return['type_name'] = "Follow Twitter @" . $socialmedia_name;
 				break;
 			case "twitter-hashtag" :
 				$return = array(
@@ -693,6 +729,7 @@ class Project extends MY_Controller{
 				$return['type_name'] = "Tweet to @ " . $socialmedia_name;
 				break;
 		}
+		if ($account_id_selected > 0) $key = $key . "_customactions";
 		$return['type_step'] = $key;
 		return $return;
 	}
@@ -837,10 +874,13 @@ class Project extends MY_Controller{
 		if (!empty($this->project->project_actions_data)){
 			$project_actions_data = json_decode( $this->project->project_actions_data );
 			foreach($project_actions_data as $k=>$v){
+				if (!property_exists($v, "type_step")) continue;
 				$project_actions_data_arr[$v->type_step] = $v;
 			}
 		}
 		$this->data['project_actions_data_arr'] = $project_actions_data_arr;
+		
+		//echo '<pre>';print_r($project_actions_data_arr);echo '</pre>';
 		
 	}
 	

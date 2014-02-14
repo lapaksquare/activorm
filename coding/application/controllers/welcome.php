@@ -98,6 +98,90 @@ class Welcome extends CI_Controller {
 		//var_dump( is_file('images/merchant/Email-Logo-activorm.png') );
 	}
 	
+	function test_pdf(){
+		$this->load->library('fpdf_library');
+		$this->fpdf_library->fpdf = new FPDF('L', 'cm', array(29,29));
+		$this->fpdf_library->fpdf->AddPage();
+		
+		// bg image
+		$this->fpdf_library->fpdf->Image(cdn_url() . '/images/voucher/voucher_basic_edited.jpg', 0, 0);
+		
+		// nomor order
+		$this->fpdf_library->fpdf->SetFont('Arial', 'I', 23); 
+		$text = "XXXX0000"; 
+		$this->fpdf_library->fpdf->Text(6, 2.45, $text); 
+		
+		$this->fpdf_library->fpdf->SetTextColor(52,73,93);
+		$this->fpdf_library->fpdf->SetFont('helvetica', 'B', 50); 
+		$text = "VOUCHER"; 
+		$mid_x = 8.5; // the middle of the "PDF screen", fixed by now.
+		$this->fpdf_library->fpdf->Text($mid_x - ($this->fpdf_library->fpdf->GetStringWidth($text) / 2), 6, $text); 
+		
+		$this->fpdf_library->fpdf->SetTextColor(52,73,93);
+		$this->fpdf_library->fpdf->SetFont('helvetica', 'B', 40); 
+		$text = "BUY 1 GET 1 FREE"; 
+		$mid_x = 8.5; // the middle of the "PDF screen", fixed by now.
+		$this->fpdf_library->fpdf->Text($mid_x - ($this->fpdf_library->fpdf->GetStringWidth($text) / 2), 8.3, $text);
+		
+		$this->fpdf_library->fpdf->SetTextColor(255,255,255);
+		$this->fpdf_library->fpdf->SetFont('helvetica', '', 22); 
+		$text = "31 Maret 2014"; 
+		$this->fpdf_library->fpdf->Text(8.2, 12.4, $text); 
+		
+		$image_merchant = "images/merchant/email-logo-virginius-affair_185x90.png";
+		$image_merchant = $this->mediamanager->getPhotoUrl($image_merchant, "100x100");
+		$this->fpdf_library->fpdf->Image(cdn_url() . $image_merchant, 25, 1.6);
+		
+		$this->fpdf_library->fpdf->SetTextColor(0,0,0);
+		$this->fpdf_library->fpdf->SetFont('helvetica', '', 17); 
+		$text = "Lapaksquare"; 
+		$this->fpdf_library->fpdf->Text(18.1, 7.6, $text); 
+		
+		$text = "www.lapaksquare.com"; 
+		$this->fpdf_library->fpdf->Text(18.1, 8.8, $text); 
+		
+		$text = "Email: lapaksquare@gmail.com"; 
+		$this->fpdf_library->fpdf->Text(18.1, 9.9, $text); 
+		
+		$text = "Phone: +62-821-6350-4980"; 
+		$this->fpdf_library->fpdf->Text(18.1, 11.1, $text); 
+		
+		$this->fpdf_library->fpdf->SetTextColor(105,206,187);
+		$this->fpdf_library->fpdf->SetFont('helvetica', 'U', 17); 
+		$text = "winner@activorm.com"; 
+		$this->fpdf_library->fpdf->Text(18.1, 14, $text); 
+		
+		$this->fpdf_library->fpdf->SetTextColor(152,153,153);
+		$this->fpdf_library->fpdf->SetFont('helvetica', '', 12); 
+		$text = "- Ongkos kirim ditanggung pemenang atau konfirmasi terlebih dahulu saat diambil dari kantor Activorm.\n- Voucher tidak dapat dipindah-tangankan.\n- Voucher hanya berlaku untuk satu kali request.\n- Voucher tidak berlaku untuk Reseller atau Dropship.
+		"; 
+		$this->fpdf_library->fpdf->SetLeftMargin(1.5);
+		$this->fpdf_library->fpdf->SetXY(1.5, 16.5);
+		$this->fpdf_library->WordWrap($text, 12);
+		$this->fpdf_library->fpdf->Write(0.6, $text);
+		
+		$text = "- Informasikan pihak Kaos Loe nomor voucher untuk konfirmasi spesifikasi kaos pilihan.\n- Pilihan kaos dapat dilihat di album foto \nFacebook Fanpage KaosLoe : Ready to Print! KaosLoe
+		"; 
+		$this->fpdf_library->fpdf->SetLeftMargin(15.3);
+		$this->fpdf_library->fpdf->SetXY(15.3, 16.5);
+		$this->fpdf_library->WordWrap($text, 12);
+		$this->fpdf_library->fpdf->Write(0.6, $text);
+		
+		$d = $this->input->get_post("d");
+		$time = sha1(time().SALT);
+		if (!empty($d)){
+			$this->fpdf_library->fpdf->Output($time . ".pdf", "D");
+		}else{
+			$this->fpdf_library->fpdf->Output();
+		}
+	}
+	
+	function generate_link_vc(){
+		$account_id = $this->input->get_post('account_id');
+		$verify_code = $this->input->get_post('vc_code');
+		echo base_url() . 'auth/vccode_next?acid=' . $account_id . '&vccode=' . $verify_code . '&h=' . sha1($account_id . $verify_code . SALT);
+	}
+	
 }
 
 /* End of file welcome.php */

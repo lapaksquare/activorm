@@ -159,7 +159,7 @@
 	  </div>  
 	  
 	  <div class="form-group">
-	    <label for="describe_project" class="col-sm-2 control-label">Describe Program</label>
+	    <label for="describe_project" class="col-sm-2 control-label">Terms & Condition</label>
 	    <div class="col-sm-10">
 	     	<textarea name="describe_project" id="describe_project" rows="5" class="form-control"><?php echo $this->project->project_description; ?></textarea>
 	    </div>
@@ -229,6 +229,7 @@
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">
 	      <input type="hidden" name="pid" value="<?php echo $this->project->project_id; ?>" />	
+	      <input type="hidden" name="aid" value="<?php echo $this->project->account_id; ?>" />	
 	      <input type="hidden" name="h" value="<?php echo sha1($this->project->project_id . SALT); ?>" />	
 	      <input type="submit" class="btn btn-default" name="update" id="update" value="Update" />
 	    </div>

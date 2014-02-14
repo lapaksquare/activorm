@@ -3,26 +3,37 @@
 		<div id="main" class="container">
 
 			<div class="page-header">
-				<h1 class="pull-left page-title">Testimoni</h1>
+				<h1 class="pull-left page-title">Testimonial</h1>
 				<span class="page-subtitle">Claim your ticket if you win the prize.</span>
 				<div class="clearfix"></div>
 			</div>
 
 			<div class="isotope row testimonials">
+				
+				<?php 
+				foreach($this->testimonials as $k=>$v){
+					$photo = (empty($v->account_primary_photo)) ? 'img/user-default.gif' : $v->account_primary_photo;
+					$photo = $this->mediamanager->getPhotoUrl($photo, "160x160");
+				?>
+				
 				<div class="col-sm-6 item">
 					<div class="box">
 						<div class="item-image">
-							<img src="<?php echo cdn_url(); ?>img/content/ladya.jpg" alt="#" />
+							<img src="<?php echo cdn_url() . $photo; ?>" alt="<?php echo ucwords( $v->account_name ); ?>" />
 						</div>
 
 						<div class="item-content">
-							<h3 class="item-title"><a href="#">Karen Kamal</a> win a Macbook Pro</h3>
-							<blockquote><p>Wooow, not have thought I won the laptop. Thank you Activorm.</p></blockquote>
-							<a href="#">View More</a>
+							<h3 class="item-title"><a href="#" onclick="return false;"><?php echo ucwords( $v->account_name ); ?></a> <?php echo ucwords($v->project_name); ?></h3>
+							<blockquote><p><?php echo ucfirst($v->messages); ?></p></blockquote>
 						</div>
 					</div>
 				<!-- .item --></div>
+				
+				<?php 
+				}
+				?>
 
+				<?php /*
 				<div class="col-sm-6 item">
 					<div class="box">
 						<div class="item-image">
@@ -94,7 +105,8 @@
 							<a href="#">View More</a>
 						</div>
 					</div>
-				<!-- .item --></div>
+				<!-- .item --></div>*/ ?>
+				
 			<!-- .testimonials --></div>
 
 		<!-- #main --></div>

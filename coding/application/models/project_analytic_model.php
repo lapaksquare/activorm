@@ -125,6 +125,25 @@ class Project_analytic_model extends CI_Model {
 		return $this->db->query($sql)->result();
 	}
 	
+	function getGenderTrafficData(){
+		$sql = '
+		SELECT
+		   	ma.gender gender,
+			( DATE_FORMAT(NOW(), "%Y") - DATE_FORMAT(ma.birthday, "%Y") ) umur,
+		    count( ( DATE_FORMAT(NOW(), "%Y") - DATE_FORMAT(ma.birthday, "%Y") ) ) jml_umur
+		    FROM 
+		    member__account ma
+		    WHERE 1
+		    AND ( DATE_FORMAT(NOW(), "%Y") - DATE_FORMAT(ma.birthday, "%Y") ) > 0
+		    AND ma.gender IS NOT NULL
+			AND ma.account_live = "Online"
+			AND ma.account_active = 1
+			GROUP BY gender, umur
+			ORDER BY umur
+		';
+		return $this->db->query($sql)->result();
+	}
+	
 }
 
 ?>

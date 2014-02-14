@@ -3,7 +3,7 @@
 		<?php 
 		$business_id = $this->session->userdata('business_id');
 		$account_id = $this->session->userdata('account_id');
-		if (!empty($this->access->business_account) && $business_id == $this->access->business_account->business_id){
+		if (!empty($this->access->business_account) && $business_id == $this->access->business_account->business_id && $this->project->project_live != "Online"){
 		?>
 		<div class="pop-warning">
 			<p>Project ini dalam keadaan : <b><?php echo ucwords( $this->project->project_live ); ?></b></p>
@@ -105,15 +105,15 @@
 											if ($project_period < $project_now) { $stoped = 1;
 									?>
 									
-									<h4>Project Closed</h4>		
+									<h4 class="project_details_h4">The Project has Ended</h4>		
 									
 									<div class="project-closed"></div>
 									
 									<?php }else{ ?>
 									
-									<h4><?php echo ucwords($this->project->project_name); ?>.</h4>
+									<h4 class="project_details_h4"><?php echo ucwords($this->project->project_name); ?>.</h4>
 									
-									<p>Project belum dimulai</p>
+									<p>The Project has not been Started</p>
 									
 									<?php } ?>
 									
@@ -128,7 +128,9 @@
 										}else{
 		        					?>
 		        					
-		        					<h4><?php echo ucwords($this->project->project_name); ?></h4>
+		        					<h4 class="project_details_h4"><?php echo ucwords($this->project->project_name); ?></h4>
+		        					
+		        					<p style="color: #e82355;margin-bottom: 0;margin-top: 20px;font-weight: bold;font-size: 18px;">Time Remaining</p>
 		        					
 		        					<script type="text/javascript">
 	        							var server_end = <?php echo $server_end * 1000; ?>;
@@ -296,7 +298,7 @@
 
 						<div class="wizard-project">
 							<div class="wizard-step step-1">
-								<h2>Click start button if you get the prize</h2>
+								<h2>Click on <strong>Start</strong> button to grab the prize</h2>
 								<a class="btn btn-big btn-wd btn-yellow" href="#" id="btn-start-action">Start</a>
 							</div>
 						<!-- .wizard-project --></div>
@@ -494,7 +496,7 @@
 																
 								<?php if ($flag == 0) { ?><button type="button" class="close" id="btn-action-close">&times;</button><?php } ?>
 
-								<h2>Only 3 steps to get the desired prize</h2>
+								<h2>Click on 3 Engagement-Action Buttons below</h2>
 								
 								<div class="action-steps" id="action-steps">
 									<ul class="row">
@@ -513,7 +515,12 @@
 											);
 											$url = http_build_query($url);
 											
-											switch($v->type_step){
+											$type_step = $v->type_step;
+											if (property_exists($v, "custom_actions") && !empty($v->custom_actions)){
+												list($type_step, $type_step_key) = explode("_", $type_step);
+											}
+											
+											switch($type_step){
 												
 												// facebok
 												case "facebook-like" :
@@ -700,7 +707,7 @@
 						
 						<!-- TABBED START -->
 						<ul class="nav nav-tabs project_tab" id="project_tab">
-						  <li class="active"><a href="#description" data-rel="description">Program Description</a></li>
+						  <li class="active"><a href="#description" data-rel="description">Terms & Condition</a></li>
 						  <li><a href="#embed" data-rel="embed">Embed</a></li>
 						</ul>
 						<div id="myTabContent" class="tab-content">
@@ -742,6 +749,9 @@
 						<div class="clearfix"></div>	
 
 						<div class="entry-footer" style="">
+							
+							<h5>Recommend this project to friends</h5>
+							
 							<?php /*
 							<ul class="clearfix list-unstyled entry-share">
 								<li class="share-facebook" data-url="http://google.com" data-text="Sharing text goes here" data-title="share"></li>

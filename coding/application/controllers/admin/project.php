@@ -81,6 +81,7 @@ class Project extends MY_Admin_Access{
 		
 		/*key ==== start ====*/
 		$pid = $this->input->get_post('pid');
+		$aid = $this->input->get_post('aid');
 		$h = $this->input->get_post('h');
 		$h_ori = sha1($pid . SALT);
 		/*key ==== end ====*/
@@ -176,18 +177,79 @@ class Project extends MY_Admin_Access{
 								
 			}else{
 				
+				/* === FIX ACTIONS ===*/
+				$this->load->model('a_project_model');
+				$project = $this->a_project_model->getProjectDetail($pid);
+				$project_hashtags = $project->project_hashtags;
+				$this->dataStatus = array(
+					'project_name' => $project_name,
+					'project_description' => $describe_project,
+					'project_uri' => base_url() . 'project/' . $project_uri,
+					'project_hashtags' => (!empty($project_hashtags)) ? '#'.$project_hashtags : '',
+					'project_picture' => $photo_thumb
+				);
+				$project_actions_data = json_decode($project->project_actions_data);
+				
+				//echo '<pre>';print_r($project_actions_data);echo '</pre>';die();
+				
+				$actions = array();
+				$actions_string = "";
+				if (!empty($project_actions_data)){
+					foreach($project_actions_data as $k=>$v){
+						$type_step = $v->type_step;
+						$aid_selected = $aid;
+						if (property_exists($v, "custom_actions") && !empty($v->custom_actions)){
+							list($type_step, $type_step_key) = explode("_", $type_step);
+							$aid_selected = 14;
+						}
+						$act = $this->func_actions_step($type_step, $aid);
+						$actions[] = $act;
+					}
+										
+					/* CUSTOM ACTIONS ======= START ======= */
+					if (count($actions) < 3 && $this->authActions($aid) == 1){
+						// follow twitter activorm
+						$act = $this->twitter_step("twitter-follow", 14, 1);
+						$act['custom_actions'] = 'business_rel_to_action_twitter_follow_activorm';
+						$this->type_social = 'twitter';
+						$key = array_keys($actions);
+						$key = end($key);
+						$actions[($key+1)] = $act;
+					}
+					/* CUSTOM ACTIONS ======= END   ======= */
+					
+					$actions_string = json_encode($actions);
+				}
+				/* === FIX ACTIONS ===*/
+				
 				$dataProject = array(
 					'project_name' => $project_name,
 					'project_description' => $describe_project,
 					'project_uri' => $project_uri,
-					'project_period' => date('Y-m-d H:i:s', strtotime("+" . $period . " days")),
-					'project_period_int' => $period,
+					//'project_period' => date('Y-m-d H:i:s', strtotime("+" . $period . " days")),
+					//'project_period_int' => $period,
 					'project_prize_detail' => $describe_prize,
 					'project_prize_category' => $prize_category,
 					'project_tags' => $project_tags,
 					'project_live' => $project_live,
-					'project_active' => $project_active
+					'project_active' => $project_active,
+					'project_actions_data' => $actions_string
 				);
+				
+				if (!empty($project) && in_array($project->project_live, array('Offline', 'Draft', 'Closed')) && $project_live == "Online"){
+					$dataProject['project_period'] = date('Y-m-d H:i:s', strtotime("+" . $period . " days"));
+					$dataProject['project_period_int'] = $period;
+				}else{
+					if ($project->project_period_int > $period){
+						$pp = $project->project_period_int - $period;
+						$pp_string = "-" . $pp . " days";
+					}else{
+						$pp = $period - $project->project_period_int;
+						$pp_string = "+" . $pp . " days";
+					}
+					$dataProject['project_period'] = date('Y-m-d H:i:s', strtotime($project->project_period . $pp_string));
+					$dataProject['project_period_int'] = $period;
+				}
 				
 				if (!empty($project_primary_photo)) $dataProject['project_primary_photo'] = $project_primary_photo;
 				
@@ -210,6 +272,168 @@ class Project extends MY_Admin_Access{
 		}
 		
 		redirect(base_url() . 'admin/project/project_detail?pid=' . $pid . '&h=' . $h_ori);
+	}
+
+	function func_actions_step($actions_step, $account_id){
+		$act = array();
+				
+		$this->type_social = '';
+		
+		$k = $actions_step;
+		
+		switch($actions_step){
+			
+			// for facebook step
+			case "facebook-like" : 
+				$act = $this->facebook_step($k, $account_id, 0);
+				$this->type_social = 'facebook';
+				break;
+			case "facebook-follow" :
+				$act = $this->facebook_step($k, $account_id, 0);
+				$this->type_social = 'facebook';
+				break;
+			case "facebook-send" :
+				$act = $this->facebook_step($k, $account_id, 0);
+				$this->type_social = 'facebook';
+				break; 
+				
+			// for twitter step
+			case "twitter-tweet" :
+				$act = $this->twitter_step($k, $account_id, 0);
+				$this->type_social = 'twitter';
+				break; 
+			case "twitter-follow" :
+				$act = $this->twitter_step($k, $account_id, 0);
+				$this->type_social = 'twitter';
+				break; 
+			case "twitter-hashtag" :
+				$act = $this->twitter_step($k, $account_id, 0);
+				$this->type_social = 'twitter';
+				break;
+			case "twitter-to" :
+				$act = $this->twitter_step($k, $account_id, 0);
+				$this->type_social = 'twitter';
+				break;
+					
+		}
+		
+		return $act;
+	}
+
+	function authActions($aid){
+		$account_id = $aid;
+		$account_id_selected = array(962,4,14);
+		if (in_array($account_id, $account_id_selected)) return 1;
+		return 0;
+	}
+
+	function facebook_step($key, $account_id_selected = 0, $custom = 0){
+		$this->load->model('socialmedia_model');
+		if ($account_id_selected == 0){
+			$account_id = $this->session->userdata('account_id');
+		}else{
+			$account_id = $account_id_selected;
+		}
+		$socialmedia = $this->socialmedia_model->getSocialMediaConnect($account_id, 'facebook');
+		
+		if (empty($socialmedia) || empty($socialmedia->social_page_data) || empty($socialmedia->social_page_active)){
+			return array();
+		}
+		
+		$return = array();
+		switch($key){
+			case "facebook-like" :
+				$return = (array) json_decode( $socialmedia->social_page_active );
+				$return['type_name'] = "Like Facebook Page";
+				break; 
+			case "facebook-follow" :
+				$return = (array) json_decode( $socialmedia->social_data );
+				$return['type_name'] = "Follow Facebook User";
+				break; 
+			case "facebook-send" :				
+				$return = array(
+				 	//'message' => //'Testing link message',
+				 	'name' => $this->dataStatus['project_name'],
+				 	'link' => $this->dataStatus['project_uri'],
+				 	'description' => $this->dataStatus['project_description'],
+				 	//'picture' => $this->dataStatus['project_picture'],
+				);
+				
+				if (!empty($this->dataStatus['facebook_format'])){
+					$return['message'] = $this->dataStatus['facebook_format'];
+				}
+				
+				$return['type_name'] = "Share Content to Facebook";
+				break;
+		}
+		if ($custom > 0) $key = $key . "_customactions";
+		$return['type_step'] = $key;
+		return $return;
+	}
+	
+	function twitter_step($key, $account_id_selected = 0, $custom = 0){
+		$this->load->model('socialmedia_model');
+		if ($account_id_selected == 0){
+			$account_id = $this->session->userdata('account_id');
+		}else{
+			$account_id = $account_id_selected;
+		}
+		$socialmedia = $this->socialmedia_model->getSocialMediaConnect($account_id, 'twitter');
+		
+		if (empty($socialmedia) || empty($socialmedia->social_oauth_data)){
+			return array();
+		}else{
+			$js = json_decode($socialmedia->social_data);
+			if (property_exists($js, "errors")){
+				return array();
+			}
+		}
+		
+		$social_oauth_data = (array) json_decode( $socialmedia->social_oauth_data );
+		$return = array();
+		
+		$tweet_status = $this->dataStatus['project_name'] . ' ' . $this->dataStatus['project_uri'];
+		if (!empty($this->dataStatus['twitter_format'])){
+			$tweet_status = $this->dataStatus['twitter_format'] .  ' ' . $this->dataStatus['project_uri'];
+		}
+		
+		switch($key){
+			case "twitter-tweet" :
+				$return = (array) json_decode( $socialmedia->social_data );
+				$socialmedia_name = "Activorm"; //$return['screen_name'];
+				$return = array(
+					'status' => $tweet_status . ' via @' . $socialmedia_name,
+					'social_oauth_data' => $social_oauth_data
+				);
+				$return['type_name'] = "Tweet Something";
+				break;
+			case "twitter-follow" :
+				$return = (array) json_decode( $socialmedia->social_data );
+				$socialmedia_name = $return['screen_name']; //"Activorm"; //$return['screen_name'];
+				$return['social_oauth_data'] = $social_oauth_data;
+				$return['type_name'] = "Follow Twitter @" . $socialmedia_name;
+				break;
+			case "twitter-hashtag" :
+				$return = array(
+					'status' => $tweet_status . ' ' . $this->dataStatus['project_hashtags'],
+					'social_oauth_data' => $social_oauth_data
+				);
+				$return['type_name'] = "Tweet Hashtag";
+				break;
+			case "twitter-to" :
+				$social_data = json_decode( $socialmedia->social_data );
+				$socialmedia_name = "Activorm"; //$social_data->screen_name;
+				$return = array(
+					'status' => $tweet_status .' @'.$socialmedia_name,
+					'social_data' => (array) $social_data,
+					'social_oauth_data' => $social_oauth_data
+				);
+				$return['type_name'] = "Tweet to @ " . $socialmedia_name;
+				break;
+		}
+		if ($custom > 0) $key = $key . "_customactions";
+		$return['type_step'] = $key;
+		return $return;
 	}
 	
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){

@@ -46,6 +46,10 @@
 			'name' => 'Project Winner',
 			'url' => base_url() . 'admin/project_winner'		
 		),
+		'voucher_pdf' => array(
+			'name' => 'Voucher PDF',
+			'url' => base_url() . 'admin/voucherpdf',
+		),
 		'project' => array(
 			'name' => 'Project',
 			'url' => base_url() . 'admin/project',
@@ -89,7 +93,15 @@
 		'rangking' => array(
 			'name' => 'Rangking',
 			'url' => base_url() . 'admin/rangking',
-		)
+		),
+		'newsletter' => array(
+			'name' => 'Newsletter',
+			'url' => base_url() . 'admin/newsletter',
+		),
+		'graph' => array(
+			'name' => 'Graph',
+			'url' => base_url() . 'admin/graph',
+		),
 	);
 	
 	?>
@@ -113,11 +125,11 @@
 		    	<?php } ?>
 		  	</ul>
 			<?php } 
-			}
 			?>
 			
 		</li>
 		<?php 	
+			}
 		}
 		?>
 		

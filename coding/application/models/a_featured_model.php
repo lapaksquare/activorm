@@ -133,11 +133,16 @@ class A_featured_model extends CI_Model{
 		bp.business_id,
 		bp.business_name,
 		bp.merchant_logo,
-		brm.account_id
+		brm.account_id,
+		bp.website,
+		bp.contact_number,
+		ma.account_email
 		FROM
 		business__profile bp
 		JOIN business__rel_member brm ON
 			bp.business_id = brm.business_id
+		JOIN member__account ma ON
+			ma.account_id = brm.account_id
 		WHERE 1
 		AND bp.business_id = ?
 		";

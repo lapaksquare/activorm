@@ -338,6 +338,16 @@ class Ajax extends CI_Controller {
 		$this->session->set_userdata('nopopuplogin', 1);
 	}
 	
+	function submit_search_suggest(){
+		$suggest_name = $this->input->get_post('suggest_name');
+		$this->load->model('search_model');
+		$this->search_model->registerSuggest(trim($suggest_name));
+		echo json_encode(array(
+			'error' => 0,
+			'message' => 'Thanks for the submit! <a class="btn btn-green" href="'.base_url().'">Back to Homepage</a>'
+		));
+	}
+	
 }
 
 ?>

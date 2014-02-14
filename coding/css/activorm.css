@@ -3555,3 +3555,52 @@ body.alt #footer {
 	color: #1ab99b;
 	font-weight:bold;
 }
+
+
+.btn-prize-view{
+	position: absolute;
+	width:60px;
+	bottom: 35px;
+	left: 50%;
+	margin-left: -30px;
+}
+
+.loading-bar-top{
+	background: #f6f7f8;
+	background: -webkit-gradient(linear, center top, center bottom, from(#ffffff), to(#f7f7f7));
+	background: -webkit-linear-gradient(to bottom, #ffffff 0%,#f7f7f7 100%);
+	background: -moz-linear-gradient(top, #ffffff, #f7f7f7);
+	height: 47px;
+	padding: 0 12px;
+	text-align:center;
+	line-height: 47px;
+	width:100%;
+	border-bottom: 1px solid #e5e5e5;
+	display:none;
+}
+.loading-img{
+	background-image: url('../img/loading.png');
+	height: 12px;
+	width: 12px;
+	margin-left: 5px;
+	position: relative;
+	-webkit-animation: rotateSpinner 1.2s linear infinite;
+	-moz-animation: rotateSpinner 1.2s linear infinite;
+	display: inline-block;
+}
+@-webkit-keyframes rotateSpinner{
+	0%{-webkit-transform:rotate(0deg)}
+	100%{-webkit-transform:rotate(360deg)}
+}
+@-moz-keyframes rotateSpinner{
+	0%{-moz-transform:rotate(0deg)}
+	100%{-moz-transform:rotate(360deg)}
+}
+
+
+
+
+.project_details_h4{
+	text-align:center !important;
+	margin-bottom:2px !important;
+}

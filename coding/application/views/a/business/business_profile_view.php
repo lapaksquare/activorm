@@ -114,7 +114,7 @@
 								$photo = $this->mediamanager->getPhotoUrl($photo, "200x125");
 								?>
 								
-								<img class="project-thumb" src="<?php echo cdn_url() . $photo; ?>" alt="<?php echo ucwords($v->project_name); ?>" />
+								<img style="max-width:200px;" class="project-thumb" src="<?php echo cdn_url() . $photo; ?>" alt="<?php echo ucwords($v->project_name); ?>" />
 							</div>
 
 							<div class="col-md-7 col-sm-6">

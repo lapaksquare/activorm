@@ -8,103 +8,82 @@
 			</div>
 
 			<div id="press" class="box">
-				<h3 class="box-subtitle green">Sunday, 10 November 2013</h3>
+				
+				<?php 
+				$medias = array(
+					'december_2013' => array(
+						'name' => 'December 2013',
+						'press' => array(
+							'dailysocial' => array(
+								'img' => cdn_url() . 'images/press/dailysocial.png',
+								'link' => 'http://dailysocial.net/post/activorm-bantu-aktivasi-promosi-di-media-sosial-pertemukan-keinginan-konsumen-dan-merchant-dalam-bentuk-hadiah',
+								'name' => 'Activorm Bantu Aktivasi Promosi di Media Sosial, Pertemukan Keinginan Konsumen dan Merchant...'
+							),
+							'techinasia' => array(
+								'img' => cdn_url() . 'images/press/techinasia.png',
+								'link' => 'http://id.techinasia.com/activorm-bantu-kumpulkan-pengikut-media-sosial-melalui-undian-berhadiah/',
+								'name' => 'Activorm bantu kumpulkan pengikut media sosial melalui undian berhadiah'
+							),
+							'startupbisnis' => array(
+								'img' => cdn_url() . 'images/press/startupbisnis.png',
+								'link' => 'http://startupbisnis.com/activorm-satu-lagi-startup-baru-karya-anak-indonesia/',
+								'name' => 'Activorm: Satu Lagi Startup Baru Karya Anak Indonesia'
+							)
+						)
+					),
+					'januari_2014' => array(
+						'name' => 'Januari 2014',
+						'press' => array(
+							'dailysocial' => array(
+								'img' => cdn_url() . 'images/press/dailysocial.png',
+								'link' => 'http://dailysocial.net/post/activorm-buka-akses-ke-publik-umumkan-fitur-baru-dan-kesuksesan-fase-private-beta',
+								'name' => 'Activorm Buka Akses ke Publik, Umumkan Fitur Baru dan Kesuksesan Fase Private Beta'
+							),
+							'e27' => array(
+								'img' => cdn_url() . 'images/press/e27.png',
+								'link' => 'http://e27.co/facebook-advtg-expensive-startup-activorm-solution/',
+								'name' => 'Facebook advtg too expensive for your startup? Activorm has a solution'
+							),
+							'startupbisnis' => array(
+								'img' => cdn_url() . 'images/press/startupbisnis.png',
+								'link' => 'http://startupbisnis.com/activorm-secara-resmi-di-buka-untuk-publik/',
+								'name' => 'Activorm Secara Resmi di Buka Untuk Publik'
+							)
+						)
+					)
+				);
+				?>
+				
+				<?php 
+				
+				foreach($medias as $k=>$v){
+					
+				?>
+				
+				<h3 class="box-subtitle green"><?php echo $v['name']; ?></h3>
 				<div class="row press-group">
+					
+					<?php foreach($v['press'] as $a=>$b){ ?>
 					<div class="col-md-6">
 						<div class="media">
-							<a class="pull-left" href="#">
-								<img class="media-object" src="<?php echo cdn_url(); ?>img/content/press-2.gif" alt="#" />
+							<a class="pull-left" href="<?php echo $b['link']; ?>" target="blank">
+								<img class="media-object" src="<?php echo $b['img']; ?>" alt="<?php echo $b['name']; ?>" />
 							</a>
 							<div class="media-body">
-								<p>Golden Gate Ventures Makes First Investments With E-Commerce-Focused Trio In Southeast Asia</p>
+								<a href="<?php echo $b['link']; ?>" target="blank"><p><?php echo $b['name']; ?></p></a>
 							</div>
 						<!-- .media --></div>
 					</div>
-
-					<div class="col-md-6">
-						<div class="media">
-							<a class="pull-left" href="#">
-								<img class="media-object" src="<?php echo cdn_url(); ?>img/content/press-3.gif" alt="#" />
-							</a>
-							<div class="media-body">
-								<p>Tech Start-Ups And Financial Inclusion: Trends To Watch In 2013</p>
-							</div>
-						<!-- .media --></div>
-					</div>
-
-					<div class="col-md-6">
-						<div class="media">
-							<a class="pull-left" href="#">
-								<img class="media-object" src="<?php echo cdn_url(); ?>img/content/press-1.gif" alt="#" />
-							</a>
-							<div class="media-body">
-								<p>Golden Gate Ventures Makes First Trio In Southeast Asia</p>
-							</div>
-						<!-- .media --></div>
-					</div>
+					<?php } ?>
+					
 				<!-- .press-group --></div>
+				
+				<?php	
+					
+				}
+				
+				?>
 
-				<h3 class="box-subtitle green">Sunday, 10 November 2013</h3>
-				<div class="row press-group">
-					<div class="col-md-6">
-						<div class="media">
-							<a class="pull-left" href="#">
-								<img class="media-object" src="<?php echo cdn_url(); ?>img/content/press-2.gif" alt="#" />
-							</a>
-							<div class="media-body">
-								<p>Golden Gate Ventures Makes First Investments With E-Commerce-Focused Trio In Southeast Asia</p>
-							</div>
-						<!-- .media --></div>
-					</div>
-
-					<div class="col-md-6">
-						<div class="media">
-							<a class="pull-left" href="#">
-								<img class="media-object" src="<?php echo cdn_url(); ?>img/content/press-3.gif" alt="#" />
-							</a>
-							<div class="media-body">
-								<p>Tech Start-Ups And Financial Inclusion: Trends To Watch In 2013</p>
-							</div>
-						<!-- .media --></div>
-					</div>
-
-					<div class="col-md-6">
-						<div class="media">
-							<a class="pull-left" href="#">
-								<img class="media-object" src="<?php echo cdn_url(); ?>img/content/press-1.gif" alt="#" />
-							</a>
-							<div class="media-body">
-								<p>Golden Gate Ventures Makes First Trio In Southeast Asia</p>
-							</div>
-						<!-- .media --></div>
-					</div>
-
-
-					<div class="col-md-6">
-						<div class="media">
-							<a class="pull-left" href="#">
-								<img class="media-object" src="<?php echo cdn_url(); ?>img/content/press-2.gif" alt="#" />
-							</a>
-							<div class="media-body">
-								<p>Tech Start-Ups And Financial Inclusion: Trends To Watch In 2013</p>
-							</div>
-						<!-- .media --></div>
-					</div>
-				<!-- .press-group --></div>
-
-				<h3 class="box-subtitle green">Sunday, 10 November 2013</h3>
-				<div class="row press-group">
-					<div class="col-md-6">
-						<div class="media">
-							<a class="pull-left" href="#">
-								<img class="media-object" src="<?php echo cdn_url(); ?>img/content/press-2.gif" alt="#" />
-							</a>
-							<div class="media-body">
-								<p>Golden Gate Ventures Makes First Investments With E-Commerce-Focused Trio In Southeast Asia</p>
-							</div>
-						<!-- .media --></div>
-					</div>
-				<!-- .press-group --></div>
 			</div>
 
 		<!-- #main --></div>

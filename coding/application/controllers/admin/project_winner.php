@@ -8,15 +8,44 @@ class Project_winner extends MY_Admin_Access{
 		parent::__construct();
 	}
 	
+	var $offset = 10;
+	
 	function index(){
 		
+		$this->project_live = $this->input->get_post('project_live');
+		$this->project_live = (empty($this->project_live)) ? 'Online' : $this->project_live;
+		
+		$this->load->library('pagination_tmpl');
+		$page = intval($this->input->get_post('page'));
+		
+		$param_url = array(
+			'project_live' => $this->project_live,
+			'page' => ''
+		);
+		
 		$this->load->model('a_project_model');
-		$this->data['projects'] = $this->a_project_model->getProjectActiveWinner();
+		$this->data['projects'] = $this->a_project_model->getProjectActiveWinner($param_url, $this->offset, 0, $page);
+		
+		$param_url = http_build_query($param_url);
+		
+		$uri_page = 'admin/project_winner?'.$param_url;
+		$this->data['page'] = (!empty($page)) ? $page : $page+1;
+		$this->data['total_data'] = $total_data = $this->a_project_model->countGetdata();
+		$this->data['pagination'] = $this->pagination_tmpl->getPaginationString(
+			$page, 
+			$total_data, 
+			$this->offset, 
+			1, 
+			base_url(), 
+			$uri_page
+		);
 		
 		$this->data['menu'] = 'project_winner';
 		$this->_default_param(
 			"",
-			"",
+			array(
+				'<script type="text/javascript" src="'.cdn_url().'js/a_project_winner.js"></script>'
+			),
 			"",
 			"Admin Login");
 		$this->load->view('n/project/project_winner_view', $this->data);
@@ -45,6 +74,9 @@ class Project_winner extends MY_Admin_Access{
 		
 		$winner = $this->a_project_model->getRandomMemberWinner($project_id, $this->project->account_id, $limit);
 		$this->data['winner'] = $winner;
+		
+		$this->load->model('voucherpdf_model');
+		$this->voucher_pdf_exists = $this->voucherpdf_model->getVoucherPDFDataByProjectId($project_id);
 		
 		$this->data['menu'] = 'project_winner';
 		$this->_default_param(
@@ -175,7 +207,8 @@ class Project_winner extends MY_Admin_Access{
 			if (!empty($voucher_data)){
 				$sql = "
 				UPDATE project__tiket SET
-				voucher_data = ?
+				voucher_data = ?,
+				voucher_data_int = ''
 				WHERE 1
 				AND tiket_id = ?
 				AND project_id = ?
@@ -186,6 +219,32 @@ class Project_winner extends MY_Admin_Access{
 		}
 		
 		redirect(base_url() . 'admin/project_winner/details?pid=' . $project_id . '&h=' . $hash);
+	}
+
+	function generate_voucher(){
+		$project_id = $this->input->get_post('project_id');
+		$tiket_id = $this->input->get_post('tiket_id');
+		$voucher_id = $this->input->get_post('voucher_id');
+		$hash = $this->input->get_post('h');
+		$hash_ori = sha1($project_id . $tiket_id . $voucher_id . SALT);
+		
+		$hash_project = sha1($project_id . SALT);
+		
+		if ($hash == $hash_ori){
+		
+			$sql = "
+			UPDATE project__tiket SET
+			voucher_data = '',
+			voucher_data_int = ?
+			WHERE 1
+			AND tiket_id = ?
+			AND project_id = ?
+			";
+			$this->db->query($sql, array($voucher_id, $tiket_id, $project_id));
+		
+		}
+		
+		redirect(base_url() . 'admin/project_winner/details?pid=' . $project_id . '&h=' . $hash_project);
 	}
 	
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){

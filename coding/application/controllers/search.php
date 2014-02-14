@@ -46,9 +46,13 @@ class Search extends MY_Controller{
 			$uri_page
 		);
 		
+		$this->search_model->registerKeyword($this->q);
+		
 		$this->data['menu'] = 'search';
 		$css = array();
-		$js = array();
+		$js = array(
+			'<script type="text/javascript" src="'.cdn_url().'js/search.js"></script>'
+		);
 		$meta = array();
 		$title = 'Search';
 		$this->_default_param($css, $js, $meta, $title);

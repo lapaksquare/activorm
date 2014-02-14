@@ -22,6 +22,23 @@
 			<script src="<?php echo cdn_url(); ?>js/respond.min.js"></script>
 		<![endif]-->
 		
+		<!-- GG SEO -->
+		<meta property="place:location:latitude" content="-6.2327333907640545"/>
+		<meta property="place:location:longitude" content="106.81167840957642"/>
+		<meta property="business:contact_data:street_address" content="Graha Tirtadi Floor 1. Jalan Senopati No.75"/>
+		<meta property="business:contact_data:locality" content="Jakarta"/>
+		<meta property="business:contact_data:postal_code" content="11530"/>
+		<meta property="business:contact_data:country_name" content="Indonesia"/>
+		<meta property="business:contact_data:email" content="info@activorm.com"/>
+		<meta property="business:contact_data:phone_number" content="(021) 2942 8723 ext. 208"/>
+		<meta property="business:contact_data:website" content="<?php echo base_url(); ?>"/>
+		
+		<!-- GG+ -->
+		<meta itemprop="name" content="<?php echo $title; ?>"/>
+		<meta itemprop="description" content="<?php echo (!empty($metaDescription)) ? $metaDescription : META_DESCRIPTION; ?>"/>
+		<meta itemprop="image" content="<?php echo (empty($metaImage)) ? cdn_url() . "img/logo.png" : $metaImage; ?>"/>
+		
+		<!-- FB -->
 		<meta property="og:image" content="<?php echo (empty($metaImage)) ? cdn_url() . "img/logo.png" : $metaImage; ?>"/>
 		<meta property="og:title" content="<?php echo $title; ?>"/>
 		<meta property="og:description" content="<?php echo (!empty($metaDescription)) ? $metaDescription : META_DESCRIPTION; ?>"/>
@@ -31,6 +48,7 @@
 		<meta property="fb:admins" content="100001413525876"/>
 		<meta property="fb:app_id" content="1425256081020066"/>
 		
+		<!-- TW -->
 		<?php if (empty($tw_meta_product)){ ?>
 		<meta name="twitter:card" content="summary">
 		<meta name="twitter:site" content="">
