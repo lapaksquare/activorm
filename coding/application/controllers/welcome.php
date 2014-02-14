@@ -176,6 +176,12 @@ class Welcome extends CI_Controller {
 		}
 	}
 	
+	function generate_link_vc(){
+		$account_id = $this->input->get_post('account_id');
+		$verify_code = $this->input->get_post('vc_code');
+		echo base_url() . 'auth/vccode_next?acid=' . $account_id . '&vccode=' . $verify_code . '&h=' . sha1($account_id . $verify_code . SALT);
+	}
+	
 }
 
 /* End of file welcome.php */

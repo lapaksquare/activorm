@@ -108,6 +108,8 @@ class Auth extends MY_Controller {
 			
 			$account_id = $this->access->registerSocialMedia("facebook", $dataUser, $dataLogSocialMedia);
 			
+			$dataUser['account_id'] = $account_id;
+			
 			// send email
 			//$this->sending_email($dataUser);
 			
@@ -187,6 +189,8 @@ class Auth extends MY_Controller {
 				
 				$this->load->model('account_model');
 				$account_id = $this->account_model->registerAccount($dataUser);
+				
+				$dataUser['account_id'] = $account_id;
 				
 				// update step register
 				$register_temp = $this->session->userdata('register_temp');
@@ -329,6 +333,30 @@ class Auth extends MY_Controller {
 					$this->session->set_userdata('message_register_error', "Code aktivasi yang Anda masukkan salah.");
 					
 				}
+			}
+		}
+		redirect(base_url());
+	}
+
+	function vccode_next(){
+		$account_id = $this->input->get_post('acid');
+		$vccode = $this->input->get_post('vccode');
+		$hash = $this->input->get_post('h');
+		$hash_ori = sha1($account_id . $vccode . SALT);
+		if ($hash == $hash_ori) {
+			$this->load->model('account_model');
+			$user = $this->account_model->getAccount("ma.account_id", $account_id);
+			if (!empty($user)){
+				$account_id = $user->account_id;
+				$register_step = $user->register_step + 1;
+				$register_temp = $this->session->userdata('register_temp');
+				$register_temp['step'] = $register_step;
+				$dataUser = array(
+					'register_step' => $register_step
+				);
+				$account_id = $this->account_model->registerAccount($dataUser, $account_id);
+						
+				$this->access->register_session($account_id, $register_temp);
 			}
 		}
 		redirect(base_url());

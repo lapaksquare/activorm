@@ -152,6 +152,26 @@
 			</div>
 		<!-- #content --></div>
 
+		<div id="newsletter" class="block block-blue">
+			<div class="container">
+
+				<div class="row">
+					<div class="col-sm-8">
+						<h2 class="block-title">Over 70 merchants already participated!</h2>
+						<p>Get started today for better engagement and performance 
+of your Social Networks</p>
+
+						<a href="<?php echo base_url(); ?>business/register" class="btn btn-big btn-green" style="padding-left:60px;padding-right:60px;">Sign up for FREE Trial</a>
+					</div>
+
+					<div class="col-sm-4 col-img">
+						<img class="" src="<?php echo cdn_url(); ?>img/sign-up-business.png" alt="#" />
+					</div>
+				</div>
+
+			</div>
+		<!-- #newsletter --></div>
+
 		<div id="merchant" class="block block-light">
 			<div class="container">
 
