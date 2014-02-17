@@ -144,6 +144,73 @@ class Project_analytic_model extends CI_Model {
 		return $this->db->query($sql)->result();
 	}
 	
+	function getGenderTrafficDataByProjectId($project_id){
+		$sql = '
+		select
+		ma.gender gender,
+		( DATE_FORMAT(NOW(), "%Y") - DATE_FORMAT(ma.birthday, "%Y") ) umur,
+		count( ( DATE_FORMAT(NOW(), "%Y") - DATE_FORMAT(ma.birthday, "%Y") ) ) jml_umur
+		from
+		project__tiket pt
+		join member__account ma on
+		ma.account_id = pt.account_id
+		
+		WHERE 1
+		AND pt.project_id = ?
+		AND ( DATE_FORMAT(NOW(), "%Y") - DATE_FORMAT(ma.birthday, "%Y") ) > 0
+		AND ma.gender IS NOT NULL
+		AND ma.account_live = "Online"
+		AND ma.account_active = 1
+		GROUP BY gender, umur
+		ORDER BY umur
+		';
+		return $this->db->query($sql, array($project_id))->result();
+	}
+	
+	function getProvinceTrafficDataByProjectId($project_id){
+		$sql = "
+		select
+		ma.province_id,
+		count(ma.account_id) jml_account,
+		ap.province_name
+		from
+		project__tiket pt
+		join member__account ma on
+		ma.account_id = pt.account_id
+		join address__province ap on
+		ap.province_id = ma.province_id
+		where 1
+		AND pt.project_id = ?
+		AND ma.account_live = 'Online'
+		AND ma.account_active = 1
+		group by ma.province_id
+		order by jml_account desc
+		";
+		return $this->db->query($sql, array($project_id))->result();
+	}
+	
+	function getCityKabupatenTrafficDataByProjectId($project_id){
+		$sql = "
+		select
+		ma.kabupaten_id,
+		count(ma.account_id) jml_account,
+		ak.city_name
+		from
+		project__tiket pt
+		join member__account ma on
+		ma.account_id = pt.account_id
+		join address__kabupaten ak on
+		ak.city_id = ma.kabupaten_id
+		where 1
+		AND pt.project_id = ?
+		AND ma.account_live = 'Online'
+		AND ma.account_active = 1
+		group by ma.kabupaten_id
+		order by jml_account desc
+		";
+		return $this->db->query($sql, array($project_id))->result();
+	}
+	
 }
 
 ?>

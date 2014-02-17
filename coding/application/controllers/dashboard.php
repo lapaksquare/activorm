@@ -118,8 +118,13 @@ class Dashboard extends MY_Controller{
 			$this->data['submenu'] = 'allproject';
 			$view = 'dashboard_project_select_view.php';
 			
+			$css = array(
+				'<link href="'.cdn_url().'css/jquery.mCustomScrollbar.css" rel="stylesheet">'
+			);
 			$js = array(
-				'<script src="'.cdn_url().'js/dashboard_allproject.js"></script>'
+				'<script type="text/javascript" src="https://www.google.com/jsapi"></script>',
+				'<script src="'.cdn_url().'js/jquery.mCustomScrollbar.min.js"></script>',
+				'<script src="'.cdn_url().'js/dashboard_project_select.js"></script>'
 			);
 		}else{
 					
@@ -583,6 +588,11 @@ class Dashboard extends MY_Controller{
 			
 		$this->load->model('google_analytic_model');
 		$this->project_analytic = $this->google_analytic_model->getAnalticsPageProject($project_id);
+		
+		$this->load->model('project_analytic_model');
+		$this->gender_data = $this->project_analytic_model->getGenderTrafficDataByProjectId($project_id);
+		$this->province_data = $this->project_analytic_model->getProvinceTrafficDataByProjectId($project_id);
+		$this->city_data = $this->project_analytic_model->getCityKabupatenTrafficDataByProjectId($project_id);
 		
 		/*
 		echo '<pre>';
