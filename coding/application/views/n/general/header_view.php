@@ -14,6 +14,7 @@
 	</head>
 	<body>
 		
+		<?php if ($menu != "login"){ ?>
 		<header class="navbar navbar-default navbar-fixed-top bs-docs-nav" role="banner">
 		  <div class="container">
 		    <div class="navbar-header">
@@ -23,7 +24,7 @@
 		        <span class="icon-bar"></span>
 		        <span class="icon-bar"></span>
 		      </button>
-		      <a href="./" class="navbar-brand">Activorm Connect</a>
+		      <a href="<?php echo base_url() ?>admin" class="navbar-brand">Activorm Connect</a>
 		    </div>
 		    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
 		      
@@ -62,7 +63,23 @@
 		    </nav>
 		  </div>
 		</header>
+		<?php } ?>
 		
-		<div class="bs-header" id="content">
+		<?php 
+		$style = "";
+		if ($menu == "login"){
+			$style = "padding-top:0;";
+		}
+		?>
+		
+		<div class="bs-header" id="content" <?php echo $style; ?>>
 			<div class="container">
 				<div class="row">
+					
+					<?php if ($menu == "login"){ ?>
+					<img src="<?php echo cdn_url(); ?>img/logo_invoice.png" alt="logo" />	
+					<h2>Welcome in Activorm Connect</h2>
+					<p><b>Activorm.com</b>, An Activation Platform for Your Social Media Network. Activorm will help your business improve more results.</p>	
+					
+					<hr />	
+					<?php } ?>

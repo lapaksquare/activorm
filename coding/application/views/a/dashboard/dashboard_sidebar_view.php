@@ -51,7 +51,7 @@
 						)
 					),
 					
-					/*
+					
 					'points_topup' => array(
 						'id' => 'points_topup',
 						'name' => 'Points &amp; Top Up',
@@ -70,8 +70,7 @@
 						'link' => base_url() . 'dashboard/paymenthistory',
 						'childs' => array()
 					)
-					 * 
-					 */
+					
 				);
 				
 				$menus = array_merge($menus, $menus_2);

@@ -8,6 +8,11 @@
 
 <div class="col-md-9 lp-header" role="main">
 
+	<h2>Welcome in Activorm Connect</h2>
+	<p><b>Activorm.com</b> An Activation Platform for Your Social Media Network. Activorm will help your business improve more results.</p>	
+	
+	<hr />
+
 	<?php  
 	$access_list = explode(",", $this->account_admin->access_list);
 	if (!empty($this->account_admin) && ($this->account_admin->access_list == "all" || in_array("admin_home", $access_list))){
