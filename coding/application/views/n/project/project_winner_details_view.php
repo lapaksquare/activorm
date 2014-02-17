@@ -2,24 +2,76 @@
 
 <div class="col-md-12 lp-header" role="main">
 	
-	<h2><?php echo ucwords($this->project->project_name); ?></h2>	
+	<h2>List Members - <?php echo ucwords($this->project->project_name); ?></h2>	
 	
 	<hr />
-	
-	<!-- TABBED START -->
-	<ul class="nav nav-tabs project_tab" id="project_tab">
-	  <li class="active"><a href="#members" data-rel="members">Members Lists <span class="label label-info"><?php echo count($members); ?></span></a></li>
-	  <li><a href="#winners_list" data-rel="winners_list">Choose Winner Lists <span class="label label-info"><?php echo count($winner); ?></span></a></li>
-	  <li><a href="#winner" data-rel="winner">Winner <span class="label label-info"><?php echo count($member_winner); ?></span></a></li>
-	</ul>
-	
-	<div id="myTabContent" class="tab-content">
 		
-		<div class="tab-pane fade active in project-tab-section" id="members">
+	<?php
 	
-	<?php 	
+	//echo '<pre>';print_r($member_winner);echo '</pre>';
+	 	
 	if (!empty($members)){ ?>
+		
+	<?php 
+	$a_message_error = $this->session->userdata('msg_error');
+	if (!empty($a_message_error)){
+		$this->session->unset_userdata('msg_error');
+	?>
+	<div class="bs-callout bs-callout-danger">
+      <p><?php echo $a_message_error; ?></p>
+    </div>
+    <?php } ?>
+    
+    <?php 
+	$a_message_success = $this->session->userdata('msg_success');
+	if (!empty($a_message_success)){
+		$this->session->unset_userdata('msg_success');
+	?>
+	<div class="bs-callout bs-callout-info">
+      <p><?php echo $a_message_success; ?></p>
+    </div>
+    <?php } ?>
 	
+	<form method="post" name="member_form"
+	enctype="multipart/form-data"
+	action="<?php echo base_url(); ?>admin/project_winner/submit_voucher_coll"
+	>
+		
+		<input type="hidden" name="project_id" value="<?php echo $this->project->project_id; ?>" />
+		<input type="hidden" name="voucher_id" value="<?php echo (!empty($this->voucher_pdf_exists->voucher_id)) ? $this->voucher_pdf_exists->voucher_id : ""; ?>" />
+		
+		<div class="panel panel-default" id="panel-voucher-upload">
+		  <div class="panel-heading">
+		    <h3 class="panel-title" style="display:inline-block;">Voucher</h3>
+		    <div class="pull-right">
+		    	<?php if (!empty($member_winner)){ ?>    	
+    				<a style="margin-top:-5px;" href="<?php echo base_url(); ?>admin/project_winner/export_excel?pid=<?php echo $project_id; ?>&h=<?php echo sha1($project_id . SALT); ?>" class="btn btn-sm btn-success">Export to Excel</a>
+    			<?php } ?>
+		    </div>
+		  </div>
+		  <div class="panel-body">
+		    <div class="col-md-3">
+				<div class="form-group"><input type="file" name="voucher_data" id="voucher_data" /></div>
+				<input type="submit" class="btn btn-sm btn-default" name="voucher_submit" id="voucher_submit" value="Upload Voucher" />
+			</div>
+			<?php if (!empty($this->voucher_pdf_exists)){ ?>
+			<div class="col-md-1"><b>OR</b></div>
+			<div class="col-md-3">
+				<input type="submit" class="btn btn-default" name="voucher_submit" id="voucher_submit" value="Generate Voucher by System" />
+			</div>
+			<?php } ?>
+		  </div>
+		  <div class="panel-footer"><small>*) Harap pilih member yang akan dijadikan pemenang di bawah ini.
+		  	
+		  	<div>Jumlah Quota Pemenang : <?php echo $this->jml_winner; ?> . Jumlah Pemenang Terpilih : <?php echo count($member_winner); ?> . Jumlah Total Members : <?php echo count($members); ?> .
+		  	</div>
+		  	
+		  	</small>
+		  	
+		  </div>
+		</div>
+		
+		
 	
 	<table class="table table-hover">
         <thead>
@@ -30,6 +82,7 @@
 			<th>Address</th>
 			<th>Facebook</th>
 			<th>Twitter</th>
+			<th>CheckList</th>
           </tr>
         </thead>
         <tbody>
@@ -41,6 +94,7 @@
 				if (empty($return[$v->account_id])){
 					$social_data = json_decode($v->social_data);
 					$return[$v->account_id] = array(
+						'tiket_id' => $v->tiket_id,
 						'tiket_barcode' => $v->tiket_barcode,
 						'project_name' => $v->project_name,
 						'account_name' => $v->account_name,
@@ -74,15 +128,42 @@
 				$address_string .= '<b>Province:</b> ' . $pronvince . '<br />';
 				$address_string .= '<b>Kecamatan:</b> ' . $kecamatan . '<br />';
 				$address_string .= '<b>Phone:</b> ' . $phone_number . '<br />';
+
+			?>
+			
+			<tr>
+				<td><b><?php echo strtoupper($v['tiket_barcode']); ?></b></td>
+				<td><?php echo ucwords($v['account_name']); ?></td>
+				<td><?php echo $v['account_email']; ?></td>
+				<td><?php echo $address_string; ?></td>
+				<td><?php echo $facebook_url; ?></td>
+				<td><?php echo $twitter_url.$twitter_followers_count; ?></td>
+				<td>
+					<?php 
+					$l = '';
+					if (!empty($member_winner[$k]) && property_exists($member_winner[$k], "voucher_data")){
+						$l = '<a href="'. cdn_url() . $member_winner[$k]->voucher_data . '" target="_blank">KLIK</a>';
+					}
+					if (!empty($member_winner[$k]) && property_exists($member_winner[$k], "voucher_data_int") && $member_winner[$k]->voucher_data_int > 0){
+						$l = '<a href="'. cdn_url() . 'admin/voucherpdf/details_see_pdf?vpid=' . $member_winner[$k]->voucher_data_int . '&h='. sha1( $member_winner[$k]->voucher_data_int . SALT ) .'" target="_blank">KLIK</a>';
+					}
+					
+					if (empty($l)){
+					?>
+					<input type="checkbox" class="" name="members[]" id="members" value="<?php echo $v['tiket_id']; ?>" />
+					<?php 
+					}else{
+					?>
+					<span class="glyphicon glyphicon-ok"></span><br />
+					<b>See Voucher : <?php echo $l; ?></b>
+					<?php	
+					}
+					?>
+				</td>
+			</tr>
+			
+			<?php
 				
-				echo '<tr>
-					<td>'.strtoupper($v['tiket_barcode']).'</td>
-					<td>'.ucwords($v['account_name']).'</td>
-					<td>'.$v['account_email'].'</td>
-					<td>'.$address_string.'</td>
-					<td>'.$facebook_url.'</td>
-					<td>'.$twitter_url.$twitter_followers_count.'</td>
-				</tr>';	
 			}
 			
 			?>
@@ -101,185 +182,8 @@
 	<?php	
 		
     } ?>
-    
-   		</div>
-    
-    	<div class="tab-pane fade project-tab-section" id="winners_list">
-    
-    <?php if (!empty($winner)){ ?>
-    
-    <table class="table table-hover">
-        <thead>
-          <tr>
-			<th>Tiket Barcode</th>
-			<th>Account Name</th>
-			<th>Account Email</th>
-			<th>Account Address</th>
-			<th>Actions</th>
-		  </tr>
-        </thead>
-        <tbody>
-        	
-        	<?php 
-        	
-        	foreach($winner as $k=>$v){
-        		
-				$address = (empty($v->address)) ? '-' : $v->address;
-				$pronvince = (empty($v->province_name)) ? '-' : $v->province_name;
-				$kecamatan = (empty($v->kecamatan_name)) ? '-' : $v->kecamatan_name;
-				$phone_number = (empty($v->phone_number)) ? '-' : $v->phone_number;
-				$address_string = '<b>Address:</b> ' . $address . '<br />';
-				$address_string .= '<b>Province:</b> ' . $pronvince . '<br />';
-				$address_string .= '<b>Kecamatan:</b> ' . $kecamatan . '<br />';
-				$address_string .= '<b>Phone:</b> ' . $phone_number . '<br />';
-				
-				echo '<tr>
-					<td>'.strtoupper($v->tiket_barcode).'</td>
-					<td>'.ucwords($v->account_name).'</td>
-					<td>'.$v->account_email.'</td>
-					<td>'.$address_string.'</td>
-					<td><a href="'.base_url().'admin/project_winner/confirmWinnerProjectTiket?pid='.$v->project_id.'&tid='.$v->tiket_id.'&h='.sha1($v->project_id . $v->tiket_id . SALT).'">Confirm</a></td>
-				</tr>';	
-				
-			}
-        	
-        	?>
-        	
-        </tbody>
-    </table>
-    <?php }else{
-    	
-	?>
-	
-	<div class="alert alert-warning" style="margin-top:10px;">
-		<p>Winner Lists is Empty</p>
-	</div>
-	
-	<?php	
-		
-    } ?>
-    
-    	</div>
-    
-    
-    	<div class="tab-pane fade project-tab-section" id="winner">	
-    
-    <?php if (!empty($member_winner)){ ?>
-    	
-    	<br />
-    	
-    	<a href="<?php echo base_url(); ?>admin/project_winner/export_excel?pid=<?php echo $project_id; ?>&h=<?php echo sha1($project_id . SALT); ?>" class="btn btn-success">Export to Excel</a>
-    	
-    	<br /><br />
-    	
-    <?php 
-    /*echo '<pre>';
-	print_r($member_winner);
-	echo '</pre>';*/
-    ?>
-   
-    
-    <table class="table table-hover">
-        <thead>
-          <tr>
-			<th>Tiket Barcode</th>
-			<th>Account Name</th>
-			<th>Account Email</th>
-			<th>Account Address</th>
-		  </tr>
-        </thead>
-        <tbody>
-        	<?php 
-        	foreach($member_winner as $k=>$v){
-        		
-				$address = (empty($v->address)) ? '-' : $v->address;
-				$pronvince = (empty($v->province_name)) ? '-' : $v->province_name;
-				$kecamatan = (empty($v->kecamatan_name)) ? '-' : $v->kecamatan_name;
-				$phone_number = (empty($v->phone_number)) ? '-' : $v->phone_number;
-				$address_string = '<b>Address:</b> ' . $address . '<br />';
-				$address_string .= '<b>Province:</b> ' . $pronvince . '<br />';
-				$address_string .= '<b>Kecamatan:</b> ' . $kecamatan . '<br />';
-				$address_string .= '<b>Phone:</b> ' . $phone_number . '<br />';
-				
-				/*
-        		echo '<tr>
-					<td>'.strtoupper($v->tiket_barcode).'</td>
-					<td>'.ucwords($v->account_name).'</td>
-					<td>'.$v->account_email.'</td>
-					<td>'.$address_string.'</td>
-					</tr>
-				';*/
-			?>
-			
-			<tr>
-				<td><?php echo strtoupper($v->tiket_barcode); ?></td>
-				<td><?php echo ucwords($v->account_name); ?></td>
-				<td><?php echo $v->account_email; ?></td>
-				<td><?php echo $address_string; ?>
-					
-					<hr />
-					
-					<div>
-						<b>Upload Voucher untuk <?php echo strtoupper($v->tiket_barcode); ?></b>
-						<br />
-						
-						<?php 
-						$l = '';
-						if (!empty($v->voucher_data)){
-							$l = '<a href="'. cdn_url() . $v->voucher_data . '" target="_blank">KLIK</a>';
-						}
-						if (!empty($v->voucher_data_int)){
-							$l = '<a href="'. cdn_url() . 'admin/voucherpdf/details_see_pdf?vpid=' . $v->voucher_data_int . '&h='. sha1( $v->voucher_data_int . SALT ) .'" target="_blank">KLIK</a>';
-						}
-						?>
-						
-						<b>See Voucher : <?php echo $l; ?></b>
-						<br />
-						
-						<b>Generate Voucher:</b>
-						<ul>
-							<li>
-								<form class="form-inline" role="form" method="post" 
-								enctype="multipart/form-data"
-								action="<?php echo base_url(); ?>admin/project_winner/submit_voucher"
-								>
-									<div class="form-group"><input type="file" name="voucher_data" id="voucher_data" /></div>
-									<input type="hidden" name="tiket_id" value="<?php echo $v->tiket_id; ?>" />
-									<input type="hidden" name="project_id" value="<?php echo $v->project_id; ?>" />
-									<input type="submit" class="btn btn-default" name="voucher_submit" id="voucher_submit" value="Submit" />
-								</form>
-							</li>
-							<?php if (!empty($this->voucher_pdf_exists)){ ?>
-							<li><a href="<?php echo base_url(); ?>admin/project_winner/generate_voucher?project_id=<?php echo $v->project_id; ?>&tiket_id=<?php echo $v->tiket_id; ?>&voucher_id=<?php echo $this->voucher_pdf_exists->voucher_id; ?>&h=<?php echo sha1($v->project_id . $v->tiket_id . $this->voucher_pdf_exists->voucher_id . SALT); ?>" class="btn btn-default">Generate Voucher</a></li>
-							<?php } ?>
-						</ul>
-					</div>
-					
-				</td>
-			</tr>
-			
-			<?php	
-        	}
-        	?>
-        </tbody>
-    </table>
-    
-    <?php }else{
-    	
-	?>
-	
-	<div class="alert alert-warning" style="margin-top:10px;">
-		<p>Winner Lists is Empty</p>
-	</div>
-	
-	<?php	
-		
-    } ?>
-    
-    	</div>
-    	
-    </div>	
-    	
+
+
     <?php 
 	/*
 	}else{

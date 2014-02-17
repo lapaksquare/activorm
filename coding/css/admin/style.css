@@ -172,3 +172,7 @@ body{
 height: 350px;
 margin: 0 0 40px;
 }
+
+.voucher_form_fixed_top{
+	position: fixed; top: 50px; width: 100%; left: 0; z-index: 9999;
+}

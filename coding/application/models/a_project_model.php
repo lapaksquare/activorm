@@ -176,6 +176,7 @@ class A_project_model extends CI_Model{
 	function getMemberProjectActiveWinner($project_id){
 		$sql = "
 		SELECT
+		pt.tiket_id,
 		pt.tiket_barcode,
 		ma.account_id,
 		ma.account_name,
@@ -201,7 +202,7 @@ class A_project_model extends CI_Model{
 			ak.kecamatan_id = ma.kecamatan_id
 		WHERE 1
 		AND pt.project_id = ?
-		ORDER BY ma.account_name ASC
+		ORDER BY pt.iswin DESC, ma.account_name ASC
 		";
 		$results = $this->db->query($sql, array($project_id))->result();
 		return $results;
@@ -241,7 +242,11 @@ class A_project_model extends CI_Model{
 		AND pt.iswin = 1
 		";
 		$results = $this->db->query($sql, array($project_id))->result();
-		return $results;
+		$return = array();
+		foreach($results as $k=>$v){
+			$return[$v->account_id] = $v;
+		}
+		return $return;
 	}
 	
 	function getRandomMemberWinner($project_id, $not_account_id, $limit = 1){
