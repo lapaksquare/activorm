@@ -33,7 +33,7 @@
 									<?php foreach($this->results as $k=>$v){ ?>
 									<tr>
 										<td><?php echo date("d M Y", strtotime($v->project_posted)); ?></td>
-										<td><a id="project_modal" href="#" data-h="<?php echo sha1($v->project_id . SALT); ?>" data-pid="<?php echo $v->project_id; ?>"><?php echo ucwords($v->project_name); ?></a></td>
+										<td><a id="" href="<?php echo base_url(); ?>dashboard/project/<?php echo $v->project_uri; ?>" data-h="<?php echo sha1($v->project_id . SALT); ?>" data-pid="<?php echo $v->project_id; ?>"><?php echo ucwords($v->project_name); ?></a></td>
 										<td><?php echo $this->results_project_analytics[$v->project_id]['pageviews']; ?></td>
 										<td><?php echo $v->member_join; ?></td>
 										<td><?php echo ($v->premium_plan == 0) ? 'FREE' : 'PAID'; ?></td>

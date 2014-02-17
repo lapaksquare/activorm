@@ -34,4 +34,10 @@ $(function(){
 		return false;
 	});
 	
+	$('#projects_selected').bind('change', function(){
+		var el = $(this);
+		var v = el.val();
+		window.location = base_url + 'dashboard/project/' + v;
+	});
+	
 });

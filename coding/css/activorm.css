@@ -3604,3 +3604,50 @@ body.alt #footer {
 	text-align:center !important;
 	margin-bottom:2px !important;
 }
+
+.dashboard-project-graph li strong{
+	display:block;
+}
+
+.dashboard-start-endtime{
+}
+.dashboard-start-endtime .dashboard-time-block{
+	padding:10px 20px 10px;
+	background-color:#34495e;
+	color:#fff;
+	border-radius:8px 8px 0 0;
+	font-weight:bold;
+	font-size:18px;
+}
+.dashboard-start-endtime .dashboard-time-block i{
+	display:block;
+	font-weight:normal;
+	font-size:15px;
+}
+.dashboard-start-endtime .dashboard-time-block:last-child{
+	border-radius:0 0 8px 8px;
+	background-color:#19b99a;
+}
+
+.dashboard-stats{
+	background-color:white;
+	border-radius:8px;
+	margin:30px 0;
+	padding:10px 20px;
+}
+.dashboard-stat{
+	border-bottom:1px solid #7e7e7e;
+	font-size:33px;
+	font-weight:bold;
+	line-height:35px;
+	padding-bottom:10px;
+}
+.dashboard-stat:last-child{
+	border-bottom:none;
+	padding-bottom:0;
+}
+.dashboard-stat i{
+	display:block;
+	font-size:15px;
+	font-weight:normal;
+}

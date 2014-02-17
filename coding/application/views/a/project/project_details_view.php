@@ -128,7 +128,7 @@
 										}else{
 		        					?>
 		        					
-		        					<h4 class="project_details_h4"><?php echo ucwords($this->project->project_name); ?></h4>
+		        					<!--<h4 class="project_details_h4"><?php echo ucwords($this->project->project_name); ?></h4>-->
 		        					
 		        					<p style="color: #e82355;margin-bottom: 0;margin-top: 20px;font-weight: bold;font-size: 18px;">Time Remaining</p>
 		        					

@@ -27,7 +27,7 @@ class Dashboard extends MY_Controller{
 			
 			$this->projects_overview();
 			
-			$title = 'Projects';
+			$title = $this->title = 'Projects';
 			$view = 'dashboard_projects_view';
 			$this->data['menu'] = 'projects';
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "pointstopup"){
@@ -38,14 +38,14 @@ class Dashboard extends MY_Controller{
 				'<script type="text/javascript" src="'.cdn_url().'js/topuppoint.js"></script>'
 			);
 			
-			$title = 'Points &amp; Top Up';
+			$title = $this->title = 'Points &amp; Top Up';
 			$view = 'dashboard_points_topup_view';
 			$this->data['menu'] = 'points_topup';
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "paymentconfirmation"){
 			
 			$this->paymentconfirmation();
 			
-			$title = 'Payment Confirmation';
+			$title = $this->title = 'Payment Confirmation';
 			$view = 'dashboard_paymentconfirmation_view';
 			$this->data['menu'] = 'payment_confirmation';
 			
@@ -62,7 +62,7 @@ class Dashboard extends MY_Controller{
 			
 			$this->paymenthistory();
 			
-			$title = 'Payment History';
+			$title = $this->title = 'Payment History';
 			$view = 'dashboard_paymenthistory_view';
 			$this->data['menu'] = 'payment_history';
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "demographic"){
@@ -74,7 +74,7 @@ class Dashboard extends MY_Controller{
 				'<script type="text/javascript" src="https://www.google.com/jsapi"></script>',
 				'<script type="text/javascript" src="'.cdn_url().'js/dashboard_demographic.js"></script>'
 			);
-			$title = 'Demographic';
+			$title = $this->title = 'Demographic';
 			$this->data['submenu'] = 'demographic';
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "searchengine"){
 			$view = 'dashboard_searchengine_view';
@@ -85,7 +85,7 @@ class Dashboard extends MY_Controller{
 				'<script src="'.cdn_url().'js/jquery.mCustomScrollbar.min.js"></script>',
 				'<script src="'.cdn_url().'js/dashboard_searchengine.js"></script>'
 			);
-			$title = 'Search Engine';
+			$title = $this->title = 'Search Engine';
 			$this->data['submenu'] = 'searchengine';
 		
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "allproject"){
@@ -93,7 +93,7 @@ class Dashboard extends MY_Controller{
 			$this->dashboard_allproject();	
 				
 			$view = 'dashboard_allproject_view';
-			$title = 'All Project';
+			$title = $this->title = 'All Project';
 			$this->data['submenu'] = 'allproject';
 			
 			$js = array(
@@ -102,7 +102,7 @@ class Dashboard extends MY_Controller{
 			
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "survey"){
 			$view = 'dashboard_survey_view';
-			$title = 'Survey';
+			$title = $this->title = 'Survey';
 			$this->data['submenu'] = 'survey';	
 		
 		/*submit ed form*/
@@ -111,7 +111,16 @@ class Dashboard extends MY_Controller{
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "submit_paymentconfirmation"){
 			$this->submit_paymentconfirmation();
 		/**/
-		
+		}else if (!empty($this->segments[2]) && $this->segments[2] == "project"){
+			//print_r($this->segments);
+			//die();
+			$this->dashboard_project();
+			$this->data['submenu'] = 'allproject';
+			$view = 'dashboard_project_select_view.php';
+			
+			$js = array(
+				'<script src="'.cdn_url().'js/dashboard_allproject.js"></script>'
+			);
 		}else{
 					
 			$this->dashboard_overview();	
@@ -125,11 +134,11 @@ class Dashboard extends MY_Controller{
 				'<script src="'.cdn_url().'js/jquery.mCustomScrollbar.min.js"></script>',
 				'<script src="'.cdn_url().'js/dashboard_overview.js"></script>'
 			);
-			$title = 'Overview';
+			$title = $this->title = 'Overview';
 			$this->data['submenu'] = 'overview';
 		}
 		
-		$this->_default_param($css, $js, $meta, $title);
+		$this->_default_param($css, $js, $meta, $this->title);
 		$this->load->view('a/dashboard/' . $view, $this->data);
 	}
 
@@ -552,6 +561,37 @@ class Dashboard extends MY_Controller{
 		$this->gender_data = $this->project_analytic_model->getGenderTrafficData();
 		$this->region_data = $this->google_analytic_model->getTrafficData("data_region");
 		$this->city_data = $this->google_analytic_model->getTrafficData("data_city");
+	}
+	
+	function dashboard_project(){
+		$this->title = "Dashboard Project";
+				
+		if (empty($this->segments[1]) || empty($this->segments[2]) || empty($this->segments[3])) redirect(base_url() . '404');		
+				
+		$this->load->model('project_model');		
+		$this->project = $this->project_model->getProject('pp.project_uri', $this->segments[3]);
+		if (empty($this->project) || empty($this->segments[2])) redirect(base_url() . '404');
+		
+		$project_id = $this->project->project_id;
+		$account_id = $this->access->member_account->account_id;
+		$business_id = $this->access->business_account->business_id;
+		
+		$this->projects = $this->project_model->getProjectAllByBusinessId($business_id);
+		
+		$this->load->model('dashboard_model');
+		$this->result = $this->dashboard_model->getBusinessProjectByProjectId($project_id);
+			
+		$this->load->model('google_analytic_model');
+		$this->project_analytic = $this->google_analytic_model->getAnalticsPageProject($project_id);
+		
+		/*
+		echo '<pre>';
+		print_r($this->result);
+		echo '</pre>';
+		
+		echo '<pre>';
+		print_r($this->project_analytic);
+		echo '</pre>';*/
 	}
 	
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){

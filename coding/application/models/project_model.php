@@ -289,6 +289,35 @@ class Project_model extends CI_Model{
 		return $this->db->query($sql, array($project_id))->row();
 	}
 	
+	function getProjectAllByBusinessId($business_id){
+		$sql = "
+		SELECT		
+		pp.project_id,
+		pp.business_id,
+		pp.project_posted,
+		pp.project_name,
+		pp.project_uri,
+		pp.project_period,
+		pp.project_period_int,
+		pp.project_actions_data,
+		pp.premium_plan,
+		pp.project_live,
+		COUNT(pt.tiket_barcode) member_join,
+		pp.premium_plan
+		FROM
+		project__profile pp
+		JOIN project__tiket pt ON
+			pt.project_id = pp.project_id
+		WHERE 1
+		AND pp.business_id = ?
+		AND pp.project_live IN ('Online', 'Closed')
+		AND pp.project_active = 1
+		GROUP BY pt.project_id
+		ORDER BY pp.project_posted DESC
+		";
+		return $this->db->query($sql, array($business_id))->result();
+	}
+	
 }
 
 ?>
