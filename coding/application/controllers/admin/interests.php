@@ -13,9 +13,12 @@ class Interests extends MY_Admin_Access{
 		$this->load->model('interests_model');
 		
 		$this->interests_category = $this->interests_model->getInterestsCategory();
+		$this->parent_interests = $this->interests_model->getParentInterests();
 		
 		$css = $js = array();
-		$js = array();
+		$js = array(
+			'<script type="text/javascript" src="'.base_url().'js/a_member_interests.js"></script>'
+		);
 		$this->data['menu'] = 'interests';
 		$this->data['menu_child'] = '';
 		$this->_default_param(
@@ -31,9 +34,12 @@ class Interests extends MY_Admin_Access{
 		$this->load->model('interests_model');
 		
 		$this->interests_name = $this->interests_model->getInterestsName();
+		$this->parent_interests = $this->interests_model->getParentInterests();
 		
 		$css = $js = array();
-		$js = array();
+		$js = array(
+			'<script type="text/javascript" src="'.base_url().'js/a_member_interests.js"></script>'
+		);
 		$this->data['menu'] = 'interests';
 		$this->data['menu_child'] = '';
 		$this->_default_param(

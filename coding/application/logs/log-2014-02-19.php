@@ -24,3 +24,15 @@ ERROR - 2014-02-19 15:09:46 --> Severity: Notice  --> Undefined property: Access
 ERROR - 2014-02-19 15:09:53 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
 ERROR - 2014-02-19 15:10:04 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
 ERROR - 2014-02-19 15:11:06 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
+ERROR - 2014-02-19 20:39:33 --> Severity: Notice  --> Undefined property: stdClass::$name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/n/interests/interests_category_view.php 35
+ERROR - 2014-02-19 20:39:33 --> Severity: Notice  --> Undefined property: stdClass::$name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/n/interests/interests_category_view.php 35
+ERROR - 2014-02-19 20:39:35 --> Severity: Notice  --> Undefined property: stdClass::$name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/n/interests/interests_category_view.php 35
+ERROR - 2014-02-19 20:39:35 --> Severity: Notice  --> Undefined property: stdClass::$name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/n/interests/interests_category_view.php 35
+ERROR - 2014-02-19 20:40:12 --> Severity: Notice  --> Undefined property: stdClass::$name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/n/interests/interests_category_view.php 35
+ERROR - 2014-02-19 20:40:12 --> Severity: Notice  --> Undefined property: stdClass::$name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/n/interests/interests_category_view.php 35
+ERROR - 2014-02-19 20:41:18 --> Severity: Notice  --> Undefined property: stdClass::$name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/n/interests/interests_category_view.php 35
+ERROR - 2014-02-19 20:41:18 --> Severity: Notice  --> Undefined property: stdClass::$name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/n/interests/interests_category_view.php 35
+ERROR - 2014-02-19 20:41:50 --> Severity: Notice  --> Undefined property: stdClass::$name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/n/interests/interests_category_view.php 35
+ERROR - 2014-02-19 20:41:50 --> Severity: Notice  --> Undefined property: stdClass::$name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/n/interests/interests_category_view.php 35
+ERROR - 2014-02-19 20:42:13 --> Severity: Notice  --> Undefined property: stdClass::$name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/n/interests/interests_category_view.php 35
+ERROR - 2014-02-19 20:42:13 --> Severity: Notice  --> Undefined property: stdClass::$name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/n/interests/interests_category_view.php 35

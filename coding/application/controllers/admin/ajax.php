@@ -55,6 +55,17 @@ class Ajax extends CI_Controller {
 		
 		echo json_encode($return);
 	}
+
+	function registerInterestsRel(){
+		$interest_id = $this->input->get_post('interest_id');
+		$name = $this->input->get_post('name');
+		$mip_id = $this->input->get_post('mip_id');
+		$this->load->model('interests_model');
+		$this->interests_model->registerInterestsRel($interest_id, $name, $mip_id);
+		echo json_encode(array(
+			'msg' => 1
+		));
+	}
 	
 }
 

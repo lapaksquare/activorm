@@ -13,11 +13,12 @@
 	<div class="graph_signup">
 		<div class="box-header">
 			
-			<table class="table table-hover">
+			<table class="table table-hover" id="table">
 		        <thead>
 		          <tr>
 					<th>Category Name</th>
 					<th>Jumlah Category</th>
+					<th>Parent Interests</th>
 		          </tr>
 		        </thead>
 		        <tbody>
@@ -28,6 +29,22 @@
 					<tr>
 						<td><?php echo ucwords( $v->category ); ?></td>
 						<td><?php echo $v->jml_category; ?></td>
+						<td>
+							<select name="parent_interests" id="parent_interests" 
+							data-interest_id="<?php echo $v->interests_id; ?>" 
+							data-name="<?php echo ( $v->category ); ?>">
+							<option value="0">Pilih</option>
+							<?php 
+							foreach($this->parent_interests as $a=>$b){
+								$class = (!empty($v->mip_id) && $v->mip_id == $b->mip_id) ? "selected" : "";
+							?>
+								<option value="<?php echo $b->mip_id; ?>" <?php echo $class; ?>><?php echo ucwords($b->mip_name); ?></option>
+							<?php	
+							} //glyphicon-ok glyphicon-remove
+							?>
+							</select>
+							<span class="glyphicon" id="glyphicon"></span>
+						</td>
 					</tr>
 					
 					<?php	
