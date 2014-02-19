@@ -594,6 +594,8 @@ class Dashboard extends MY_Controller{
 		$this->province_data = $this->project_analytic_model->getProvinceTrafficDataByProjectId($project_id);
 		$this->city_data = $this->project_analytic_model->getCityKabupatenTrafficDataByProjectId($project_id);
 		
+		$this->cronGATrafficProject($project_id, $this->project->project_uri);
+		
 		/*
 		echo '<pre>';
 		print_r($this->result);
@@ -603,6 +605,188 @@ class Dashboard extends MY_Controller{
 		print_r($this->project_analytic);
 		echo '</pre>';*/
 	}
+	
+	/* CRON */
+	function cronGATrafficProject($project_id, $project_uri){
+		$this->load->library("google_analytic_library");	
+		$this->load->model("google_analytic_model");
+		
+		$endDateTraffic = $this->google_analytic_model->getEndDateTrafficProject($project_id);
+		
+		if ($endDateTraffic != date("Y-m-d")){
+		
+			$ga_session = $this->gaAuth();
+			$accessToken = $ga_session->auth->access_token;
+			$this->google_analytic_library->ga->setAccessToken($accessToken);
+			$this->google_analytic_library->ga->setAccountId('ga:78298628');
+			// Set the default params. For example the start/end dates and max-results
+			$defaults = array(
+			    'end-date' => date('Y-m-d', strtotime('- 1 days')),
+			);
+			$this->google_analytic_library->ga->setDefaultQueryParams($defaults);
+			$params = array(
+				'metrics' => 'ga:visitors,ga:newVisits,ga:visits,ga:percentNewVisits',
+				'dimensions' => 'ga:date',
+				'max-results' => 500,
+				'start-date' => $endDateTraffic,
+				'filters' => 'ga:pagePath==/project/' . $project_uri
+			);
+			$this->traffic_website = $this->google_analytic_library->ga->query($params);
+					
+			if (!empty($this->traffic_website['rows'])){
+				foreach($this->traffic_website['rows'] as $k=>$v){
+					$data = array(
+						'project_id' => $project_id,
+						'analytic_date' => date('Y-m-d', strtotime($v[0])),
+						'analytic_visitors' => $v[1],
+						'analytic_newvisits' => $v[2],
+						'analytic_visit' => $v[3],
+						'analytic_percentnewvisits' => $v[4]
+					);
+					$this->google_analytic_model->addTrafficProject($data);
+				}
+			}
+			
+			$this->cronGATrafficDataNewReturnVisitors($project_id, $project_uri);
+			$this->cronGATrafficDataMediumContent($project_id, $project_uri);
+			$this->cronGATrafficDataSourceContent($project_id, $project_uri);
+			
+		}
+
+		$this->gchart_type = "daily";
+		$startdate = $this->input->get_post('s');
+		$enddate = $this->input->get_post('e');
+		$hash = $this->input->get_post('h');
+		$hash_ori = sha1($startdate.$enddate.SALT);
+		if (empty($startdate) || empty($enddate) || empty($hash) || $hash != $hash_ori){
+			$startdate = date("Y-m-d", strtotime("- 7 days"));
+			$enddate = date("Y-m-d", strtotime("- 1 days"));
+		}
+		$this->keyal = "s=" . $startdate . "&e=" . $enddate . "&h=" . $hash;
+		$this->trafficwebsite = $this->google_analytic_model->getTrafficProject($project_id, $this->gchart_type, $startdate, $enddate);
+		
+		$this->reffererdata = $this->google_analytic_model->getTrafficProjectData($project_id, "source_data") ;
+		$this->contentdata = $this->google_analytic_model->getTrafficProjectData($project_id, "medium_data") ;
+		$this->visitorsdata = $this->google_analytic_model->getTrafficProjectData($project_id, "new_vs_return_visitors") ;
+
+	}	
+	function cronGATrafficDataNewReturnVisitors($project_id, $project_uri){
+		$this->load->library("google_analytic_library");	
+		$this->load->model("google_analytic_model");
+				
+		$ga_session = $this->gaAuth();
+		$accessToken = $ga_session->auth->access_token;
+		$this->google_analytic_library->ga->setAccessToken($accessToken);
+		$this->google_analytic_library->ga->setAccountId('ga:78298628');
+		// Set the default params. For example the start/end dates and max-results
+		$defaults = array(
+		    'end-date' => date('Y-m-d', strtotime('- 1 days')),
+		);
+		$this->google_analytic_library->ga->setDefaultQueryParams($defaults);
+		$params = array(
+			'metrics' => 'ga:visits',
+			'dimensions' => 'ga:visitorType',
+			'start-date' => "2013-10-27",
+			'max-results' => 500,
+			'filters' => 'ga:pagePath==/project/' . $project_uri
+		);
+		$this->traffics = $this->google_analytic_library->ga->query($params);
+		if (!empty($this->traffics['rows'])){
+			$data = array();
+			foreach($this->traffics['rows'] as $k=>$v){
+				$data[] = array(
+					'visitor_type' => $v[0],
+					'visits' => $v[1]
+				);
+			}
+			if (!empty($data)){
+				$data = json_encode($data);
+				$this->google_analytic_model->addTrafficDataProject($project_id, "new_vs_return_visitors", $data);
+			}
+		}
+	}
+	function cronGATrafficDataMediumContent($project_id, $project_uri){
+		$this->load->library("google_analytic_library");	
+		$this->load->model("google_analytic_model");
+				
+		$ga_session = $this->gaAuth();
+		$accessToken = $ga_session->auth->access_token;
+		$this->google_analytic_library->ga->setAccessToken($accessToken);
+		$this->google_analytic_library->ga->setAccountId('ga:78298628');
+		// Set the default params. For example the start/end dates and max-results
+		$defaults = array(
+		    'end-date' => date('Y-m-d', strtotime('- 1 days')),
+		);
+		$this->google_analytic_library->ga->setDefaultQueryParams($defaults);
+		$params = array(
+			'metrics' => 'ga:visits',
+			'dimensions' => 'ga:medium',
+			'start-date' => "2013-10-27",
+			'filters' => 'ga:medium!=facebook;ga:medium!=twitter;ga:medium!=social;ga:pagePath==/project/' . $project_uri,
+			'max-results' => 500
+		);
+		$this->traffics = $this->google_analytic_library->ga->query($params);
+		if (!empty($this->traffics['rows'])){
+			$data = array();
+			foreach($this->traffics['rows'] as $k=>$v){
+				$data[] = array(
+					'medium' => ($v[0] == "(none)") ? 'direct' : $v[0],
+					'visits' => $v[1]
+				);
+			}
+			if (!empty($data)){
+				$data = json_encode($data);
+				$this->google_analytic_model->addTrafficDataProject($project_id, "medium_data", $data);
+			}
+		}
+	}
+	function cronGATrafficDataSourceContent($project_id, $project_uri){
+		$this->load->library("google_analytic_library");	
+		$this->load->model("google_analytic_model");
+				
+		$ga_session = $this->gaAuth();
+		$accessToken = $ga_session->auth->access_token;
+		$this->google_analytic_library->ga->setAccessToken($accessToken);
+		$this->google_analytic_library->ga->setAccountId('ga:78298628');
+		// Set the default params. For example the start/end dates and max-results
+		$defaults = array(
+		    'end-date' => date('Y-m-d', strtotime('- 1 days')),
+		);
+		$this->google_analytic_library->ga->setDefaultQueryParams($defaults);
+		$params = array(
+			'metrics' => 'ga:visits',
+			'dimensions' => 'ga:source',
+			'start-date' => "2013-10-27",
+			'filters' => 'ga:source==facebook.com,ga:source==m.facebook.com,ga:source==t.co,ga:source=~startupbisnis.com,ga:source=~techinasia.com,ga:source=~dailysocial.net,ga:source=~google,ga:source=~direct;ga:source!~blogspot.com;ga:source!~plus.url.google.com;ga:pagePath==/project/' . $project_uri,
+			'max-results' => 500,
+			'sort' => '-ga:visits'
+		);
+		$this->traffics = $this->google_analytic_library->ga->query($params);
+		if (!empty($this->traffics['rows'])){
+			$data = array();
+			foreach($this->traffics['rows'] as $k=>$v){
+				
+				$source = $v[0];
+				switch($v[0]){
+					case "(direct)":
+						$source = "activorm.com";
+						break;
+					case "t.co":
+						$source = "twitter.com (t.co)";
+				}
+				
+				$data[] = array(
+					'source' => $source,
+					'visits' => $v[1]
+				);
+			}
+			if (!empty($data)){
+				$data = json_encode($data);
+				$this->google_analytic_model->addTrafficDataProject($project_id, "source_data", $data);
+			}
+		}
+	}
+	/* CRON */
 	
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){
 		/*$default_css = array(

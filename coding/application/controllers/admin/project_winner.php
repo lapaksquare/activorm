@@ -156,7 +156,7 @@ class Project_winner extends MY_Admin_Access{
         $message = Swift_Message::newInstance();
 		//Give the message a subject
 		
-		$email = array('karen.qer.kamal@gmail.com', 'lapaksquare@gmail.com', 'info@activorm.com'); //$data['email'];
+		$email = $data['email']; //array('karen.qer.kamal@gmail.com', 'lapaksquare@gmail.com', 'info@activorm.com'); //$data['email'];
 		$subject = $data['subject_email'];
 								
 		$data = $this->load->view('email/' . $tmpl, $data, true);
