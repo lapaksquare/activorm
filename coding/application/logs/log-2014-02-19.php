@@ -36,3 +36,9 @@ ERROR - 2014-02-19 20:41:50 --> Severity: Notice  --> Undefined property: stdCla
 ERROR - 2014-02-19 20:41:50 --> Severity: Notice  --> Undefined property: stdClass::$name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/n/interests/interests_category_view.php 35
 ERROR - 2014-02-19 20:42:13 --> Severity: Notice  --> Undefined property: stdClass::$name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/n/interests/interests_category_view.php 35
 ERROR - 2014-02-19 20:42:13 --> Severity: Notice  --> Undefined property: stdClass::$name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/n/interests/interests_category_view.php 35
+ERROR - 2014-02-19 23:41:14 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
+ERROR - 2014-02-19 23:41:14 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
+ERROR - 2014-02-19 23:41:17 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
+ERROR - 2014-02-19 23:41:19 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
+ERROR - 2014-02-19 23:41:29 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
+ERROR - 2014-02-19 23:41:29 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11

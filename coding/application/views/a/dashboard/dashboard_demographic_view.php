@@ -144,7 +144,7 @@
 						</div>
 					<!-- .box --></div>
 
-					<?php /*
+					
 					<div class="box">
 						<div class="box-header">
 							<h2 class="box-title title-light">Interest <i class="icon-lock"></i></h2>
@@ -175,8 +175,7 @@
 							</table>
 						</div>
 					<!-- .box --></div>
-					 * 
-					 */ ?>
+					 
 
 				<!-- #content --></div>
 
