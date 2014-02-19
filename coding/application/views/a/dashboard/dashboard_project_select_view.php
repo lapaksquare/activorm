@@ -168,8 +168,8 @@
 									<table class="table table-activorm table-align-alt table-scrollable">
 										<thead>
 											<tr>
-												<th width="60%">Provinsi</th>
-												<th width="40%">Views</th>
+												<th width="60%">Province</th>
+												<th width="40%">Users</th>
 											</tr>
 										</thead>
 										<tbody class="scrollable-area">
@@ -196,7 +196,7 @@
 										<thead>
 											<tr>
 												<th width="60%">City</th>
-												<th width="40%">Views</th>
+												<th width="40%">Users</th>
 											</tr>
 										</thead>
 										<tbody class="scrollable-area">
@@ -222,13 +222,16 @@
 					
 					<div class="box dashboard-traffic">
 						<div class="box-header">
-							<h2 class="box-title title-light" style="float:left;">Traffic to Website</h2>
+							<h2 class="box-title title-light" style="float:left;">Traffic to Project Page</h2>
 							
 							<div class="pull-right">
 								<select id="aldate" class="form-control">
 									<?php
-									$date1 = date("Y-m-d", strtotime("- 7 days"));
-									$date2 = date("Y-m-d", strtotime("- 1 days")); 
+									//$date1 = date("Y-m-d", strtotime("- 7 days"));
+									//$date2 = date("Y-m-d", strtotime("- 1 days")); 
+									/*
+									$date1 = date('d M Y', strtotime($this->project->project_period . "- 7 days"));
+									$date2 = date('d M Y', strtotime($this->project->project_period));
 									for($i=1;$i<=4;$i++){
 										$h = sha1($date1 . $date2 . SALT);
 										$v = "s=".$date1."&e=".$date2."&h=".$h;
@@ -238,9 +241,51 @@
 									<?php	
 										$date2 = $date1;
 										$date1 = date("Y-m-d", strtotime($date2 . " - 7 days"));
+									}*/
+									
+									$c_array = array();
+									$c = $this->project->project_period_int;
+									if ($c < 7){
+										$date1 = date('Y-m-d', strtotime($this->project->project_period . "- ".$c." days"));
+										$date2 = date('Y-m-d', strtotime($this->project->project_period));
+										$h = sha1($date1 . $date2 . SALT);
+										$v = "s=".$date1."&e=".$date2."&h=".$h;
+										$t = date("d M Y", strtotime($date1)).' s/d '.date("d M Y", strtotime($date2));
+										$c_array[] = array(
+											'value' => $v,
+											'text' => $t
+										);
+									}else{
+										$ca = 7;
+										$date1 = date('Y-m-d', strtotime($this->project->project_period . "- ".$ca." days"));
+										$date2 = date('Y-m-d', strtotime($this->project->project_period));
+										while($c > 0){
+											$h = sha1($date1 . $date2 . SALT);
+											$v = "s=".$date1."&e=".$date2."&h=".$h;
+											$t = date("d M Y", strtotime($date1)).' s/d '.date("d M Y", strtotime($date2));
+											$c_array[] = array(
+												'value' => $v,
+												'text' => $t,
+												'c' => $c
+											);
+											
+											$c = $c - $ca;
+											$date2 = $date1;
+											$date1 = date("Y-m-d", strtotime($date2 . " - " . $c . " days"));
+										}
+									}
+									
+									foreach($c_array as $k=>$v){
+										$class = ($v['value'] == $this->keyal) ? 'selected' : '';
+									?>
+									
+									<option value="<?php echo base_url() . 'dashboard/project/' . $this->project->project_uri . '?' . $v['value']; ?>" <?php echo $class; ?>><?php echo $v['text']; ?></option>
+									
+									<?php
 									}
 									?>
 								</select>
+								<?php //echo $this->project->project_period_int. '<pre>';print_r($c_array);echo '</pre>'; ?>
 							</div>
 							
 							<div class="clearfix"></div>

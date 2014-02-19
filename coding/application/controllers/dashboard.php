@@ -594,7 +594,7 @@ class Dashboard extends MY_Controller{
 		$this->province_data = $this->project_analytic_model->getProvinceTrafficDataByProjectId($project_id);
 		$this->city_data = $this->project_analytic_model->getCityKabupatenTrafficDataByProjectId($project_id);
 		
-		$this->cronGATrafficProject($project_id, $this->project->project_uri);
+		$this->cronGATrafficProject($project_id, $this->project->project_uri, $this->project);
 		
 		/*
 		echo '<pre>';
@@ -607,7 +607,7 @@ class Dashboard extends MY_Controller{
 	}
 	
 	/* CRON */
-	function cronGATrafficProject($project_id, $project_uri){
+	function cronGATrafficProject($project_id, $project_uri, $projects){
 		$this->load->library("google_analytic_library");	
 		$this->load->model("google_analytic_model");
 		
@@ -659,8 +659,19 @@ class Dashboard extends MY_Controller{
 		$hash = $this->input->get_post('h');
 		$hash_ori = sha1($startdate.$enddate.SALT);
 		if (empty($startdate) || empty($enddate) || empty($hash) || $hash != $hash_ori){
-			$startdate = date("Y-m-d", strtotime("- 7 days"));
-			$enddate = date("Y-m-d", strtotime("- 1 days"));
+			//$startdate = date("Y-m-d", strtotime("- 7 days"));
+			//$enddate = date("Y-m-d", strtotime("- 1 days"));
+			
+			$c = $projects->project_period_int;
+			if ($c < 7){
+				$startdate = date('Y-m-d', strtotime($this->project->project_period . "- ".$c." days"));
+				$enddate = date('Y-m-d', strtotime($this->project->project_period));
+			}else{
+				$ca = 7;
+				$startdate = date('Y-m-d', strtotime($this->project->project_period . "- ".$ca." days"));
+				$enddate = date('Y-m-d', strtotime($this->project->project_period));
+			}
+			
 		}
 		$this->keyal = "s=" . $startdate . "&e=" . $enddate . "&h=" . $hash;
 		$this->trafficwebsite = $this->google_analytic_model->getTrafficProject($project_id, $this->gchart_type, $startdate, $enddate);
