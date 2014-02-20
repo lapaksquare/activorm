@@ -80,6 +80,45 @@ class Interests_model extends CI_Model{
 		return $this->db->query($sql, array($interest_id, $name))->row();
 	}
 	
+	function getInterestsOverview(){
+		$sql = "
+		SELECT
+		mip.mip_name,
+		mip.mip_details,
+		count(mir.mip_id) rangking
+		FROM
+		member__interests_rel mir 
+		JOIN member__interests_parent mip ON
+		mir.mip_id = mip.mip_id
+		WHERE 1
+		GROUP BY mir.mip_id
+		ORDER BY rangking DESC
+		";
+		return $this->db->query($sql)->result();
+	}
+	
+	function getInterestsByProjectId($project_id){
+		$sql = "
+		SELECT
+		mip.mip_name,
+		mip.mip_details,
+		count(mir.mip_id) rangking
+		FROM
+		member__interests_rel mir 
+		JOIN member__interests_parent mip ON
+		mir.mip_id = mip.mip_id
+		JOIN member__interests mi ON
+		mi.interests_id = mir.interest_id
+		JOIN project__tiket pt ON
+		pt.account_id = mi.account_id
+		WHERE 1
+		AND pt.project_id = ?
+		GROUP BY mir.mip_id
+		ORDER BY rangking DESC
+		";
+		return $this->db->query($sql, array($project_id))->result();
+	}
+	
 }
 
 ?>

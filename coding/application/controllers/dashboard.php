@@ -566,6 +566,9 @@ class Dashboard extends MY_Controller{
 		$this->gender_data = $this->project_analytic_model->getGenderTrafficData();
 		$this->region_data = $this->google_analytic_model->getTrafficData("data_region");
 		$this->city_data = $this->google_analytic_model->getTrafficData("data_city");
+		
+		$this->load->model('interests_model');
+		$this->interests = $this->interests_model->getInterestsOverview();
 	}
 	
 	function dashboard_project(){
@@ -595,6 +598,9 @@ class Dashboard extends MY_Controller{
 		$this->city_data = $this->project_analytic_model->getCityKabupatenTrafficDataByProjectId($project_id);
 		
 		$this->cronGATrafficProject($project_id, $this->project->project_uri, $this->project);
+		
+		$this->load->model('interests_model');
+		$this->interests = $this->interests_model->getInterestsByProjectId($project_id);
 		
 		/*
 		echo '<pre>';
