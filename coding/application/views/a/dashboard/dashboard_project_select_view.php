@@ -155,97 +155,8 @@
 						</script>
 						<div id="chart-genderage"></div>
 					<!-- .box --></div>
-					
-					
-					<div class="box">
-						<div class="box-header">
-							<h2 class="box-title title-light">Geography </h2>
-						</div>
-						
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="table-responsive">
-									<table class="table table-activorm table-align-alt table-scrollable">
-										<thead>
-											<tr>
-												<th width="60%">Province</th>
-												<th width="40%">Users</th>
-											</tr>
-										</thead>
-										<tbody class="scrollable-area">
-											<?php 
-											if (!empty($this->province_data)){
-												foreach($this->province_data as $k=>$v){
-											?>
-											<tr>
-												<td><?php echo ucwords( $v->province_name ); ?></td>
-												<td><?php echo $v->jml_account; ?></td>
-											</tr>
-											<?php } 
-											}
-											?>
-										</tbody>
-									</table>
-								</div>
-							</div>
 
 
-							<div class="col-sm-6">
-								<div class="table-responsive">
-									<table class="table table-activorm table-align-alt table-scrollable">
-										<thead>
-											<tr>
-												<th width="60%">City</th>
-												<th width="40%">Users</th>
-											</tr>
-										</thead>
-										<tbody class="scrollable-area">
-											<?php 
-											if (!empty($this->city_data)){
-												foreach($this->city_data as $k=>$v){
-											?>
-											<tr>
-												<td><?php echo ucwords( $v->city_name ); ?></td>
-												<td><?php echo $v->jml_account; ?></td>
-											</tr>
-											<?php } 
-											}
-											?>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					<!-- .box --></div>
-					
-					<?php if (!empty($this->interests)){ ?>
-					<div class="box">
-						<div class="box-header">
-							<h2 class="box-title title-light">Interest</h2>
-						</div>
-
-						<div class="table-responsive">
-							<table class="table table-activorm table-align-alt">
-								<thead>
-									<tr>
-										<th width="25%">Rangking</th>
-										<th width="75%">Interest</th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php foreach($this->interests as $k=>$v){ ?>
-									<tr>
-										<td style="text-align:center;"><?php echo ($k+1); ?></td>
-										<td style="text-align:left;"><?php echo ucwords($v->mip_name); ?>
-											<div><small><?php echo ucfirst($v->mip_details); ?></small></div></td>
-									</tr>
-									<?php } ?>
-								</tbody>
-							</table>
-						</div>
-					<!-- .box --></div>
-					<?php } ?> 
-					
 					<div class="box dashboard-traffic">
 						<div class="box-header">
 							<h2 class="box-title title-light" style="float:left;">Traffic to Project Page</h2>
@@ -407,6 +318,96 @@
 							
 						</div>
 					</div>
+					
+					
+					<div class="box">
+						<div class="box-header">
+							<h2 class="box-title title-light">Geography </h2>
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="table-responsive">
+									<table class="table table-activorm table-align-alt table-scrollable">
+										<thead>
+											<tr>
+												<th width="60%">Province</th>
+												<th width="40%">Users</th>
+											</tr>
+										</thead>
+										<tbody class="scrollable-area">
+											<?php 
+											if (!empty($this->province_data)){
+												foreach($this->province_data as $k=>$v){
+											?>
+											<tr>
+												<td><?php echo ucwords( $v->province_name ); ?></td>
+												<td><?php echo $v->jml_account; ?></td>
+											</tr>
+											<?php } 
+											}
+											?>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+
+							<div class="col-sm-6">
+								<div class="table-responsive">
+									<table class="table table-activorm table-align-alt table-scrollable">
+										<thead>
+											<tr>
+												<th width="60%">City</th>
+												<th width="40%">Users</th>
+											</tr>
+										</thead>
+										<tbody class="scrollable-area">
+											<?php 
+											if (!empty($this->city_data)){
+												foreach($this->city_data as $k=>$v){
+											?>
+											<tr>
+												<td><?php echo ucwords( $v->city_name ); ?></td>
+												<td><?php echo $v->jml_account; ?></td>
+											</tr>
+											<?php } 
+											}
+											?>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					<!-- .box --></div>
+					
+					<?php if (!empty($this->interests)){ ?>
+					<div class="box">
+						<div class="box-header">
+							<h2 class="box-title title-light">Interest</h2>
+						</div>
+
+						<div class="table-responsive">
+							<table class="table table-activorm table-align-alt">
+								<thead>
+									<tr>
+										<th width="25%">Rangking</th>
+										<th width="75%">Interest</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php foreach($this->interests as $k=>$v){ ?>
+									<tr>
+										<td style="text-align:center;"><?php echo ($k+1); ?></td>
+										<td style="text-align:left;"><?php echo ucwords($v->mip_name); ?>
+											<div><small><?php echo ucfirst($v->mip_details); ?></small></div></td>
+									</tr>
+									<?php } ?>
+								</tbody>
+							</table>
+						</div>
+					<!-- .box --></div>
+					<?php } ?> 
 					
 				<!-- #content -->
 				</div>
