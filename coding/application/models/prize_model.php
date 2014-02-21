@@ -114,13 +114,25 @@ class Prize_model extends CI_Model{
 		SQL_CALC_FOUND_ROWS
 		pp.*,
 		bp.business_name,
-		bp.business_uri
+		bp.business_uri,
+		pphx.photo_id,
+		pphx.photo_file
 		FROM
 		project__profile pp
 		JOIN business__profile bp ON
 			pp.business_id = bp.business_id
 		JOIN project__prize ppr ON
 			ppr.project_id = pp.project_id
+		LEFT JOIN (
+			SELECT
+			pph.project_id,
+			pph.photo_id,
+			pph.photo_file
+			FROM 
+			project__photo pph
+			ORDER BY pph.photo_id ASC
+			LIMIT 1
+		) pphx ON pphx.project_id = pp.project_id
 		WHERE 1
 		AND ppr.prize_id = ?
 		AND (pp.project_live = 'Online' || pp.project_live = 'Closed')

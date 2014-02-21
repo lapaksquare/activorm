@@ -61,8 +61,15 @@
 				}
 				?>
 				
-				<?php foreach($this->project_prize as $k=>$v){ 
-					$photo = $this->mediamanager->getPhotoUrl($v->project_primary_photo, "200x125");
+				<?php foreach($this->project_prize as $k=>$v){
+					
+					if (empty($v->photo_file)){
+						$photo = $v->project_primary_photo;
+					}else{
+						$photo = $v->photo_file;
+					}
+					 
+					$photo = $this->mediamanager->getPhotoUrl($photo, "200x125");
 					?>
 					
 					<?php 

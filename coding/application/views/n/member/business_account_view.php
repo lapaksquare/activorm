@@ -43,7 +43,28 @@
 	<table class="table table-hover">
         <thead>
           <tr>
-            <th>Business Id</th>
+            <th>
+            	<?php 
+            	$sort_by = "desc";
+				$class = "glyphicon-chevron-down";
+				if (empty($this->sort_by)){
+					$sort_by = "desc";
+				}else if ($this->sort_by == "asc"){
+					$sort_by = "desc";
+				}else if ($this->sort_by == "desc"){
+					$sort_by = "asc";
+					$class = "glyphicon-chevron-up";
+				}
+            	$param_url_sub = array(
+					'order_by' => "bp.business_id",
+					'sort_by' => $sort_by,
+					'search_by' => $this->search_by,
+					'q' => $this->q,
+					'page' => $this->page
+				);
+				$param_url_sub = http_build_query($param_url_sub);
+            	?>
+            	<a href="<?php echo base_url(); ?>admin/member/business_account?<?php echo $param_url_sub; ?>">Business Id <span class="glyphicon <?php echo $class; ?>"></span></a></th>
             <th>Account Id</th>
             <th>Business Name</th>
             <th>Email</th>
@@ -56,7 +77,7 @@
         	
         	<?php foreach($members as $k=>$v){ ?>
           <tr>
-            <td><?php echo $v->business_id; ?></td>
+            <td><?php echo $v->business_id; ?> </td>
             <td><?php echo $v->account_id; ?></td>
             <td><?php echo ucwords($v->business_name); ?></td>
             <td><?php echo $v->account_email; ?></td>

@@ -31,6 +31,19 @@
 										<input type="text" name="business_name" placeholder="" value="<?php echo $business_name; ?>" class="form-control form-light" />
 									</div>
 								</div>
+								
+								<div class="col-sm-6">
+									<div class="form-label">
+										<label for="business-contact">Person In Charge <span class="req">*</span></label>
+									</div>
+									<div class="form-group">
+										<?php 
+										$business_contact = $this->session->userdata('business_contact');
+										$this->session->unset_userdata('business_contact');
+										?>
+										<input type="text" name="business_contact" placeholder="" value="<?php echo $business_contact; ?>" class="form-control form-light" />
+									</div>
+								</div>
 
 								<div class="col-sm-6">
 									<div class="form-label">
@@ -45,18 +58,7 @@
 									</div>
 								</div>
 
-								<div class="col-sm-6">
-									<div class="form-label">
-										<label for="business-contact">Person In Charge <span class="req">*</span></label>
-									</div>
-									<div class="form-group">
-										<?php 
-										$business_contact = $this->session->userdata('business_contact');
-										$this->session->unset_userdata('business_contact');
-										?>
-										<input type="text" name="business_contact" placeholder="" value="<?php echo $business_contact; ?>" class="form-control form-light" />
-									</div>
-								</div>
+								
 
 								<div class="col-sm-6">
 									<div class="form-label">

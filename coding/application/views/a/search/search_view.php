@@ -34,10 +34,20 @@
 
 						<div class="row list-items">
 							
-							<?php foreach($search_data as $k=>$v){ ?>
+							<?php foreach($search_data as $k=>$v){ 
+								
+								if (empty($v->photo_file)){
+									$photo = $v->project_primary_photo;
+								}else{
+									$photo = $v->photo_file;
+								}
+								 
+								$photo = $this->mediamanager->getPhotoUrl($photo, "211x155");
+								
+								?>
 							<div class="col-md-4 col-sm-6 item">
 								<div class="item-thumbnail">
-									<?php $photo = $this->mediamanager->getPhotoUrl($v->project_primary_photo, "211x155"); ?>
+									<?php //$photo = $this->mediamanager->getPhotoUrl($v->project_primary_photo, "211x155"); ?>
 									<img style="margin: 0 auto;" class="img-responsive" src="<?php echo cdn_url() . $photo; ?>" alt="<?php echo $v->project_name; ?>" />
 								</div>
 

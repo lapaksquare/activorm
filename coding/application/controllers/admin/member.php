@@ -19,11 +19,15 @@ class Member extends MY_Admin_Access{
 	function member_account(){
 		
 		$this->load->library('pagination_tmpl');
-		$page = intval($this->input->get_post('page'));
+		$this->page = $page = intval($this->input->get_post('page'));
 		
+		$this->order_by = $this->input->get_post('order_by');
+		$this->sort_by = $this->input->get_post('sort_by');
 		$this->search_by = $this->input->get_post('search_by');
 		$this->q = $this->input->get_post('q');
 		$param_url = array(
+			'order_by' => $this->order_by,
+			'sort_by' => $this->sort_by,
 			'search_by' => $this->search_by,
 			'q' => $this->q,
 			'page' => ''
@@ -90,6 +94,9 @@ class Member extends MY_Admin_Access{
 		if (!empty($account_kelurahan)){
 			$kelurahans = $this->address_model->getKelurahanByKecamatanId($account_kecamatan);
 		}
+		
+		$this->load->model('socialmedia_model');
+		$this->socialmedia = $this->socialmedia_model->socialmedia_connect($mai);
 		
 		$this->data['kabupatens'] = $kabupatens;
 		$this->data['kecamatans'] = $kecamatans;
@@ -283,11 +290,15 @@ class Member extends MY_Admin_Access{
 	/**** BUSINESS ACCOUNT - START ****/
 	function business_account(){
 		$this->load->library('pagination_tmpl');
-		$page = intval($this->input->get_post('page'));
+		$this->page = $page = intval($this->input->get_post('page'));
 		
+		$this->order_by = $this->input->get_post('order_by');
+		$this->sort_by = $this->input->get_post('sort_by');
 		$this->search_by = $this->input->get_post('search_by');
 		$this->q = $this->input->get_post('q');
 		$param_url = array(
+			'order_by' => $this->order_by,
+			'sort_by' => $this->sort_by,
 			'search_by' => $this->search_by,
 			'q' => $this->q,
 			'page' => ''
@@ -358,6 +369,9 @@ class Member extends MY_Admin_Access{
 		$this->data['kabupatens'] = $kabupatens;
 		$this->data['kecamatans'] = $kecamatans;
 		$this->data['kelurahans'] = $kelurahans;
+		
+		$this->load->model('socialmedia_model');
+		$this->socialmedia = $this->socialmedia_model->socialmedia_connect($mai);
 		
 		$this->data['menu'] = 'account';
 		$this->data['menu_child'] = 'business_account';

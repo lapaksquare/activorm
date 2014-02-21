@@ -562,10 +562,13 @@ class Dashboard extends MY_Controller{
 	
 	function demographic(){
 		$this->load->model('project_analytic_model');
-		$this->load->model('google_analytic_model');
+		//$this->load->model('google_analytic_model');
 		$this->gender_data = $this->project_analytic_model->getGenderTrafficData();
-		$this->region_data = $this->google_analytic_model->getTrafficData("data_region");
-		$this->city_data = $this->google_analytic_model->getTrafficData("data_city");
+		//$this->region_data = $this->google_analytic_model->getTrafficData("data_region");
+		//$this->city_data = $this->google_analytic_model->getTrafficData("data_city");
+		$this->province_data = $this->project_analytic_model->getProvinceTrafficData();
+		$this->city_data = $this->project_analytic_model->getCityKabupatenTrafficData();
+		
 		
 		$this->load->model('interests_model');
 		$this->interests = $this->interests_model->getInterestsOverview();

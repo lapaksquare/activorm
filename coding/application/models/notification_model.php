@@ -74,6 +74,30 @@ class Notification_model extends CI_Model{
 		return $return;
 	}
 	
+	function getNotificationLastEditedAccount(){
+		$sql = "
+		select
+		ma.account_id,
+		ma.account_name,
+		ma.account_type,
+		ma.lastupdate,
+		DATE_FORMAT(ma.lastupdate,'%d %b %Y') lastupdate_string
+		from
+		member__account ma
+		WHERE 1
+		AND ma.account_name <> ''
+		AND ma.lastupdate > DATE_SUB(CURDATE(), INTERVAL 3 DAY)
+		ORDER BY ma.lastupdate DESC
+		";
+		$result = $this->db->query($sql)->result();
+		$return = array();
+		foreach($result as $k=>$v){
+			$return[$v->lastupdate_string][] = $v;
+		}
+		
+		return $return;
+	}
+	
 }
 
 ?>

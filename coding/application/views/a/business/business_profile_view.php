@@ -110,7 +110,11 @@
 							<div class="col-md-3 col-sm-4">
 								
 								<?php 
-								$photo = $v->project_primary_photo;
+								if (empty($v->photo_file)){
+									$photo = $v->project_primary_photo;
+								}else{
+									$photo = $v->photo_file;
+								}
 								$photo = $this->mediamanager->getPhotoUrl($photo, "200x125");
 								?>
 								

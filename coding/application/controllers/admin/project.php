@@ -62,6 +62,9 @@ class Project extends MY_Admin_Access{
 		$this->load->model('a_project_model');
 		$this->project = $this->a_project_model->getProjectDetail($project_id);
 		
+		$this->load->model('project_model');
+		$this->project_photos = $this->project_model->getProjectPhotos($project_id);
+		
 		$this->data['menu'] = 'project';
 		$this->_default_param(
 			array(
@@ -145,6 +148,30 @@ class Project extends MY_Admin_Access{
 			
 			$this->load->library('upload', $config);
 			
+			$images_uploaded = array();
+			$uploaded = $this->upload->do_multi_upload('project_photo', TRUE);
+			$project_primary_photo = $photo_thumb = "";
+			if ($uploaded){
+				foreach($uploaded as $k=>$v){
+					if ($k == 0){
+						$project_primary_photo = 'images/project/' . $v['file_name'];
+						$photo_thumb = cdn_url() . $this->mediamanager->getPhotoUrl($project_primary_photo, "200x200");
+						$dataProject['project_primary_photo'] = $project_primary_photo;
+					}
+					if ($k < 3){
+						$images_uploaded[] = $v;
+					}
+				}
+				//$images_uploaded = $uploaded;
+			}else{
+				
+				if (!empty($_FILES['project_photo']['name'])){
+					$errors[] = 'You have to upload a Project Image in jpg/jpeg, gif, or png smaller than 2 MB, dimension are limited to 200x200 pixels image';
+				}
+				
+			}
+			
+			/*
 			$uploaded = $this->upload->do_upload('project_photo');
 			$project_primary_photo = $photo_thumb = "";
 			if ($uploaded){
@@ -165,7 +192,7 @@ class Project extends MY_Admin_Access{
 					$errors[] = 'You have to upload a Project Image in jpg/jpeg, gif, or png smaller than 2 MB, dimension are limited to 200x200 pixels image';
 				}
 				
-			}
+			}*/
 			// UPLOAD IMAGES =================== end ============================
 			
 			
@@ -254,6 +281,18 @@ class Project extends MY_Admin_Access{
 				if (!empty($project_primary_photo)) $dataProject['project_primary_photo'] = $project_primary_photo;
 				
 				$project_id = $this->project_model->registerProject($dataProject, $pid);
+				
+				if (!empty($images_uploaded)){
+					$this->project_model->deleteProjectPhoto($project_id);
+					foreach($images_uploaded as $k=>$v){
+						$primary_photo = 0;
+						$this->project_model->addProjectPhoto(array(
+							'project_id' => $project_id,
+							'photo_file' => 'images/project/'. $v['file_name'],
+							'primary_photo' => $primary_photo
+						));
+					}
+				}
 				
 				$project_tags = explode(",", $project_tags);
 				foreach($project_tags as $k=>$v){

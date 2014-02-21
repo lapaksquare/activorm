@@ -282,6 +282,29 @@
 	    </div>
 	  </div>
 	  
+	  <div class="form-group">
+	    <label for="account_active" class="col-sm-2 control-label">Social Media yang terhubung</label>
+	    <div class="col-sm-10" >
+	    	<?php 
+	    	
+	    	$facebook_url = "";
+	    	if (!empty($this->socialmedia['facebook'])){
+	    		$data = json_decode($this->socialmedia['facebook']->social_data);
+				$facebook_url = (!empty($data)) ? 'FACEBOOK LINK : <a href="http://facebook.com/'.$data->id.'" target="_blank">LINK</a>' : "";	
+	    	}
+			$twitter_url = $twitter_followers_count = "";
+			if (!empty($this->socialmedia['twitter'])){
+				$data = json_decode($this->socialmedia['twitter']->social_data);
+				$twitter_url = (!empty($data)) ? 'TWITTER LINK : <a href="http://twitter.com/'.$data->screen_name.'" target="_blank">LINK</a>' : "";
+				$twitter_followers_count = (!empty($data)) ? '<br />TWITTER Followers Count : '.$data->followers_count : 0;
+			}
+			
+			echo $facebook_url . " <br /> " . $twitter_url;
+	    	
+	    	?>
+	    </div>
+	  </div> 
+	  
 	  <?php 
 	  $p1 = $this->member->account_password;
 	  $p2 = $this->member->account_temp_password;

@@ -207,9 +207,21 @@ class Project_model extends CI_Model{
 		$sql = "
 		SELECT
 		SQL_CALC_FOUND_ROWS
-		pp.*
+		pp.*,
+		pphx.photo_id,
+		pphx.photo_file
 		FROM
 		project__profile pp
+		LEFT JOIN (
+			SELECT
+			pph.project_id,
+			pph.photo_id,
+			pph.photo_file
+			FROM 
+			project__photo pph
+			ORDER BY pph.photo_id ASC
+			LIMIT 1
+		) pphx ON pphx.project_id = pp.project_id
 		WHERE 1
 		AND pp.business_id = ?
 		AND pp.project_active = 1
@@ -316,6 +328,45 @@ class Project_model extends CI_Model{
 		ORDER BY pp.project_posted DESC
 		";
 		return $this->db->query($sql, array($business_id))->result();
+	}
+	
+	function addProjectPhoto($data){
+		$this->db->insert('project__photo', $data);
+	}
+	
+	function deleteProjectPhoto($project_id){
+		$sql = "
+		DELETE
+		FROM
+		project__photo
+		WHERE 1
+		AND project_id = ?
+		";
+		return $this->db->query($sql, array($project_id));
+	}
+	
+	function getProjectPhotos($project_id){
+		$sql = "
+		SELECT
+		pp.*
+		FROM
+		project__photo pp
+		WHERE 1
+		AND pp.project_id = ?
+		ORDER BY pp.photo_id ASC
+		";
+		return $this->db->query($sql, array($project_id))->result();
+	}
+	
+	function deletePhotoProjectByPhotoId($photo_id){
+		$sql = "
+		DELETE
+		FROM
+		project__photo
+		WHERE 1
+		AND photo_id = ?
+		";
+		return $this->db->query($sql, array($photo_id));
 	}
 	
 }

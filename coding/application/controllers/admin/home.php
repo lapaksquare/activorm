@@ -13,6 +13,7 @@ class Home extends MY_Admin_Access{
 		$this->load->model('notification_model');
 		$this->data['project_lastposted'] = $this->notification_model->getNotificationProjectByLastPosted();
 		$this->data['project_lastupdated'] = $this->notification_model->getNotificationProjectByLastUpdated();
+		$this->data['account_lastupdated'] = $this->notification_model->getNotificationLastEditedAccount();
 		
 		$this->data['menu'] = 'home';
 		$this->_default_param(

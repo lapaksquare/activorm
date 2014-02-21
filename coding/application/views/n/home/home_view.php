@@ -24,6 +24,7 @@
 	<ul class="nav nav-tabs" id="home_tabs">
 	  <li class="active"><a href="#last_post_project" data-toggle="tab">Last Post Project</a></li>
 	  <li><a href="#last_edited_project" data-toggle="tab">Last Edited Project</a></li>
+	  <li><a href="#last_edited_account" data-toggle="tab">Last Edited Account</a></li>
 	</ul>
 	
 	<!-- Tab panes -->
@@ -59,6 +60,27 @@
 		  			<ol>
 		  			<?php foreach($v as $a=>$b){ ?>
 		  				<li>Project <i>'<?php echo ucwords($b->project_name) ?>'</i> diedit oleh <b><i><?php echo $b->business_name; ?></i></b>, pada jam <small><?php echo date("G:i A", strtotime($b->lastupdate)); ?></small></li>
+		  			<?php } ?>	
+		  			</ol>
+		  		</li>
+		  		<?php } ?>
+		  	</ul>
+		</p>
+	  </div>
+	  <div class="tab-pane fade" id="last_edited_account">
+	  	<p>
+		  	<ul>
+		  		<?php 		  		
+		  		foreach($account_lastupdated as $k=>$v){ 
+		  			
+					$label_header = (date('Y-m-d') == date('Y-m-d', strtotime($k))) ? 'Today' : $k;
+		  			
+		  			?>
+		  		<li>
+		  			<b><?php echo $label_header; ?></b>
+		  			<ol>
+		  			<?php foreach($v as $a=>$b){ ?>
+		  				<li><?php echo ucwords($b->account_type); ?> <i>'<?php echo ucwords($b->account_name) ?>'</i> last edited pada jam <small><?php echo date("G:i A", strtotime($b->lastupdate)); ?></small></li>
 		  			<?php } ?>	
 		  			</ol>
 		  		</li>

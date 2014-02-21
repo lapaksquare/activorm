@@ -189,6 +189,25 @@ class Project_analytic_model extends CI_Model {
 		return $this->db->query($sql, array($project_id))->result();
 	}
 	
+	function getProvinceTrafficData(){
+		$sql = "
+		select
+		ma.province_id,
+		count(ma.account_id) jml_account,
+		ap.province_name
+		from
+		member__account ma
+		join address__province ap on
+		ap.province_id = ma.province_id
+		where 1
+		AND ma.account_live = 'Online'
+		AND ma.account_active = 1
+		group by ma.province_id
+		order by jml_account desc
+		";
+		return $this->db->query($sql)->result();
+	}
+	
 	function getCityKabupatenTrafficDataByProjectId($project_id){
 		$sql = "
 		select
@@ -209,6 +228,25 @@ class Project_analytic_model extends CI_Model {
 		order by jml_account desc
 		";
 		return $this->db->query($sql, array($project_id))->result();
+	}
+	
+	function getCityKabupatenTrafficData(){
+		$sql = "
+		select
+		ma.kabupaten_id,
+		count(ma.account_id) jml_account,
+		ak.city_name
+		from
+		member__account ma
+		join address__kabupaten ak on
+		ak.city_id = ma.kabupaten_id
+		where 1
+		AND ma.account_live = 'Online'
+		AND ma.account_active = 1
+		group by ma.kabupaten_id
+		order by jml_account desc
+		";
+		return $this->db->query($sql)->result();
 	}
 	
 }

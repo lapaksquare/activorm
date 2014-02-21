@@ -339,10 +339,12 @@
 											<?php 
 											if (!empty($this->province_data)){
 												foreach($this->province_data as $k=>$v){
+													
+													$style = (strlen($v->province_name) > 17) ? 'min-height:65px;' : '';
 											?>
 											<tr>
 												<td><?php echo ucwords( $v->province_name ); ?></td>
-												<td><?php echo $v->jml_account; ?></td>
+												<td style="<?php echo $style; ?>"><?php echo $v->jml_account; ?></td>
 											</tr>
 											<?php } 
 											}
@@ -366,10 +368,12 @@
 											<?php 
 											if (!empty($this->city_data)){
 												foreach($this->city_data as $k=>$v){
+													
+													$style = (strlen($v->province_name) > 17) ? 'min-height:65px;' : '';
 											?>
 											<tr>
 												<td><?php echo ucwords( $v->city_name ); ?></td>
-												<td><?php echo $v->jml_account; ?></td>
+												<td style="<?php echo $style; ?>"><?php echo $v->jml_account; ?></td>
 											</tr>
 											<?php } 
 											}

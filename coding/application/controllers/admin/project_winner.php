@@ -22,9 +22,14 @@ class Project_winner extends MY_Admin_Access{
 		$this->load->library('pagination_tmpl');
 		$page = intval($this->input->get_post('page'));
 		
+		$this->search_by = $this->input->get_post('search_by');
+		$this->q = $this->input->get_post('q');
+		
 		$param_url = array(
 			'business_id' => $this->access->business_id,
 			'project_live' => $this->project_live,
+			'search_by' => $this->search_by,
+			'q' => $this->q,
 			'page' => ''
 		);
 		

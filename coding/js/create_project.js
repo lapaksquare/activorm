@@ -227,5 +227,30 @@ $(function(){
 			$('#modal-project').modal('show');
 		}
 		
+		$('#photo_container').delegate('#delete_photo', 'click', function(){
+			var el = $(this);
+			if (el.data('working')) return false;
+			el.data('working', true);
+			var c = confirm("Are you sure to delete this photo?");
+			if (c == true){
+				var pid = el.attr('data-pid');
+				var h = el.attr('data-h');
+				$.post('/ajax/delete_photo_project', {
+					pid : pid,
+					h : h
+				}, function(data){
+					if (data.msg == 0){
+						alert('Something error to delete photo');
+					}else{
+						el.closest('.project-thumbnail').fadeOut(function(){
+							$(this).remove();
+						});
+					}
+					el.data('working', false);
+				}, 'json');
+			}
+			return false;
+		});
+		
 	});
 });

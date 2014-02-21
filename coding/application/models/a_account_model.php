@@ -51,10 +51,21 @@ class A_account_model extends CI_Model{
 			$limited = " LIMIT " . $this->start . " , " .$this->limit;
 		}
 		
-		$where = "";
+		$where = $order_by = $sort_by = "";
+		
+		if ($account_type == "user"){
+			$order_by = "ORDER BY ma.account_name ASC";
+		}else if ($account_type == "business"){
+			$order_by = "ORDER BY bp.business_name ASC";
+		}
+		
 		if (!empty($param_url)){
 			if (!empty($param_url['search_by']) && !empty($param_url['q'])){
 				$where .= " AND " . $param_url['search_by'] . " LIKE '%". $param_url['q'] ."%' ";
+			}
+			if (!empty($param_url['order_by']) && !empty($param_url['sort_by'])){
+				$sort_by = (!empty($param_url['sort_by'])) ? $param_url['sort_by'] : 'asc';
+				$order_by = "ORDER BY " . $param_url['order_by'] . " " . $sort_by;
 			}
 		}
 		
@@ -72,7 +83,7 @@ class A_account_model extends CI_Model{
 			AND ma.account_type = 'user'
 			AND ma.account_email != ''
 			$where
-			ORDER BY ma.account_name ASC
+			$order_by
 			" . $limited;
 		}else if ($account_type == "business"){
 			$sql = "
@@ -97,7 +108,7 @@ class A_account_model extends CI_Model{
 			AND ma.account_email != ''
 			$where
 			GROUP BY bp.business_id
-			ORDER BY bp.business_name ASC
+			$order_by
 			" . $limited;
 		}
 				

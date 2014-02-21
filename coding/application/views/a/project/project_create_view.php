@@ -48,11 +48,13 @@
 				<!-- #step-1 --></div>
 
 				<div id="step-2" class="box step">
-					<h2 class="step-title">Step 2: <span class="green">Upload Project Image</span></h2>
+					<h2 class="step-title">Step 2: <span class="green">Upload Project Image (Max. 3 Images)</span></h2>
 
 					<div class="row">
 						
-						<?php if (!empty($this->project)){ 
+						<?php 
+						/*
+						if (!empty($this->project)){ 
 							$photo = $this->project->project_primary_photo;
 							$photo = $this->mediamanager->getPhotoUrl($photo, "300x300");
 							?>
@@ -61,10 +63,10 @@
 								<img src="<?php echo cdn_url() . $photo; ?>" alt="photo" width="260" />
 							</div>
 						</div>
-						<?php } ?>
+						<?php } */ ?>
 						
 
-						<div class="col-sm-8">
+						<div class="col-sm-12">
 							<div class="form-group file-upload" style="margin:0;">
 								
 								<div class="row">
@@ -72,7 +74,7 @@
 										<?php /*
 										<input type="text" placeholder="Choose an Image" class="form-control form-light fake-file" /> */ ?>
 										
-										<input type="file" name="project_photo" class="real-file" />
+										<input type="file" name="project_photo[]" class="real-file" multiple="true" />
 										
 									</div>
 									
@@ -83,6 +85,46 @@
 								</div>
 
 								<p class="help-block"><strong>Tips:</strong> <em>Project image could be your logo or other image that will boost this project exposure must be <strong>jpg/jpeg, gif, or png</strong> smaller than <strong>2 MB</strong>, dimension are limited to <strong>200x200 pixels</strong> image larger than this will be resized.</em></p>
+								
+								<?php 
+								if (!empty($this->project)){
+									
+									?>
+								<div class="col-sm-12" id="photo_container" style="padding-left:0;padding-right:0;padding-top:15px;">
+									
+									<?php 
+									if (empty($this->project_photos)){ 
+										$photo = $this->project->project_primary_photo;
+										$photo = $this->mediamanager->getPhotoUrl($photo, "300x300");
+									?>
+									<div class="project-thumbnail">
+										<img src="<?php echo cdn_url() . $photo; ?>" alt="photo" width="260" class="img-thumbnail" />
+										
+									</div>
+									<?php 
+									}else{
+										
+										foreach($this->project_photos as $k=>$v){
+											$photo = $v->photo_file;
+											$photo = $this->mediamanager->getPhotoUrl($photo, "300x300");
+									?>
+									
+									<div class="project-thumbnail">
+										<img src="<?php echo cdn_url() . $photo; ?>" alt="photo" width="260" class="img-thumbnail"  />
+										<a href="#" id="delete_photo" data-pid="<?php echo $v->photo_id; ?>" data-h="<?php echo sha1($v->photo_id . SALT); ?>"><span class="glyphicon glyphicon-remove"></span>
+</a>
+									</div>
+									
+									<?php	
+										
+										}
+									
+									}
+									?>
+									
+								</div>
+								<?php } ?>
+							
 							</div>
 						</div>
 					</div>

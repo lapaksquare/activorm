@@ -128,6 +128,11 @@ class Project extends MY_Controller{
 				);
 			}else{
 				$view = 'project_details_view';
+				$css = array(
+					'<link rel="stylesheet" href="'.cdn_url().'js/nivoslider/themes/default/default.css" type="text/css" media="screen" />',
+					'<link rel="stylesheet" href="'.cdn_url().'js/nivoslider/themes/light/light.css" type="text/css" media="screen" />',
+					'<link rel="stylesheet" href="'.cdn_url().'js/nivoslider/nivo-slider.css" type="text/css" media="screen" />'
+				);
 			}
 			
 			
@@ -137,6 +142,7 @@ class Project extends MY_Controller{
 			$js = array(
 				'<script src="'.cdn_url().'js/jquery.simplyCountable.js"></script>',
 				'<script src="'.cdn_url().'js/jquery.sharrre-1.3.4.min.js"></script>',
+				'<script type="text/javascript" src="'.cdn_url().'js/nivoslider/jquery.nivo.slider.js"></script>',
 				'<script src="'.cdn_url().'js/project_details.js"></script>',
 				'<script src="'.cdn_url().'js/project_steps.js"></script>'
 			);
@@ -342,6 +348,30 @@ class Project extends MY_Controller{
 			
 			$this->load->library('upload', $config);
 			
+			$images_uploaded = array();
+			$uploaded = $this->upload->do_multi_upload('project_photo', TRUE);
+			$project_primary_photo = $photo_thumb = "";
+			if ($uploaded){
+				foreach($uploaded as $k=>$v){
+					if ($k == 0){
+						$project_primary_photo = 'images/project/' . $v['file_name'];
+						$photo_thumb = cdn_url() . $this->mediamanager->getPhotoUrl($project_primary_photo, "200x200");
+						$dataProject['project_primary_photo'] = $project_primary_photo;
+					}
+					if ($k < 3){
+						$images_uploaded[] = $v;
+					}
+				}
+				//$images_uploaded = $uploaded;
+			}else{
+				
+				if (!empty($_FILES['project_photo']['name'])){
+					$errors[] = 'You have to upload a Project Image in jpg/jpeg, gif, or png smaller than 2 MB, dimension are limited to 200x200 pixels image';
+				}
+				
+			}
+			
+			/* =================== SINGEL UPLOAD =======================
 			$uploaded = $this->upload->do_upload('project_photo');
 			$project_primary_photo = $photo_thumb = "";
 			if ($uploaded){
@@ -362,7 +392,7 @@ class Project extends MY_Controller{
 					$errors[] = 'You have to upload a Project Image in jpg/jpeg, gif, or png smaller than 2 MB, dimension are limited to 200x200 pixels image';
 				}
 				
-			}
+			}*/
 			
 			//$dataProject['photo_thumb'] = $photo_thumb;
 			// UPLOAD IMAGES =================== end ============================
@@ -409,8 +439,12 @@ class Project extends MY_Controller{
 					'project_hashtags' => (!empty($project_hashtags)) ? '#'.$project_hashtags : '',
 					'facebook_format' => $facebook_format,
 					'twitter_format' => $twitter_format,
-					'project_picture' => $photo_thumb
+					//'project_picture' => $photo_thumb
 				);
+				
+				if (!empty($photo_thumb)){
+					$this->dataStatus['project_picture'] = $photo_thumb;
+				}
 			
 				$actions_step_data = $this->func_actions_step($actions_step);
 				
@@ -485,6 +519,18 @@ class Project extends MY_Controller{
 				}
 				
 				$project_id = $this->project_model->registerProject($dataProject, $pid);
+				
+				if (!empty($images_uploaded)){
+					$this->project_model->deleteProjectPhoto($project_id);
+					foreach($images_uploaded as $k=>$v){
+						$primary_photo = 0;
+						$this->project_model->addProjectPhoto(array(
+							'project_id' => $project_id,
+							'photo_file' => 'images/project/'. $v['file_name'],
+							'primary_photo' => $primary_photo
+						));
+					}
+				}
 				
 				$project_tags = explode(",", $project_tags);
 				foreach($project_tags as $k=>$v){
@@ -842,6 +888,12 @@ class Project extends MY_Controller{
 		$this->load->model('comment_model');
 		$this->data['comments'] = $this->comment_model->getComment($project_id);
 		
+		// project photos
+		$this->project_photos = $this->project_model->getProjectPhotos($project_id);
+		$metaImage = $this->project->project_primary_photo;
+		if (!empty($this->project_photos)){
+			$metaImage = $this->project_photos[0]->photo_file;
+		}
 		/*
 		echo '<pre>';
 		print_r($this->data['comments']);
@@ -852,7 +904,7 @@ class Project extends MY_Controller{
 		// og meta
 		$this->data['title'] = $this->project->project_name;
 		$this->data['metaDescription'] = $this->project->business_description;
-		$photos = $this->mediamanager->getPhotoUrl($this->project->project_primary_photo, "200x200");
+		$photos = $this->mediamanager->getPhotoUrl($metaImage, "200x200");
 		$this->data['metaImage'] = cdn_url() . $photos;
 		
 	} 
@@ -882,6 +934,7 @@ class Project extends MY_Controller{
 		
 		//echo '<pre>';print_r($project_actions_data_arr);echo '</pre>';
 		
+		$this->project_photos = $this->project_model->getProjectPhotos($this->project->project_id);
 	}
 	
 	function pricing_overview(){
