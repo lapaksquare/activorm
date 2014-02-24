@@ -348,6 +348,21 @@ class Ajax extends CI_Controller {
 		));
 	}
 	
+	function delete_photo_project(){
+		$pid = $this->input->get_post('pid');
+		$h = $this->input->get_post('h');
+		$h_ori = sha1($pid . SALT);
+		$msg = 0;
+		if ($h == $h_ori){
+			$this->load->model('project_model');
+			$this->project_model->deletePhotoProjectByPhotoId($pid);
+			$msg = 1;
+		}
+		echo json_encode(array(
+			'msg' => $msg
+		));
+	}
+	
 }
 
 ?>

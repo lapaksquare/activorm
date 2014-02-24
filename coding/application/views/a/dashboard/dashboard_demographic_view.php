@@ -80,29 +80,27 @@
 						<div class="box-header">
 							<h2 class="box-title title-light">Geography </h2>
 						</div>
-
-						<?php 
-						$regions = json_decode($this->region_data);
-						?>
 						
 						<div class="row">
 							<div class="col-sm-6">
 								<div class="table-responsive">
-									<table class="table table-activorm table-align-alt">
+									<table class="table table-activorm table-align-alt table-scrollable">
 										<thead>
 											<tr>
-												<th width="60%">Provinsi</th>
+												<th width="60%">Province</th>
 												<th width="40%">Views</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody class="scrollable-area">
 											<?php 
-											if (!empty($regions)){
-												foreach($regions as $k=>$v){
+											if (!empty($this->province_data)){
+												foreach($this->province_data as $k=>$v){
+													
+													$style = (strlen($v->province_name) > 17) ? 'min-height:65px;' : '';
 											?>
 											<tr>
-												<td><?php echo $v->region; ?></td>
-												<td><?php echo $v->visits; ?></td>
+												<td><?php echo ucwords( $v->province_name ); ?></td>
+												<td style="<?php echo $style; ?>"><?php echo $v->jml_account; ?></td>
 											</tr>
 											<?php } 
 											}
@@ -111,28 +109,27 @@
 									</table>
 								</div>
 							</div>
-							
-							<?php 
-							$citys = json_decode($this->city_data);
-							?>
+
 
 							<div class="col-sm-6">
 								<div class="table-responsive">
-									<table class="table table-activorm table-align-alt">
+									<table class="table table-activorm table-align-alt table-scrollable">
 										<thead>
 											<tr>
 												<th width="60%">City</th>
 												<th width="40%">Views</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody class="scrollable-area">
 											<?php 
-											if (!empty($citys)){
-												foreach($citys as $k=>$v){
+											if (!empty($this->city_data)){
+												foreach($this->city_data as $k=>$v){
+													
+													$style = (strlen($v->province_name) > 17) ? 'min-height:65px;' : '';
 											?>
 											<tr>
-												<td><?php echo $v->city; ?></td>
-												<td><?php echo $v->visits; ?></td>
+												<td><?php echo ucwords( $v->city_name ); ?></td>
+												<td style="<?php echo $style; ?>"><?php echo $v->jml_account; ?></td>
 											</tr>
 											<?php } 
 											}
@@ -144,39 +141,34 @@
 						</div>
 					<!-- .box --></div>
 
-					<?php /*
+					
+					<?php if (!empty($this->interests)){ ?>
 					<div class="box">
 						<div class="box-header">
-							<h2 class="box-title title-light">Interest <i class="icon-lock"></i></h2>
+							<h2 class="box-title title-light">Interest</h2>
 						</div>
 
 						<div class="table-responsive">
 							<table class="table table-activorm table-align-alt">
 								<thead>
 									<tr>
+										<th width="25%">Rangking</th>
 										<th width="75%">Interest</th>
-										<th width="25%">Views</th>
 									</tr>
 								</thead>
 								<tbody>
+									<?php foreach($this->interests as $k=>$v){ ?>
 									<tr>
-										<td>Sepak Bola</td>
-										<td>2318</td>
+										<td style="text-align:center;"><?php echo ($k+1); ?></td>
+										<td style="text-align:left;"><?php echo ucwords($v->mip_name); ?>
+											<div><small><?php echo ucfirst($v->mip_details); ?></small></div></td>
 									</tr>
-									<tr>
-										<td>Basket</td>
-										<td>1882</td>
-									</tr>
-									<tr>
-										<td>Renang</td>
-										<td>95</td>
-									</tr>
+									<?php } ?>
 								</tbody>
 							</table>
 						</div>
 					<!-- .box --></div>
-					 * 
-					 */ ?>
+					<?php } ?> 
 
 				<!-- #content --></div>
 

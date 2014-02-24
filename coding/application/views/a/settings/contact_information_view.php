@@ -106,7 +106,7 @@
 											<input type="text" placeholder="Choose an Image" class="form-control form-light fake-file" />
 											</div>
 											<div class="col-xs-4">
-												<a class="btn btn-green" onclick="$('.real-file').click();">Upload</a>
+												<a class="btn btn-green" onclick="$('.real-file').click();">Browse</a>
 											</div>
 											
 											<div class="clearfix"></div>
@@ -458,7 +458,7 @@
 											<input type="text" placeholder="Choose an Image" class="form-control form-light fake-file" />
 											</div>
 											<div class="col-xs-4">
-												<a class="btn btn-green" onclick="$('.real-file').click();">Upload</a>
+												<a class="btn btn-green" onclick="$('.real-file').click();">Browse</a>
 											</div>
 											
 											<div class="clearfix"></div>

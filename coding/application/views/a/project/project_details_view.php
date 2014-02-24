@@ -78,10 +78,46 @@
 										//$photo = $this->mediamanager->getPhotoUrl($photo, "300x300");
 									}*/
 									
-									$photo = $this->project->project_primary_photo;
-									$photo = $this->mediamanager->getPhotoUrl($photo, "300x300");
+									
+									
+									/*
+									 * <img class="img-responsive" src="<?php echo cdn_url() . $photo; ?>" alt="<?php echo $this->project->project_uri; ?>" />
+									 * */
 									?>
-									<img class="img-responsive" src="<?php echo cdn_url() . $photo; ?>" alt="<?php echo $this->project->project_uri; ?>" />
+									
+									
+									<?php if (empty($this->project_photos) || (!empty($this->project_photos) && count($this->project_photos) == 1)){ 
+							            		
+										$photo = $this->project->project_primary_photo;
+										$photo = $this->mediamanager->getPhotoUrl($photo, "300x300");
+					            		
+					            		?>
+					                <img class="img-responsive" src="<?php echo cdn_url() . $photo; ?>" alt="<?php echo $this->project->project_uri; ?>" />
+					                <?php }else{  ?>
+									
+									<div class="slider-wrapper theme-light">
+							            <div id="slider" class="nivoSlider">
+							            	
+							                <?php	
+												foreach($this->project_photos as $k=>$v){
+													
+													$photo = $v->photo_file;
+													$photo = $this->mediamanager->getPhotoUrl($photo, "300x300");
+											?>
+											
+													<img class="img-responsive" src="<?php echo cdn_url() . $photo; ?>" alt="<?php echo $this->project->project_uri; ?>" />
+											
+											<?php
+													
+												}	
+							                ?>
+							                	
+							                
+							            </div>
+							        </div>
+							        
+							        <?php } ?>
+									
 								</div>
 							</div>
 
@@ -128,7 +164,7 @@
 										}else{
 		        					?>
 		        					
-		        					<h4 class="project_details_h4"><?php echo ucwords($this->project->project_name); ?></h4>
+		        					<!--<h4 class="project_details_h4"><?php echo ucwords($this->project->project_name); ?></h4>-->
 		        					
 		        					<p style="color: #e82355;margin-bottom: 0;margin-top: 20px;font-weight: bold;font-size: 18px;">Time Remaining</p>
 		        					

@@ -27,7 +27,7 @@ class Dashboard extends MY_Controller{
 			
 			$this->projects_overview();
 			
-			$title = 'Projects';
+			$title = $this->title = 'Projects';
 			$view = 'dashboard_projects_view';
 			$this->data['menu'] = 'projects';
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "pointstopup"){
@@ -38,14 +38,14 @@ class Dashboard extends MY_Controller{
 				'<script type="text/javascript" src="'.cdn_url().'js/topuppoint.js"></script>'
 			);
 			
-			$title = 'Points &amp; Top Up';
+			$title = $this->title = 'Points &amp; Top Up';
 			$view = 'dashboard_points_topup_view';
 			$this->data['menu'] = 'points_topup';
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "paymentconfirmation"){
 			
 			$this->paymentconfirmation();
 			
-			$title = 'Payment Confirmation';
+			$title = $this->title = 'Payment Confirmation';
 			$view = 'dashboard_paymentconfirmation_view';
 			$this->data['menu'] = 'payment_confirmation';
 			
@@ -62,7 +62,7 @@ class Dashboard extends MY_Controller{
 			
 			$this->paymenthistory();
 			
-			$title = 'Payment History';
+			$title = $this->title = 'Payment History';
 			$view = 'dashboard_paymenthistory_view';
 			$this->data['menu'] = 'payment_history';
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "demographic"){
@@ -74,7 +74,7 @@ class Dashboard extends MY_Controller{
 				'<script type="text/javascript" src="https://www.google.com/jsapi"></script>',
 				'<script type="text/javascript" src="'.cdn_url().'js/dashboard_demographic.js"></script>'
 			);
-			$title = 'Demographic';
+			$title = $this->title = 'Demographic';
 			$this->data['submenu'] = 'demographic';
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "searchengine"){
 			$view = 'dashboard_searchengine_view';
@@ -85,7 +85,7 @@ class Dashboard extends MY_Controller{
 				'<script src="'.cdn_url().'js/jquery.mCustomScrollbar.min.js"></script>',
 				'<script src="'.cdn_url().'js/dashboard_searchengine.js"></script>'
 			);
-			$title = 'Search Engine';
+			$title = $this->title = 'Search Engine';
 			$this->data['submenu'] = 'searchengine';
 		
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "allproject"){
@@ -93,7 +93,7 @@ class Dashboard extends MY_Controller{
 			$this->dashboard_allproject();	
 				
 			$view = 'dashboard_allproject_view';
-			$title = 'All Project';
+			$title = $this->title = 'All Project';
 			$this->data['submenu'] = 'allproject';
 			
 			$js = array(
@@ -102,7 +102,7 @@ class Dashboard extends MY_Controller{
 			
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "survey"){
 			$view = 'dashboard_survey_view';
-			$title = 'Survey';
+			$title = $this->title = 'Survey';
 			$this->data['submenu'] = 'survey';	
 		
 		/*submit ed form*/
@@ -111,7 +111,21 @@ class Dashboard extends MY_Controller{
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "submit_paymentconfirmation"){
 			$this->submit_paymentconfirmation();
 		/**/
-		
+		}else if (!empty($this->segments[2]) && $this->segments[2] == "project"){
+			//print_r($this->segments);
+			//die();
+			$this->dashboard_project();
+			$this->data['submenu'] = 'allproject';
+			$view = 'dashboard_project_select_view.php';
+			
+			$css = array(
+				'<link href="'.cdn_url().'css/jquery.mCustomScrollbar.css" rel="stylesheet">'
+			);
+			$js = array(
+				'<script type="text/javascript" src="https://www.google.com/jsapi"></script>',
+				'<script src="'.cdn_url().'js/jquery.mCustomScrollbar.min.js"></script>',
+				'<script src="'.cdn_url().'js/dashboard_project_select.js"></script>'
+			);
 		}else{
 					
 			$this->dashboard_overview();	
@@ -125,11 +139,11 @@ class Dashboard extends MY_Controller{
 				'<script src="'.cdn_url().'js/jquery.mCustomScrollbar.min.js"></script>',
 				'<script src="'.cdn_url().'js/dashboard_overview.js"></script>'
 			);
-			$title = 'Overview';
+			$title = $this->title = 'Overview';
 			$this->data['submenu'] = 'overview';
 		}
 		
-		$this->_default_param($css, $js, $meta, $title);
+		$this->_default_param($css, $js, $meta, $this->title);
 		$this->load->view('a/dashboard/' . $view, $this->data);
 	}
 
@@ -548,11 +562,251 @@ class Dashboard extends MY_Controller{
 	
 	function demographic(){
 		$this->load->model('project_analytic_model');
-		$this->load->model('google_analytic_model');
+		//$this->load->model('google_analytic_model');
 		$this->gender_data = $this->project_analytic_model->getGenderTrafficData();
-		$this->region_data = $this->google_analytic_model->getTrafficData("data_region");
-		$this->city_data = $this->google_analytic_model->getTrafficData("data_city");
+		//$this->region_data = $this->google_analytic_model->getTrafficData("data_region");
+		//$this->city_data = $this->google_analytic_model->getTrafficData("data_city");
+		$this->province_data = $this->project_analytic_model->getProvinceTrafficData();
+		$this->city_data = $this->project_analytic_model->getCityKabupatenTrafficData();
+		
+		
+		$this->load->model('interests_model');
+		$this->interests = $this->interests_model->getInterestsOverview();
 	}
+	
+	function dashboard_project(){
+		$this->title = "Dashboard Project";
+				
+		if (empty($this->segments[1]) || empty($this->segments[2]) || empty($this->segments[3])) redirect(base_url() . '404');		
+				
+		$this->load->model('project_model');		
+		$this->project = $this->project_model->getProject('pp.project_uri', $this->segments[3]);
+		if (empty($this->project) || empty($this->segments[2])) redirect(base_url() . '404');
+		
+		$project_id = $this->project->project_id;
+		$account_id = $this->access->member_account->account_id;
+		$business_id = $this->access->business_account->business_id;
+		
+		$this->projects = $this->project_model->getProjectAllByBusinessId($business_id);
+		
+		$this->load->model('dashboard_model');
+		$this->result = $this->dashboard_model->getBusinessProjectByProjectId($project_id);
+			
+		$this->load->model('google_analytic_model');
+		$this->project_analytic = $this->google_analytic_model->getAnalticsPageProject($project_id);
+		
+		$this->load->model('project_analytic_model');
+		$this->gender_data = $this->project_analytic_model->getGenderTrafficDataByProjectId($project_id);
+		$this->province_data = $this->project_analytic_model->getProvinceTrafficDataByProjectId($project_id);
+		$this->city_data = $this->project_analytic_model->getCityKabupatenTrafficDataByProjectId($project_id);
+		
+		$this->cronGATrafficProject($project_id, $this->project->project_uri, $this->project);
+		
+		$this->load->model('interests_model');
+		$this->interests = $this->interests_model->getInterestsByProjectId($project_id);
+		
+		/*
+		echo '<pre>';
+		print_r($this->result);
+		echo '</pre>';
+		
+		echo '<pre>';
+		print_r($this->project_analytic);
+		echo '</pre>';*/
+	}
+	
+	/* CRON */
+	function cronGATrafficProject($project_id, $project_uri, $projects){
+		$this->load->library("google_analytic_library");	
+		$this->load->model("google_analytic_model");
+		
+		$endDateTraffic = $this->google_analytic_model->getEndDateTrafficProject($project_id);
+		
+		if ($endDateTraffic != date("Y-m-d")){
+		
+			$ga_session = $this->gaAuth();
+			$accessToken = $ga_session->auth->access_token;
+			$this->google_analytic_library->ga->setAccessToken($accessToken);
+			$this->google_analytic_library->ga->setAccountId('ga:78298628');
+			// Set the default params. For example the start/end dates and max-results
+			$defaults = array(
+			    'end-date' => date('Y-m-d', strtotime('- 1 days')),
+			);
+			$this->google_analytic_library->ga->setDefaultQueryParams($defaults);
+			$params = array(
+				'metrics' => 'ga:visitors,ga:newVisits,ga:visits,ga:percentNewVisits',
+				'dimensions' => 'ga:date',
+				'max-results' => 500,
+				'start-date' => $endDateTraffic,
+				'filters' => 'ga:pagePath==/project/' . $project_uri
+			);
+			$this->traffic_website = $this->google_analytic_library->ga->query($params);
+					
+			if (!empty($this->traffic_website['rows'])){
+				foreach($this->traffic_website['rows'] as $k=>$v){
+					$data = array(
+						'project_id' => $project_id,
+						'analytic_date' => date('Y-m-d', strtotime($v[0])),
+						'analytic_visitors' => $v[1],
+						'analytic_newvisits' => $v[2],
+						'analytic_visit' => $v[3],
+						'analytic_percentnewvisits' => $v[4]
+					);
+					$this->google_analytic_model->addTrafficProject($data);
+				}
+			}
+			
+			$this->cronGATrafficDataNewReturnVisitors($project_id, $project_uri);
+			$this->cronGATrafficDataMediumContent($project_id, $project_uri);
+			$this->cronGATrafficDataSourceContent($project_id, $project_uri);
+			
+		}
+
+		$this->gchart_type = "daily";
+		$startdate = $this->input->get_post('s');
+		$enddate = $this->input->get_post('e');
+		$hash = $this->input->get_post('h');
+		$hash_ori = sha1($startdate.$enddate.SALT);
+		if (empty($startdate) || empty($enddate) || empty($hash) || $hash != $hash_ori){
+			//$startdate = date("Y-m-d", strtotime("- 7 days"));
+			//$enddate = date("Y-m-d", strtotime("- 1 days"));
+			
+			$c = $projects->project_period_int;
+			if ($c < 7){
+				$startdate = date('Y-m-d', strtotime($this->project->project_period . "- ".$c." days"));
+				$enddate = date('Y-m-d', strtotime($this->project->project_period));
+			}else{
+				$ca = 7;
+				$startdate = date('Y-m-d', strtotime($this->project->project_period . "- ".$ca." days"));
+				$enddate = date('Y-m-d', strtotime($this->project->project_period));
+			}
+			
+		}
+		$this->keyal = "s=" . $startdate . "&e=" . $enddate . "&h=" . $hash;
+		$this->trafficwebsite = $this->google_analytic_model->getTrafficProject($project_id, $this->gchart_type, $startdate, $enddate);
+		
+		$this->reffererdata = $this->google_analytic_model->getTrafficProjectData($project_id, "source_data") ;
+		$this->contentdata = $this->google_analytic_model->getTrafficProjectData($project_id, "medium_data") ;
+		$this->visitorsdata = $this->google_analytic_model->getTrafficProjectData($project_id, "new_vs_return_visitors") ;
+
+	}	
+	function cronGATrafficDataNewReturnVisitors($project_id, $project_uri){
+		$this->load->library("google_analytic_library");	
+		$this->load->model("google_analytic_model");
+				
+		$ga_session = $this->gaAuth();
+		$accessToken = $ga_session->auth->access_token;
+		$this->google_analytic_library->ga->setAccessToken($accessToken);
+		$this->google_analytic_library->ga->setAccountId('ga:78298628');
+		// Set the default params. For example the start/end dates and max-results
+		$defaults = array(
+		    'end-date' => date('Y-m-d', strtotime('- 1 days')),
+		);
+		$this->google_analytic_library->ga->setDefaultQueryParams($defaults);
+		$params = array(
+			'metrics' => 'ga:visits',
+			'dimensions' => 'ga:visitorType',
+			'start-date' => "2013-10-27",
+			'max-results' => 500,
+			'filters' => 'ga:pagePath==/project/' . $project_uri
+		);
+		$this->traffics = $this->google_analytic_library->ga->query($params);
+		if (!empty($this->traffics['rows'])){
+			$data = array();
+			foreach($this->traffics['rows'] as $k=>$v){
+				$data[] = array(
+					'visitor_type' => $v[0],
+					'visits' => $v[1]
+				);
+			}
+			if (!empty($data)){
+				$data = json_encode($data);
+				$this->google_analytic_model->addTrafficDataProject($project_id, "new_vs_return_visitors", $data);
+			}
+		}
+	}
+	function cronGATrafficDataMediumContent($project_id, $project_uri){
+		$this->load->library("google_analytic_library");	
+		$this->load->model("google_analytic_model");
+				
+		$ga_session = $this->gaAuth();
+		$accessToken = $ga_session->auth->access_token;
+		$this->google_analytic_library->ga->setAccessToken($accessToken);
+		$this->google_analytic_library->ga->setAccountId('ga:78298628');
+		// Set the default params. For example the start/end dates and max-results
+		$defaults = array(
+		    'end-date' => date('Y-m-d', strtotime('- 1 days')),
+		);
+		$this->google_analytic_library->ga->setDefaultQueryParams($defaults);
+		$params = array(
+			'metrics' => 'ga:visits',
+			'dimensions' => 'ga:medium',
+			'start-date' => "2013-10-27",
+			'filters' => 'ga:medium!=facebook;ga:medium!=twitter;ga:medium!=social;ga:pagePath==/project/' . $project_uri,
+			'max-results' => 500
+		);
+		$this->traffics = $this->google_analytic_library->ga->query($params);
+		if (!empty($this->traffics['rows'])){
+			$data = array();
+			foreach($this->traffics['rows'] as $k=>$v){
+				$data[] = array(
+					'medium' => ($v[0] == "(none)") ? 'direct' : $v[0],
+					'visits' => $v[1]
+				);
+			}
+			if (!empty($data)){
+				$data = json_encode($data);
+				$this->google_analytic_model->addTrafficDataProject($project_id, "medium_data", $data);
+			}
+		}
+	}
+	function cronGATrafficDataSourceContent($project_id, $project_uri){
+		$this->load->library("google_analytic_library");	
+		$this->load->model("google_analytic_model");
+				
+		$ga_session = $this->gaAuth();
+		$accessToken = $ga_session->auth->access_token;
+		$this->google_analytic_library->ga->setAccessToken($accessToken);
+		$this->google_analytic_library->ga->setAccountId('ga:78298628');
+		// Set the default params. For example the start/end dates and max-results
+		$defaults = array(
+		    'end-date' => date('Y-m-d', strtotime('- 1 days')),
+		);
+		$this->google_analytic_library->ga->setDefaultQueryParams($defaults);
+		$params = array(
+			'metrics' => 'ga:visits',
+			'dimensions' => 'ga:source',
+			'start-date' => "2013-10-27",
+			'filters' => 'ga:source==facebook.com,ga:source==m.facebook.com,ga:source==t.co,ga:source=~startupbisnis.com,ga:source=~techinasia.com,ga:source=~dailysocial.net,ga:source=~google,ga:source=~direct;ga:source!~blogspot.com;ga:source!~plus.url.google.com;ga:pagePath==/project/' . $project_uri,
+			'max-results' => 500,
+			'sort' => '-ga:visits'
+		);
+		$this->traffics = $this->google_analytic_library->ga->query($params);
+		if (!empty($this->traffics['rows'])){
+			$data = array();
+			foreach($this->traffics['rows'] as $k=>$v){
+				
+				$source = $v[0];
+				switch($v[0]){
+					case "(direct)":
+						$source = "activorm.com";
+						break;
+					case "t.co":
+						$source = "twitter.com (t.co)";
+				}
+				
+				$data[] = array(
+					'source' => $source,
+					'visits' => $v[1]
+				);
+			}
+			if (!empty($data)){
+				$data = json_encode($data);
+				$this->google_analytic_model->addTrafficDataProject($project_id, "source_data", $data);
+			}
+		}
+	}
+	/* CRON */
 	
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){
 		/*$default_css = array(

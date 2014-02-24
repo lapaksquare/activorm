@@ -6,6 +6,10 @@ class Socialmedia_model extends CI_Model{
 		$cek = $this->getSocialMediaConnect($data['account_id'], $data['social_name']);
 		if (empty($cek)){
 			$this->db->insert('connect__socialmedia', $data);
+		}else{
+			$this->db->update('connect__socialmedia', $data, array(
+				'social_id' => $cek->social_id
+			));
 		}
 	}
 	

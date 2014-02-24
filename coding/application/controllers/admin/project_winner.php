@@ -22,9 +22,14 @@ class Project_winner extends MY_Admin_Access{
 		$this->load->library('pagination_tmpl');
 		$page = intval($this->input->get_post('page'));
 		
+		$this->search_by = $this->input->get_post('search_by');
+		$this->q = $this->input->get_post('q');
+		
 		$param_url = array(
 			'business_id' => $this->access->business_id,
 			'project_live' => $this->project_live,
+			'search_by' => $this->search_by,
+			'q' => $this->q,
 			'page' => ''
 		);
 		
@@ -156,7 +161,7 @@ class Project_winner extends MY_Admin_Access{
         $message = Swift_Message::newInstance();
 		//Give the message a subject
 		
-		$email = array('karen.qer.kamal@gmail.com', 'lapaksquare@gmail.com', 'info@activorm.com'); //$data['email'];
+		$email = $data['email']; //array('karen.qer.kamal@gmail.com', 'lapaksquare@gmail.com', 'info@activorm.com'); //$data['email'];
 		$subject = $data['subject_email'];
 								
 		$data = $this->load->view('email/' . $tmpl, $data, true);

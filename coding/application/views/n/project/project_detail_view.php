@@ -60,19 +60,49 @@
 	  
 	  <div class="form-group">
 	    <label for="" class="col-sm-2 control-label">Photo</label>
-	    <div class="col-sm-10">
-	      <input type="file" name="project_photo" id="project_photo" />
+	    <div class="col-sm-10" id="photo_container">
+	      <input type="file" name="project_photo[]" id="project_photo" multiple="true" />
 	      
 	      <br />
 	      
 	      <?php 
+	      /*
 	      if (!empty($this->project->project_primary_photo)){
 	      	$photo = $this->mediamanager->getPhotoUrl($this->project->project_primary_photo, "300x300");
 	      ?>
 	      <img src="<?php echo cdn_url() . $photo; ?>" alt="photo" />
 	      <?php	
-	      }
+	      }*/
 	      ?>
+	      
+	      	<?php 
+			if (empty($this->project_photos)){ 
+				$photo = $this->project->project_primary_photo;
+				$photo = $this->mediamanager->getPhotoUrl($photo, "300x300");
+			?>
+			<div class="project-thumbnail">
+				<img src="<?php echo cdn_url() . $photo; ?>" alt="photo" width="260" class="img-thumbnail" />
+				
+			</div>
+			<?php 
+			}else{
+				
+				foreach($this->project_photos as $k=>$v){
+					$photo = $v->photo_file;
+					$photo = $this->mediamanager->getPhotoUrl($photo, "300x300");
+			?>
+			
+			<div class="project-thumbnail">
+				<img src="<?php echo cdn_url() . $photo; ?>" alt="photo" width="260" class="img-thumbnail"  />
+				<a href="#" id="delete_photo" data-pid="<?php echo $v->photo_id; ?>" data-h="<?php echo sha1($v->photo_id . SALT); ?>"><span class="glyphicon glyphicon-remove"></span></a>
+			</div>
+			
+			<?php	
+				
+				}
+			
+			}
+			?>
 	      
 	    </div>
 	  </div>  
@@ -134,13 +164,14 @@
 	  
 	  <div class="form-group">
 	    <label for="prize_category" class="col-sm-2 control-label">Actions</label>
-	    <div class="col-sm-10">
+	    <div class="col-sm-10" id="actions_container">
 	     	<p>
 	     		
 	     		<?php 
 	     		$actions = $this->project->project_actions_data;
 				if (!empty($actions)){
 					$actions = json_decode($actions);
+					
 					/*
 					echo '<pre>';
 					print_r($actions);
@@ -149,7 +180,45 @@
 	     		
 	     		<ol>
 	     			<?php foreach($actions as $k=>$v){ ?>
-	     			<li><?php echo ucwords($v->type_name); ?></li>
+	     			<li><?php echo ucwords($v->type_name); ?>
+	     				
+	     				<?php 
+	     				if ($v->type_step == "twitter-tweet" || $v->type_step == "twitter-hashtag"){
+	     				?>
+	     					<br />
+	     					<div>
+	     					<input type="hidden" name="project_id" id="project_id" value="<?php echo $this->project->project_id; ?>" />
+	     					<input type="hidden" name="type" id="type" value="<?php echo $v->type_step; ?>" />
+	     					<textarea class="form-control" name="tw-tweet" id="tw-tweet" style="height:80px;margin-bottom:8px;"><?php echo $v->status; ?></textarea>
+	     					<input type="button" name="btn-action-edit" class="btn btn-default" id="btn-action-edit-tw" value="save" />
+	     					</div>
+	     					<br /><br />
+	     				<?php	
+	     				}else if ($v->type_step == "facebook-send"){
+	     				?>
+	     					<br />
+	     					<div>
+	     					
+	     					<input type="hidden" name="project_id" id="project_id" value="<?php echo $this->project->project_id; ?>" />
+	     					
+	     					<input type="hidden" name="type" id="type" value="<?php echo $v->type_step; ?>" />
+	     					<label>Name:</label>
+	     					<input type="text" class="form-control" name="fb-link-name" id="fb-link-name" value="<?php echo $v->name; ?>" />
+	     					
+	     					<label>Link:</label>
+	     					<input type="text" class="form-control" name="fb-link-linka" id="fb-link-linka" value="<?php echo $v->link; ?>" />
+	     					
+	     					<label>Description:</label>
+	     					<textarea class="form-control" name="fb-link-description" id="fb-link-description" style="height:80px;margin-bottom:8px;"><?php echo $v->description; ?></textarea>
+	     					
+	     					<input type="button" name="btn-action-edit" class="btn btn-default" id="btn-action-edit-fb" value="save" />
+	     					</div>
+	     					<br /><br />
+	     				<?php
+	     				}
+	     				?>
+	     				
+	     			</li>
 	     			<?php } ?>
 	     		</ol>
 	     		

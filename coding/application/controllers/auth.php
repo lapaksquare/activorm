@@ -478,8 +478,10 @@ class Auth extends MY_Controller {
 			$business_number = preg_replace("/[^0-9]/", "", $business_number);
 			
 			$errors = array();
-			if ($validateBusinessName == 1){
-				$errors[] = "Company Name must contain words only (you may not use special characters e.g. - , > , % , $)";
+			//if ($validateBusinessName == 1){
+			if (strlen($business_name) < 5){		
+				//$errors[] = "Company Name must contain words only (you may not use special characters e.g. - , > , % , $)";
+				$errors[] = "Company name must contain minimum 5 characters.";
 			}
 			if ($validateBusinessContact == 1){
 				$errors[] = "Person In Charge must contain words only (you may not use special characters e.g. - , > , % , $)";

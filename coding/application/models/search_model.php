@@ -62,7 +62,10 @@ class Search_model extends CI_Model{
 		pp.project_hashtags,
 		pp.project_posted,
 		bp.business_name,
-		bp.business_uri
+		bp.business_uri,
+		
+		pphx.photo_id,
+		pphx.photo_file
 		
 		FROM
 		
@@ -72,6 +75,17 @@ class Search_model extends CI_Model{
 			bp.business_id = pp.business_id AND
 			bp.business_live = 'Online' AND
 			bp.business_active = 1
+		
+		LEFT JOIN (
+			SELECT
+			pph.project_id,
+			pph.photo_id,
+			pph.photo_file
+			FROM 
+			project__photo pph
+			ORDER BY pph.photo_id ASC
+			LIMIT 1
+		) pphx ON pphx.project_id = pp.project_id
 		
 		WHERE 1
 		

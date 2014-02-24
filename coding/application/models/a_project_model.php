@@ -134,6 +134,14 @@ class A_project_model extends CI_Model{
 			$where .= " AND bp.business_id = '". $param_url['business_id'] ."' ";
 		}
 		
+		if (!empty($param_url['search_by']) && !empty($param_url['q'])){
+			if ($param_url['search_by'] != "both"){
+				$where .= " AND ( ". $param_url['search_by'] ." LIKE '%". $param_url['q'] ."%' ) ";
+			}else{
+				$where .= " AND ( pp.project_name LIKE '%". $param_url['q'] ."%' OR bp.business_name LIKE '%". $param_url['q'] ."%' ) ";
+			}
+		}
+		
 		$sql = "
 		SELECT
 		SQL_CALC_FOUND_ROWS
@@ -162,9 +170,9 @@ class A_project_model extends CI_Model{
 				WHERE 1 GROUP BY project_id
 			) x ON x.project_id = pp.project_id
 		WHERE 1
-		$where
 		AND pp.project_live = ?
 		AND pp.project_active = 1
+		$where
         GROUP BY x.project_id
 		ORDER BY `pp`.`project_name`  ASC
 		" . $limited;
@@ -306,6 +314,18 @@ class A_project_model extends CI_Model{
 		AND pt.tiket_id = ?
 		";
 		return $this->db->query($sql, array($tiket_id))->row();
+	}
+	
+	function registerProject($data = array(), $project_id = ''){
+		if (empty($project_id)){
+			$this->db->insert('project__profile', $data);
+			$project_id = $this->db->insert_id();
+		}else{
+			$this->db->update('project__profile', $data, array(
+				'project_id' => $project_id
+			));
+		}
+		return $project_id;
 	}
 	
 }

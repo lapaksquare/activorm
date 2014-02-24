@@ -29,6 +29,32 @@
 	
 	<hr />
 	
+	<form class="form-inline" role="form" method="get">
+	  <div class="form-group">
+	    <label class="sr-only" for="search_by">Search By</label>
+	    <select class="form-control" name="search_by" id="search_by">
+	    	<?php 
+	    	$sb = array(
+				"pp.project_name" => "Project Name",
+				"bp.business_name" => "Business Name",
+				"both" => "Both"
+			);
+			foreach($sb as $k=>$v){
+				$class = ($k == $this->search_by) ? "selected" : "";
+			?>
+			<option value="<?php echo $k; ?>" <?php echo $class; ?>><?php echo $v; ?></option>
+			<?php
+			}
+	    	?>
+	    </select>
+	  </div>
+	  <div class="form-group">
+	    <input type="text" class="form-control" id="q" name="q" placeholder="Keyword" value="<?php echo $this->q; ?>">
+	  </div>
+	  <input type="hidden" name="project_live" value="<?php echo $this->project_live; ?>" />
+	  <button type="submit" class="btn btn-default">Search</button>
+	</form>
+	
 	<table class="table table-hover">
         <thead>
           <tr>
