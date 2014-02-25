@@ -783,7 +783,7 @@ class Project extends MY_Controller{
 	function project_overview(){
 		$this->load->model('project_model');
 		$this->project = $this->project_model->getProject('pp.project_uri', $this->segments[2]);
-		if (empty($this->project) || empty($this->segments[2])) redirect(base_url() . '404');
+		if (empty($this->project) || empty($this->segments[2]) || $this->project->project_active == 0) redirect(base_url() . '404');
 		
 		$project_id = $this->project->project_id;
 		$account_id = $this->session->userdata('account_id');
