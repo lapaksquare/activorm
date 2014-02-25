@@ -1,5 +1,100 @@
 <?php $this->load->view('a/general/header_view', $this->data); ?>
+		
+		<?php 
+		if ($this->step_create == 1){
+		?>
+		
+		<div id="main" class="container">
 
+			<div class="row">
+				
+			<?php 
+			$message_submit_premiumproject = $this->session->userdata('message_submit_premiumproject');
+			$this->session->unset_userdata('message_submit_premiumproject');
+			if (!empty($message_submit_premiumproject) && $message_submit_premiumproject == 1){
+				$message_error = 'Terjadi kesalahan dalam pengiriman data.';
+			?>
+			<div class="alert alert-danger"><?php echo $message_error; ?></div>
+			<?php } ?>	
+			
+			</div>
+			
+			<form class="form-activorm" action="" method="post" id="form_pricing">
+
+				<div class="clearfix"></div>
+
+				<div class="col-xs-12 pricing-plans">
+					<div class="box" style="margin-bottom:0;padding-bottom:2px;">
+
+						<div class="row pricing-panel" style="position: relative;left: 16%;margin-bottom:10px;">
+							<div class="col-sm-4">
+								<div class="panel panel-plan">
+									<div class="panel-heading">
+										<h3 class="panel-title">Free Trial</h3>
+									</div>
+
+									<div class="panel-body" data-plantype="cpm" style="height: 470px;">
+										<div class="panel-price">
+											<?php /*
+											<span>IDR 150/impression</span>
+											<strong>0,15 Points</strong> */ ?>
+											<span class="panel-price-title">Free</span>
+											<span><b>3</b> Project Left</span>
+										</div>
+
+										<ul style="margin-top: 73px;">
+											<li>Full Dashboard &amp; Analytics</li>
+											<li>Campaign in Activorm Newsletter</li>
+											<li>Get more tickets by more sharing</li>
+										</ul>
+							
+										<a href="<?php echo base_url(); ?>project/create?cid=<?php echo sha1("FREE".SALT); ?>" style="bottom:20px;" type="submit" class="btn btn-big btn-yellow" id="btn_select_point">Select This Plan</a>
+									</div>
+								<!-- .panel-plan --></div>
+							</div>
+							
+							<div class="col-sm-4">
+								<div class="panel panel-plan">
+									<div class="panel-heading">
+										<h3 class="panel-title">Premium</h3>
+									</div>
+
+									<div class="panel-body" data-plantype="cpm" style="height: 470px;">
+										<div class="panel-price">
+											<?php /*
+											<span>IDR 150/impression</span>
+											<strong>0,15 Points</strong> */ ?>
+											<span class="panel-price-title" style="font-size:40px;"><span style="font-size: 25px;vertical-align: top;">IDR</span> <strike>300.000</strike><br /><span style="margin-left: 48px;font-size: 28px;">100.000</span></span>
+											<div style="font-size:25px;font-weight:normal;">(Recommended)</div>
+										</div>
+
+										<ul> 
+											<li>Full Dashboard &amp; Analytics</li>
+											<li>Campaign in Activorm Newsletter</li>
+											<li>Get more tickets by more sharing</li>
+											<li>Direct Prize</li>
+											<li>Display merchant social accounts</li>
+											<li>Campaign featured in first 3 pages</li>
+										</ul>
+							
+										<a href="<?php echo base_url(); ?>project/create?cid=<?php echo sha1("PREMIUM100K".SALT); ?>" style="bottom:20px;" type="submit" class="btn btn-big btn-yellow" id="btn_select_point">Select This Plan</a>
+									</div>
+								<!-- .panel-plan --></div>
+							</div>
+
+						<!-- .pricing-panel --></div>
+
+					</div>
+				<!-- .pricing-plans --></div>
+								
+			</form>
+			
+		</div>		
+		
+		<?php	
+		}else if ($this->step_create == 2){
+		?>
+		
 		<div id="main" class="container">
 
 			<div class="page-header">
@@ -28,6 +123,78 @@
 			?>
 
 			<form action="<?php echo base_url(); ?>project/submit_createproject" method="post" enctype="multipart/form-data">
+				
+				<div id="step-1" class="box step">
+					
+					<div class="col-sm-4" style="padding:0;">
+						<h2 class="step-title">Project Plan</h2>
+						<div class="form-group">
+							<div class="form-group" id="project-plan-type">
+								
+								<?php 
+								$types = array(
+									'FREE' => array(
+										'value' => 'FREE',
+										'label' => 'Free'
+									),
+									'PREMIUM100K' => array(
+										'value' => 'PREMIUM',
+										'label' => 'Premium'
+									)
+								);
+								
+								foreach($types as $k=>$v){
+									
+									$checked = ($this->cid == sha1($k . SALT)) ? "checked='checked'" : '';
+									
+								?>
+								
+								<input type="radio" class="custom-checkgrey" value="<?php echo sha1($k . SALT); ?>" name="project-plan" data-label="<?php echo $v['label']; ?>" data-value="<?php echo $v['value']; ?>" <?php echo $checked; ?> />
+								
+								<?php 
+								}
+								
+								/*
+								 * <input type="checkbox" class="custom-checkgrey" value="free" name="project-plan" data-label="Free" />
+								<input type="checkbox" class="custom-checkgrey" value="premium" name="project-plan" data-label="Premium" />*/
+								
+								?>
+								
+								
+							</div>
+						</div>	
+					</div>
+					
+					<?php 
+					$point_need = 100;
+					?>
+					<div class="col-sm-4 pricing-counter">
+						<div class="counter-box">
+							<span>1 Point IDR 1.000</span>
+							<strong class="green">100 Points</strong>
+						</div>
+					</div>	
+					
+					<div class="col-sm-4 pricing-balance" style="margin: 0;padding: 0;">
+						<div class="box" style="padding: 0;margin: 0;height: 90px;">
+							<strong>Your Point Balance Now</strong>
+							<span class="balance-box" data-balance="<?php echo $points_user; ?>"><?php echo $points_user; ?> Points</span>
+							<?php 
+							$style_cid_type = "display:none;";
+							if ($this->cid_type == "PREMIUM100K" && $point_need > $points_user){
+								$style_cid_type = "display:block;";
+							}
+							?>
+							<span class="balance-note" style="<?php echo $style_cid_type; ?>">You don't have enough balance, please <a href="#">Top Up</a></span>
+						</div>
+					</div>	
+					
+					<div class="clearfix"></div>
+					
+				</div>	
+
+				<div class="clearfix"></div>
+				
 				<div id="step-1" class="box step">
 					<h2 class="step-title">Step 1: <span class="green">Add Project Title</span></h2>
 
@@ -560,20 +727,29 @@
 						
 					</div>
 				<!-- #step-6 --></div>
-
+				
+				
+				<?php 
+				$style_premium = "display:none;";
+				if ($this->cid_type == "PREMIUM100K"){
+					$style_premium = "display:block;";
+				}
+				?>
 				
 				<div id="step-7" class="box step">
 					
+					
+					<div class="premium-plan-container" style="<?php echo $style_premium; ?>">
 					
 					<?php 
 					if (PREMIUM_PLAN == 1){
 					?>
 					
 					
-					<h2 class="step-title">Additional Step:</h2>
+					<h2 class="step-title">Premium Plan Feature</h2>
 					
 					
-					
+					<?php /*
 					<div class="form-group">
 						<?php 
 						$checkupgrade = (!empty($this->project->premium_plan)) ? 'checked="checked"' : '';
@@ -583,9 +759,9 @@
 					</div> 
 
 					<div class="upgrade-divider"></div>
-
+					*/ ?>
 					
-					<ul class="list-unstyled upgrade-options" id="upgrade-options">
+					<ul class="list-unstyled upgrade-options" id="upgrade-options" style="display:block;">
 						
 						<?php 
 						$social_format_data_checked = $social_format_data = '';
@@ -602,7 +778,7 @@
 						
 						<li>
 							<div class="form-group">
-								<input type="checkbox" <?php echo $social_format_data_checked; ?> class="custom-checkwhite" value="allow-share" name="option_share" data-label="Allow fans to share more about your business to get more tickets (max 3 tickets)" />
+								<input type="radio" <?php echo $social_format_data_checked; ?> class="custom-checkgrey opt_premium" value="allow-share" name="opt_premium" data-label="Allow fans to share more about your business to get more tickets (max 3 tickets)" />
 							</div>
 
 							<div class="sub-options">
@@ -631,7 +807,7 @@
 						?>
 						<li>
 							<div class="form-group">
-								<input type="checkbox" <?php echo $project_file_data_checked; ?> class="custom-checkwhite" value="direct-tickets" name="option_tickets" data-label="Direct tickets/price for completed actions (e.g voucher images or ebook PDF)" />
+								<input type="radio" <?php echo $project_file_data_checked; ?> class="custom-checkgrey opt_premium" value="direct-tickets" name="opt_premium" data-label="Direct tickets/price for completed actions (e.g voucher images or ebook PDF)" />
 								<?php if (!empty($project_file_data)){ ?><p style="margin-left:42px;">Your file/voucher : <a href="<?php echo cdn_url() . $project_file_data; ?>" target="_blank">Click here</p><?php } ?></a>
 							</div>
 
@@ -655,6 +831,8 @@
 					<!-- .upgrade-options --></ul>
 					
 					<?php } ?>
+
+					</div>
 
 					<div class="clearfix form-submit" id="form-submit">
 						<?php 
@@ -687,6 +865,10 @@
 			</form>
 
 		<!-- #main --></div>
+		
+		<?php 
+		}
+		?>
 		
 
 <?php $this->load->view('a/general/footer_view', $this->data); ?>

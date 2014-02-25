@@ -8,11 +8,11 @@
 		<div class="pop-warning">
 			<p>Project ini dalam keadaan : <b><?php echo ucwords( $this->project->project_live ); ?></b></p>
 			<p><?php if ($this->project->project_live == "Draft"){ ?><a href="<?php echo base_url(); ?>project/edit/<?php echo $this->project->project_uri; ?>" class="btn btn-wd btn-green">Edit</a> or 
-				<?php if ($this->project->premium_plan == 0){ ?>
+				<?php //if ($this->project->premium_plan == 0){ ?>
 				<a href="#" class="btn btn-wd btn-yellow" id="submit_project">Submit</a>
-				<?php }else{ ?>
+				<?php /*}else{ ?>
 				<a href="<?php echo base_url(); ?>project/pricing/<?php echo $this->project->project_uri; ?>" class="btn btn-wd btn-yellow" id="">Submit</a>
-				<?php } ?>
+				<?php }*/ ?>
 			<?php } ?></p>
 		</div>
 		<?php } ?>
@@ -136,9 +136,13 @@
 										
 										$stoped = 0;
 										//if ( ($server_start >= $server_end && $server_start <= $tiket_enddate) || $this->input->get_post('tiketstart') == 1 ){
-										if ($project_period < $project_now || in_array($this->project->project_live, array('Draft', 'Offline'))){	
+										if (
+											$project_period < $project_now || 
+											in_array($this->project->project_live, array('Draft', 'Offline')) ||
+											!empty($project_win_tiket)
+										){	
 											//redirect(base_url() . '404');
-											if ($project_period < $project_now) { $stoped = 1;
+											if ($project_period < $project_now || !empty($project_win_tiket)) { $stoped = 1;
 									?>
 									
 									<h4 class="project_details_h4">The Project has Ended</h4>		
@@ -369,7 +373,7 @@
 						if ( ($project_actions['action_1'] == 1 && $project_actions['action_2'] == 1 && $project_actions['action_3'] == 1) ){
 						?>
 						
-						<?php if ( ($project_actions['action_premium'] == 1 && $this->project->premium_plan == 1) || 
+						<?php if ( (/*$project_actions['action_premium'] == 1 &&*/ $this->project->premium_plan == 1) || 
 						($project_actions['action_1'] == 1 && $project_actions['action_2'] == 1 && $project_actions['action_3'] == 1 && $this->project->premium_plan == 0)
 						){ ?>
 							

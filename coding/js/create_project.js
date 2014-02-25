@@ -40,6 +40,7 @@ $(function(){
 			}
 		});
 		
+		/*
 		$(".custom-checkupgrade").ready(function(){
 			if($(".custom-checkupgrade").is(":checked")){
 				$(".upgrade-options").slideDown();	
@@ -55,8 +56,9 @@ $(function(){
 				$('#premium-submit-draft').hide();
 			}
 		});
+		*/
 		
-		$(".upgrade-options").find("li .custom-checkwhite").each(function(){
+		$(".upgrade-options").find("li .opt_premium").each(function(){
 			if($(this).is(":checked")){
 				$(this).parents("li").find(".sub-options").slideDown();	
 				
@@ -68,7 +70,7 @@ $(function(){
 			}
 		});
 		
-		$(".custom-checkwhite").on("change", function(){
+		$(".custom-checkwhite, .opt_premium").on("change", function(){
 			if($(this).is(":checked")){
 				$(this).parents("li").find(".sub-options").slideDown();	
 			}
@@ -249,6 +251,20 @@ $(function(){
 					el.data('working', false);
 				}, 'json');
 			}
+			return false;
+		});
+		
+		$('#project-plan-type').delegate('input', 'change', function(){
+			var el = $(this);
+			if (el.data('working')) return false;
+			el.data('working', true);
+			var v = el.attr('data-value');
+			if (v == "PREMIUM"){
+				$('.premium-plan-container').slideDown();
+			}else{
+				$('.premium-plan-container').slideUp();
+			}
+			el.data('working', false);
 			return false;
 		});
 		

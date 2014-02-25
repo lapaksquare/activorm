@@ -369,7 +369,7 @@
 											if (!empty($this->city_data)){
 												foreach($this->city_data as $k=>$v){
 													
-													$style = (strlen($v->province_name) > 17) ? 'min-height:65px;' : '';
+													$style = (property_exists($v, "province_name") && strlen($v->province_name) > 17) ? 'min-height:65px;' : '';
 											?>
 											<tr>
 												<td><?php echo ucwords( $v->city_name ); ?></td>

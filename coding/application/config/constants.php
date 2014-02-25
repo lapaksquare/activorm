@@ -87,7 +87,7 @@ date_default_timezone_set('Asia/Jakarta');
 
 define('WEB_VERSION', 1);
 define('DEV_INVITATION', 0);
-define('PREMIUM_PLAN', 0);
+define('PREMIUM_PLAN', 1);
 
 /* API FACEBOOK */
 define('FACEBOOK_APP_ID', '1425256081020066');
