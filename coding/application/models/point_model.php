@@ -43,9 +43,17 @@ class Point_model extends CI_Model{
 	}
 	
 	function updateMemberPoint($data = array(), $account_id){
-		$this->db->update('member__points', $data, array(
-			'account_id' => $account_id
-		));
+		$cek = $this->getAccountPoint($account_id);
+		if ($cek == 0){
+			$this->db->insert('member__points', array(
+				'point' => $data['point'],
+				'account_id' => $account_id
+			));
+		}else{
+			$this->db->update('member__points', $data, array(
+				'account_id' => $account_id
+			));
+		}
 	}
 	
 }
