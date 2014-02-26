@@ -427,7 +427,7 @@ class Project extends MY_Controller{
 			if ($opt_premium == "direct-tickets"){
 			// UPLOAD FILE =================== start ============================
 			$config['upload_path'] = './images/project_data/';
-			$config['allowed_types'] = 'pdf';
+			$config['allowed_types'] = 'jpg|jpeg|png|pdf';
 			$config['encrypt_name'] = true;
 			$config['max_size']	= '2024';
 			

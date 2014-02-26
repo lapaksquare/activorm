@@ -373,7 +373,7 @@
 						if ( ($project_actions['action_1'] == 1 && $project_actions['action_2'] == 1 && $project_actions['action_3'] == 1) ){
 						?>
 						
-						<?php if ( (/*$project_actions['action_premium'] == 1 &&*/ $this->project->premium_plan == 1) || 
+						<?php if ( ($project_actions['action_premium'] == 1 && $this->project->premium_plan == 1) || 
 						($project_actions['action_1'] == 1 && $project_actions['action_2'] == 1 && $project_actions['action_3'] == 1 && $this->project->premium_plan == 0)
 						){ ?>
 							
@@ -398,7 +398,8 @@
 							}else{
 									
 									
-								if (empty($this->project->project_file_data)){ ?>
+								//if (empty($this->project->project_file_data)){ 
+							?>
 							
 							<div class="wizard-project">
 								<div class="wizard-step step-4">
@@ -408,7 +409,7 @@
 								</div>
 							<!-- .wizard-project --></div>
 							
-							<?php }else{ ?>
+							<?php /*}else{ ?>
 							
 							<div class="wizard-project">
 								<div class="wizard-step step-4">
@@ -417,7 +418,7 @@
 								</div>
 							<!-- .wizard-project --></div>	
 									
-							<?php } 
+							<?php } */
 							
 							
 							}
@@ -461,7 +462,16 @@
 								</div>
 							</div>
 						<!-- .wizard-project --></div>
-						<?php } ?>
+						<?php }else if (!empty($this->project->project_file_data)){
+						?>
+							<div class="wizard-project">
+								<div class="wizard-step step-4">
+									<h2>Thank you for completing it</h2>
+									<a class="btn btn-big btn-yellow" href="<?php echo base_url(); ?>download?h=<?php echo sha1($this->project->project_id.$account_id.SALT); ?>&p=<?php echo $this->project->project_id; ?>&a=<?php echo $account_id; ?>" target="_blank">Download Voucher</a>
+								</div>
+							<!-- .wizard-project --></div>	
+						<?php
+						} ?>
 						
 						<?php } ?>
 						
