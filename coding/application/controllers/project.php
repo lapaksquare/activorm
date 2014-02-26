@@ -1177,7 +1177,7 @@ class Project extends MY_Controller{
 					$this->load->model('point_model');
 					$point = $this->point_model->getAccountPoint($this->access->member_account->account_id);
 					$project_point = $point - $project_budget;
-					
+										
 					$this->point_model->updateMemberPoint(array(
 						'point' => $project_point
 					), $this->access->member_account->account_id);
