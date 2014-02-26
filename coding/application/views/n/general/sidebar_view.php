@@ -76,10 +76,6 @@
 			'name' => 'Payment',
 			'url' => base_url() . 'admin/payment',
 			'child' => array(
-				'payment_completed' => array(
-					'name' => 'Completed',
-					'url' => base_url() . 'admin/payment?order_status=completed'
-				),
 				'payment_checkout' => array(
 					'name' => 'Checkout',
 					'url' => base_url() . 'admin/payment?order_status=checkout'
@@ -87,6 +83,10 @@
 				'payment_onprogress' => array(
 					'name' => 'OnProgress',
 					'url' => base_url() . 'admin/payment?order_status=onprogress'
+				),
+				'payment_completed' => array(
+					'name' => 'Completed',
+					'url' => base_url() . 'admin/payment?order_status=completed'
 				)
 			)
 		),
