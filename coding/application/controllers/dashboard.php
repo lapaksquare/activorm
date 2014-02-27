@@ -380,7 +380,7 @@ class Dashboard extends MY_Controller{
 				
 		$data = $this->load->view('email/' . $tmpl, $data, true);
         $message->setSubject($subject)
-                ->setFrom(array('info@activorm.com' => 'Activorm'))
+                ->setFrom(array('business@activorm.com' => 'Activorm'))
                 ->setTo($email)
                 ->addPart($data, 'text/html')
         ;
