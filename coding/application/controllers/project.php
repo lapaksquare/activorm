@@ -175,6 +175,10 @@ class Project extends MY_Controller{
 		
 		$redirect = base_url() . 'project/create';
 		
+		$this->load->model('point_model');
+		$points_user = $this->point_model->getAccountPoint($this->access->member_account->account_id);
+		$points_balance = 100;
+		
 		if (!empty($submit_btn) || !empty($preview_btn) || !empty($save_draft) || !empty($premium_submit_draft)){
 			
 			$this->load->library('validate');
@@ -276,6 +280,10 @@ class Project extends MY_Controller{
 			//}
 			if ($project_period < 7 || $project_period > 30){
 				$errors[] = "Terjadi kesalahan dalam pengaturan periode";
+			}
+			
+			if ($points_user < $points_balance){
+				$errors[] = "You don't have enough balance, please <a href='".base_url()."dashboard/pointstopup'>Top Up</a>";
 			}
 			
 			if (!empty($submit_btn)){
@@ -1228,6 +1236,9 @@ class Project extends MY_Controller{
 		
 		$this->load->model('point_model');
 		$this->data['points_user'] = $this->point_model->getAccountPoint($this->access->member_account->account_id);
+		
+		$this->load->model('project_model');
+		$this->data['freeplan'] = $this->project_model->getCountFreePlan($this->access->member_account->account_id);
 	}
 	
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){

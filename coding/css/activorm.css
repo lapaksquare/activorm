@@ -3709,3 +3709,30 @@ body.alt #footer {
 	font-size: 40px;
 	line-height: 1;
 }
+
+.premium-star{
+	width:60px;
+	height:60px;
+	position:absolute;
+	top:-30px;
+	right:-30px;
+	background-image:url('../img/premiumplan1.png');
+	background-repeat:no-repeat;
+	background-size:cover;
+	box-shadow:0 0 10px rgba(0,0,0,.7);
+	border-radius:50% 50%;
+}
+
+.pricing-panel ul li{
+	padding-left:35px;
+	list-style:none;
+	background-repeat:no-repeat;
+	background-position:0 3px;
+}
+
+.pricing-panel ul.pp li{
+	background-image:url('../img/premiumplan2.png');
+}
+.pricing-panel ul.pf li{
+	background-image:url('../img/premiumplan3.png');
+}

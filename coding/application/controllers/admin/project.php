@@ -266,6 +266,12 @@ class Project extends MY_Admin_Access{
 				if (!empty($project) && in_array($project->project_live, array('Offline', 'Draft', 'Closed')) && $project_live == "Online"){
 					$dataProject['project_period'] = date('Y-m-d H:i:s', strtotime("+" . $period . " days"));
 					$dataProject['project_period_int'] = $period;
+					
+					$this->load->model('project_model');
+					$freeplan = $this->project_model->getCountFreePlan($aid);
+					$freeplan -= 1;
+					$this->project_model->updateCountFreePlan($aid, $freeplan);
+					
 				}else{
 					if ($project->project_period_int > $period){
 						$pp = $project->project_period_int - $period;

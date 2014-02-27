@@ -373,6 +373,56 @@ class Project_model extends CI_Model{
 		return $this->db->query($sql, array($photo_id));
 	}
 	
+	function getCountFreePlan($account_id){
+		$sql = "
+		SELECT
+		pf.jml_free jml
+		FROM
+		project__freeplan pf
+		WHERE 1
+		AND pf.account_id = ?
+		";
+		$return = $this->db->query($sql, array($account_id))->row();
+		if (empty($return)){
+			return 3;
+		}else{
+			return $return->jml;
+		}
+	}
+	
+	function cekCountFreePlan($account_id){
+		$sql = "
+		SELECT
+		pf.jml_free jml
+		FROM
+		project__freeplan pf
+		WHERE 1
+		AND pf.account_id = ?
+		";
+		$return = $this->db->query($sql, array($account_id))->row();
+		if (empty($return)){
+			return 0;
+		}else{
+			return 1;
+		}
+	}
+	
+	function updateCountFreePlan($account_id, $freeplan){
+		$cek = $this->cekCountFreePlan($account_id);
+		if ($cek == 0){
+			$this->db->insert('project__freeplan', array(
+				'account_id' => $account_id,
+				'jml_free' => $freeplan
+			));
+		}else{
+			$this->db->update('project__freeplan', array(
+				'jml_free' => $freeplan
+			), array(
+				'account_id' => $account_id
+			));
+		}
+	}
+	
 }
 
 ?>

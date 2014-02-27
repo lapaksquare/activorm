@@ -24,51 +24,55 @@
 				<div class="clearfix"></div>
 
 				<div class="col-xs-12 pricing-plans">
-					<div class="box" style="margin-bottom:0;padding-bottom:2px;">
-
-						<div class="row pricing-panel" style="position: relative;left: 16%;margin-bottom:10px;">
-							<div class="col-sm-4">
+					<div class="box" style="margin-bottom:0;padding-bottom:2px;background:none;padding-top: 0;">
+						
+						<h2 style="text-align: center;margin: 0 0 80px;font-size: 24px;">Choose your plan and let’s create the project</h2>
+						
+						<div class="row pricing-panel" style="position: relative;left: 125px;margin-bottom:10px;">
+							<div class="col-sm-4" style="position: relative;top: 50px;left: 35px;">
 								<div class="panel panel-plan">
-									<div class="panel-heading">
+									<div class="panel-heading" style="background:#34495e;">
 										<h3 class="panel-title">Free Trial</h3>
 									</div>
 
-									<div class="panel-body" data-plantype="cpm" style="height: 470px;">
-										<div class="panel-price">
+									<div class="panel-body" data-plantype="cpm" style="height: 340px;padding:0;background: #9ee3d6;border-bottom: none;color:#4c4c4c;">
+										<div class="panel-price" style="background-color: #8ed5c8;padding: 20px;">
 											<?php /*
 											<span>IDR 150/impression</span>
 											<strong>0,15 Points</strong> */ ?>
-											<span class="panel-price-title">Free</span>
-											<span><b>3</b> Project Left</span>
+											<span class="panel-price-title" style="color:#4c4c4c;">Free</span>
+											<span style="color:#4c4c4c;"><b><?php echo ($freeplan <= 0) ? 0 : $freeplan; ?></b> Project Left</span>
 										</div>
 
-										<ul style="margin-top: 73px;">
+										<ul class="pf" style="padding: 0 20px;margin-left:5px;">
 											<li>Full Dashboard &amp; Analytics</li>
 											<li>Campaign in Activorm Newsletter</li>
-											<li>Get more tickets by more sharing</li>
+											<li>Display merchant social account</li>
 										</ul>
 							
-										<a href="<?php echo base_url(); ?>project/create?cid=<?php echo sha1("FREE".SALT); ?>" style="bottom:20px;" type="submit" class="btn btn-big btn-yellow" id="btn_select_point">Select This Plan</a>
+										<a href="<?php echo base_url(); ?>project/create?cid=<?php echo sha1("FREE".SALT); ?>" style="bottom:20px;background: #eaf9e2;border-color: #eaf9e2;color: #4c4c4c;" type="submit" class="btn btn-big btn-yellow" id="btn_select_point">Select This Plan</a>
 									</div>
 								<!-- .panel-plan --></div>
 							</div>
 							
 							<div class="col-sm-4">
-								<div class="panel panel-plan">
+								<div class="panel panel-plan" style="box-shadow:0 0 20px rgba(0,0,0,.75);">
+									
+									<div class="premium-star"></div>
+									
 									<div class="panel-heading">
 										<h3 class="panel-title">Premium</h3>
 									</div>
 
-									<div class="panel-body" data-plantype="cpm" style="height: 470px;">
-										<div class="panel-price">
+									<div class="panel-body" data-plantype="cpm" style="height: 460px;padding:0;">
+										<div class="panel-price" style="background-color: #0aa98a;padding: 20px;">
 											<?php /*
 											<span>IDR 150/impression</span>
 											<strong>0,15 Points</strong> */ ?>
-											<span class="panel-price-title" style="font-size:40px;"><span style="font-size: 25px;vertical-align: top;">IDR</span> <strike>300.000</strike><br /><span style="margin-left: 48px;font-size: 28px;">100.000</span></span>
-											<div style="font-size:25px;font-weight:normal;">(Recommended)</div>
+											<span class="panel-price-title" style="font-size:25px;letter-spacing: 2px;"><strike>IDR 300.000</strike><br /><span style="font-size: 35px;color: #f5ee31;letter-spacing: 1px;font-weight:bold;margin-top: 10px;display: block;">IDR 100.000</span></span>
 										</div>
 
-										<ul> 
+										<ul class="pp" style="padding: 0 20px 0;margin-left:5px;">
 											<li>Full Dashboard &amp; Analytics</li>
 											<li>Campaign in Activorm Newsletter</li>
 											<li>Get more tickets by more sharing</li>
@@ -185,7 +189,7 @@
 								$style_cid_type = "display:block;";
 							}
 							?>
-							<span class="balance-note" style="<?php echo $style_cid_type; ?>">You don't have enough balance, please <a href="#">Top Up</a></span>
+							<span class="balance-note" style="<?php echo $style_cid_type; ?>">You don't have enough balance, please <a href="<?php echo base_url(); ?>dashboard/pointstopup">Top Up</a></span>
 						</div>
 					</div>	
 					
