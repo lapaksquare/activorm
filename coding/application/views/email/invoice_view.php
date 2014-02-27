@@ -10,6 +10,12 @@
 </head>
 <body style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #000;font-size: 16px;font-family: 'Myriad Pro', Arial, Helvetica, sans-serif;line-height: 1.4;background: #fff url(<?php echo cdn_url(); ?>img/bar.png) repeat-x 50% 0;width: 100%;">
 
+
+<?php 
+$title_email = ($order_cart->order_status == "completed") ? 'Receipt' : 'Invoice';
+?>
+
+
 <table id="table-background" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
 	<tr>
 		<td align="center" style="border-collapse: collapse;">
@@ -20,7 +26,7 @@
 							<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
 								<tr>
 									<td width="500" style="border-collapse: collapse;">
-										<h1 class="invoice-title" style="margin: -25px 0 0;font-size: 30px;text-transform: uppercase;color: #000;">Invoice</h1>
+										<h1 class="invoice-title" style="margin: -25px 0 0;font-size: 30px;text-transform: uppercase;color: #000;"><?php echo ucwords($title_email); ?></h1>
 										<span class="invoice-date" style="padding: 4px 0 0;display: inline-block;font-size: 14px;border-top: 1px solid #232323;"><?php echo date("l, d M Y"); ?></span>
 									</td>
 									<td width="260" style="border-collapse: collapse;">
@@ -170,6 +176,11 @@
 							</table>
 						</td>
 					</tr>
+					
+					<?php 
+					if ($order_cart->order_status != "completed"){
+					?>
+					
 					<tr>
 						<td colspan="2">
 							<p style="margin-bottom: 0px;margin-top: 40px;">Please transfer to one of this following banks:</p>
@@ -182,18 +193,18 @@
 									<td>
 										<img src="<?php echo cdn_url(); ?>img/bank-mandiri.gif" alt="mandiri" /><br />
 										<b>Nama Bank : BANK CENTRAL ASIA (BCA)</b><br />
-										Cabang Bank : BCA<br />
-										No. Rekening : BCA<br />
-										Nama Rekening : BCA<br />
-										Di kolom "Berita" cantumkan No. Order: BCA <br />
+										Cabang Bank : <?php echo BCA_REKENING_CABANG; ?><br />
+										No. Rekening : <?php echo BCA_REKENING_NOMOR; ?><br />
+										Nama Rekening : <?php echo BCA_REKENING_ATASNAMA; ?><br />
+										Di kolom "Berita" cantumkan Nomor Transaksi : #<?php echo strtoupper($order_cart->order_barcode); ?><br />
 									</td>
 									<td>
 										<img src="<?php echo cdn_url(); ?>img/bank-bca.gif" alt="bca" /><br />
 										<b>Nama Bank : BANK MANDIRI</b><br />
-										Cabang Bank : MANDIRI<br />
-										No. Rekening : MANDIRI<br />
-										Nama Rekening : MANDIRI<br />
-										Di kolom "Berita" cantumkan No. Order: MANDIRI <br />
+										Cabang Bank : <?php echo MANDIRI_REKENING_CABANG; ?><br />
+										No. Rekening : <?php echo MANDIRI_REKENING_NOMOR; ?><br />
+										Nama Rekening : <?php echo MANDIRI_REKENING_ATASNAMA; ?><br />
+										Di kolom "Berita" cantumkan Nomor Transaksi : #<?php echo strtoupper($order_cart->order_barcode); ?><br />
 									</td>
 								</tr>
 							</table>
@@ -202,8 +213,14 @@
 					<tr>
 						<td colspan="2">
 							<p style="margin-bottom: 0px;margin-top: 40px;">Please complete payment in 2x24 hours via bank transfer and confirm the payment.</p>
+							<p class="signup" style="margin: 1em 0;"><a class="button" href="<?php echo base_url(); ?>dashboard/paymentconfirmation" style="padding: 10px 30px;display: inline-block;color: #fff;font-size: 18px;font-weight: bold;text-decoration: none;background: #20b396;border-bottom: 2px solid #1fa88c;border-radius: 5px;">Confirm Payment</a></p>
 						</td>
 					</tr>
+					
+					<?php 
+					}
+					?>
+					
 				</tbody></table>
 			</td>
 		</tr>

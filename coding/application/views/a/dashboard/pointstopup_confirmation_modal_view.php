@@ -5,7 +5,7 @@
 				
 				<div class="modal-confirm">
 					<strong>Confirmation</strong>
-					<p>Thank you! our representative will contact you in 1x24 hours to assist.</p>
+					<p>Our representative will contact you in 1x24 hours to assist.</p>
 				</div>
 				
 			</div>

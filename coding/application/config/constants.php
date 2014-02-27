@@ -104,6 +104,15 @@ if (ENVIRONMENT == "production"){
 }
 
 
+/*NOMOR REKENING*/
+define('BCA_REKENING_NOMOR', '7090258791');
+define('BCA_REKENING_ATASNAMA', 'Karen Kamal');
+define('BCA_REKENING_CABANG', 'KCP Rantai Mulia Kencana');
+
+define('MANDIRI_REKENING_NOMOR', 'MANDIRI_7090258791');
+define('MANDIRI_REKENING_ATASNAMA', 'Karen Kamal MANDIRI');
+define('MANDIRI_REKENING_CABANG', 'KCP Rantai Mulia Kencana MANDIRI');
+
 define('GA_CLIENT_ID', '802492281133.apps.googleusercontent.com');
 define('GA_CLIENT_SECRET', 'COpdo3DmaYhTFOmQ3pgwBphK');
 

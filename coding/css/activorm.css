@@ -114,6 +114,13 @@ a:hover {
 	background: #9d9fa1;
 	border-color: #bbbdbf;
 	}
+	
+.btn-tw1 i, a.btn-tw1 i, .btn-fb1 i, a.btn-fb1 i{
+	position: relative;
+	left: -5px;
+	top: 2px;
+}
+	
 .btn-tw, a.btn-tw {
 	padding: 8px!important;
 	color: #fff;
@@ -121,8 +128,19 @@ a:hover {
 	background: #3ac7f4;
 	border: none;
 	}
+.btn-tw1, a.btn-tw1 {
+	padding: 8px 0 6px;
+	width: 190px;
+	color: #fff;
+	line-height: 25px;
+	background: #3ac7f4;
+	border: none;
+	}	
 .btn-tw:focus, a.btn-tw:focus,
-.btn-tw:hover, a.btn-tw:hover {
+.btn-tw:hover, a.btn-tw:hover,
+.btn-tw1:focus, a.btn-tw1:focus,
+.btn-tw1:hover, a.btn-tw1:hover
+ {
 	color: #fff;
 	background: #2eafd8;
 	border: none;
@@ -134,8 +152,19 @@ a:hover {
 	background: #208ecd;
 	border: none;
 	}
+.btn-fb1, a.btn-fb1{
+	padding: 8px 0 6px;
+	width: 200px;
+	color: #fff;
+	line-height: 25px;
+	background: #208ecd;
+	border: none;
+}
 .btn-fb:focus, a.btn-fb:focus,
-.btn-fb:hover, a.btn-fb:hover {
+.btn-fb:hover, a.btn-fb:hover,
+.btn-fb1:focus, a.btn-fb1:focus,
+.btn-fb1:hover, a.btn-fb1:hover
+ {
 	color: #fff;
 	background: #1580bd;
 	border: none;
@@ -2460,6 +2489,18 @@ body.blog .entry-footer {
 	}
 .wizard-project .ico-em-send span.active {
 	}
+
+#premium_action .check{
+	top: 30px;
+	left: 8px;
+	width: 20px;
+	height: 20px;
+	display: block;
+	position: absolute;
+	text-indent: -999em;
+	background: url('../img/ico-check.png') no-repeat #fff;
+	border-radius:50% 50%;
+}
 
 .wizard-project .step-ico .check {
 	top: 68px;

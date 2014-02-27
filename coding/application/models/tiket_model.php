@@ -107,16 +107,27 @@ class Tiket_model extends CI_Model{
 	}
 	
 	function getCountPrizeAccount($account_id){
-		$sql = "
-		SELECT
+		/*
+		 * 		SELECT
 		count(pt.tiket_id) jml_tiket
 		FROM
 		project__tiket pt
 		WHERE 1
 		AND pt.account_id = ?
 		AND DATE_FORMAT(pt.lastupdate,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
+		*/
+		$sql = "
+		SELECT
+		pt.project_id
+		FROM
+		project__tiket pt
+		WHERE 1
+		AND pt.account_id = ?
+		AND DATE_FORMAT(pt.lastupdate,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
+		group by pt.project_id
 		";
-		return $this->db->query($sql, array($account_id))->row()->jml_tiket;
+		$return = $this->db->query($sql, array($account_id))->result_array();
+		return count($return);
 	}
 	
 	function checkTiket($project_id, $account_id){

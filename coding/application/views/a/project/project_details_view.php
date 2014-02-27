@@ -369,11 +369,12 @@
 						
 						<?php	
 						
+						$jml_action_premium = 2;
 						
 						if ( ($project_actions['action_1'] == 1 && $project_actions['action_2'] == 1 && $project_actions['action_3'] == 1) ){
 						?>
 						
-						<?php if ( ($project_actions['action_premium'] == 1 && $this->project->premium_plan == 1) || 
+						<?php if ( ($project_actions['action_premium'] >= $jml_action_premium && $this->project->premium_plan == 1) || 
 						($project_actions['action_1'] == 1 && $project_actions['action_2'] == 1 && $project_actions['action_3'] == 1 && $this->project->premium_plan == 0)
 						){ ?>
 							
@@ -436,17 +437,16 @@
 						
 						<div class="wizard-project">
 							<div class="wizard-step step-3">
-								<button type="button" class="close">&times;</button>
-								<h2>More Tickets (max. 3 tickets)</h2>
+								<h2>More Tickets (max. 2 tickets)</h2>
 
-								<div class="row">
+								<div class="row" id="premium_action">
 									
 									<?php if (property_exists($social_format_data, "facebook_format")){ 
 										$sc = "facebook";
 										$sc_hash = sha1($pid . $sc . SALT);
 										?>
 									<div class="col-sm-4">
-										<a class="btn btn-block btn-fb" href="<?php echo base_url() . 'actions/premium?type=' . $sc . '&pid='. $pid .'&hash=' . $sc_hash; ?>"><i class="icon-facebook"></i> Share Status Facebook</a>
+										<a class="btn btn-block btn-fb1" href="<?php echo base_url() . 'actions/premium?type=' . $sc . '&pid='. $pid .'&hash=' . $sc_hash; ?>"><i class="icon-facebook"></i> Share Status Facebook <?php if ($project_actions['action_premium_fb'] == 1){ ?><i class="check"></i><?php } ?></a>
 									</div>
 									<?php } ?>
 
@@ -455,7 +455,7 @@
 										$sc_hash = sha1($pid . $sc . SALT);
 										?>
 									<div class="col-sm-5">
-										<a class="btn btn-block btn-tw" href="<?php echo base_url() . 'actions/premium?type=' . $sc . '&pid='. $pid .'&hash=' . $sc_hash; ?>"><i class="icon-twitter"></i> Share Status Twitter</a>
+										<a class="btn btn-block btn-tw1" href="<?php echo base_url() . 'actions/premium?type=' . $sc . '&pid='. $pid .'&hash=' . $sc_hash; ?>"><i class="icon-twitter"></i> Share Status Twitter <?php if ($project_actions['action_premium_tw'] == 1){ ?><i class="check"></i><?php } ?></a>
 									</div>
 									<?php } ?>
 
