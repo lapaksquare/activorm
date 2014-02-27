@@ -96,7 +96,7 @@ $title_email = ($order_cart->order_status == "completed") ? 'Receipt' : 'Invoice
 												<td width="70%" style="border-collapse: collapse;padding: 10px 0;border-bottom: 1px dashed #b3b3b3;"><span style="margin-right: 5px;">:</span> Win a Macbook Pro</td>
 											</tr> */ ?>
 											<tr>
-												<td style="border-collapse: collapse;padding: 10px 0;border-bottom: 1px dashed #b3b3b3;">Businesss</td>
+												<td style="border-collapse: collapse;padding: 10px 0;border-bottom: 1px dashed #b3b3b3;">Business</td>
 												<td style="border-collapse: collapse;padding: 10px 0;border-bottom: 1px dashed #b3b3b3;"><span style="margin-right: 5px;">:</span> <?php echo ucwords($order_cart->account_name); ?></td>
 											</tr>
 											<tr>
