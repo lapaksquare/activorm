@@ -24,3 +24,5 @@ ERROR - 2014-03-01 00:14:48 --> Severity: Notice  --> Undefined property: Access
 ERROR - 2014-03-01 00:15:01 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
 ERROR - 2014-03-01 00:15:05 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
 ERROR - 2014-03-01 00:15:08 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
+ERROR - 2014-03-01 00:42:14 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
+ERROR - 2014-03-01 00:42:14 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
