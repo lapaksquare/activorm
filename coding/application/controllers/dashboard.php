@@ -326,22 +326,22 @@ class Dashboard extends MY_Controller{
 				
 				$errors = array();
 				if (empty($payment_date)){
-					$errors[] = "Payment date must be fill.";
+					$errors[] = "Payment Date must be filled.";
 				}
 				if (empty($transaction_amount)){
-					$errors[] = "Transaction Amount must be fill.";
+					$errors[] = "Transaction Amount must be filled and may consists of numbers only.";
 				}
 				if ($transaction_amount < $order->order_total_price){
-					$errors[] = "Your payment transaction is not sufficient";
+					$errors[] = "Please insert the correct Payment Amount.";
 				}
 				if (empty($sender_bank)){
-					$errors[] = "Sender Bank  must be fill.";
+					$errors[] = "Bank Name must be filled.";
 				}
 				if (empty($sender_name)){
-					$errors[] = "Sender Name  must be fill.";
+					$errors[] = "Bank Account Holder Name must be filled and contain words only (you may not use special characters e.g. - , > , % , $).";
 				}
 				if (empty($sender_account)){
-					$errors[] = "Sender Account Name  must be fill.";
+					$errors[] = "Bank Account Number must be filled and may consists of numbers only.";
 				}
 				
 				if (count($errors) > 0){
