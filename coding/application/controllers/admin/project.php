@@ -228,10 +228,18 @@ class Project extends MY_Admin_Access{
 						if (property_exists($v, "custom_actions") && !empty($v->custom_actions)){
 							list($type_step, $type_step_key) = explode("_", $type_step);
 							$aid_selected = 14;
+							continue;
 						}
 						$act = $this->func_actions_step($type_step, $aid);
 						$actions[] = $act;
 					}
+					
+					/*
+					echo '<pre>';
+					print_r($actions);
+					echo '</pre>';
+					die();
+					*/
 										
 					/* CUSTOM ACTIONS ======= START ======= */
 					if (count($actions) < 3 && $this->authActions($aid) == 1){
@@ -245,9 +253,22 @@ class Project extends MY_Admin_Access{
 					}
 					/* CUSTOM ACTIONS ======= END   ======= */
 					
+					/*
+					echo '<pre>';
+					print_r($actions);
+					echo '</pre>';
+					die();
+					*/
+					
 					$actions_string = json_encode($actions);
 				}
 				/* === FIX ACTIONS ===*/
+				
+				//$project_actions_data = json_decode($actions_string);
+				
+				//echo '<pre>';print_r($project_actions_data);echo '</pre>';die();
+				
+				//die();
 				
 				$dataProject = array(
 					'project_name' => $project_name,
