@@ -7,9 +7,16 @@
 		?>
 		<div class="pop-warning">
 			<p>Project ini dalam keadaan : <b><?php echo ucwords( $this->project->project_live ); ?></b></p>
-			<p><?php if ($this->project->project_live == "Draft"){ ?><a href="<?php echo base_url(); ?>project/edit/<?php echo $this->project->project_uri; ?>" class="btn btn-wd btn-green">Edit</a> or 
+			<p><?php if ($this->project->project_live == "Draft"){ ?><a href="<?php echo base_url(); ?>project/edit/<?php echo $this->project->project_uri; ?>" class="btn btn-wd btn-green">Edit</a> 
+				
 				<?php //if ($this->project->premium_plan == 0){ ?>
+					
+				
+				<?php if ($freeplan > 0){ ?>	
+					or 
 				<a href="#" class="btn btn-wd btn-yellow" id="submit_project">Submit</a>
+				<?php } ?>
+				
 				<?php /*}else{ ?>
 				<a href="<?php echo base_url(); ?>project/pricing/<?php echo $this->project->project_uri; ?>" class="btn btn-wd btn-yellow" id="">Submit</a>
 				<?php }*/ ?>
@@ -436,10 +443,10 @@
 						?>
 						
 						<div class="wizard-project">
-							<div class="wizard-step step-3" style="height: 170px;padding-top: 40px;">
+							<div class="wizard-step step-3" style="height: 185px;padding-top: 40px;">
 								<h2>More Tickets (max. 2 tickets)</h2>
 
-								<div class="row" id="premium_action" style="margin-left:60px;">
+								<div class="row" id="premium_action" style="margin-left:60px;margin-top:35px;">
 									
 									<?php if (property_exists($social_format_data, "facebook_format")){ 
 										$sc = "facebook";
@@ -1144,7 +1151,16 @@
 				<!-- #sidebar --></div>
 			</div>
 		<!-- #main --></div>
-		
+
+<script type="text/javascript">
+	var freeplan = <?php echo $freeplan; ?>;
+</script>		
+<?php if ($freeplan > 0){ ?>			
 <?php $this->load->view('a/project/project_modal_thankyou_view', $this->data); ?>					
+<?php }else{
+?>
+<?php $this->load->view('a/project/project_topup_view', $this->data); ?>					
+<?php	
+} ?>
 
 <?php $this->load->view('a/general/footer_view', $this->data); ?>

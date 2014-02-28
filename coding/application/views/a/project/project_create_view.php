@@ -45,7 +45,7 @@
 										</div>
 
 										<ul class="pf" style="padding: 0 20px;margin-left:5px;">
-											<li>Full Dashboard &amp; Analytics</li>
+											<li>Limited Dashboard &amp; Analytics</li>
 											<li>Campaign in Activorm Newsletter</li>
 											<li>Display merchant social account</li>
 										</ul>

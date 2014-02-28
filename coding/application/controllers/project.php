@@ -943,6 +943,8 @@ class Project extends MY_Controller{
 		echo '</pre>';
 		die();
 		*/
+		
+		$this->data['freeplan'] = $this->project_model->getCountFreePlan($this->access->member_account->account_id);
 				
 		// og meta
 		$this->data['title'] = $this->project->project_name;
