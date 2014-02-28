@@ -81,3 +81,11 @@ ERROR - 2014-02-28 15:37:36 --> Severity: Notice  --> Undefined property: Access
 ERROR - 2014-02-28 15:37:49 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
 ERROR - 2014-02-28 15:37:54 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
 ERROR - 2014-02-28 15:37:58 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
+ERROR - 2014-02-28 15:51:44 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
+ERROR - 2014-02-28 15:51:44 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
+ERROR - 2014-02-28 15:52:31 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
+ERROR - 2014-02-28 15:52:34 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
+ERROR - 2014-02-28 15:52:46 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
+ERROR - 2014-02-28 15:52:46 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
+ERROR - 2014-02-28 15:52:49 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
+ERROR - 2014-02-28 15:52:51 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
