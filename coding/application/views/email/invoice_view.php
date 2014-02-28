@@ -191,7 +191,7 @@ $title_email = ($order_cart->order_status == "completed") ? 'Receipt' : 'Invoice
 							<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;margin-top: 20px;">
 								<tr>
 									<td>
-										<img src="<?php echo cdn_url(); ?>img/bank-mandiri.gif" alt="mandiri" /><br />
+										<img src="<?php echo cdn_url(); ?>img/bank-bca.gif" alt="bca" /><br />
 										<b>Nama Bank : BANK CENTRAL ASIA (BCA)</b><br />
 										Cabang Bank : <?php echo BCA_REKENING_CABANG; ?><br />
 										No. Rekening : <?php echo BCA_REKENING_NOMOR; ?><br />
@@ -199,7 +199,7 @@ $title_email = ($order_cart->order_status == "completed") ? 'Receipt' : 'Invoice
 										Di kolom "Berita" cantumkan Nomor Transaksi : #<?php echo strtoupper($order_cart->order_barcode); ?><br />
 									</td>
 									<td>
-										<img src="<?php echo cdn_url(); ?>img/bank-bca.gif" alt="bca" /><br />
+										<img src="<?php echo cdn_url(); ?>img/bank-mandiri.gif" alt="mandiri" /><br />
 										<b>Nama Bank : BANK MANDIRI</b><br />
 										Cabang Bank : <?php echo MANDIRI_REKENING_CABANG; ?><br />
 										No. Rekening : <?php echo MANDIRI_REKENING_NOMOR; ?><br />

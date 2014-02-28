@@ -22,7 +22,7 @@
 						$this->session->unset_userdata('pointtopup_error');
 						if ($pointtopup_error == 1){
 						?>
-						<div class="alert alert-danger">Terjadi kesalahan dalam pengiriman data.</div>
+						<div class="alert alert-danger">Something error when send your data.</div>
 						<?php } ?>
 
 						<div class="box">

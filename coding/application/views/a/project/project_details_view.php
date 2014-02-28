@@ -436,16 +436,16 @@
 						?>
 						
 						<div class="wizard-project">
-							<div class="wizard-step step-3">
+							<div class="wizard-step step-3" style="height: 170px;padding-top: 40px;">
 								<h2>More Tickets (max. 2 tickets)</h2>
 
-								<div class="row" id="premium_action">
+								<div class="row" id="premium_action" style="margin-left:60px;">
 									
 									<?php if (property_exists($social_format_data, "facebook_format")){ 
 										$sc = "facebook";
 										$sc_hash = sha1($pid . $sc . SALT);
 										?>
-									<div class="col-sm-4">
+									<div class="col-sm-4" style="margin-right:30px;">
 										<a class="btn btn-block btn-fb1" href="<?php echo base_url() . 'actions/premium?type=' . $sc . '&pid='. $pid .'&hash=' . $sc_hash; ?>"><i class="icon-facebook"></i> Share Status Facebook <?php if ($project_actions['action_premium_fb'] == 1){ ?><i class="check"></i><?php } ?></a>
 									</div>
 									<?php } ?>
@@ -454,7 +454,7 @@
 										$sc = "twitter";
 										$sc_hash = sha1($pid . $sc . SALT);
 										?>
-									<div class="col-sm-5">
+									<div class="col-sm-4">
 										<a class="btn btn-block btn-tw1" href="<?php echo base_url() . 'actions/premium?type=' . $sc . '&pid='. $pid .'&hash=' . $sc_hash; ?>"><i class="icon-twitter"></i> Share Status Twitter <?php if ($project_actions['action_premium_tw'] == 1){ ?><i class="check"></i><?php } ?></a>
 									</div>
 									<?php } ?>

@@ -282,7 +282,7 @@ class Project extends MY_Controller{
 				$errors[] = "Terjadi kesalahan dalam pengaturan periode";
 			}
 			
-			if ($points_user < $points_balance){
+			if ($points_user < $points_balance && !empty($preview_btn)){
 				$errors[] = "You don't have enough balance, please <a href='".base_url()."dashboard/pointstopup'>Top Up</a>";
 			}
 			
@@ -456,7 +456,7 @@ class Project extends MY_Controller{
 			}else{
 				
 				if (!empty($_FILES['attach_file']['name'])){
-					$errors[] = 'There is an error while uploading file. File must be in PDF format. Please try again.';
+					$errors[] = 'There is an error while uploading file. File must be in PDF/JPG/PNG format. Please try again.';
 				}
 				
 			}			
