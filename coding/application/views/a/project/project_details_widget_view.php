@@ -240,7 +240,7 @@
 			?>
 			
 									<div class="widget-auth" >
-										<div class="widget-auth-sp">More Tickets (max. 2 tickets). Please check <a href="<?php echo base_url(); ?>project/<?php echo $this->project->project_uri; ?>" target="_blank">here</a>.</div>
+										<div class="widget-auth-sp">More Tickets (max. 2 tickets). <br />Please check <a href="<?php echo base_url(); ?>project/<?php echo $this->project->project_uri; ?>" target="_blank">here</a>.</div>
 									</div>	
 		
 			<?php
