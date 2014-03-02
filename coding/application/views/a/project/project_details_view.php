@@ -8,16 +8,16 @@
 		<div class="pop-warning">
 			<p>Project ini dalam keadaan : <b><?php echo ucwords( $this->project->project_live ); ?></b></p>
 
-			<p><?php if ($this->project->project_live == "Draft"){ ?><a href="<?php echo base_url(); ?>project/edit/<?php echo $this->project->project_uri; ?>" class="btn btn-wd btn-green">Edit</a> 
+			<p><?php if ($this->project->project_live == "Draft"){ ?><a href="<?php echo base_url(); ?>project/edit/<?php echo $this->project->project_uri; ?>" class="btn btn-wd btn-green">Edit</a>
 				
 				<?php //if ($this->project->premium_plan == 0){ ?>
 					
 				
-				<?php if ($freeplan > 0){ ?>	
+				<?php if ($freeplan > 0 || $this->project->premium_plan == 1){ ?>	
 					or 
 				<a href="#" class="btn btn-wd btn-yellow" id="submit_project">Submit</a>
 				<?php } ?>
-
+			<?php } ?></p>
 		</div>
 		<?php } ?>
 
@@ -547,6 +547,10 @@
 									</div>
 									
 								</div>
+												
+								<?php 
+								//echo '<pre>';print_r($project_actions_data);echo '</pre>';
+								?>				
 																
 								<?php if ($flag == 0) { ?><button type="button" class="close" id="btn-action-close">&times;</button><?php } ?>
 
@@ -568,6 +572,8 @@
 												'hashactions' => sha1($k . SALT)
 											);
 											$url = http_build_query($url);
+											
+											if (!property_exists($v, "type_step")) continue;
 											
 											$type_step = $v->type_step;
 											if (property_exists($v, "custom_actions") && !empty($v->custom_actions)){
@@ -1152,7 +1158,7 @@
 <script type="text/javascript">
 	var freeplan = <?php echo $freeplan; ?>;
 </script>		
-<?php if ($freeplan > 0){ ?>			
+<?php if ($freeplan > 0 || $this->project->premium_plan == 1){ ?>			
 <?php $this->load->view('a/project/project_modal_thankyou_view', $this->data); ?>					
 <?php }else{
 ?>

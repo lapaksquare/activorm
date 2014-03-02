@@ -21,6 +21,10 @@
 				'add_invite_member' => array(
 					'name' => 'Add/Invite Member',
 					'url' => base_url() . 'admin/member/add_account'
+				),
+				'member_point' => array(
+					'name' => 'Member Point',
+					'url' => base_url() . 'admin/member/member_point'
 				)
 			)
 		),

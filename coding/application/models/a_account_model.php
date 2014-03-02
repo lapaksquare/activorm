@@ -94,7 +94,8 @@ class A_account_model extends CI_Model{
 			ma.account_id,
 			ma.account_email,
 			ma.account_live,
-			IFNULL(mp.point, 0) point
+			IFNULL(mp.point, 0) point,
+			IFNULL(pf.jml_free, 0) jml_free_plan
 			FROM
 			business__profile bp
 			JOIN business__rel_member brm ON
@@ -103,6 +104,8 @@ class A_account_model extends CI_Model{
 				ma.account_id = brm.account_id
 			LEFT JOIN member__points mp ON
 				mp.account_id = ma.account_id
+			LEFT JOIN project__freeplan pf ON
+				pf.account_id = mp.account_id
 			WHERE 1
 			AND ma.account_type = 'business'
 			AND ma.account_email != ''
@@ -197,6 +200,64 @@ class A_account_model extends CI_Model{
 		AND ma.account_id = ?
 		";
 		return $this->db->query($sql, array($account_id))->row();
+	}
+	
+	function getMembersPoint($param_url = array(), $limit = 10, $start = 0, $page = 0, $nolimit = FALSE){
+		if(empty($start)) {
+			$this->start = 0;
+		} else {
+			$this->start = $start;
+		}
+		if(empty($limit)) {
+			$this->limit = 20;
+		} else {
+			$this->limit = $limit;
+		}
+		if(!empty($page) && $page > 0) {
+			$this->page = $page;
+			$this->start = ($this->page - 1) * $this->limit;
+		} else {
+			$this->page = 1;
+		}	
+		
+		$limited = "";
+		if ($nolimit == FALSE){
+			$limited = " LIMIT " . $this->start . " , " .$this->limit;
+		}
+		
+		$where = $order_by = $sort_by = "";
+		
+		if (!empty($param_url)){
+			if (!empty($param_url['search_by']) && !empty($param_url['q'])){
+				$where .= " AND " . $param_url['search_by'] . " LIKE '%". $param_url['q'] ."%' ";
+			}
+		}
+		
+		$sql = "
+		SELECT
+		SQL_CALC_FOUND_ROWS
+		
+		bp.business_id,
+		bp.business_name,
+		ma.account_id,
+		ma.account_email,
+		ma.account_live,
+		IFNULL(mp.point, 0) point
+		
+		FROM
+		member__points mp
+		JOIN member__account ma ON
+			ma.account_id = mp.account_id
+		JOIN business__rel_member brm ON
+			brm.account_id = ma.account_id
+		JOIN business__profile bp ON
+			bp.business_id = brm.business_id
+		WHERE 1
+		$where
+		" . $limited;
+		
+		return $this->db->query($sql)->result();
+		
 	}
 	
 }

@@ -51,3 +51,31 @@ ERROR - 2014-03-02 19:43:16 --> Query error: You have an error in your SQL synta
 		WHERE 1
 		AND pp.project_id = '62'
 		
+ERROR - 2014-03-02 19:57:14 --> Severity: Notice  --> Undefined property: stdClass::$type_step /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/controllers/project.php 880
+ERROR - 2014-03-02 19:57:14 --> Severity: Notice  --> Undefined offset: 1 /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/controllers/project.php 880
+ERROR - 2014-03-02 19:57:15 --> Severity: Notice  --> Undefined property: stdClass::$type_step /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/controllers/project.php 880
+ERROR - 2014-03-02 19:57:15 --> Severity: Notice  --> Undefined offset: 1 /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/controllers/project.php 880
+ERROR - 2014-03-02 19:57:16 --> Severity: Notice  --> Undefined property: stdClass::$type_step /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/controllers/project.php 880
+ERROR - 2014-03-02 19:57:16 --> Severity: Notice  --> Undefined offset: 1 /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/controllers/project.php 880
+ERROR - 2014-03-02 20:00:39 --> Severity: Notice  --> Undefined property: stdClass::$type_step /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 507
+ERROR - 2014-03-02 20:00:39 --> Severity: Notice  --> Undefined property: stdClass::$type_step /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 572
+ERROR - 2014-03-02 20:00:39 --> Severity: Notice  --> Undefined offset: 1 /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 574
+ERROR - 2014-03-02 20:00:39 --> Severity: Notice  --> Undefined property: stdClass::$type_step /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 631
+ERROR - 2014-03-02 20:00:39 --> Severity: Notice  --> Undefined property: stdClass::$type_name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 642
+ERROR - 2014-03-02 20:00:53 --> Severity: Notice  --> Undefined property: stdClass::$type_step /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 507
+ERROR - 2014-03-02 20:00:53 --> Severity: Notice  --> Undefined property: stdClass::$type_step /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 572
+ERROR - 2014-03-02 20:00:53 --> Severity: Notice  --> Undefined offset: 1 /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 574
+ERROR - 2014-03-02 20:00:53 --> Severity: Notice  --> Undefined property: stdClass::$type_step /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 631
+ERROR - 2014-03-02 20:00:53 --> Severity: Notice  --> Undefined property: stdClass::$type_name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 642
+ERROR - 2014-03-02 20:01:52 --> Severity: Notice  --> Undefined property: stdClass::$type_step /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 507
+ERROR - 2014-03-02 20:01:52 --> Severity: Notice  --> Undefined property: stdClass::$type_step /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 576
+ERROR - 2014-03-02 20:01:52 --> Severity: Notice  --> Undefined offset: 1 /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 578
+ERROR - 2014-03-02 20:01:52 --> Severity: Notice  --> Undefined property: stdClass::$type_step /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 635
+ERROR - 2014-03-02 20:01:52 --> Severity: Notice  --> Undefined property: stdClass::$type_name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 646
+ERROR - 2014-03-02 20:02:09 --> Severity: Notice  --> Undefined property: stdClass::$type_step /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 507
+ERROR - 2014-03-02 20:02:09 --> Severity: Notice  --> Undefined property: stdClass::$type_step /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 576
+ERROR - 2014-03-02 20:02:09 --> Severity: Notice  --> Undefined offset: 1 /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 578
+ERROR - 2014-03-02 20:02:09 --> Severity: Notice  --> Undefined property: stdClass::$type_step /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 635
+ERROR - 2014-03-02 20:02:09 --> Severity: Notice  --> Undefined property: stdClass::$type_name /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 646
+ERROR - 2014-03-02 20:02:56 --> Severity: Notice  --> Undefined property: stdClass::$type_step /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 507
+ERROR - 2014-03-02 20:03:04 --> Severity: Notice  --> Undefined property: stdClass::$type_step /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/project/project_details_view.php 507

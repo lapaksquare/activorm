@@ -877,6 +877,9 @@ class Project extends MY_Controller{
 		$socialmedia_user = $this->socialmedia_model->socialmedia_connect($account_id);
 		$socialmedia_required = $socialmedia_account_required = array();
 		foreach($project_actions_data as $k=>$v){
+			
+			if (!property_exists($v, "type_step")) continue;
+			
 			list($type, $type_detail) = explode("-", $v->type_step);
 			
 			// link oauth
