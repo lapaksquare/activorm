@@ -35,11 +35,13 @@ class Actions extends MY_Controller {
 		
 		$message = "Something Error!. Please try again.";
 		
+		//echo '<pre>';print_r($project_actions_data);echo '</pre>';
+		
 		foreach($project_actions_data as $k=>$v){
 			if ($k == $actions){
 				
 				$type_step = $v->type_step;
-				list($type_step, $type_detail) = explode("_", $v->type_step);
+				list($type_step) = explode("_", $v->type_step);
 				
 				//echo $type_step;die();
 				
