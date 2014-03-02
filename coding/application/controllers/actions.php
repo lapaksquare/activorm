@@ -38,7 +38,12 @@ class Actions extends MY_Controller {
 		foreach($project_actions_data as $k=>$v){
 			if ($k == $actions){
 				
-				switch($v->type_step){
+				$type_step = $v->type_step;
+				list($type_step, $type_detail) = explode("_", $v->type_step);
+				
+				//echo $type_step;die();
+				
+				switch($type_step){
 					
 					// facebook
 					case "facebook-like" :

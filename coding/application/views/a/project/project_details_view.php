@@ -7,6 +7,7 @@
 		?>
 		<div class="pop-warning">
 			<p>Project ini dalam keadaan : <b><?php echo ucwords( $this->project->project_live ); ?></b></p>
+
 			<p><?php if ($this->project->project_live == "Draft"){ ?><a href="<?php echo base_url(); ?>project/edit/<?php echo $this->project->project_uri; ?>" class="btn btn-wd btn-green">Edit</a> 
 				
 				<?php //if ($this->project->premium_plan == 0){ ?>
@@ -16,11 +17,7 @@
 					or 
 				<a href="#" class="btn btn-wd btn-yellow" id="submit_project">Submit</a>
 				<?php } ?>
-				
-				<?php /*}else{ ?>
-				<a href="<?php echo base_url(); ?>project/pricing/<?php echo $this->project->project_uri; ?>" class="btn btn-wd btn-yellow" id="">Submit</a>
-				<?php }*/ ?>
-			<?php } ?></p>
+
 		</div>
 		<?php } ?>
 
