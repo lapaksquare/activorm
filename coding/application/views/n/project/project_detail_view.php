@@ -48,6 +48,16 @@
 	    <label for="account_name" class="col-sm-2 control-label">Business Name</label>
 	    <div class="col-sm-10">
 	      <input type="text" class="form-control" id="business_name" name="business_name" disabled value="<?php echo $this->project->business_name; ?>" />
+	    	
+	    	<div class="panel panel-default">
+			  <div class="panel-body">
+			    <ul style="margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;">
+			    	<li><?php echo $this->project->jml_free_plan; ?> Project free left</li>
+			    	<li>Jumlah Point : <?php echo $this->project->jml_point; ?> Point</li>
+			    </ul>
+			  </div>
+			</div>
+	    	
 	    </div>
 	  </div>	
 	
