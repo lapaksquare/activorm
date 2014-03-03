@@ -151,3 +151,14 @@ $('#slider').nivoSlider();
 if (freeplan <= 0){
 $('#modal-project-topup-confirmation').modal('show');
 }
+
+$('#redeem_prize_btn').click(function (e) {
+  $('#modal-project-redeem-confirmation').modal('show');
+  return false;
+});
+
+$('#modal-project-redeem-confirmation').delegate('#cancel-btn', 'click', function(){
+	$('#modal-project-redeem-confirmation').modal('hide');
+	return false;
+});
+

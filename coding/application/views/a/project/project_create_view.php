@@ -831,6 +831,22 @@
 								</div>
 							</div>
 						</li>
+						
+						<?php 
+						$redeem_tiket_checked = '';
+						if (!empty($this->project->redeem_tiket_merchant)){
+							$redeem_tiket_checked = 'checked="checked"';
+						}
+						
+						$business_id = $this->session->userdata('business_id');
+						if (in_array($business_id, array(1, 7, 72))){
+						?>
+						<li>
+							<div class="form-group">
+								<input type="checkbox" <?php echo $redeem_tiket_checked; ?> class="custom-checkgrey opt_premium" value="redeem_tiket" name="redeem_tiket" data-label="Redeem Prize by Merchant" />
+							</div>
+						</li>
+						<?php } ?>
 
 					<!-- .upgrade-options --></ul>
 					

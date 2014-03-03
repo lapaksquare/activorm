@@ -401,6 +401,19 @@ class Actions extends MY_Controller {
 		$this->log_model->insertLog($data);
 	}
 	
+	function redeem_tiket(){
+		$tiket_barcode = $this->input->get_post('tid');
+		$hash = $this->input->get_post('h');
+		$hash_ori = sha1($tiket_barcode . SALT);
+		if ($hash != $hash_ori) redirect(base_url() . '404');
+		
+		$this->load->model('tiket_model');
+		$this->tiket_model->redeemTiket($tiket_barcode);
+		
+		$ref = $_SERVER['HTTP_REFERER'];
+		redirect($ref);
+	}
+	
 }
 
 ?>

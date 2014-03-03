@@ -85,5 +85,9 @@ $(function(){
        		}, 'json');
 		};
 		
+		if (note_topup_amount == 1){
+			$('#modal-topup-confirmation').modal('show');
+		}
+		
 	});
 });

@@ -15,16 +15,20 @@
 					<form action="<?php echo base_url(); ?>dashboard/submit_paymentconfirmation" method="post">
 						<div class="box">
 							
-							<?php 
+							<?php 				
+							$message_paymentconfirmation_error = $this->session->userdata('message_paymentconfirmation_error');
+							
 							$message_paymentconfirmation = $this->session->userdata('message_paymentconfirmation');
-							$this->session->unset_userdata('message_paymentconfirmation');
-							if (!empty($message_paymentconfirmation)){
-								$message_paymentconfirmation = '<li>' . implode('</li><li>', $message_paymentconfirmation) . '</li>';
-								$this->session->unset_userdata('message_paymentconfirmation');
+							
+							if (!empty($message_paymentconfirmation_error)){
+								$message_paymentconfirmation = '<li>' . implode('</li><li>', $message_paymentconfirmation_error) . '</li>';
+								$this->session->unset_userdata('message_paymentconfirmation_error');
 							?>
-							<div class="alert alert-danger"><?php echo $message_paymentconfirmation; ?></div>
-							<?php }else if ($message_paymentconfirmation == 2){ ?>
-							<div class="alert alert-success">Terima Kasih, Pembayaran Anda akan kami cek segera.</div>
+							<div class="alert alert-danger"><ul><?php echo $message_paymentconfirmation; ?></ul></div>
+							<?php }else if ($message_paymentconfirmation == 2){ 
+								$this->session->unset_userdata('message_paymentconfirmation');
+								?>
+							<div class="alert alert-success">Thank you. We will confirm this transaction soon.</div>
 							<?php } ?>
 								
 							<div class="box-header">

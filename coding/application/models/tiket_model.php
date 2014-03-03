@@ -136,7 +136,8 @@ class Tiket_model extends CI_Model{
 		pt.tiket_id,
 		pt.tiket_barcode,
 		pp.project_file_data,
-		pt.voucher_data
+		pt.voucher_data,
+		pt.used_tiket
 		FROM
 		project__tiket pt
 		JOIN project__profile pp ON
@@ -146,6 +147,14 @@ class Tiket_model extends CI_Model{
 		AND pt.account_id = ?
 		";
 		return $this->db->query($sql, array($project_id, $account_id))->row();
+	}
+	
+	function redeemTiket($tiket_barcode){
+		$this->db->update('project__tiket', array(
+			'used_tiket	' => 1
+		), array(
+			'tiket_barcode' => $tiket_barcode
+		));
 	}
 	
 }

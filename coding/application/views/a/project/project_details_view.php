@@ -475,6 +475,38 @@
 								</div>
 							<!-- .wizard-project --></div>	
 						<?php
+						} else if (!empty($this->project->redeem_tiket_merchant)){
+							
+							if ($this->checkTiket->used_tiket == 0){
+						?>	
+						
+							<div class="wizard-project">
+								<div class="wizard-step step-4" style="padding-top: 29px;padding-bottom: 9px;">
+									<h2>Thank You for completing the steps</h2>
+									<a class="btn btn-big btn-yellow" id="redeem_prize_btn" href="#" target="_blank">Redeem Prize</a>
+									<p style="line-height: 20px;margin-top: 30px;">This prize can be claimed for one time only once you click on “Redeem Prize.” <br />Please ask for assistance from merchant for prize claiming.</p>
+								</div>
+							<!-- .wizard-project --></div>	
+							
+							<?php $this->load->view('a/project/project_redeem_tiket_view', $this->data); ?>					
+						
+						<?php
+						
+							}else{
+								
+						?>
+							
+							<div class="wizard-project">
+								<div class="wizard-step step-4" style="padding-top: 29px;padding-bottom: 33px;">
+									<h2 style="line-height:28px;">Congratulations! You just redeemed a prize.<br />Check out other projects on Activorm!</h2>
+									<a class="btn btn-big btn-yellow" href="<?php echo base_url(); ?>" target="_blank">Go to Homepage</a>
+								</div>
+							<!-- .wizard-project --></div>	
+								
+						<?php		
+								
+							}
+						
 						} ?>
 						
 						<?php } ?>

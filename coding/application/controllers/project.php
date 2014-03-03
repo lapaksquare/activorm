@@ -229,6 +229,8 @@ class Project extends MY_Controller{
 			$facebook_format = $this->input->get_post('facebook_format');
 			$twitter_format = $this->input->get_post('twitter_format');
 			
+			$redeem_tiket = $this->input->get_post('redeem_tiket');
+			$redeem_tiket_merchant = (empty($redeem_tiket)) ? 0 : 1;
 			
 			/*contact person*/
 			if (!empty($submit_btn)){
@@ -368,7 +370,8 @@ class Project extends MY_Controller{
 				'project_description' => $project_description,
 				'project_live' => $project_live,
 				'premium_plan' => $premium_plan,
-				'project_posted' => date('Y-m-d H:i:s')
+				'project_posted' => date('Y-m-d H:i:s'),
+				'redeem_tiket_merchant' => $redeem_tiket_merchant
 			);
 			
 			
@@ -926,6 +929,12 @@ class Project extends MY_Controller{
 		echo '<pre>';
 		print_r($this->data['socialmedia']);
 		echo '</pre>'; */
+		
+		if (!empty($this->project->redeem_tiket_merchant)){
+			$this->checkTiket = $this->tiket_model->checkTiket($project_id, $account_id);
+			$this->load->model('prize_model');
+			$this->prizeProfile = $this->prize_model->getPrizeProfileByProjectId($project_id);
+		}
 		
 		// project analytic 
 		$this->project_analytic($project_id, $account_id, $account_id_project);
