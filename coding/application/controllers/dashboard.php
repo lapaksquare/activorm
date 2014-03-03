@@ -445,6 +445,9 @@ class Dashboard extends MY_Controller{
 		
 		$this->results_project_analytics = $this->project_analytics($this->results);
 		//echo '<pre>';print_r($this->results_project_analytics);echo '</pre>';
+		
+		$this->load->model('project_model');
+		$this->data['freeplan'] = $this->project_model->getCountFreePlan($this->access->member_account->account_id);
 	}
 	function project_analytics($results){
 		$ga_session = $this->gaAuth();
@@ -601,7 +604,17 @@ class Dashboard extends MY_Controller{
 				
 		$this->load->model('project_model');		
 		$this->project = $this->project_model->getProject('pp.project_uri', $this->segments[3]);
-		if (empty($this->project) || empty($this->segments[2])) redirect(base_url() . '404');
+		
+		$access = 1;
+		$limit_time = "2014-03-03 18:00";
+		$limit_time = strtotime($limit_time);
+		$project_posted = strtotime($this->project->project_posted);
+		$freeplan = $this->project_model->getCountFreePlan($this->access->member_account->account_id);
+		if ($this->project->premium_plan == 0 && $freeplan <= 0 && $limit_time < $project_posted){
+			$access = 0;
+		}
+		
+		if (empty($this->project) || empty($this->segments[2]) || $access == 0) redirect(base_url() . '404');
 		
 		$project_id = $this->project->project_id;
 		$account_id = $this->access->member_account->account_id;

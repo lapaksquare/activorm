@@ -136,8 +136,12 @@
 								<strong>Choose Payment Method</strong>
 								Transfer Bank:
 								<div class="topup-bank">
+									<?php if (REK_MANDIRI == 1){ ?>
 									<img src="<?php echo cdn_url(); ?>img/bank-mandiri.gif" alt="mandiri" />
+									<?php } ?>
+									<?php if (REK_BCA == 1){ ?>
 									<img src="<?php echo cdn_url(); ?>img/bank-bca.gif" alt="bca" />
+									<?php } ?>
 								</div>
 							</div>
 							
