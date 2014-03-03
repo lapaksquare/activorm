@@ -22,7 +22,7 @@
 						$this->session->unset_userdata('pointtopup_error');
 						if ($pointtopup_error == 1){
 						?>
-						<div class="alert alert-danger">Terjadi kesalahan dalam pengiriman data.</div>
+						<div class="alert alert-danger">Something error when send your data.</div>
 						<?php } ?>
 
 						<div class="box">
@@ -75,6 +75,15 @@
 								</table>
 							</div>
 
+							
+							<?php 
+							$qty = 1;
+							$total_amount = 200000;
+							$service_charge = 5 * 200000 / 100;
+							$goverment_tax = 10 * 200000 / 100;
+							$total_payment = $total_amount + $service_charge + $goverment_tax;
+							?>
+
 							<br />
 							<ul class="list-unstyled list-details">
 								<li class="row">
@@ -83,7 +92,7 @@
 									</div>
 									<div class="col-xs-7">
 										<span class="pull-right">
-											<input type="text" name="quantity" placeholder="" value="" id="point_qty" class="form-control input-sm input-nr" autocomplete="off"  />
+											<input type="text" name="quantity" placeholder="" value="1" id="point_qty" class="form-control input-sm input-nr" autocomplete="off" style="text-align:right;"  />
 										</span>
 									</div>
 								</li>
@@ -92,7 +101,7 @@
 										Total Amount:
 									</div>
 									<div class="col-xs-7">
-										<span class="pull-right" id="totalamount" data-totalamount="0">IDR <?php echo number_format(0, 2, ",", "."); ?></span>
+										<span class="pull-right" id="totalamount" data-totalamount="0">IDR <?php echo number_format($total_amount, 2, ",", "."); ?></span>
 									</div>
 								</li>
 								<li class="row">
@@ -100,7 +109,7 @@
 										Service Charge 5%:
 									</div>
 									<div class="col-xs-7">
-										<span class="pull-right" id="servicecharge" data-servicecharge="0">IDR <?php echo number_format(0, 2, ",", "."); ?></span>
+										<span class="pull-right" id="servicecharge" data-servicecharge="0">IDR <?php echo number_format($service_charge, 2, ",", "."); ?></span>
 									</div>
 								</li>
 								<li class="row">
@@ -108,7 +117,7 @@
 										Government Tax 10%:
 									</div>
 									<div class="col-xs-7">
-										<span class="pull-right" id="governmenttax" data-governmenttax="0">IDR <?php echo number_format(0, 2, ",", "."); ?></span>
+										<span class="pull-right" id="governmenttax" data-governmenttax="0">IDR <?php echo number_format($goverment_tax, 2, ",", "."); ?></span>
 									</div>
 								</li>
 								<li class="row list-total">
@@ -116,7 +125,7 @@
 										<strong>Total Payment:</strong>
 									</div>
 									<div class="col-xs-7">
-										<span class="pull-right"><strong class="green" id="totalpayment" data-totalpayment="0">IDR <?php echo number_format(0, 2, ",", "."); ?></strong></span>
+										<span class="pull-right"><strong class="green" id="totalpayment" data-totalpayment="0">IDR <?php echo number_format($total_payment, 2, ",", "."); ?></strong></span>
 									</div>
 								</li>
 							<!-- .transaction-details --></ul>

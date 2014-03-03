@@ -262,13 +262,16 @@ class Project_model extends CI_Model{
 		 return (int) $this->db->query("SELECT FOUND_ROWS() AS total")->row()->total;	
 	}
 	
-	function registerTiket($data){
+	function registerTiket($data, $tiket_premium = 0){
 		// check tiket
-		$checkTiket = $this->checkProjectTiket($data['project_id'], $data['account_id']);
-		if ($checkTiket == 0) $this->db->insert('project__tiket', $data);
+		$checkTiket = $this->checkProjectTiket($data['project_id'], $data['account_id'], $tiket_premium);
+		if ($checkTiket == 0) {
+			$data['tiket_premium'] = $tiket_premium;
+			$this->db->insert('project__tiket', $data);
+		}
 	}
 	
-	function checkProjectTiket($project_id, $account_id){
+	function checkProjectTiket($project_id, $account_id, $tiket_premium = 0){
 		$sql = "
 		SELECT
 		pt.tiket_barcode
@@ -277,8 +280,9 @@ class Project_model extends CI_Model{
 		WHERE 1
 		AND pt.project_id = ?
 		AND pt.account_id = ?
+		AND pt.tiket_premium = ?
 		";
-		$result = $this->db->query($sql, array($project_id, $account_id))->row();
+		$result = $this->db->query($sql, array($project_id, $account_id, $tiket_premium))->row();
 		if (empty($result)){
 			return 0;
 		}else{
@@ -367,6 +371,56 @@ class Project_model extends CI_Model{
 		AND photo_id = ?
 		";
 		return $this->db->query($sql, array($photo_id));
+	}
+	
+	function getCountFreePlan($account_id){
+		$sql = "
+		SELECT
+		pf.jml_free jml
+		FROM
+		project__freeplan pf
+		WHERE 1
+		AND pf.account_id = ?
+		";
+		$return = $this->db->query($sql, array($account_id))->row();
+		if (empty($return)){
+			return 3;
+		}else{
+			return $return->jml;
+		}
+	}
+	
+	function cekCountFreePlan($account_id){
+		$sql = "
+		SELECT
+		pf.jml_free jml
+		FROM
+		project__freeplan pf
+		WHERE 1
+		AND pf.account_id = ?
+		";
+		$return = $this->db->query($sql, array($account_id))->row();
+		if (empty($return)){
+			return 0;
+		}else{
+			return 1;
+		}
+	}
+	
+	function updateCountFreePlan($account_id, $freeplan){
+		$cek = $this->cekCountFreePlan($account_id);
+		if ($cek == 0){
+			$this->db->insert('project__freeplan', array(
+				'account_id' => $account_id,
+				'jml_free' => $freeplan
+			));
+		}else{
+			$this->db->update('project__freeplan', array(
+				'jml_free' => $freeplan
+			), array(
+				'account_id' => $account_id
+			));
+		}
 	}
 	
 }

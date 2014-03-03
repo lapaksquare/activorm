@@ -87,7 +87,7 @@ date_default_timezone_set('Asia/Jakarta');
 
 define('WEB_VERSION', 1);
 define('DEV_INVITATION', 0);
-define('PREMIUM_PLAN', 0);
+define('PREMIUM_PLAN', 1);
 
 /* API FACEBOOK */
 define('FACEBOOK_APP_ID', '1425256081020066');
@@ -103,6 +103,15 @@ if (ENVIRONMENT == "production"){
 	define('TWITTER_OAUTH_CALLBACK', 'http://activorm.local/kkrf/auth/twitter_callback');
 }
 
+
+/*NOMOR REKENING*/
+define('BCA_REKENING_NOMOR', '7090258791');
+define('BCA_REKENING_ATASNAMA', 'Karen Kamal');
+define('BCA_REKENING_CABANG', 'KCP Rantai Mulia Kencana');
+
+define('MANDIRI_REKENING_NOMOR', 'MANDIRI_7090258791');
+define('MANDIRI_REKENING_ATASNAMA', 'Karen Kamal MANDIRI');
+define('MANDIRI_REKENING_CABANG', 'KCP Rantai Mulia Kencana MANDIRI');
 
 define('GA_CLIENT_ID', '802492281133.apps.googleusercontent.com');
 define('GA_CLIENT_SECRET', 'COpdo3DmaYhTFOmQ3pgwBphK');

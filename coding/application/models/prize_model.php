@@ -63,7 +63,7 @@ class Prize_model extends CI_Model{
 		AND ppf.isactive = 1
 		AND (ppro.project_live = '$project_live')
 		AND ppro.project_active = 1
-		ORDER BY ppf.priority ASC
+		ORDER BY ppr.lastupdate DESC
 		" . $limited;
 		
 		return $this->db->query($sql)->result();

@@ -813,6 +813,49 @@ class Member extends MY_Admin_Access{
 
 	/**** SENDING EMAIL - END ****/
 	
+	
+	/**** MemberPoint - START ****/
+	function member_point(){
+		$this->load->library('pagination_tmpl');
+		$this->page = $page = intval($this->input->get_post('page'));
+		
+		$this->search_by = $this->input->get_post('search_by');
+		$this->q = $this->input->get_post('q');
+		$param_url = array(
+			'search_by' => $this->search_by,
+			'q' => $this->q,
+			'page' => ''
+		);
+		
+		$this->load->model('a_account_model');
+		$this->data['members'] = $this->a_account_model->getMembersPoint($param_url, $this->offset, 0, $page);
+		
+		$param_url = http_build_query($param_url);
+		
+		$uri_page = 'admin/member/member_point?'.$param_url;
+		$this->data['page'] = (!empty($page)) ? $page : $page+1;
+		$this->data['total_data'] = $total_data = $this->a_account_model->countGetdata();
+		$this->data['pagination'] = $this->pagination_tmpl->getPaginationString(
+			$page, 
+			$total_data, 
+			$this->offset, 
+			1, 
+			base_url(), 
+			$uri_page
+		);
+		
+		$this->data['menu'] = 'account';
+		$this->data['menu_child'] = 'member_point';
+		$this->_default_param(
+			"",
+			"",
+			"",
+			"Member Point - Activorm Connect");
+		$this->load->view('n/member/member_point_view', $this->data);
+	}
+	/**** SENDING EMAIL - END ****/
+	
+	
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){
 		/*$default_css = array(
 		);

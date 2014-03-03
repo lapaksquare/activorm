@@ -92,13 +92,19 @@ class A_project_model extends CI_Model{
 		pp.business_id,
 		pp.jml_winner,
 		bp.business_name,
-		brm.account_id
+		brm.account_id,
+		IFNULL(mp.point, 0) jml_point,
+		IFNULL(pf.jml_free, 0) jml_free_plan
 		FROM
 		project__profile pp
 		JOIN business__profile bp ON
 			bp.business_id = pp.business_id
 		JOIN business__rel_member brm ON
 			brm.business_id = bp.business_id
+		LEFT JOIN member__points mp ON
+			mp.account_id = brm.account_id
+		LEFT JOIN project__freeplan pf ON
+			pf.account_id = brm.account_id
 		WHERE 1
 		AND pp.project_id = ?
 		";

@@ -18,9 +18,11 @@
 							<?php 
 							$message_paymentconfirmation = $this->session->userdata('message_paymentconfirmation');
 							$this->session->unset_userdata('message_paymentconfirmation');
-							if ($message_paymentconfirmation == 1){
+							if (!empty($message_paymentconfirmation)){
+								$message_paymentconfirmation = '<li>' . implode('</li><li>', $message_paymentconfirmation) . '</li>';
+								$this->session->unset_userdata('message_paymentconfirmation');
 							?>
-							<div class="alert alert-danger">Terjadi kesalahan dalam pengiriman data.</div>
+							<div class="alert alert-danger"><?php echo $message_paymentconfirmation; ?></div>
 							<?php }else if ($message_paymentconfirmation == 2){ ?>
 							<div class="alert alert-success">Terima Kasih, Pembayaran Anda akan kami cek segera.</div>
 							<?php } ?>

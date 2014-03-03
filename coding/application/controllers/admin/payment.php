@@ -65,10 +65,12 @@ class Payment extends MY_Admin_Access{
 		$order_id = $order_cart->order_id;
 		$order_cart_detail = $this->order_model->getDataOrderCartDetail($order_id);
 		
+		$title_email = ($order_cart->order_status == "completed") ? 'Receipt' : 'Invoice';
+		
 		// sending email
 		$dataEmail = array(
 			'account_email' => $order_cart->account_email,
-			'email_subject' => 'INVOICE #' . $order_cart->order_barcode,
+			'email_subject' => strtoupper($title_email) . ' #' . $order_cart->order_barcode,
 			'email_tmpl' => 'invoice_view',
 			'order_cart' => $order_cart,
 			'order_cart_detail' => $order_cart_detail
@@ -94,7 +96,7 @@ class Payment extends MY_Admin_Access{
 				
 		$data = $this->load->view('email/' . $tmpl, $data, true);
         $message->setSubject($subject)
-                ->setFrom(array('info@activorm.com' => 'Activorm'))
+                ->setFrom(array('business@activorm.com' => 'Activorm'))
                 ->setTo($email)
                 ->addPart($data, 'text/html')
         ;
@@ -155,9 +157,10 @@ class Payment extends MY_Admin_Access{
 				// ganti order status ============ end ===============
 				
 				// sending email ============ start ===============
+				$title_email = ($order_cart->order_status == "completed") ? 'Receipt' : 'Invoice';
 				$dataEmail = array(
 					'account_email' => $order_cart->account_email,
-					'email_subject' => 'INVOICE #' . $order_cart->order_barcode,
+					'email_subject' => strtoupper($title_email) . ' #' . $order_cart->order_barcode,
 					'email_tmpl' => 'invoice_view',
 					'order_cart' => $order_cart,
 					'order_cart_detail' => $order_cart_detail

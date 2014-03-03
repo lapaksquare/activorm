@@ -7,12 +7,16 @@
 		?>
 		<div class="pop-warning">
 			<p>Project ini dalam keadaan : <b><?php echo ucwords( $this->project->project_live ); ?></b></p>
-			<p><?php if ($this->project->project_live == "Draft"){ ?><a href="<?php echo base_url(); ?>project/edit/<?php echo $this->project->project_uri; ?>" class="btn btn-wd btn-green">Edit</a> or 
+
+			<p><?php if ($this->project->project_live == "Draft"){ ?><a href="<?php echo base_url(); ?>project/edit/<?php echo $this->project->project_uri; ?>" class="btn btn-wd btn-green">Edit</a>
+				
 				<?php //if ($this->project->premium_plan == 0){ ?>
+					
+				
+				<?php if ($freeplan > 0 || $this->project->premium_plan == 1){ ?>	
+					or 
 				<a href="#" class="btn btn-wd btn-yellow" id="submit_project">Submit</a>
-				<?php /*}else{ ?>
-				<a href="<?php echo base_url(); ?>project/pricing/<?php echo $this->project->project_uri; ?>" class="btn btn-wd btn-yellow" id="">Submit</a>
-				<?php }*/ ?>
+				<?php } ?>
 			<?php } ?></p>
 		</div>
 		<?php } ?>
@@ -369,11 +373,12 @@
 						
 						<?php	
 						
+						$jml_action_premium = 2;
 						
 						if ( ($project_actions['action_1'] == 1 && $project_actions['action_2'] == 1 && $project_actions['action_3'] == 1) ){
 						?>
 						
-						<?php if ( (/*$project_actions['action_premium'] == 1 &&*/ $this->project->premium_plan == 1) || 
+						<?php if ( ($project_actions['action_premium'] >= $jml_action_premium && $this->project->premium_plan == 1) || 
 						($project_actions['action_1'] == 1 && $project_actions['action_2'] == 1 && $project_actions['action_3'] == 1 && $this->project->premium_plan == 0)
 						){ ?>
 							
@@ -398,7 +403,8 @@
 							}else{
 									
 									
-								if (empty($this->project->project_file_data)){ ?>
+								//if (empty($this->project->project_file_data)){ 
+							?>
 							
 							<div class="wizard-project">
 								<div class="wizard-step step-4">
@@ -408,7 +414,7 @@
 								</div>
 							<!-- .wizard-project --></div>
 							
-							<?php }else{ ?>
+							<?php /*}else{ ?>
 							
 							<div class="wizard-project">
 								<div class="wizard-step step-4">
@@ -417,7 +423,7 @@
 								</div>
 							<!-- .wizard-project --></div>	
 									
-							<?php } 
+							<?php } */
 							
 							
 							}
@@ -434,18 +440,17 @@
 						?>
 						
 						<div class="wizard-project">
-							<div class="wizard-step step-3">
-								<button type="button" class="close">&times;</button>
-								<h2>More Tickets (max. 3 tickets)</h2>
+							<div class="wizard-step step-3" style="height: 185px;padding-top: 40px;">
+								<h2>More Tickets (max. 2 tickets)</h2>
 
-								<div class="row">
+								<div class="row" id="premium_action" style="margin-left:60px;margin-top:35px;">
 									
 									<?php if (property_exists($social_format_data, "facebook_format")){ 
 										$sc = "facebook";
 										$sc_hash = sha1($pid . $sc . SALT);
 										?>
-									<div class="col-sm-4">
-										<a class="btn btn-block btn-fb" href="<?php echo base_url() . 'actions/premium?type=' . $sc . '&pid='. $pid .'&hash=' . $sc_hash; ?>"><i class="icon-facebook"></i> Share Status Facebook</a>
+									<div class="col-sm-4" style="margin-right:30px;">
+										<a class="btn btn-block btn-fb1" href="<?php echo base_url() . 'actions/premium?type=' . $sc . '&pid='. $pid .'&hash=' . $sc_hash; ?>"><i class="icon-facebook"></i> Share Status Facebook <?php if ($project_actions['action_premium_fb'] == 1){ ?><i class="check"></i><?php } ?></a>
 									</div>
 									<?php } ?>
 
@@ -453,15 +458,24 @@
 										$sc = "twitter";
 										$sc_hash = sha1($pid . $sc . SALT);
 										?>
-									<div class="col-sm-5">
-										<a class="btn btn-block btn-tw" href="<?php echo base_url() . 'actions/premium?type=' . $sc . '&pid='. $pid .'&hash=' . $sc_hash; ?>"><i class="icon-twitter"></i> Share Status Twitter</a>
+									<div class="col-sm-4">
+										<a class="btn btn-block btn-tw1" href="<?php echo base_url() . 'actions/premium?type=' . $sc . '&pid='. $pid .'&hash=' . $sc_hash; ?>"><i class="icon-twitter"></i> Share Status Twitter <?php if ($project_actions['action_premium_tw'] == 1){ ?><i class="check"></i><?php } ?></a>
 									</div>
 									<?php } ?>
 
 								</div>
 							</div>
 						<!-- .wizard-project --></div>
-						<?php } ?>
+						<?php }else if (!empty($this->project->project_file_data)){
+						?>
+							<div class="wizard-project">
+								<div class="wizard-step step-4">
+									<h2>Thank you for completing it</h2>
+									<a class="btn btn-big btn-yellow" href="<?php echo base_url(); ?>download?h=<?php echo sha1($this->project->project_id.$account_id.SALT); ?>&p=<?php echo $this->project->project_id; ?>&a=<?php echo $account_id; ?>" target="_blank">Download Voucher</a>
+								</div>
+							<!-- .wizard-project --></div>	
+						<?php
+						} ?>
 						
 						<?php } ?>
 						
@@ -533,6 +547,10 @@
 									</div>
 									
 								</div>
+												
+								<?php 
+								//echo '<pre>';print_r($project_actions_data);echo '</pre>';
+								?>				
 																
 								<?php if ($flag == 0) { ?><button type="button" class="close" id="btn-action-close">&times;</button><?php } ?>
 
@@ -554,6 +572,8 @@
 												'hashactions' => sha1($k . SALT)
 											);
 											$url = http_build_query($url);
+											
+											if (!property_exists($v, "type_step")) continue;
 											
 											$type_step = $v->type_step;
 											if (property_exists($v, "custom_actions") && !empty($v->custom_actions)){
@@ -1134,7 +1154,16 @@
 				<!-- #sidebar --></div>
 			</div>
 		<!-- #main --></div>
-		
+
+<script type="text/javascript">
+	var freeplan = <?php echo $freeplan; ?>;
+</script>		
+<?php if ($freeplan > 0 || $this->project->premium_plan == 1){ ?>			
 <?php $this->load->view('a/project/project_modal_thankyou_view', $this->data); ?>					
+<?php }else{
+?>
+<?php $this->load->view('a/project/project_topup_view', $this->data); ?>					
+<?php	
+} ?>
 
 <?php $this->load->view('a/general/footer_view', $this->data); ?>

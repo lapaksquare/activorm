@@ -146,3 +146,8 @@ $('#project_tab a').click(function (e) {
 });
 
 $('#slider').nivoSlider();
+
+
+if (freeplan <= 0){
+$('#modal-project-topup-confirmation').modal('show');
+}

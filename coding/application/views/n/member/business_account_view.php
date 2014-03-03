@@ -81,7 +81,10 @@
             <td><?php echo $v->account_id; ?></td>
             <td><?php echo ucwords($v->business_name); ?></td>
             <td><?php echo $v->account_email; ?></td>
-            <td><?php echo $v->point; ?> Point</td>
+            <td><?php echo $v->point; ?> Point
+            	<br />
+            	<small><?php echo $v->jml_free_plan; ?> Project Free Left</small>
+            	</td>
             <td><?php echo ucfirst($v->account_live); ?></td>
             <td><a href="<?php echo base_url(); ?>admin/member/business_account_details?bai=<?php echo $v->business_id; ?>&mai=<?php echo $v->account_id; ?>&h=<?php echo sha1($v->business_id . $v->account_id . SALT); ?>" class="btn btn-primary">Details</a></td>
           </tr>

@@ -21,6 +21,10 @@
 				'add_invite_member' => array(
 					'name' => 'Add/Invite Member',
 					'url' => base_url() . 'admin/member/add_account'
+				),
+				'member_point' => array(
+					'name' => 'Member Point',
+					'url' => base_url() . 'admin/member/member_point'
 				)
 			)
 		),
@@ -76,10 +80,6 @@
 			'name' => 'Payment',
 			'url' => base_url() . 'admin/payment',
 			'child' => array(
-				'payment_completed' => array(
-					'name' => 'Completed',
-					'url' => base_url() . 'admin/payment?order_status=completed'
-				),
 				'payment_checkout' => array(
 					'name' => 'Checkout',
 					'url' => base_url() . 'admin/payment?order_status=checkout'
@@ -87,6 +87,10 @@
 				'payment_onprogress' => array(
 					'name' => 'OnProgress',
 					'url' => base_url() . 'admin/payment?order_status=onprogress'
+				),
+				'payment_completed' => array(
+					'name' => 'Completed',
+					'url' => base_url() . 'admin/payment?order_status=completed'
 				)
 			)
 		),

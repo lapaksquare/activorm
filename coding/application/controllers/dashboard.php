@@ -220,7 +220,7 @@ class Dashboard extends MY_Controller{
 			}
 			
 			if ($error_hash > 0 || empty($order_cart_detail)){
-				$errors[] = 'Terjadi kesalahan dalam pengiriman data.';
+				$errors[] = 'Something error when send your data.';
 			}
 			
 			if (!empty($order_cart_detail)){
@@ -324,8 +324,28 @@ class Dashboard extends MY_Controller{
 				$sender_name = $this->input->get_post('sender_name');
 				$sender_account = $this->input->get_post('sender_account');
 				
+				$errors = array();
+				if (empty($payment_date)){
+					$errors[] = "Payment Date must be filled.";
+				}
+				if (empty($transaction_amount)){
+					$errors[] = "Transaction Amount must be filled and may consists of numbers only.";
+				}
 				if ($transaction_amount < $order->order_total_price){
-					$this->session->set_userdata('message_paymentconfirmation', 1);
+					$errors[] = "Please insert the correct Payment Amount.";
+				}
+				if (empty($sender_bank)){
+					$errors[] = "Bank Name must be filled.";
+				}
+				if (empty($sender_name)){
+					$errors[] = "Bank Account Holder Name must be filled and contain words only (you may not use special characters e.g. - , > , % , $).";
+				}
+				if (empty($sender_account)){
+					$errors[] = "Bank Account Number must be filled and may consists of numbers only.";
+				}
+				
+				if (count($errors) > 0){
+					$this->session->set_userdata('message_paymentconfirmation', $errors);
 				}else{
 				
 					$data = array(
@@ -380,7 +400,7 @@ class Dashboard extends MY_Controller{
 				
 		$data = $this->load->view('email/' . $tmpl, $data, true);
         $message->setSubject($subject)
-                ->setFrom(array('info@activorm.com' => 'Activorm'))
+                ->setFrom(array('business@activorm.com' => 'Activorm'))
                 ->setTo($email)
                 ->addPart($data, 'text/html')
         ;

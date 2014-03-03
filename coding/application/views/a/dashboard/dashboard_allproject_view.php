@@ -30,11 +30,15 @@
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach($this->results as $k=>$v){ ?>
+									<?php foreach($this->results as $k=>$v){ 
+										
+										$pageviews = (empty($this->results_project_analytics[$v->project_id]['pageviews'])) ? 0 : $this->results_project_analytics[$v->project_id]['pageviews'];
+										
+										?>
 									<tr>
 										<td><?php echo date("d M Y", strtotime($v->project_posted)); ?></td>
 										<td><a id="" href="<?php echo base_url(); ?>dashboard/project/<?php echo $v->project_uri; ?>" data-h="<?php echo sha1($v->project_id . SALT); ?>" data-pid="<?php echo $v->project_id; ?>" target="_blank"><?php echo ucwords($v->project_name); ?></a></td>
-										<td><?php echo $this->results_project_analytics[$v->project_id]['pageviews']; ?></td>
+										<td><?php echo $pageviews; ?></td>
 										<td><?php echo $v->member_join; ?></td>
 										<td><?php echo ($v->premium_plan == 0) ? 'FREE' : 'PAID'; ?></td>
 										<td><?php echo ucwords($v->project_live); ?></td>

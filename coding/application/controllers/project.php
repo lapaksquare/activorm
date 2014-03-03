@@ -47,6 +47,8 @@ class Project extends MY_Controller{
 				$tw_name = $social_page_active->name;
 			}
 			
+			$this->step_function();
+			
 			$this->data['actions_label_info'] = array(
 				'facebook' => $fb_name,
 				'twitter' => $tw_name
@@ -173,6 +175,10 @@ class Project extends MY_Controller{
 		
 		$redirect = base_url() . 'project/create';
 		
+		$this->load->model('point_model');
+		$points_user = $this->point_model->getAccountPoint($this->access->member_account->account_id);
+		$points_balance = 100;
+		
 		if (!empty($submit_btn) || !empty($preview_btn) || !empty($save_draft) || !empty($premium_submit_draft)){
 			
 			$this->load->library('validate');
@@ -200,9 +206,24 @@ class Project extends MY_Controller{
 			$project_hashtags = $this->input->get_post('project_hashtags');
 			$project_period = $this->input->get_post('project_period');
 			
-			$step_upgrade = $this->input->get_post('step_upgrade');
-			$step_upgrade_hash = $this->input->get_post('step_upgrade_hash');
-			$step_upgrade_hash_ori = sha1($step_upgrade . SALT);
+			//$step_upgrade = $this->input->get_post('step_upgrade');
+			//$step_upgrade_hash = $this->input->get_post('step_upgrade_hash');
+			//$step_upgrade_hash_ori = sha1($step_upgrade . SALT);
+			$cid = $project_plan = $this->input->get_post('project-plan');
+			$project_plan_type_string = "";
+			$premium_plan = 0;
+			switch($project_plan){
+				case sha1("FREE".SALT):
+					$project_plan_type = 1;
+					break;
+				case sha1("PREMIUM100K".SALT):
+					$project_plan_type = 2;
+					$project_plan_type_string = "PREMIUM100K";
+					$premium_plan = 1;
+					break;
+			}
+			
+			$opt_premium = $this->input->get_post('opt_premium');
 			
 			$option_share = $this->input->get_post('option_share');
 			$facebook_format = $this->input->get_post('facebook_format');
@@ -243,7 +264,7 @@ class Project extends MY_Controller{
 			
 			//if ($validateProjectName == 1){
 			if (strlen($project_name) < 5){	
-				$errors[] = "Project Title must contain words only (you may not use special characters e.g. - , > , % , $). Minimum 5 characters.";
+				$errors[] = "Project Prize must contain words only. Minimum 5 characters.";
 			}
 			//if ($validateProjectPrize == 1){
 			//	$errors[] = "Project Prize must contain words only (you may not use special characters e.g. - , > , % , $). Minimum 5 characters.";
@@ -259,6 +280,10 @@ class Project extends MY_Controller{
 			//}
 			if ($project_period < 7 || $project_period > 30){
 				$errors[] = "Terjadi kesalahan dalam pengaturan periode";
+			}
+			
+			if ($points_user < $points_balance && !empty($preview_btn)){
+				$errors[] = "You don't have enough balance, please <a href='".base_url()."dashboard/pointstopup'>Top Up</a>";
 			}
 			
 			if (!empty($submit_btn)){
@@ -309,6 +334,8 @@ class Project extends MY_Controller{
 			}
 			/* end */
 			
+			
+			/****
 			$premium_plan = 0;
 			if (!empty($step_upgrade) && $step_upgrade_hash != $step_upgrade_hash_ori){
 				$errors[] = "There is an error while transferring data. Please try again.";
@@ -319,6 +346,13 @@ class Project extends MY_Controller{
 				}
 				//$project_live = "Draft";
 			}
+			*****/
+			
+			
+			/*********** PREMIUM PLAN ****************/
+			
+			/*********** PREMIUM PLAN ****************/
+			
 						
 			$business_id = $this->session->userdata('business_id');
 			$dataProject = array(
@@ -397,9 +431,11 @@ class Project extends MY_Controller{
 			//$dataProject['photo_thumb'] = $photo_thumb;
 			// UPLOAD IMAGES =================== end ============================
 			
+			
+			if ($opt_premium == "direct-tickets"){
 			// UPLOAD FILE =================== start ============================
 			$config['upload_path'] = './images/project_data/';
-			$config['allowed_types'] = 'pdf';
+			$config['allowed_types'] = 'jpg|jpeg|png|pdf';
 			$config['encrypt_name'] = true;
 			$config['max_size']	= '2024';
 			
@@ -420,11 +456,12 @@ class Project extends MY_Controller{
 			}else{
 				
 				if (!empty($_FILES['attach_file']['name'])){
-					$errors[] = 'There is an error while uploading file. File must be in jpeg/jpg/png format. Please try again.';
+					$errors[] = 'There is an error while uploading file. File must be in PDF/JPG/PNG format. Please try again.';
 				}
 				
 			}			
 			// UPLOAD FILE =================== end ============================
+			}
 			
 			
 			/*actions*/
@@ -487,16 +524,22 @@ class Project extends MY_Controller{
 				
 				$this->session->set_userdata('message_create_project_error', $errors);
 				
-				$redirect = base_url() . 'project/create';
+				$redirect = base_url() . 'project/create?cid=' . $cid;
 				
 			}else{
 				
-				$dataProject['social_format_data'] = json_encode( array(
-					'facebook_format' => $facebook_format,
-					'twitter_format' => $twitter_format
-				) );
+				if ($opt_premium == "allow-share"){
+					$dataProject['social_format_data'] = json_encode( array(
+						'facebook_format' => $facebook_format,
+						'twitter_format' => $twitter_format
+					) );
+				}
 				
 				$dataProject['project_actions_data'] = $actions_step_data;
+				
+				if ($project_plan_type == 2){
+					$dataProject['premium_plan_type'] = $project_plan_type_string;
+				}
 				
 				/*actions debug*/
 				/*
@@ -834,6 +877,9 @@ class Project extends MY_Controller{
 		$socialmedia_user = $this->socialmedia_model->socialmedia_connect($account_id);
 		$socialmedia_required = $socialmedia_account_required = array();
 		foreach($project_actions_data as $k=>$v){
+			
+			if (!property_exists($v, "type_step")) continue;
+			
 			list($type, $type_detail) = explode("-", $v->type_step);
 			
 			// link oauth
@@ -900,6 +946,8 @@ class Project extends MY_Controller{
 		echo '</pre>';
 		die();
 		*/
+		
+		$this->data['freeplan'] = $this->project_model->getCountFreePlan($this->access->member_account->account_id);
 				
 		// og meta
 		$this->data['title'] = $this->project->project_name;
@@ -1131,6 +1179,24 @@ class Project extends MY_Controller{
 						
 			if ($hash_pid != $ori_hash_pid) redirect($redirect);
 			
+			$this->project = $this->project_model->getProject('pp.project_id', $pid);
+			
+			$project_budget = 0;
+			if (!empty($this->project)){
+				if (!empty($this->project->premium_plan_type)){
+					$project_budget = 100000; //$this->input->get_post('project-budget');
+					$project_budget = intval( $project_budget ) / 1000;
+					
+					$this->load->model('point_model');
+					$point = $this->point_model->getAccountPoint($this->access->member_account->account_id);
+					$project_point = $point - $project_budget;
+										
+					$this->point_model->updateMemberPoint(array(
+						'point' => $project_point
+					), $this->access->member_account->account_id);
+				}
+			}
+			
 			$dataCP = array(
 				'project_id' => $pid,
 				'name' => $contact_name,
@@ -1140,11 +1206,44 @@ class Project extends MY_Controller{
 			$this->project_model->insertProjectContact($dataCP, $pid);
 
 			$project_id = $this->project_model->registerProject(array(
-				'project_live' => 'Offline'
+				'project_live' => 'Offline',
+				'project_point' => $project_budget
 			), $pid);
 			
 		}
 		redirect($redirect);
+	}
+	
+	/* =========== STEP FUNCTION ============= */
+	function step_function(){
+		$this->step_create = 1;
+		
+		$this->cid = $this->input->get_post('cid');
+		
+		if (!empty($this->project)){
+			if (!empty($this->project->premium_plan_type)){
+				$this->cid = sha1("PREMIUM100K" . SALT);
+			}else{
+				$this->cid = sha1("FREE" . SALT);
+			}
+		}
+		
+		switch($this->cid){
+			case sha1("FREE".SALT) : 
+				$this->step_create = 2;
+				$this->cid_type = "FREE";
+				break;
+			case sha1("PREMIUM100K".SALT) :
+				$this->step_create = 2;
+				$this->cid_type = "PREMIUM100K";
+				break;
+		}
+		
+		$this->load->model('point_model');
+		$this->data['points_user'] = $this->point_model->getAccountPoint($this->access->member_account->account_id);
+		
+		$this->load->model('project_model');
+		$this->data['freeplan'] = $this->project_model->getCountFreePlan($this->access->member_account->account_id);
 	}
 	
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){

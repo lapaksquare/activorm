@@ -52,7 +52,6 @@
 					),
 					
 					
-					/*
 					'points_topup' => array(
 						'id' => 'points_topup',
 						'name' => 'Points &amp; Top Up',
@@ -70,7 +69,7 @@
 						'name' => 'Payment History',
 						'link' => base_url() . 'dashboard/paymenthistory',
 						'childs' => array()
-					)*/
+					)
 					
 				);
 				

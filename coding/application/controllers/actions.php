@@ -35,11 +35,13 @@ class Actions extends MY_Controller {
 		
 		$message = "Something Error!. Please try again.";
 		
+		//echo '<pre>';print_r($project_actions_data);echo '</pre>';
+		
 		foreach($project_actions_data as $k=>$v){
 			if ($k == $actions){
 				
 				$type_step = $v->type_step;
-				list($type_step, $type_detail) = explode("_", $v->type_step);
+				list($type_step) = explode("_", $v->type_step);
 				
 				//echo $type_step;die();
 				
@@ -135,7 +137,7 @@ class Actions extends MY_Controller {
 		}
 	}
 
-	function generateTiket($project_id, $account_id){
+	function generateTiket($project_id, $account_id, $action_premium = 0){
 		$project_actions = $this->project_model->checkProjectActions($project_id, $account_id);
 		if ( ($project_actions['action_1'] == 1 && $project_actions['action_2'] == 1 && $project_actions['action_3'] == 1) ){
 			$this->load->library('util');	
@@ -146,7 +148,7 @@ class Actions extends MY_Controller {
 				'project_id' => $project_id,
 				'account_id' => $account_id
 			);
-			$this->project_model->registerTiket($data);
+			$this->project_model->registerTiket($data, $action_premium);
 		}
 	}
 	
@@ -313,8 +315,9 @@ class Actions extends MY_Controller {
 		$this->project = $this->project_model->getProject('pp.project_id', $pid);
 		if ($this->project->premium_plan == 0) redirect($ref);
 		$actions = $this->project_model->checkProjectActions($pid, $account_id);
-		if ($actions['action_premium'] == 1) redirect($ref);
-		
+		if ($actions['action_premium'] >= 2) redirect($ref);
+		$action_premium_count = $actions['action_premium'] + 1;	
+			
 		$account_id_project = $this->project->account_id;
 		
 		$this->dataStatus = array(
@@ -323,35 +326,71 @@ class Actions extends MY_Controller {
 			'project_uri' => base_url() . 'project/' . $this->project->project_uri
 		);
 		
+		$social_media_data = "";
+		if (!empty($this->project->social_format_data)){
+			$social_media_data = json_decode($this->project->social_format_data);
+		}
+		
+		/*
+		echo '<pre>';
+		print_r($social_media_data);
+		echo '</pre>';die();
+		*/
+		
 		switch($type){
 			case "facebook" :
 				
-				$data = (object) array(
+				$action_premium_fb = $actions['action_premium_fb'] + 1;	
+				
+				$data = array(
 				 	//'message' => //'Testing link message',
 				 	'name' => $this->dataStatus['project_name'],
 				 	'link' => $this->dataStatus['project_uri'],
 				 	'description' => $this->dataStatus['project_description'],
 				);
+				if (!empty($social_media_data->facebook_format) && $social_media_data->facebook_format != "null"){
+					$data['message'] = $social_media_data->facebook_format;
+				}
+				
+				$data = (object) $data;
 				
 				$this->checkFacebookPost($data);
+				
+				$this->project_model->registerActions($pid, $account_id, "premium_fb", $action_premium_fb);
+				
+				$generate_tiket = $this->generateTiket($pid, $account_id, $action_premium_fb);
+								
 				break;
 			case "twitter" :		
+				
+				$action_premium_tw = $actions['action_premium_tw'] + 1;	
 				
 				$this->load->model('socialmedia_model');
 				$socialmedia = $this->socialmedia_model->getSocialMediaConnect($account_id_project, 'twitter');
 				$return = (array) json_decode( $socialmedia->social_data );
 				$socialmedia_name = $return['name'];
-						
+				
 				$tweet_status = $this->dataStatus['project_name'] . ' ' . $this->dataStatus['project_uri'];
+				$tweet_status_completed = $tweet_status . ' via @' . $socialmedia_name;
+				
+				if (!empty($social_media_data->twitter_format) && $social_media_data->twitter_format != "null"){
+					$tweet_status_completed = $social_media_data->twitter_format;
+				}
+				
 				$data = (object) array(
-					'status' => $tweet_status . ' via @' . $socialmedia_name,
+					'status' => $tweet_status_completed
 				);
 				
 				$this->checkTwitterTweet($data);
+				
+				$this->project_model->registerActions($pid, $account_id, "premium_tw", $action_premium_tw);
+				
+				$generate_tiket = $this->generateTiket($pid, $account_id, $action_premium_tw);
+				
 				break;
 		}
 		
-		$this->project_model->registerActions($pid, $account_id, "premium", 1);
+		$this->project_model->registerActions($pid, $account_id, "premium", $action_premium_count);
 		
 		redirect($ref);
 	}
