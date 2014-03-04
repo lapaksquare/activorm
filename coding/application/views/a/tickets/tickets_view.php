@@ -16,6 +16,8 @@
 				
 				foreach($tikets as $k=>$v){
 					
+					if ($v->redeem_tiket_merchant == 1) continue;
+					
 					$project_period = strtotime($v->project_period);
 					$project_now = strtotime(date('Y-m-d H:i:s'));
 					$period = $project_period - $project_now;

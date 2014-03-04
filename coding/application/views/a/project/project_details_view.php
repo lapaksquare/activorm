@@ -1193,9 +1193,15 @@
 <?php if ($freeplan > 0 || $this->project->premium_plan == 1){ ?>			
 <?php $this->load->view('a/project/project_modal_thankyou_view', $this->data); ?>					
 <?php }else{
+	
+	if ($this->project->business_id == $this->access->business_account->business_id){
+	
 ?>
 <?php $this->load->view('a/project/project_topup_view', $this->data); ?>					
 <?php	
+
+	}
+
 } ?>
 
 <?php $this->load->view('a/general/footer_view', $this->data); ?>

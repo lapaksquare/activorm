@@ -5,6 +5,7 @@ class Prize extends MY_Controller{
 	
 	function __construct(){
 		parent::__construct();
+		$this->load->library('scache');
 	}
 	
 	var $offset = 12;
@@ -46,12 +47,15 @@ class Prize extends MY_Controller{
 			'page' => ''
 		);
 		$param_url = http_build_query($param_url);
-		
-		$this->data['product_prize'] = $this->prize_model->getProductPrize(16, 0, $page, FALSE, $this->project_live);
+
+		$product_prize = $this->prize_model->getProductPrize(16, 0, $page, FALSE, $this->project_live);
+		$total_data = $this->prize_model->countGetdata();	
+					
+		$this->data['product_prize'] = $product_prize;
 		
 		$uri_page = 'prize?' . $param_url;
 		$this->data['page'] = (!empty($page)) ? $page : $page+1;
-		$this->data['total_data'] = $total_data = $this->prize_model->countGetdata();
+		$this->data['total_data'] = $total_data;
 		$this->data['pagination'] = $this->pagination_tmpl->getPaginationString(
 			$page, 
 			$total_data, 
@@ -71,14 +75,20 @@ class Prize extends MY_Controller{
 		$view_type = (empty($view_type_session)) ? 'list' : $view_type_session;
 		$this->data['view_type'] = $view_type;
 		
+		$param_url = array(
+			'page' => ''
+		);
+		$param_url = http_build_query($param_url);
+		
 		$this->project_prize = $this->prize_model->getProductPrizeRel($this->prize_profile->prize_id, 12);
+		$total_data = $this->prize_model->countGetdata();
 		
 		$this->load->library('pagination_tmpl');
 		$page = intval($this->input->get_post('page'));
 		
-		$uri_page = 'prize?page=';
+		$uri_page = 'prize?' . $param_url;
 		$this->data['page'] = (!empty($page)) ? $page : $page+1;
-		$this->data['total_data'] = $total_data = $this->prize_model->countGetdata();
+		$this->data['total_data'] = $total_data;
 		$this->data['pagination'] = $this->pagination_tmpl->getPaginationString(
 			$page, 
 			$total_data, 

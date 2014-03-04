@@ -46,7 +46,8 @@ class Tiket_model extends CI_Model{
 		pp.project_period,
 		pt.lastupdate,
 		bp.business_name,
-		bp.business_uri
+		bp.business_uri,
+		pp.redeem_tiket_merchant
 		FROM
 		project__tiket pt
 		JOIN project__profile pp ON
