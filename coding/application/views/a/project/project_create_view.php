@@ -462,7 +462,7 @@
 							//	$project_actions_data_arr = $project_actions_data_arr_session;
 							//}
 							
-							/*
+							
 							$pvc = $this->session->userdata('pvc');
 							$project_actions_data_arr_session = $this->scache->read('project#'. $pvc . '#');
 							//print_r($project_actions_data_arr_session);
@@ -470,7 +470,9 @@
 								$this->scache->clear('project#'. $pvc . '#');
 								$this->session->unset_userdata('pvc');
 								$project_actions_data_arr = json_decode( $project_actions_data_arr_session );
-							}*/
+							}
+							
+							//echo '<pre>';print_r($project_actions_data_arr);echo '</pre>';
 														
 							foreach($actiondata as $k=>$v){
 							?>
@@ -484,9 +486,9 @@
 										//if (!empty($project_actions_data_arr[$a]) && !empty($project_actions_data_arr[$a]->custom_actions)) continue;
 										
 										$checked = (array_key_exists($a, $project_actions_data_arr)) ? 'checked="checked"' : '';
-										if (!empty($project_actions_data_arr[$a]) && !empty($project_actions_data_arr[$a]->custom_actions)){
-											$checked = "";
-										}
+										//if (!empty($project_actions_data_arr[$a]) && !empty($project_actions_data_arr[$a]->custom_actions)){
+										//	$checked = "";
+										//}
 										
 										?>
 									<div class="col-md-4 col-sm-6">

@@ -26,7 +26,7 @@ Once you hit “Redeem” button, redeem prize is no longer available.</p>
 						<img src="<?php echo cdn_url() . $image; ?>" class="img-circle" width="150" height="150" />
 						<h4 style="font-weight:normal;margin-top:18px;"><?php echo $prize_name; ?></h4>
 						
-						<p style="margin-top:38px;"><a href="#" class="btn btn-blue" id="cancel-btn" style="margin-top: 8px;padding: 14px 25px;font-size: 20px;line-height: 17px;color:#fff;margin-right:30px;width:140px;">Cancel</a><a href="<?php echo base_url(); ?>actions/redeem_tiket?tid=<?php echo $this->checkTiket->tiket_barcode; ?>&h=<?php echo sha1($this->checkTiket->tiket_barcode . SALT); ?>" class="btn btn-yellow" id="btn_next_topup" style="margin-top: 8px;padding: 14px 25px;font-size: 20px;line-height: 17px;width:140px;">Redeem</a></p>
+						<p style="margin-top:38px;"><a href="#" class="btn btn-blue" id="cancel-btn" style="margin-top: 8px;padding: 15px 25px 13px 25px;font-size: 20px;line-height: 17px;color:#fff;margin-right:30px;width:140px;">Cancel</a><a href="<?php echo base_url(); ?>actions/redeem_tiket?tid=<?php echo $this->checkTiket->tiket_barcode; ?>&h=<?php echo sha1($this->checkTiket->tiket_barcode . SALT); ?>" class="btn btn-yellow" id="btn_next_topup" style="margin-top: 8px;padding: 15px 25px 13px 25px;font-size: 20px;line-height: 17px;width:140px;">Redeem</a></p>
 					</div> 
 
 				</div>

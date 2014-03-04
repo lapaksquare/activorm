@@ -105,10 +105,12 @@ class Actions extends MY_Controller {
 		$account_id = $this->session->userdata('account_id');
 		$this->project_model->registerActions($projectid, $account_id, $actions+1, $return);
 		
-		$generate_tiket = $this->generateTiket($projectid, $account_id);
+		if ($this->project->redeem_tiket_merchant == 0){
+			$generate_tiket = $this->generateTiket($projectid, $account_id);
+		}
 		
 		// project analytic
-		$this->project_analytic($projectid, $account_id, $this->project->account_id);
+		//$this->project_analytic($projectid, $account_id, $this->project->account_id);
 		
 		redirect($ref);
 		

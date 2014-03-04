@@ -175,7 +175,7 @@ class Dashboard extends MY_Controller{
 	}
 
 	function pointstopup(){
-		
+				
 		//echo '<pre>';print_r($this->access->business_account);echo '</pre>';
 		
 		$this->load->model('point_model');
@@ -296,7 +296,7 @@ class Dashboard extends MY_Controller{
 				
 				// sending email
 				$dataEmail = array(
-					'account_email' => $this->access->member_account->account_email,
+					'account_email' => "business@activorm.com", //$this->access->member_account->account_email,
 					'email_subject' => 'Need More Point',
 					'email_tmpl' => 'need_more_point_view',
 					'note_topup_amount' => $note_topup_amount,

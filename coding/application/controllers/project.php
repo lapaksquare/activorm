@@ -490,7 +490,7 @@ class Project extends MY_Controller{
 				
 				$project_actions_data = json_decode( $actions_step_data );
 				
-				/*
+				
 				$project_actions_data_arr = array();
 				if (!empty($actions_step_data)){
 					$project_actions_data = json_decode( $actions_step_data );
@@ -503,7 +503,7 @@ class Project extends MY_Controller{
 				$this->session->set_userdata('pvc', $pvc);
 				$this->scache->write('project#'. $pvc . '#', json_encode( $project_actions_data_arr ), 60 * 60);
 				//$this->data['project_actions_data_arr'] = $project_actions_data_arr;
-				*/
+				
 				
 				if (empty($actions_step_data)){
 					//$errors[] = 'Terjadi kesalahan dalam Social Media Connect. Koneksi '. $this->type_social . ' Anda mengalami masalah. Periksa kembali di menu <a href="'.base_url().'settings/socialmedia" target="_blank">Settings</a>.';
