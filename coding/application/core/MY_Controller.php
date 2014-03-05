@@ -66,7 +66,7 @@ class MY_Controller extends CI_Controller{
 		$default_css = array(
 			'<link href="'.cdn_url().'css/bootstrap.min.css" rel="stylesheet" type="text/css">',
 			'<link href="'.cdn_url().'css/dropkick.min.css" rel="stylesheet" type="text/css">',
-			'<link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic|PT+Sans+Caption:400,700" rel="stylesheet" type="text/css">',
+			//'<link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic|PT+Sans+Caption:400,700" rel="stylesheet" type="text/css">',
 			'<link href="'.cdn_url().'css/settings.css" rel="stylesheet" type="text/css">',
 			'<link href="'.cdn_url().'css/activorm.css" rel="stylesheet" type="text/css">',
 			'<link href="'.cdn_url().'css/pagination.css" rel="stylesheet" type="text/css">',

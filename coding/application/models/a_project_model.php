@@ -201,7 +201,9 @@ class A_project_model extends CI_Model{
 		cs.social_name,
 		ma.address,
 		ap.province_name, 
-		ak.kecamatan_name
+		ak.kecamatan_name,
+		pp.redeem_tiket_merchant,
+		pt.used_tiket
 		FROM
 		project__tiket pt
 		JOIN member__account ma ON

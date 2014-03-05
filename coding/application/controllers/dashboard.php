@@ -668,6 +668,24 @@ class Dashboard extends MY_Controller{
 		$this->load->model('interests_model');
 		$this->interests = $this->interests_model->getInterestsByProjectId($project_id);
 		
+		if ($this->project->redeem_tiket_merchant == 1){
+			$startdate = $this->input->get_post('redeem_s');
+			$enddate = $this->input->get_post('redeem_e');
+			$hash = $this->input->get_post('redeem_h');
+			$hash_ori = sha1($startdate.$enddate.SALT);
+			if (empty($startdate) || empty($enddate) || empty($hash) || $hash != $hash_ori){
+				$startdate = date("Y-m-d", strtotime("- 5 days"));
+				$enddate = date("Y-m-d", strtotime("- 1 days"));
+			}
+			$this->keyal = "redeem_s=" . $startdate . "&redeem_e=" . $enddate . "&redeem_h=" . $hash;
+			
+			$this->redeem_startdate = $startdate;
+			$this->redeem_enddate = $enddate;
+			
+			$this->load->model('tiket_model');
+			$this->tikets = $this->tiket_model->getRedeemDataTiket($project_id, $startdate, $enddate);			
+		}
+		
 		/*
 		echo '<pre>';
 		print_r($this->result);

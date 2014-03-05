@@ -5,6 +5,18 @@
 	<h2>List Members - <?php echo ucwords($this->project->project_name); ?></h2>	
 	
 	<hr />
+	
+	
+	<!-- TABBED START -->
+	<ul class="nav nav-tabs project_tab" id="project_tab">
+	  <li class="active"><a href="#tikets" data-rel="tikets">Tikets</a></li>
+	  <li><a href="#scantikets" data-rel="scantikets">Scan Tikets</a></li>
+	</ul>
+	
+	
+	<div id="myTabContent" class="tab-content">
+		
+		<div class="tab-pane fade active in project-tab-section" id="tikets">
 		
 	<?php
 	
@@ -103,7 +115,9 @@
 						'address' => $v->address,
 						'province_name' => $v->province_name,
 						'kecamatan_name' => $v->kecamatan_name,
-						'phone_number' => $v->phone_number
+						'phone_number' => $v->phone_number,
+						'redeem_tiket_merchant' => $v->redeem_tiket_merchant,
+						'used_tiket' => $v->used_tiket
 					);
 				}else{
 					if (!empty($v->social_data)){
@@ -132,7 +146,20 @@
 			?>
 			
 			<tr>
-				<td><b><?php echo strtoupper($v['tiket_barcode']); ?></b></td>
+				<td><b><?php echo strtoupper($v['tiket_barcode']); ?></b>
+					
+					<?php if ($v['used_tiket'] == 1){
+						
+					?>
+					
+					<br /><i>(tiket sudah digunakan/diredeem)</i>
+					
+					<?php	
+						
+					} 
+					?>
+					
+				</td>
 				<td><?php echo ucwords($v['account_name']); ?></td>
 				<td><?php echo $v['account_email']; ?></td>
 				<td><?php echo $address_string; ?></td>
@@ -182,7 +209,46 @@
 	<?php	
 		
     } ?>
-
+	
+		</div>
+		
+		<div class="tab-pane fade in project-tab-section" id="scantikets">
+			
+			<div class="panel panel-default" id="panel-voucher-upload" style="border-top:0;border-radius:0 0 4px 4px;">
+			  <div class="panel-body">
+			      <div class="col-lg-6" style="float:none;margin:0 auto;">
+				    <div class="input-group">
+				      <input type="text" class="form-control" id="tiket-barcode">
+				      <span class="input-group-btn">
+				        <button class="btn btn-default btn-primary" type="button" id="btn-search-tiket">Search!</button>
+				      </span>
+				    </div><!-- /input-group -->
+				    <p class="help-block" id="loading" style="display:none;">Loading...</p>
+				  </div><!-- /.col-lg-6 -->
+			  </div>
+			</div>
+			
+			<div class="modal fade" id="modal-confirm-tiket">
+			  <div class="modal-dialog" style="margin-top:200px;">
+			    <div class="modal-content">
+			      <div class="modal-body" style="padding-bottom:0;">
+			        <p id="message-success" style="display:none;">Click Yes to confirm his/her presence at "<?php echo ucwords($this->project->project_name); ?>"</p>
+			        <p id="message-error1" style="display:none;">Sorry, This ticket number is not valid.</p>
+			        <p id="message-error2" style="display:none;">Sorry, This ticket number has been used.</p>
+			      </div>
+			      <div class="modal-footer">
+			      	<button type="button" class="btn btn-default" data-dismiss="modal" id="btn-close" style="display:none;">Close</button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal" id="btn-cancel" style="display:none;">Cancel</button>
+			        <button type="button" class="btn btn-primary" id="btn-confirm" style="display:none;">Yes</button>
+			      </div>
+			    </div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+			
+		</div>	
+		
+	</div>	
+	
 
     <?php 
 	/*

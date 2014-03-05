@@ -845,7 +845,7 @@
 						?>
 						<li>
 							<div class="form-group">
-								<input type="checkbox" <?php echo $redeem_tiket_checked; ?> class="custom-checkgrey opt_premium" value="redeem_tiket" name="redeem_tiket" data-label="Redeem Prize by Merchant" />
+								<input type="radio" <?php echo $redeem_tiket_checked; ?> class="custom-checkgrey opt_premium" value="redeem_tiket" name="opt_premium" data-label="Redeem Prize by Merchant" />
 							</div>
 						</li>
 						<?php } ?>

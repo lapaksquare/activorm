@@ -6,6 +6,7 @@ class Project extends MY_Controller{
 	function __construct(){
 		parent::__construct();
 		//$this->session->set_userdata('current_uri', current_url());
+		$this->load->library('scache');
 	}
 	
 	var $segments;
@@ -20,8 +21,6 @@ class Project extends MY_Controller{
 		$title = 'Project';
 		
 		if (!empty($this->segments[2]) && ($this->segments[2] == "create" || $this->segments[2] == "edit")){
-			
-			$this->load->library('scache');
 			
 			$account_id = $this->session->userdata('account_id');
 			if (empty($account_id) || empty($this->access->member_account) || $this->access->member_account->account_type == "user") redirect(base_url());
@@ -229,8 +228,11 @@ class Project extends MY_Controller{
 			$facebook_format = $this->input->get_post('facebook_format');
 			$twitter_format = $this->input->get_post('twitter_format');
 			
-			$redeem_tiket = $this->input->get_post('redeem_tiket');
-			$redeem_tiket_merchant = (empty($redeem_tiket)) ? 0 : 1;
+			//$redeem_tiket = $this->input->get_post('redeem_tiket');
+			$redeem_tiket_merchant = 0;
+			if ($opt_premium == "redeem_tiket"){
+				$redeem_tiket_merchant = 1;
+			}
 			
 			/*contact person*/
 			if (!empty($submit_btn)){
@@ -620,6 +622,12 @@ class Project extends MY_Controller{
 					$msg_txt = "Project Draft Saved!";
 				}	
 				if ($msg_txt != '') $this->session->set_userdata('message_create_project_success', $msg_txt);
+				
+				if ($preview_btn == "Preview"){
+					$pvc = $this->session->userdata('pvc');
+					$this->scache->clear('project#'. $pvc . '#');
+					$this->session->unset_userdata('pvc');
+				}
 					
 			}
 			

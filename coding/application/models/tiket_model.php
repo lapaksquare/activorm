@@ -158,6 +158,51 @@ class Tiket_model extends CI_Model{
 		));
 	}
 	
+	function getRedeemDataTiket($project_id, $startdate = "", $enddate = ""){
+		
+		$where_dates = "";
+		if (!empty($startdate) && !empty($enddate)){
+			$where_dates .= " AND DATE_FORMAT(pt.lastupdate,'%Y-%m-%d') BETWEEN '$startdate' AND '$enddate' ";
+		}
+		
+		$sql = "
+		SELECT
+		COUNT(pt.account_id) jml_redeem,
+		DATE_FORMAT(pt.lastupdate,'%Y-%m-%d') tanggal
+		FROM
+		project__tiket pt
+		WHERE 1
+		AND pt.project_id = ?
+		$where_dates
+		ORDER BY pt.lastupdate ASC
+		";
+		
+		$results = $this->db->query($sql, array($project_id))->result();
+		
+		$return = array();
+		foreach($results as $k=>$v){
+			$return[strtotime($v->tanggal)] = $v->jml_redeem;
+		}
+		
+		return $return;
+	}
+	
+	function scanTiketBarcode($tiket_barcode){
+		$sql = "
+		SELECT
+		pt.tiket_barcode,
+		pt.project_id,
+		pt.account_id,
+		pt.used_tiket,
+		pt.tiket_id
+		FROM
+		project__tiket pt
+		WHERE 1
+		AND pt.tiket_barcode = ?
+		";
+		return $this->db->query($sql, array($tiket_barcode))->row();
+	}
+	
 }
 
 ?>

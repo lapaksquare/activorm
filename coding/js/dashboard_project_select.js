@@ -10,7 +10,11 @@ google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(drawChart);
 function drawChart() {
 	var data = google.visualization.arrayToDataTable($dataGAGender);
-
+	
+	if ($dataRedeemTiket_container == 1){
+		var data_redeem = google.visualization.arrayToDataTable($dataRedeemTiket);
+	}
+	
 	var options = {
 		bar: {groupWidth:'60%'},
 		colors: ['#19b99a', '#d35828'],
@@ -22,17 +26,20 @@ function drawChart() {
 	var chart = new google.visualization.ColumnChart(document.getElementById('chart-genderage'));
 	chart.draw(data, options);
 	
+	if ($dataRedeemTiket_container == 1){
+		var chart_redeem = new google.visualization.LineChart(document.getElementById('chart-redeem'));
+		chart_redeem.draw(data_redeem, options);
+	}
 	
 	var data1 = new google.visualization.DataTable();
 	data1.addColumn($gchart_type, 'Date');
 	data1.addColumn('number', 'Visits');
 	data1.addColumn('number', 'Visitors');
-
 	data1.addRows($chart_traffic);
 
 	var data2 = google.visualization.arrayToDataTable($chart_source);
 	var data3 = google.visualization.arrayToDataTable($chart_type);
-
+	
 	var options1 = {
 		hAxis: {
 			gridlines:{color:'#dbdcdd'},
@@ -70,6 +77,7 @@ function drawChart() {
 		pieSliceText: 'none',
 	};
 
+
 	var chart = new google.visualization.AreaChart(document.getElementById('chart-traffic'));
 	chart.draw(data1, options1);
 	var chart = new google.visualization.PieChart(document.getElementById('chart-source'));
@@ -79,6 +87,12 @@ function drawChart() {
 }
 
 $('#aldate').bind('change', function(){
+	var el = $(this);
+	var v = el.val();
+	window.location = v;
+});
+
+$('#redeemdate').bind('change', function(){
 	var el = $(this);
 	var v = el.val();
 	window.location = v;
