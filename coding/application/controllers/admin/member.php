@@ -848,6 +848,8 @@ class Member extends MY_Admin_Access{
 			$uri_page
 		);
 		
+		$this->data['business'] = $this->a_account_model->getMemberBusiness();
+		
 		$this->data['menu'] = 'account';
 		$this->data['menu_child'] = 'member_point';
 		$this->_default_param(
@@ -881,6 +883,59 @@ class Member extends MY_Admin_Access{
 		), $user->business_id);
 		
 		redirect(base_url());
+	}
+	
+	function submit_manual_point(){
+		$btn_submit_point = $this->input->get_post('btn_submit_point');
+		$account_id = $this->input->get_post('account_id');
+		$point = $this->input->get_post('point');
+		$note = $this->input->get_post('note');
+		if (!empty($btn_submit_point)){
+			$errors = array();
+			if (empty($account_id)){
+				$errors[] = "Anda harus memilih business yang akan ditambahkan point.";
+			}
+			if (empty($point)){
+				$errors[] = "Point Anda harus diisi.";
+			}
+			if (empty($note)){
+				$errors[] = "Note Anda harus diisi.";
+			}
+			if (count($errors) > 0){
+				$this->session->set_userdata('manual_point_error', $errors);
+			}else{
+				
+				$this->load->library('util');	
+				$barcode1 = $this->util->create_code(4, "text");
+				$barcode2 = $this->util->create_code(4, "number");
+				$order_date = date("Y-m-d H:i:s");
+				
+				$this->load->model('point_model');
+				$data = array(
+					'order_barcode' => $barcode1.$barcode2,
+					'account_id' => $account_id,
+					'point' => $point,
+					'note' => $note,
+					'order_date' => $order_date
+				);
+				
+				$this->load->model('point_model');
+				$this->point_model->addPointManual($data);
+				
+				$point_current = $this->point_model->getAccountPoint($account_id);
+				$point = $point_current + $point;
+				$data = array(
+					'point' => $point
+				);
+				$this->point_model->updateMemberPoint($data, $account_id);
+				
+				$this->session->set_userdata('manual_point_success', 'Success Add Points');
+				
+			}
+		}
+
+		redirect(base_url() . 'admin/member/member_point');
+
 	}
 	
 	

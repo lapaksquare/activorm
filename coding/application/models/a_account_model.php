@@ -254,6 +254,7 @@ class A_account_model extends CI_Model{
 			bp.business_id = brm.business_id
 		WHERE 1
 		$where
+		GROUP BY ma.account_id
 		" . $limited;
 		
 		return $this->db->query($sql)->result();
@@ -298,6 +299,22 @@ class A_account_model extends CI_Model{
 		AND ma.account_id = ?
 		";
 		return $this->db->query($sql, array($account_id))->row();
+	}
+	
+	function getMemberBusiness(){
+		$sql = "
+		SELECT
+		ma.account_id,
+		ma.account_name
+		FROM
+		member__account ma
+		WHERE 1
+		AND ma.account_type = 'business'
+		AND ma.account_live = 'Online'
+		AND ma.account_active = 1
+		ORDER BY ma.account_name ASC
+		";
+		return $this->db->query($sql)->result();
 	}
 	
 }

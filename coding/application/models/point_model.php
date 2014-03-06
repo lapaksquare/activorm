@@ -56,6 +56,10 @@ class Point_model extends CI_Model{
 		}
 	}
 	
+	function addPointManual($data){
+		$this->db->insert('order__manual_point', $data);
+	}
+	
 }
 
 ?>

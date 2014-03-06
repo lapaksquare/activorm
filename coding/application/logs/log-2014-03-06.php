@@ -11,3 +11,4 @@ ERROR - 2014-03-06 09:36:21 --> Severity: Notice  --> Undefined property: Access
 ERROR - 2014-03-06 09:36:21 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
 ERROR - 2014-03-06 09:37:43 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
 ERROR - 2014-03-06 09:37:43 --> Severity: Notice  --> Undefined property: Access::$loginUrl /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/a/home/register_modal_view.php 11
+ERROR - 2014-03-06 17:14:04 --> Severity: Notice  --> Trying to get property of non-object /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/views/n/member/member_point_view.php 44

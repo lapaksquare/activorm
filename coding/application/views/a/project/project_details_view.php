@@ -507,6 +507,24 @@
 								
 							}
 						
+						}else{
+							
+						
+						?>
+						
+							<div class="wizard-project">
+								<div class="wizard-step step-4">
+									<h2>Thank you for completing it!</h2>
+									
+									<a class="btn btn-big btn-yellow" href="<?php echo base_url(); ?>tickets">Check Your Ticket</a>
+								</div>
+							<!-- .wizard-project -->
+							</div>
+						
+						
+						<?php	
+							
+							
 						} ?>
 						
 						<?php } ?>
