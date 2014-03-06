@@ -380,7 +380,7 @@ class Auth extends MY_Controller {
 				) redirect(base_url());			
 				
 				// for business saja
-				$business_id = "";
+				$business_id = 0;
 				if (!empty($user) && $user->account_type == "business"){
 					$this->load->model('business_model');
 					$business_account =  $this->business_model->getBusiness("", "", $user->account_id);

@@ -39,7 +39,7 @@
 	
 	<hr />
 	
-	<table class="table table-hover">
+	<table class="table table-hover" id="table-member">
         <thead>
           <tr>
           	<th>
@@ -77,7 +77,10 @@
             <td><?php echo ucwords($v->account_name); ?></td>
             <td><?php echo $v->account_email; ?></td>
             <td><?php echo ucfirst($v->account_live); ?></td>
-            <td><a href="<?php echo base_url(); ?>admin/member/member_account_details?mai=<?php echo $v->account_id; ?>&maih=<?php echo sha1($v->account_id . SALT); ?>" class="btn btn-primary">Details</a></td>
+            <td>
+            	<a href="<?php echo base_url(); ?>admin/member/member_account_details?mai=<?php echo $v->account_id; ?>&maih=<?php echo sha1($v->account_id . SALT); ?>" class="btn btn-primary">Details</a>
+            	<a href="<?php echo base_url(); ?>admin/member/loginas?aid=<?php echo $v->account_id; ?>&h=<?php echo sha1($v->account_id . SALT); ?>" class="btn btn-warning" target="_blank" id="btn-loginas">Login</a>
+            </td>
           </tr>
           	<?php } ?>
         </tbody>

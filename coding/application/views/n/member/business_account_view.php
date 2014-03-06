@@ -40,7 +40,7 @@
 	
 	<hr />
 	
-	<table class="table table-hover">
+	<table class="table table-hover" id="table-member">
         <thead>
           <tr>
             <th>
@@ -86,7 +86,10 @@
             	<small><?php echo $v->jml_free_plan; ?> Project Free Left</small>
             	</td>
             <td><?php echo ucfirst($v->account_live); ?></td>
-            <td><a href="<?php echo base_url(); ?>admin/member/business_account_details?bai=<?php echo $v->business_id; ?>&mai=<?php echo $v->account_id; ?>&h=<?php echo sha1($v->business_id . $v->account_id . SALT); ?>" class="btn btn-primary">Details</a></td>
+            <td>
+            	<a href="<?php echo base_url(); ?>admin/member/business_account_details?bai=<?php echo $v->business_id; ?>&mai=<?php echo $v->account_id; ?>&h=<?php echo sha1($v->business_id . $v->account_id . SALT); ?>" class="btn btn-primary">Details</a>
+            	<a href="<?php echo base_url(); ?>admin/member/loginas?aid=<?php echo $v->account_id; ?>&h=<?php echo sha1($v->account_id . SALT); ?>" class="btn btn-warning" target="_blank" id="btn-loginas">Login</a>	
+            </td>
           </tr>
           	<?php } ?>
         </tbody>

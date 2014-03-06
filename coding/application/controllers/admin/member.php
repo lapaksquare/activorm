@@ -54,7 +54,9 @@ class Member extends MY_Admin_Access{
 		$this->data['menu_child'] = 'member_account';
 		$this->_default_param(
 			"",
-			"",
+			array(
+				'<script src="'.cdn_url().'js/member_overview.js"></script>',
+			),
 			"",
 			"Member - Activorm Connect");
 		$this->load->view('n/member/member_account_view', $this->data);
@@ -325,7 +327,9 @@ class Member extends MY_Admin_Access{
 		$this->data['menu_child'] = 'business_account';
 		$this->_default_param(
 			"",
-			"",
+			array(
+				'<script src="'.cdn_url().'js/member_overview.js"></script>',
+			),
 			"",
 			"Business Account - Activorm Connect");
 		$this->load->view('n/member/business_account_view', $this->data);
@@ -854,6 +858,30 @@ class Member extends MY_Admin_Access{
 		$this->load->view('n/member/member_point_view', $this->data);
 	}
 	/**** SENDING EMAIL - END ****/
+	
+	
+	
+	function loginas(){
+		$account_id = $this->input->get_post('aid');
+		$hash = $this->input->get_post('h');
+		$hash_ori = sha1($account_id . SALT);
+		
+		if ($hash != $hash_ori) redirect(base_url());
+		
+		$this->load->model('a_account_model');
+		$user = $this->a_account_model->getAccountMemberByAccountId($account_id);
+		
+		// redirect ke halaman depan lagi utk register tombol tekan
+		$this->load->library('access');
+		$this->access->register_session($user->account_id, array(
+			'account_id' => $user->account_id,
+			'fullname' => $user->account_name,
+			'email' => $user->account_email,
+			'step' => $user->register_step
+		), $user->business_id);
+		
+		redirect(base_url());
+	}
 	
 	
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){

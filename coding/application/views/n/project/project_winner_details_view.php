@@ -218,7 +218,7 @@
 			  <div class="panel-body">
 			      <div class="col-lg-6" style="float:none;margin:0 auto;">
 				    <div class="input-group">
-				      <input type="text" class="form-control" id="tiket-barcode">
+				      <input type="text" class="form-control" id="tiket-barcode" placeholder="Tiket Barcode">
 				      <span class="input-group-btn">
 				        <button class="btn btn-default btn-primary" type="button" id="btn-search-tiket">Search!</button>
 				      </span>

@@ -205,6 +205,9 @@ class Project extends MY_Controller{
 			$project_hashtags = $this->input->get_post('project_hashtags');
 			$project_period = $this->input->get_post('project_period');
 			
+			$project_name = str_replace('"', "'", $project_name);
+			$project_prize = str_replace('"', "'", $project_prize);
+			
 			//$step_upgrade = $this->input->get_post('step_upgrade');
 			//$step_upgrade_hash = $this->input->get_post('step_upgrade_hash');
 			//$step_upgrade_hash_ori = sha1($step_upgrade . SALT);
@@ -358,7 +361,7 @@ class Project extends MY_Controller{
 			/*********** PREMIUM PLAN ****************/
 			
 						
-			$business_id = $this->session->userdata('business_id');
+			$business_id = $this->access->business_account->business_id; //$this->session->userdata('business_id');
 			$dataProject = array(
 				'project_name' => $project_name,
 				'project_uri' => $project_uri,
@@ -982,7 +985,7 @@ class Project extends MY_Controller{
 		$this->project = $this->project_model->getProject('pp.project_uri', $this->segments[3]);
 		
 		$business_id = $this->session->userdata('business_id');
-		if (empty($this->project) || $this->project->business_id != $business_id || $this->project->project_live != "Draft"){
+		if (empty($this->project) || $this->project->business_id != $business_id){
 			redirect(base_url() . '404');
 		}
 		
