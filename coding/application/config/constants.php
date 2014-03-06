@@ -105,10 +105,12 @@ if (ENVIRONMENT == "production"){
 
 
 /*NOMOR REKENING*/
+define('REK_BCA', 1);
 define('BCA_REKENING_NOMOR', '7090258791');
 define('BCA_REKENING_ATASNAMA', 'Karen Kamal');
 define('BCA_REKENING_CABANG', 'KCP Rantai Mulia Kencana');
 
+define('REK_MANDIRI', 0);
 define('MANDIRI_REKENING_NOMOR', 'MANDIRI_7090258791');
 define('MANDIRI_REKENING_ATASNAMA', 'Karen Kamal MANDIRI');
 define('MANDIRI_REKENING_CABANG', 'KCP Rantai Mulia Kencana MANDIRI');

@@ -46,7 +46,8 @@ class Tiket_model extends CI_Model{
 		pp.project_period,
 		pt.lastupdate,
 		bp.business_name,
-		bp.business_uri
+		bp.business_uri,
+		pp.redeem_tiket_merchant
 		FROM
 		project__tiket pt
 		JOIN project__profile pp ON
@@ -136,7 +137,8 @@ class Tiket_model extends CI_Model{
 		pt.tiket_id,
 		pt.tiket_barcode,
 		pp.project_file_data,
-		pt.voucher_data
+		pt.voucher_data,
+		pt.used_tiket
 		FROM
 		project__tiket pt
 		JOIN project__profile pp ON
@@ -146,6 +148,59 @@ class Tiket_model extends CI_Model{
 		AND pt.account_id = ?
 		";
 		return $this->db->query($sql, array($project_id, $account_id))->row();
+	}
+	
+	function redeemTiket($tiket_barcode){
+		$this->db->update('project__tiket', array(
+			'used_tiket	' => 1
+		), array(
+			'tiket_barcode' => $tiket_barcode
+		));
+	}
+	
+	function getRedeemDataTiket($project_id, $startdate = "", $enddate = ""){
+		
+		$where_dates = "";
+		if (!empty($startdate) && !empty($enddate)){
+			$where_dates .= " AND DATE_FORMAT(pt.lastupdate,'%Y-%m-%d') BETWEEN '$startdate' AND '$enddate' ";
+		}
+		
+		$sql = "
+		SELECT
+		COUNT(pt.account_id) jml_redeem,
+		DATE_FORMAT(pt.lastupdate,'%Y-%m-%d') tanggal
+		FROM
+		project__tiket pt
+		WHERE 1
+		AND pt.project_id = ?
+		$where_dates
+		ORDER BY pt.lastupdate ASC
+		";
+		
+		$results = $this->db->query($sql, array($project_id))->result();
+		
+		$return = array();
+		foreach($results as $k=>$v){
+			$return[strtotime($v->tanggal)] = $v->jml_redeem;
+		}
+		
+		return $return;
+	}
+	
+	function scanTiketBarcode($tiket_barcode){
+		$sql = "
+		SELECT
+		pt.tiket_barcode,
+		pt.project_id,
+		pt.account_id,
+		pt.used_tiket,
+		pt.tiket_id
+		FROM
+		project__tiket pt
+		WHERE 1
+		AND pt.tiket_barcode = ?
+		";
+		return $this->db->query($sql, array($tiket_barcode))->row();
 	}
 	
 }

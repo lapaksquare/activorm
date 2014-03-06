@@ -254,10 +254,67 @@ class A_account_model extends CI_Model{
 			bp.business_id = brm.business_id
 		WHERE 1
 		$where
+		GROUP BY ma.account_id
 		" . $limited;
 		
 		return $this->db->query($sql)->result();
 		
+	}
+
+	function getAccountMemberByAccountId($account_id){
+		$sql = "
+		SELECT
+		
+		ma.account_id,
+		ma.account_name,
+		ma.account_email,
+		ma.account_primary_photo,
+		ma.city_id,
+		ma.zip_code,
+		ma.gender,
+		ma.birthday,
+		ma.phone_number,
+		ma.card_number,
+		ma.address,
+		ma.province_id,
+		ma.kabupaten_id,
+		ma.kecamatan_id,
+		ma.kelurahan_id,
+		ma.account_live,
+		ma.account_active,
+		ma.verification_code,
+		ma.register_step,
+		
+		IFNULL(brm.business_id, 0) business_id
+		
+		FROM
+		
+		member__account ma 
+		
+		LEFT JOIN business__rel_member brm ON
+			ma.account_id = brm.account_id
+			
+		WHERE 1
+		
+		AND ma.account_id = ?
+		";
+		return $this->db->query($sql, array($account_id))->row();
+	}
+	
+	function getMemberBusiness(){
+		$sql = "
+		SELECT
+		ma.account_id,
+		ma.account_name
+		FROM
+		member__account ma
+		WHERE 1
+		AND ma.account_type = 'business'
+		AND ma.account_live = 'Online'
+		AND ma.account_active = 1
+		ORDER BY ma.account_name ASC
+		";
+		return $this->db->query($sql)->result();
 	}
 	
 }

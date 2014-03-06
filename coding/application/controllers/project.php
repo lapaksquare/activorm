@@ -6,6 +6,7 @@ class Project extends MY_Controller{
 	function __construct(){
 		parent::__construct();
 		//$this->session->set_userdata('current_uri', current_url());
+		$this->load->library('scache');
 	}
 	
 	var $segments;
@@ -20,8 +21,6 @@ class Project extends MY_Controller{
 		$title = 'Project';
 		
 		if (!empty($this->segments[2]) && ($this->segments[2] == "create" || $this->segments[2] == "edit")){
-			
-			$this->load->library('scache');
 			
 			$account_id = $this->session->userdata('account_id');
 			if (empty($account_id) || empty($this->access->member_account) || $this->access->member_account->account_type == "user") redirect(base_url());
@@ -206,6 +205,9 @@ class Project extends MY_Controller{
 			$project_hashtags = $this->input->get_post('project_hashtags');
 			$project_period = $this->input->get_post('project_period');
 			
+			$project_name = str_replace('"', "'", $project_name);
+			$project_prize = str_replace('"', "'", $project_prize);
+			
 			//$step_upgrade = $this->input->get_post('step_upgrade');
 			//$step_upgrade_hash = $this->input->get_post('step_upgrade_hash');
 			//$step_upgrade_hash_ori = sha1($step_upgrade . SALT);
@@ -229,6 +231,11 @@ class Project extends MY_Controller{
 			$facebook_format = $this->input->get_post('facebook_format');
 			$twitter_format = $this->input->get_post('twitter_format');
 			
+			//$redeem_tiket = $this->input->get_post('redeem_tiket');
+			$redeem_tiket_merchant = 0;
+			if ($opt_premium == "redeem_tiket"){
+				$redeem_tiket_merchant = 1;
+			}
 			
 			/*contact person*/
 			if (!empty($submit_btn)){
@@ -354,7 +361,7 @@ class Project extends MY_Controller{
 			/*********** PREMIUM PLAN ****************/
 			
 						
-			$business_id = $this->session->userdata('business_id');
+			$business_id = $this->access->business_account->business_id; //$this->session->userdata('business_id');
 			$dataProject = array(
 				'project_name' => $project_name,
 				'project_uri' => $project_uri,
@@ -368,7 +375,8 @@ class Project extends MY_Controller{
 				'project_description' => $project_description,
 				'project_live' => $project_live,
 				'premium_plan' => $premium_plan,
-				'project_posted' => date('Y-m-d H:i:s')
+				'project_posted' => date('Y-m-d H:i:s'),
+				'redeem_tiket_merchant' => $redeem_tiket_merchant
 			);
 			
 			
@@ -487,7 +495,7 @@ class Project extends MY_Controller{
 				
 				$project_actions_data = json_decode( $actions_step_data );
 				
-				/*
+				
 				$project_actions_data_arr = array();
 				if (!empty($actions_step_data)){
 					$project_actions_data = json_decode( $actions_step_data );
@@ -500,7 +508,7 @@ class Project extends MY_Controller{
 				$this->session->set_userdata('pvc', $pvc);
 				$this->scache->write('project#'. $pvc . '#', json_encode( $project_actions_data_arr ), 60 * 60);
 				//$this->data['project_actions_data_arr'] = $project_actions_data_arr;
-				*/
+				
 				
 				if (empty($actions_step_data)){
 					//$errors[] = 'Terjadi kesalahan dalam Social Media Connect. Koneksi '. $this->type_social . ' Anda mengalami masalah. Periksa kembali di menu <a href="'.base_url().'settings/socialmedia" target="_blank">Settings</a>.';
@@ -617,6 +625,12 @@ class Project extends MY_Controller{
 					$msg_txt = "Project Draft Saved!";
 				}	
 				if ($msg_txt != '') $this->session->set_userdata('message_create_project_success', $msg_txt);
+				
+				if ($preview_btn == "Preview"){
+					$pvc = $this->session->userdata('pvc');
+					$this->scache->clear('project#'. $pvc . '#');
+					$this->session->unset_userdata('pvc');
+				}
 					
 			}
 			
@@ -927,6 +941,12 @@ class Project extends MY_Controller{
 		print_r($this->data['socialmedia']);
 		echo '</pre>'; */
 		
+		if (!empty($this->project->redeem_tiket_merchant)){
+			$this->checkTiket = $this->tiket_model->checkTiket($project_id, $account_id);
+			$this->load->model('prize_model');
+			$this->prizeProfile = $this->prize_model->getPrizeProfileByProjectId($project_id);
+		}
+		
 		// project analytic 
 		$this->project_analytic($project_id, $account_id, $account_id_project);
 		
@@ -965,7 +985,7 @@ class Project extends MY_Controller{
 		$this->project = $this->project_model->getProject('pp.project_uri', $this->segments[3]);
 		
 		$business_id = $this->session->userdata('business_id');
-		if (empty($this->project) || $this->project->business_id != $business_id || $this->project->project_live != "Draft"){
+		if (empty($this->project) || $this->project->business_id != $business_id){
 			redirect(base_url() . '404');
 		}
 		

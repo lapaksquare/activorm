@@ -110,6 +110,8 @@ class Dashboard extends MY_Controller{
 			$this->submit_pointtopup();
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "submit_paymentconfirmation"){
 			$this->submit_paymentconfirmation();
+		}else if (!empty($this->segments[2]) && $this->segments[2] == "submit_pointtopup_needed"){
+			$this->submit_pointtopup_needed();
 		/**/
 		}else if (!empty($this->segments[2]) && $this->segments[2] == "project"){
 			//print_r($this->segments);
@@ -173,6 +175,9 @@ class Dashboard extends MY_Controller{
 	}
 
 	function pointstopup(){
+				
+		//echo '<pre>';print_r($this->access->business_account);echo '</pre>';
+		
 		$this->load->model('point_model');
 		$this->data['points'] = $this->point_model->getPointProfileActive();
 		$this->data['points_user'] = $this->point_model->getAccountPoint($this->access->member_account->account_id);
@@ -241,7 +246,7 @@ class Dashboard extends MY_Controller{
 					'order_total_price' => $total_payment,
 					'order_datetime' => date('Y-m-d H:i:s'),
 					'order_expired' => date('Y-m-d H:i:s', strtotime('+7 days')),
-					'notes_point' => $note_topup_amount
+					'notes_point' => 0//$note_topup_amount
 				);	
 			}
 			
@@ -281,6 +286,30 @@ class Dashboard extends MY_Controller{
 		redirect(base_url() . 'dashboard/pointstopup');
 	}
 
+	function submit_pointtopup_needed(){
+		$submit_needed_topup = $this->input->get_post('submit_needed_topup');
+		if (!empty($submit_needed_topup)){
+			$note_topup_amount = $this->input->get_post('note_topup_amount');
+			if (empty($note_topup_amount)){
+				$this->session->set_userdata('note_topup_amount_error', 'Points must be filled.');
+			}else{
+				
+				// sending email
+				$dataEmail = array(
+					'account_email' => "business@activorm.com", //$this->access->member_account->account_email,
+					'email_subject' => 'Need More Point',
+					'email_tmpl' => 'need_more_point_view',
+					'note_topup_amount' => $note_topup_amount,
+					'business' => $this->access->business_account
+				);
+				$this->sending_email($dataEmail);
+				
+				$this->session->set_userdata('note_topup_amount', 1);
+			}
+		}
+		redirect(base_url() . 'dashboard/pointstopup');
+	}
+
 	function paymenthistory(){
 		$this->load->model('order_model');
 		$account_id = $this->access->member_account->account_id;
@@ -314,8 +343,10 @@ class Dashboard extends MY_Controller{
 			$this->load->model('order_model');
 			$transaction_number = $this->input->get_post('transaction_number');
 			$order = $this->order_model->getOrderCart("oc.order_barcode", $transaction_number);
+			$errors = array();
 			if (empty($order)){
-				$this->session->set_userdata('message_paymentconfirmation', 1);
+				$errors[] = "No Transaction";
+				$this->session->set_userdata('message_paymentconfirmation_error', $errors);
 			}else{
 				$payment_date = $this->input->get_post('payment_date');	
 				$transaction_amount = (int) $this->input->get_post('transaction_amount');
@@ -324,7 +355,6 @@ class Dashboard extends MY_Controller{
 				$sender_name = $this->input->get_post('sender_name');
 				$sender_account = $this->input->get_post('sender_account');
 				
-				$errors = array();
 				if (empty($payment_date)){
 					$errors[] = "Payment Date must be filled.";
 				}
@@ -345,7 +375,7 @@ class Dashboard extends MY_Controller{
 				}
 				
 				if (count($errors) > 0){
-					$this->session->set_userdata('message_paymentconfirmation', $errors);
+					$this->session->set_userdata('message_paymentconfirmation_error', $errors);
 				}else{
 				
 					$data = array(
@@ -445,6 +475,9 @@ class Dashboard extends MY_Controller{
 		
 		$this->results_project_analytics = $this->project_analytics($this->results);
 		//echo '<pre>';print_r($this->results_project_analytics);echo '</pre>';
+		
+		$this->load->model('project_model');
+		$this->data['freeplan'] = $this->project_model->getCountFreePlan($this->access->member_account->account_id);
 	}
 	function project_analytics($results){
 		$ga_session = $this->gaAuth();
@@ -601,7 +634,17 @@ class Dashboard extends MY_Controller{
 				
 		$this->load->model('project_model');		
 		$this->project = $this->project_model->getProject('pp.project_uri', $this->segments[3]);
-		if (empty($this->project) || empty($this->segments[2])) redirect(base_url() . '404');
+		
+		$access = 1;
+		$limit_time = "2014-03-03 18:00";
+		$limit_time = strtotime($limit_time);
+		$project_posted = strtotime($this->project->project_posted);
+		$freeplan = $this->project_model->getCountFreePlan($this->access->member_account->account_id);
+		if ($this->project->premium_plan == 0 && $freeplan <= 0 && $limit_time < $project_posted){
+			$access = 0;
+		}
+		
+		if (empty($this->project) || empty($this->segments[2]) || $access == 0) redirect(base_url() . '404');
 		
 		$project_id = $this->project->project_id;
 		$account_id = $this->access->member_account->account_id;
@@ -624,6 +667,24 @@ class Dashboard extends MY_Controller{
 		
 		$this->load->model('interests_model');
 		$this->interests = $this->interests_model->getInterestsByProjectId($project_id);
+		
+		if ($this->project->redeem_tiket_merchant == 1){
+			$startdate = $this->input->get_post('redeem_s');
+			$enddate = $this->input->get_post('redeem_e');
+			$hash = $this->input->get_post('redeem_h');
+			$hash_ori = sha1($startdate.$enddate.SALT);
+			if (empty($startdate) || empty($enddate) || empty($hash) || $hash != $hash_ori){
+				$startdate = date("Y-m-d", strtotime("- 5 days"));
+				$enddate = date("Y-m-d", strtotime("- 1 days"));
+			}
+			$this->keyal = "redeem_s=" . $startdate . "&redeem_e=" . $enddate . "&redeem_h=" . $hash;
+			
+			$this->redeem_startdate = $startdate;
+			$this->redeem_enddate = $enddate;
+			
+			$this->load->model('tiket_model');
+			$this->tikets = $this->tiket_model->getRedeemDataTiket($project_id, $startdate, $enddate);			
+		}
 		
 		/*
 		echo '<pre>';

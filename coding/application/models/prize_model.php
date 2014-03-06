@@ -195,6 +195,23 @@ class Prize_model extends CI_Model{
 		return $result->prize_id;
 	}
 	
+	function getPrizeProfileByProjectId($project_id){
+		$sql = "
+		SELECT
+		ppf.prize_name,
+		ppf.prize_uri,
+		ppf.prize_detail,
+		ppf.prize_primary_photo
+		FROM
+		project__prize pp
+		JOIN prize__profile ppf ON
+			pp.prize_id = ppf.prize_id
+		WHERE 1
+		AND pp.project_id = ?
+		";
+		return $this->db->query($sql, array($project_id))->row();
+	}
+	
 }
 
 ?>

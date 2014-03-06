@@ -155,7 +155,74 @@
 						</script>
 						<div id="chart-genderage"></div>
 					<!-- .box --></div>
+					
+					
+					<?php if ($this->project->redeem_tiket_merchant == 1){ ?>
+					<div class="box">
+						<div class="box-header">
+							<h2 class="box-title title-light" style="display: inline-block;float: left;">Redeem Tiket</h2>
+							
+							<div class="pull-right">
+								<select id="redeemdate" class="form-control">
+									<?php
+									$date1 = date("Y-m-d", strtotime("- 5 days"));
+									$date2 = date("Y-m-d", strtotime("- 1 days")); 
+									for($i=1;$i<=4;$i++){
+										$h = sha1($date1 . $date2 . SALT);
+										$v = "redeem_s=".$date1."&redeem_e=".$date2."&redeem_h=".$h;
+										$class = ($v == $this->keyal) ? 'selected' : '';
+									?>
+									<option value="<?php echo base_url() . 'dashboard/project/' . $this->project->project_uri . '?' . $v; ?>" <?php echo $class; ?>><?php echo date("d M Y", strtotime($date1)).' s/d '.date("d M Y", strtotime($date2)); ?></option>
+									<?php	
+										$date2 = $date1;
+										$date1 = date("Y-m-d", strtotime($date2 . " - 5 days"));
+									}
+									?>	
+								</select>
+							</div>	
+							
+							<div class="clearfix"></div>
+						</div>
 
+						<script type="text/javascript">
+							<?php 
+								$chart_traffic = array();
+								$gchart_type_js = "";
+
+								$this->redeem_enddate = date("Y-m-d", strtotime($this->redeem_enddate . "+ 1 days"));
+								while($this->redeem_startdate != $this->redeem_enddate){
+									$tgl_string = date("d M Y", strtotime($this->redeem_startdate));
+									$jml_redeem = (empty($this->tikets[strtotime($this->redeem_startdate)])) ? 0 : $this->tikets[strtotime($this->redeem_startdate)];
+									$chart_traffic[] = '["'.$tgl_string.'", '.$jml_redeem.']';
+									$this->redeem_startdate = date("Y-m-d", strtotime($this->redeem_startdate . "+ 1 days"));
+								}
+								
+								/*
+								foreach($this->tikets as $k=>$v){
+									
+									$jml_redeem = $v->jml_redeem;
+									$tgl = date("d M Y", strtotime($v->tanggal));
+									
+									$chart_traffic[] = '["'.$tgl.'", '.$jml_redeem.']';
+									
+								}*/
+								?>
+								var $dataRedeemTiket_container = 1;
+								var $dataRedeemTiket = [
+									['Date', 'Count'],
+									<?php echo implode(", ", $chart_traffic); ?>
+								];
+						</script>
+						<div id="chart-redeem" style="height: 300px;"></div>
+					<!-- .box --></div>
+					<?php }else{
+					?>	
+					<script type="text/javascript">
+						var $dataRedeemTiket_container = 0;
+						var $dataRedeemTiket = [];
+					</script>
+					<?php	
+					} ?>
 
 					<div class="box dashboard-traffic">
 						<div class="box-header">

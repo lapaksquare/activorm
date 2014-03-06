@@ -155,6 +155,36 @@ class Ajax extends CI_Controller {
 			'msg' => $msg
 		));
 	}
+
+	function scanTiketOffline(){
+		$this->load->model('tiket_model');
+		$tiket_barcode = $this->input->get_post('tiket_barcode');
+		$tiket = $this->tiket_model->scanTiketBarcode($tiket_barcode);
+		$message = 1;
+		if (!empty($tiket)){
+			$message = 0;
+			if ($tiket->used_tiket == 1){
+				$message = 2; 
+			}
+		}
+		echo json_encode(array(
+			'message' => $message
+		));
+	}
+	
+	function confirmTiketOffline(){
+		$this->load->model('tiket_model');
+		$tiket_barcode = $this->input->get_post('tiket_barcode');
+		$tiket = $this->tiket_model->scanTiketBarcode($tiket_barcode);
+		$message = 1;
+		if (!empty($tiket)){
+			$message = 0;
+			$this->tiket_model->redeemTiket($tiket_barcode);
+		}
+		echo json_encode(array(
+			'message' => $message
+		));
+	}
 	
 }
 

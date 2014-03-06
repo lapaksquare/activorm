@@ -24,6 +24,14 @@
 						?>
 						<div class="alert alert-danger">Something error when send your data.</div>
 						<?php } ?>
+						
+						<?php 
+						$note_topup_amount_error = $this->session->userdata('note_topup_amount_error');
+						$this->session->unset_userdata('note_topup_amount_error');
+						if (!empty($note_topup_amount_error)){
+						?>
+						<div class="alert alert-danger"><?php echo $note_topup_amount_error; ?></div>
+						<?php } ?>
 
 						<div class="box">
 							<div class="box-header">
@@ -136,16 +144,18 @@
 								<strong>Choose Payment Method</strong>
 								Transfer Bank:
 								<div class="topup-bank">
+									<?php if (REK_MANDIRI == 1){ ?>
 									<img src="<?php echo cdn_url(); ?>img/bank-mandiri.gif" alt="mandiri" />
+									<?php } ?>
+									<?php if (REK_BCA == 1){ ?>
 									<img src="<?php echo cdn_url(); ?>img/bank-bca.gif" alt="bca" />
+									<?php } ?>
 								</div>
 							</div>
 							
 							<div class="clearfix">
 								<input type="submit" name="btn_submit_topup" class="btn btn-blue pull-right" value="Okay, Submit!" />
 							</div>
-							
-							<?php $this->load->view('a/dashboard/pointstopup_modal_view', $this->data); ?>
 							
 						<!-- .box --></div>
 					</form>
@@ -157,6 +167,16 @@
 			<!-- .row --></div>
 
 		<!-- #main --></div>	
+		
+<script>
+	<?php 
+	$note_topup_amount = $this->session->userdata('note_topup_amount');
+	$this->session->unset_userdata('note_topup_amount');
+	?>
+	var note_topup_amount = "<?php echo (empty($note_topup_amount)) ? 0 : $note_topup_amount; ?>";
+</script>		
+		
+<?php $this->load->view('a/dashboard/pointstopup_modal_view', $this->data); ?>		
 
 <?php $this->load->view('a/dashboard/pointstopup_confirmation_modal_view', $this->data); ?>
 

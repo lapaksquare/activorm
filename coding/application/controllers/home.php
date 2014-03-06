@@ -5,57 +5,85 @@ class Home extends MY_Controller{
 	
 	function __construct(){
 		parent::__construct();
+		$this->load->library('scache');
 	}
 	
 	function index(){
 		
+		$product_prize = $this->scache->read('cache#product_prize#');
+		$featured_type = $this->scache->read('cache#featured_type#');
+		
 		$this->load->model('featured_model');
-		$data_featured = $this->featured_model->getFeaturedData('featured__homepage_prize');
-		$product_prize = array();
-		if (!empty($data_featured)){
-			
-			if ($data_featured->type == "manual"){
+		
+		if (empty($product_prize)){
+		
+			$data_featured = $this->featured_model->getFeaturedData('featured__homepage_prize');
+			$product_prize = array();
+			if (!empty($data_featured)){
 				
-				if ($data_featured->model == "project"){
+				if ($data_featured->type == "manual"){
 					
-					$data_featured_isi = array();
-					foreach($data_featured->isi as $k=>$v){
-						$data_featured_isi[] = $v->project_id;
+					if ($data_featured->model == "project"){
+						
+						$data_featured_isi = array();
+						foreach($data_featured->isi as $k=>$v){
+							$data_featured_isi[] = $v->project_id;
+						}
+						
+						$product_prize = $this->featured_model->getFeaturedProductHomePage($data_featured_isi, $data_featured->model);
+						$featured_type = 1;
+						
 					}
-					
-					$product_prize = $this->featured_model->getFeaturedProductHomePage($data_featured_isi, $data_featured->model);
-					$featured_type = 1;
 					
 				}
 				
 			}
 			
+			if (empty($product_prize)){
+				$this->load->model('prize_model');
+				$product_prize = $this->prize_model->getProductPrize(16);
+				$featured_type = 3;
+			}
+			
+			$product_prize = json_encode( $product_prize );
+			$this->scache->write('cache#product_prize#', $product_prize, 60 * 60 * 24);
+			$this->scache->write('cache#featured_type#', $featured_type, 60 * 60 * 24);
+			
 		}
 		
-		if (empty($product_prize)){
-			$this->load->model('prize_model');
-			$product_prize = $this->prize_model->getProductPrize(16);
-			$featured_type = 3;
-		}
-		
+		$product_prize = json_decode($product_prize);		
+						
 		$this->data['product_prize'] = $product_prize;
 		$this->data['featured_type'] = $featured_type;
 		
 		$this->load->model('business_model');
-		$data_featured = $this->featured_model->getFeaturedData('featured__homepage_logomerchant');
-		$merchants = array();
-		if (!empty($data_featured)){
-			if ($data_featured->type == "manual"){
-				$data_featured_isi = array();
-				foreach($data_featured->isi as $k=>$v){
-					$data_featured_isi[] = $v;
-				}
-				$merchants = $this->featured_model->getMerchantLogoHomePage($data_featured_isi);
-			}
-		}
+		
+		$merchants = $this->scache->read('cache#merchants#');
+		
 		if (empty($merchants)){
-			$merchants = $this->business_model->getMerchantHomePage();
+		
+			$data_featured = $this->featured_model->getFeaturedData('featured__homepage_logomerchant');
+			$merchants = array();
+			if (!empty($data_featured)){
+				if ($data_featured->type == "manual"){
+					$data_featured_isi = array();
+					foreach($data_featured->isi as $k=>$v){
+						$data_featured_isi[] = $v;
+					}
+					$merchants = $this->featured_model->getMerchantLogoHomePage($data_featured_isi);
+				}
+			}
+			if (empty($merchants)){
+				$merchants = $this->business_model->getMerchantHomePage();
+			}
+			
+			$merchants = json_encode( $merchants );
+			$this->scache->write('cache#merchants#', $merchants, 60 * 60 * 24);
+			
 		}
+		
+		$merchants = json_decode($merchants);		
+				
 		$this->data['merchants'] = $merchants;
 		
 		$this->data['menu'] = 'home';

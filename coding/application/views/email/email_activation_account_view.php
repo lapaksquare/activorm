@@ -51,7 +51,7 @@
 											<h1 class="content-title" style="margin: 0 0 20px;padding: 0 0 10px;font-size: 24px;border-bottom: 1px solid #e8e8e8;color: #555555;">Account Verification</h1>
 											<p style="margin: 1em 0;"><strong>Hi <?php echo $account_name; ?>!</strong></p>
 											<p style="margin: 1em 0;">Do activate your Activorm account, we need you to copy this activation code below and enter it to Activorm website.</p>
-											<p style="margin: 1em 0;">Verification Code : <b><?php echo $verification_code; ?></b></p>
+											<p style="margin: 1em 0;">Copy This Verification Code : <b><?php echo $verification_code; ?></b></p>
 											<p class="signup" style="margin: 1em 0;"><a class="button" href="<?php echo base_url(); ?>auth/vcautoauth?vc=<?php echo $verification_code; ?>&vch=<?php echo sha1(SALT . $verification_code); ?>" style="padding: 10px 30px;display: inline-block;color: #fff;font-size: 18px;font-weight: bold;text-decoration: none;background: #20b396;border-bottom: 2px solid #1fa88c;border-radius: 5px;">Activate My Account</a></p>
 											<p style="margin: 1em 0;">If the activation code above doesn't work, please click on <a href="<?php echo base_url(); ?>auth/vccode_next?acid=<?php echo $account_id; ?>&vccode=<?php echo $verification_code; ?>&h=<?php echo sha1($account_id.$verification_code.SALT); ?>">the link here</a> OR contact our support at <strong><a href="mailto:info@activorm.com" style="color: #20b396;text-decoration: none;">info@activorm.com</a></strong></p>
 										</div>

@@ -30,14 +30,26 @@
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach($this->results as $k=>$v){ 
+									<?php 
+									$limit_time = "2014-03-03 18:00";
+									$limit_time = strtotime($limit_time);
+									//$limit_time = date("Y-m-d H:i", strtotime($limit_time));
+									//echo $limit_time;
+									foreach($this->results as $k=>$v){ 
 										
 										$pageviews = (empty($this->results_project_analytics[$v->project_id]['pageviews'])) ? 0 : $this->results_project_analytics[$v->project_id]['pageviews'];
+										
+										$href = base_url() . 'dashboard/project/' . $v->project_uri;
+										$project_posted = strtotime($v->project_posted);
+										//echo $limit_time . ' ' . $project_posted;
+										if ($v->premium_plan == 0 && $freeplan <= 0 && $limit_time < $project_posted){
+											$href = "#";	
+										}
 										
 										?>
 									<tr>
 										<td><?php echo date("d M Y", strtotime($v->project_posted)); ?></td>
-										<td><a id="" href="<?php echo base_url(); ?>dashboard/project/<?php echo $v->project_uri; ?>" data-h="<?php echo sha1($v->project_id . SALT); ?>" data-pid="<?php echo $v->project_id; ?>" target="_blank"><?php echo ucwords($v->project_name); ?></a></td>
+										<td><a id="" href="<?php echo $href; ?>" data-h="<?php echo sha1($v->project_id . SALT); ?>" data-pid="<?php echo $v->project_id; ?>" target="_blank"><?php echo ucwords($v->project_name); ?></a></td>
 										<td><?php echo $pageviews; ?></td>
 										<td><?php echo $v->member_join; ?></td>
 										<td><?php echo ($v->premium_plan == 0) ? 'FREE' : 'PAID'; ?></td>

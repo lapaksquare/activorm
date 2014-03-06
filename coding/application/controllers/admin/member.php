@@ -54,7 +54,9 @@ class Member extends MY_Admin_Access{
 		$this->data['menu_child'] = 'member_account';
 		$this->_default_param(
 			"",
-			"",
+			array(
+				'<script src="'.cdn_url().'js/member_overview.js"></script>',
+			),
 			"",
 			"Member - Activorm Connect");
 		$this->load->view('n/member/member_account_view', $this->data);
@@ -325,7 +327,9 @@ class Member extends MY_Admin_Access{
 		$this->data['menu_child'] = 'business_account';
 		$this->_default_param(
 			"",
-			"",
+			array(
+				'<script src="'.cdn_url().'js/member_overview.js"></script>',
+			),
 			"",
 			"Business Account - Activorm Connect");
 		$this->load->view('n/member/business_account_view', $this->data);
@@ -844,6 +848,8 @@ class Member extends MY_Admin_Access{
 			$uri_page
 		);
 		
+		$this->data['business'] = $this->a_account_model->getMemberBusiness();
+		
 		$this->data['menu'] = 'account';
 		$this->data['menu_child'] = 'member_point';
 		$this->_default_param(
@@ -854,6 +860,83 @@ class Member extends MY_Admin_Access{
 		$this->load->view('n/member/member_point_view', $this->data);
 	}
 	/**** SENDING EMAIL - END ****/
+	
+	
+	
+	function loginas(){
+		$account_id = $this->input->get_post('aid');
+		$hash = $this->input->get_post('h');
+		$hash_ori = sha1($account_id . SALT);
+		
+		if ($hash != $hash_ori) redirect(base_url());
+		
+		$this->load->model('a_account_model');
+		$user = $this->a_account_model->getAccountMemberByAccountId($account_id);
+		
+		// redirect ke halaman depan lagi utk register tombol tekan
+		$this->load->library('access');
+		$this->access->register_session($user->account_id, array(
+			'account_id' => $user->account_id,
+			'fullname' => $user->account_name,
+			'email' => $user->account_email,
+			'step' => $user->register_step
+		), $user->business_id);
+		
+		redirect(base_url());
+	}
+	
+	function submit_manual_point(){
+		$btn_submit_point = $this->input->get_post('btn_submit_point');
+		$account_id = $this->input->get_post('account_id');
+		$point = $this->input->get_post('point');
+		$note = $this->input->get_post('note');
+		if (!empty($btn_submit_point)){
+			$errors = array();
+			if (empty($account_id)){
+				$errors[] = "Anda harus memilih business yang akan ditambahkan point.";
+			}
+			if (empty($point)){
+				$errors[] = "Point Anda harus diisi.";
+			}
+			if (empty($note)){
+				$errors[] = "Note Anda harus diisi.";
+			}
+			if (count($errors) > 0){
+				$this->session->set_userdata('manual_point_error', $errors);
+			}else{
+				
+				$this->load->library('util');	
+				$barcode1 = $this->util->create_code(4, "text");
+				$barcode2 = $this->util->create_code(4, "number");
+				$order_date = date("Y-m-d H:i:s");
+				
+				$this->load->model('point_model');
+				$data = array(
+					'order_barcode' => $barcode1.$barcode2,
+					'account_id' => $account_id,
+					'point' => $point,
+					'note' => $note,
+					'order_date' => $order_date
+				);
+				
+				$this->load->model('point_model');
+				$this->point_model->addPointManual($data);
+				
+				$point_current = $this->point_model->getAccountPoint($account_id);
+				$point = $point_current + $point;
+				$data = array(
+					'point' => $point
+				);
+				$this->point_model->updateMemberPoint($data, $account_id);
+				
+				$this->session->set_userdata('manual_point_success', 'Success Add Points');
+				
+			}
+		}
+
+		redirect(base_url() . 'admin/member/member_point');
+
+	}
 	
 	
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){
