@@ -1,0 +1,8 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+ERROR - 2014-03-07 12:55:07 --> Severity: Notice  --> Undefined property: Access::$member_account /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/controllers/project.php 983
+ERROR - 2014-03-07 12:55:07 --> Severity: Notice  --> Trying to get property of non-object /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/application/controllers/project.php 983
+ERROR - 2014-03-07 12:55:07 --> Severity: Warning  --> Cannot modify header information - headers already sent by (output started at /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/system/core/Exceptions.php:186) /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/system/libraries/Session/drivers/Session_cookie.php 722
+ERROR - 2014-03-07 12:55:07 --> Severity: Warning  --> Cannot modify header information - headers already sent by (output started at /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/system/core/Exceptions.php:186) /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/system/libraries/Session/drivers/Session_cookie.php 722
+ERROR - 2014-03-07 12:55:07 --> Severity: Warning  --> Cannot modify header information - headers already sent by (output started at /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/system/core/Exceptions.php:186) /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/system/libraries/Session/drivers/Session_cookie.php 722
+ERROR - 2014-03-07 12:55:07 --> Severity: Warning  --> Cannot modify header information - headers already sent by (output started at /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/system/core/Exceptions.php:186) /Applications/XAMPP/xamppfiles/htdocs/activorm/coding/system/libraries/Session/drivers/Session_cookie.php 722

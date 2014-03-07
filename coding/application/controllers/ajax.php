@@ -1,6 +1,6 @@
 <?php 
 
-class Ajax extends CI_Controller {
+class Ajax extends MY_Controller {
 	
 	function getKabupatenByProvinceId(){
 		$province_id = $this->input->get_post('province_id');
@@ -175,7 +175,7 @@ class Ajax extends CI_Controller {
 		$pid = $this->input->get_post('pid');
 		$pidhash = $this->input->get_post('pidhash');
 		$ori_pidhash = sha1($pid . SALT);
-		$account_id = $this->session->userdata('account_id');
+		$account_id = $this->access->member_account->account_id; //$this->session->userdata('account_id');
 		$data = array();
 		if (strlen($comment) <= 0 || strlen($comment) > 300 || ($pidhash != $ori_pidhash)){
 			$data = array(
@@ -267,7 +267,7 @@ class Ajax extends CI_Controller {
 		$cidhash = $this->input->get_post('cidhash');
 		$ori_cidhash = sha1($cid . SALT);
 		
-		$account_id = $this->session->userdata('account_id');
+		$account_id = $this->access->member_account->account_id; //$this->session->userdata('account_id');
 		$data = array();
 		if (strlen($comment) <= 0 || strlen($comment) > 300 
 		|| ($pidhash != $ori_pidhash) || ($cidhash != $ori_cidhash)
