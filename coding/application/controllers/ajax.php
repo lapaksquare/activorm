@@ -363,6 +363,16 @@ class Ajax extends MY_Controller {
 		));
 	}
 	
+	
+	function getProjectComment(){
+		$comment_id = $this->input->get_post('cid');
+		$project_id = $this->input->get_post('pid');
+		$this->load->model('comment_model');
+		$this->data['project_id'] = $project_id;
+		$this->data['comments'] = $this->comment_model->getComment($project_id, $comment_id);
+		$this->load->view('a/project/ajax_comment_view', $this->data);
+	}
+	
 }
 
 ?>

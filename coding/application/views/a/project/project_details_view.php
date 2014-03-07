@@ -927,7 +927,7 @@
 									
 								?>	
 								
-								<li class="clearfix comment">
+								<li class="clearfix comment" id="comment" data-cid="<?php echo $comment->comment_id; ?>">
 									<div class="comment-avatar">
 										<img class="img-responsive" src="<?php echo cdn_url() . $photo; ?>" alt="<?php echo $comment->account_name; ?>" />
 									</div>
@@ -1127,6 +1127,14 @@
 								 */ ?>
 								  
 							<!-- .list-comments --></ul>
+							
+							
+							<?php if ($total_comments > 10){ ?>
+							<div class="load-more" id="load-more">
+								<a href="#" class="btn btn-default btn-blue" data-tc="<?php echo $total_comments; ?>" data-pid="<?php echo $this->project->project_id; ?>" style="display:block;">Load More</a>
+							</div>
+							<?php } ?>
+							
 						<!-- .entry-comments --></div>
 						
 							

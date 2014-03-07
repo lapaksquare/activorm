@@ -1003,6 +1003,7 @@ class Project extends MY_Controller{
 		// project comment
 		$this->load->model('comment_model');
 		$this->data['comments'] = $this->comment_model->getComment($project_id);
+		$this->data['total_comments'] = $this->comment_model->total_comment;
 		
 		// project photos
 		$this->project_photos = $this->scache->read('cache#getProjectPhotos#' . $project_id);
