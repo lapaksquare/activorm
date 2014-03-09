@@ -102,7 +102,7 @@ class Actions extends MY_Controller {
 			$this->session->set_userdata('message_project_actions_success', 'Action succeed!');
 		}
 		
-		$account_id = $this->session->userdata('account_id');
+		$account_id = $this->access->member_account->account_id; //$this->session->userdata('account_id');
 		$this->project_model->registerActions($projectid, $account_id, $actions+1, $return);
 		
 		//if ($this->project->redeem_tiket_merchant == 0){
