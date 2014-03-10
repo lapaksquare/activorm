@@ -78,15 +78,32 @@ class Minify_Cache_File {
      */
     public function display($id)
     {
+    	/*
         if ($this->_locking) {
             $fp = fopen($this->_path . '/' . $id, 'rb');
             flock($fp, LOCK_SH);
-            fpassthru($fp);
+            //fpassthru($fp);
+            echo stream_get_contents($fp);
             flock($fp, LOCK_UN);
             fclose($fp);
         } else {
             readfile($this->_path . '/' . $id);            
-        }
+        }*/
+		
+		
+		
+		$filename=$this->_path . '/' . $id;
+	    if ($this->_locking) {
+	        $fp = fopen($filename, 'rb');
+	        flock($fp, LOCK_SH);
+	        //fpassthru($fp);
+	        $out=fread($fp,filesize($filename));
+	        echo $out;
+	        flock($fp, LOCK_UN);
+	        fclose($fp);
+	    } else {
+	        readfile($filename);            
+	    } 
     }
     
 	/**
