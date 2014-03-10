@@ -30,29 +30,7 @@ class Project extends MY_Controller{
 				$this->edit_project();
 			}
 			
-			// social connect =============================== start ===================================
-			$this->load->model('socialmedia_model');
-			$account_id = $this->session->userdata('account_id');
-			$socialmedia_account = $this->socialmedia_model->socialmedia_connect($account_id);
-			$fb_name = "";
-			if (!empty($socialmedia_account['facebook']) && !empty($socialmedia_account['facebook']->social_page_active)){
-				$social_page_active = json_decode( $socialmedia_account['facebook']->social_page_active );
-				$fb_name = $social_page_active->name;
-			}
-			
-			$tw_name = "";
-			if (!empty($socialmedia_account['twitter']) && !empty($socialmedia_account['twitter']->social_data)){
-				$social_page_active = json_decode( $socialmedia_account['twitter']->social_data );
-				$tw_name = $social_page_active->name;
-			}
-			
-			$this->step_function();
-			
-			$this->data['actions_label_info'] = array(
-				'facebook' => $fb_name,
-				'twitter' => $tw_name
-			);
-			// social connect =============================== end ===================================
+			$this->social_actions_func();
 			
 			$title = 'Create Project';
 			$view = 'project_create_view';
@@ -1327,6 +1305,39 @@ class Project extends MY_Controller{
 		
 		$this->load->model('project_model');
 		$this->data['freeplan'] = $this->project_model->getCountFreePlan($this->access->member_account->account_id);
+	}
+	
+	function social_actions_func(){
+		// social connect =============================== start ===================================
+		$this->load->model('socialmedia_model');
+		$account_id = $this->session->userdata('account_id');
+		$socialmedia_account = $this->socialmedia_model->socialmedia_connect($account_id);
+		$fb_name = "";
+		if (!empty($socialmedia_account['facebook']) && !empty($socialmedia_account['facebook']->social_page_active)){
+			$social_page_active = json_decode( $socialmedia_account['facebook']->social_page_active );
+			$fb_name = $social_page_active->name;
+		}
+		
+		$tw_name = "";
+		if (!empty($socialmedia_account['twitter']) && !empty($socialmedia_account['twitter']->social_data)){
+			$social_page_active = json_decode( $socialmedia_account['twitter']->social_data );
+			$tw_name = $social_page_active->name;
+		}
+		
+		$ig_name = "";
+		if (!empty($socialmedia_account['instagram']) && !empty($socialmedia_account['instagram']->social_data)){
+			$social_page_active = json_decode( $socialmedia_account['instagram']->social_data );
+			$ig_name = $social_page_active->user->username;
+		}
+		
+		$this->step_function();
+		
+		$this->data['actions_label_info'] = array(
+			'facebook' => $fb_name,
+			'twitter' => $tw_name,
+			'instagram' => $ig_name
+		);
+		// social connect =============================== end ===================================
 	}
 	
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){

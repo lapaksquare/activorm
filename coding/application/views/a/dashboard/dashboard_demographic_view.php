@@ -1,5 +1,7 @@
 <?php $this->load->view('a/general/header_view', $this->data); ?>
 
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
 		<div id="main" class="container">
 
 			<div class="page-header">

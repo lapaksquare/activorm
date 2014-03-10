@@ -751,6 +751,39 @@ class Auth extends MY_Controller {
 		}
 	}
 	
+	// INSTAGRAM CONNECT
+	function instagram_connect_ref(){
+		$ref = $_SERVER['HTTP_REFERER'];
+		$this->session->set_userdata('HTTP_REFERER', $ref);
+		$this->load->library('instagram_library');
+		redirect($this->instagram_library->instagram->getLoginUrl(array("basic", "relationships", "likes")));
+	}
+	function instagram_connect(){
+		$code = $this->input->get_post('code');
+		if (!empty($code)){
+			$this->load->library('instagram_library');
+			$data = $this->instagram_library->instagram->getOAuthToken($code);
+			//echo '<pre>';print_r($data);echo '</pre>';
+			$this->instagram_library->instagram->setAccessToken($data);
+			// masukkan data log fb di database
+			$this->load->model('socialmedia_model');
+			$account_id = $this->session->userdata('account_id');
+			$data = array(
+				'account_id' => $account_id,
+				'social_name' => 'instagram',
+				'social_data' => json_encode($data),
+				'social_oauth_data' => json_encode($data),
+				'social_active' => 1
+			);
+			$this->socialmedia_model->insertLogSocialMedia($data);
+		}
+		//die();
+		$ref = $this->session->userdata('HTTP_REFERER');
+		$this->session->unset_userdata('HTTP_REFERER');
+		if (empty($ref)) $ref = base_url() . 'settings/socialmedia';
+		redirect($ref);
+	}
+	
 	
 	
 	

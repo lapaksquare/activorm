@@ -453,6 +453,20 @@
 										'label' => 'Tweet #hashtag',
 										'icon' => 'actions-twitter-tweet-hashtag'
 									)
+								),
+								'instagram' => array(
+									'ig-follow' => array(
+										'value' => 'ig-follow',
+										'name' => 'actions_step[ig-follow]',
+										'label' => 'Follow @ {brand name}',
+										'icon' => 'actions-ig-follow-account'
+									),
+									'ig-like' => array(
+										'value' => 'ig-like',
+										'name' => 'actions_step[ig-like]',
+										'label' => 'Like Photo',
+										'icon' => 'actions-ig-like-photo'
+									)
 								)
 							);
 							

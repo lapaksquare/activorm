@@ -704,7 +704,7 @@ abstract class BaseFacebook
     }
 
     return false;*/
-    if (isset($_REQUEST['code'])) {
+    if (isset($_REQUEST['code']) && !empty($_REQUEST['state']) && property_exists($this, "state")) {
       if ($this->state !== null && isset($_REQUEST['state']) && $this->state == $_REQUEST['state']) {
         // CSRF state has done its job, so clear it
         //$this->state = null;

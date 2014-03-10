@@ -28,7 +28,11 @@
 							'twitter' => array(
 								'name' => 'Twitter',
 								'link_connect' => base_url() . 'auth/twitter_connect'
-							)
+							),
+							'instagram' => array(
+								'name' => 'Instagram',
+								'link_connect' => base_url() . 'auth/instagram_connect_ref' // $this->access->fb_connect_url
+							),
 						);
 						?>
 
@@ -69,8 +73,13 @@
 								$fp = "";
 								if (!empty($socialmedia_account[$k])){
 								
-								$js = json_decode($socialmedia_account[$k]->social_data);
-								$fp = ucwords( $js->name );
+								if ($k == "facebook" || $k == "twitter"){
+									$js = json_decode($socialmedia_account[$k]->social_data);
+									$fp = ucwords( $js->name );
+								}else if ($k == "instagram"){
+									$js = json_decode($socialmedia_account[$k]->social_data);
+									$fp = $js->user->username;
+								}
 								
 								if ($k == "facebook" && $this->access->member_account->account_type == "business" && !empty($facebook_pages)){
 									$flag_fp = 1;
