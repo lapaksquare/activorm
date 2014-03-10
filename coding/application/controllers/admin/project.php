@@ -288,10 +288,27 @@ class Project extends MY_Admin_Access{
 					$dataProject['project_period'] = date('Y-m-d H:i:s', strtotime("+" . $period . " days"));
 					$dataProject['project_period_int'] = $period;
 					
+					/* PROJECT FREE PLAN COUNT */
 					$this->load->model('project_model');
-					$freeplan = $this->project_model->getCountFreePlan($aid);
-					$freeplan -= 1;
-					$this->project_model->updateCountFreePlan($aid, $freeplan);
+					if (empty($project->premium_plan_type)){
+						$freeplan = $this->project_model->getCountFreePlan($aid);
+						$freeplan -= 1;
+						$this->project_model->updateCountFreePlan($aid, $freeplan);
+					}else{
+					
+					/* PROJECT BUDGET */
+					//if (!empty($project->premium_plan_type)){
+						$project_budget = 100000; //$this->input->get_post('project-budget');
+						$project_budget = intval( $project_budget ) / 1000;
+						
+						$this->load->model('point_model');
+						$point = $this->point_model->getAccountPoint($aid);
+						$project_point = $point - $project_budget;
+											
+						$this->point_model->updateMemberPoint(array(
+							'point' => $project_point
+						), $aid);
+					}
 					
 				}else{
 					if ($project->project_period_int > $period){

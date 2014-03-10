@@ -91,6 +91,7 @@ class A_project_model extends CI_Model{
 		pp.project_posted,
 		pp.business_id,
 		pp.jml_winner,
+		pp.premium_plan_type,
 		bp.business_name,
 		brm.account_id,
 		IFNULL(mp.point, 0) jml_point,
