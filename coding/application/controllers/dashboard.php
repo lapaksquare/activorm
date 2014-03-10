@@ -71,7 +71,6 @@ class Dashboard extends MY_Controller{
 			
 			$view = 'dashboard_demographic_view';
 			$js = array(
-				'<script type="text/javascript" src="https://www.google.com/jsapi"></script>',
 				'<script type="text/javascript" src="'.cdn_url().'js/dashboard_demographic.js"></script>'
 			);
 			$title = $this->title = 'Demographic';
@@ -124,7 +123,6 @@ class Dashboard extends MY_Controller{
 				'<link href="'.cdn_url().'css/jquery.mCustomScrollbar.css" rel="stylesheet">'
 			);
 			$js = array(
-				'<script type="text/javascript" src="https://www.google.com/jsapi"></script>',
 				'<script src="'.cdn_url().'js/jquery.mCustomScrollbar.min.js"></script>',
 				'<script src="'.cdn_url().'js/dashboard_project_select.js"></script>'
 			);
@@ -137,7 +135,6 @@ class Dashboard extends MY_Controller{
 				'<link href="'.cdn_url().'css/jquery.mCustomScrollbar.css" rel="stylesheet">'
 			);
 			$js = array(
-				'<script type="text/javascript" src="https://www.google.com/jsapi"></script>',
 				'<script src="'.cdn_url().'js/jquery.mCustomScrollbar.min.js"></script>',
 				'<script src="'.cdn_url().'js/dashboard_overview.js"></script>'
 			);
