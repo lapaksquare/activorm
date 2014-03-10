@@ -471,8 +471,7 @@ class Project extends MY_Controller{
 			
 				$actions_step_data = $this->func_actions_step($actions_step);
 				
-				$project_actions_data = json_decode( $actions_step_data );
-				
+				//echo '<pre>';print_r($actions_step_data);echo '</pre>';die();
 				
 				$project_actions_data_arr = array();
 				if (!empty($actions_step_data)){
@@ -490,7 +489,7 @@ class Project extends MY_Controller{
 				
 				if (empty($actions_step_data)){
 					//$errors[] = 'Terjadi kesalahan dalam Social Media Connect. Koneksi '. $this->type_social . ' Anda mengalami masalah. Periksa kembali di menu <a href="'.base_url().'settings/socialmedia" target="_blank">Settings</a>.';
-					$errors[] = 'You must connect Facebook, Twitter to proceed this project. Connect your Social Network Account at <a href="'.base_url().'settings/socialmedia" target="_blank">Settings</a>.';
+					$errors[] = 'You must connect Facebook, Twitter to proceed this project. Connect your Social Network Account at <a href="'.base_url().'settings/socialmedia" target="_blank">Settings</a> or Something Error config social connect social media.';
 				}else if (count($project_actions_data) < 3 || count($project_actions_data) >= 4){
 					$errors[] = 'You have to pick 3 Actions to create this project.';
 				}
@@ -661,7 +660,16 @@ class Project extends MY_Controller{
 					$act = $this->twitter_step($k);
 					$this->type_social = 'twitter';
 					break;
-						
+					
+				// for instagram step
+				case "instagram-follow" :
+					$act = $this->instagram_step($k);
+					$this->type_social = 'instagram';
+					break;
+				case "instagram-like" :
+					$act = $this->instagram_step($k);
+					$this->type_social = 'instagram';
+					break;
 			}
 						
 			if (empty($act)) {
@@ -814,6 +822,51 @@ class Project extends MY_Controller{
 		$return['type_step'] = $key;
 		return $return;
 	}
+	function instagram_step($key, $account_id_selected = 0){
+		$this->load->model('socialmedia_model');
+		if ($account_id_selected == 0){
+			$account_id = $this->session->userdata('account_id');
+		}else{
+			$account_id = $account_id_selected;
+		}
+		$socialmedia = $this->socialmedia_model->getSocialMediaConnect($account_id, 'instagram');
+		
+		if (empty($socialmedia) || empty($socialmedia->social_oauth_data)){
+			return array();
+		}
+		
+		$social_oauth_data = (array) json_decode( $socialmedia->social_oauth_data );
+		
+		$c = array();
+		$url_photo_input = "";
+		if ($key == "instagram-like"){
+			$url_photo_input = $this->input->get_post('ig_url_photo');
+			$url_photo = "http://api.instagram.com/oembed?url=" . $url_photo_input;
+			$this->load->library('util');
+			$c = $this->util->getDataUrl($url_photo);
+			$c = (array) json_decode($c);
+			if (empty($c)) return array();
+		}
+		
+		$return = array();
+		switch($key){
+			case "instagram-follow" :
+				$return = (array) json_decode( $socialmedia->social_data );
+				$socialmedia_name = $return['user']->username; //"Activorm"; //$return['screen_name'];
+				$return['social_oauth_data'] = $social_oauth_data;
+				$return['type_name'] = "Follow Instagram @ " . $socialmedia_name;
+				break;
+			case "instagram-like" :
+				$return['photo_url'] = $url_photo_input;
+				$return['photo_data'] = $c;
+				$return['social_oauth_data'] = $social_oauth_data;
+				$return['type_name'] = "Like Instagram Photo";
+				break;
+		}
+		if ($account_id_selected > 0) $key = $key . "_customactions";
+		$return['type_step'] = $key;
+		return $return;
+	}
 	
 	function project_overview(){
 		$this->load->model('project_model');
@@ -889,6 +942,7 @@ class Project extends MY_Controller{
 		if (empty($socialmediaconnect)){
 			$socialmedia = $this->socialmedia_model->socialmedia_connect($account_id_project);
 			$socialmedia_cols = array();
+			
 			foreach($socialmedia as $k=>$v){
 				$socialmedia_name = $link = "";
 				$social_page_active = $v->social_page_active;
@@ -900,6 +954,10 @@ class Project extends MY_Controller{
 					$social_data = json_decode($v->social_data);
 					$socialmedia_name = $social_data->name;
 					$link = "http://www.twitter.com/" . $social_data->screen_name;
+				}else if ($k == "instagram"){
+					$social_data = json_decode($v->social_data);
+					$socialmedia_name = $social_data->user->username;
+					$link = "http://www.instagram.com/" . $socialmedia_name;
 				}
 				$socialmedia_cols[$k] = array(
 					'link' => $link,
@@ -907,6 +965,8 @@ class Project extends MY_Controller{
 					'name' => ucfirst( $socialmedia_name )
 				);
 			}
+			
+			//echo '<pre>';print_r($socialmedia_cols);echo '</pre>';die();
 			
 			$socialmediaconnect = json_encode( $socialmedia_cols );
 			$this->scache->write('cache#socialmedia_connect#' . $account_id_project, $socialmediaconnect, 60 * 60 * 24);
@@ -918,6 +978,9 @@ class Project extends MY_Controller{
 		// butuh required
 		$socialmedia_user = $this->socialmedia_model->socialmedia_connect($account_id);
 		$socialmedia_required = $socialmedia_account_required = array();
+		
+		//echo '<pre>';print_r($project_actions_data);echo '</pre>';die();
+		
 		foreach($project_actions_data as $k=>$v){
 			
 			if (!property_exists($v, "type_step")) continue;
@@ -933,6 +996,9 @@ class Project extends MY_Controller{
 				case "twitter" : 
 					$link_oauth = base_url() . 'auth/twitter_connect';
 					break;
+				case "instagram" : // instagram
+					$link_oauth = base_url() . 'auth/instagram_connect_ref';
+					break;
 			}
 			
 			$socialmedia_required[$type] = array(
@@ -941,6 +1007,7 @@ class Project extends MY_Controller{
 				'link_oauth' => $link_oauth
 			);
 		}
+				
 		$isok = 0;
 		foreach($socialmedia_user as $k=>$v){
 			if (array_key_exists($v->social_name, $socialmedia_required)){
@@ -948,6 +1015,7 @@ class Project extends MY_Controller{
 				$isok++;
 			}
 		}
+				
 		$this->data['socialmedia_required'] = $socialmedia_required;
 		$this->data['socialmedia_required_isok'] = $isok;
 		

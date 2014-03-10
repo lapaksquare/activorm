@@ -207,6 +207,16 @@ class Welcome extends CI_Controller {
 		echo '</pre>';
 	}
 	
+	function crawlurl(){
+		$this->load->library('util');
+		$url = "http://api.instagram.com/oembed?url=http://instagram.com/lUH8c6OtHO/";
+		$c = $this->util->getDataUrl($url);
+		$c = (array) json_decode($c);
+		echo '<pre>';
+		print_r($c);
+		echo '</pre>';
+	}
+	
 }
 
 /* End of file welcome.php */

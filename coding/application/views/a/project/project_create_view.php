@@ -455,17 +455,17 @@
 									)
 								),
 								'instagram' => array(
-									'ig-follow' => array(
-										'value' => 'ig-follow',
-										'name' => 'actions_step[ig-follow]',
+									'instagram-follow' => array(
+										'value' => 'instagram-follow',
+										'name' => 'actions_step[instagram-follow]',
 										'label' => 'Follow @ {brand name}',
-										'icon' => 'actions-ig-follow-account'
+										'icon' => 'actions-instagram-follow-account'
 									),
-									'ig-like' => array(
-										'value' => 'ig-like',
-										'name' => 'actions_step[ig-like]',
+									'instagram-like' => array(
+										'value' => 'instagram-like',
+										'name' => 'actions_step[instagram-like]',
 										'label' => 'Like Photo',
-										'icon' => 'actions-ig-like-photo'
+										'icon' => 'actions-instagram-like-photo'
 									)
 								)
 							);
@@ -497,6 +497,8 @@
 									
 									<?php foreach($v as $a=>$b){ 
 										
+										//echo '<pre>';print_r($b);echo '</pre>';
+										
 										//if (!empty($project_actions_data_arr[$a]) && !empty($project_actions_data_arr[$a]->custom_actions)) continue;
 										
 										$checked = (array_key_exists($a, $project_actions_data_arr)) ? 'checked="checked"' : '';
@@ -520,8 +522,17 @@
 											
 											?>	
 												
-											<div>#<input type="textbox" name="project_hashtags" class="form-control" id="project_hashtags" value="<?php echo $project_hashtags; ?>" style="width:96%;margin-top:5px;display:inline-block;" placeholder="Insert Hashtag" /></div>
-											<?php } ?>
+											<div>#<input type="text" name="project_hashtags" class="form-control" id="project_hashtags" value="<?php echo $project_hashtags; ?>" style="width:96%;margin-top:5px;display:inline-block;" placeholder="Insert Hashtag" /></div>
+											<?php }else if ($a == "instagram-like"){
+												
+												//echo '<pre>';print_r($project_actions_data_arr[$a]);echo '</pre>';
+												
+												$ig_url_photo = (!empty($project_actions_data_arr[$a]->photo_url)) ? $project_actions_data_arr[$a]->photo_url : "";
+												
+											?>
+											<div><input type="text" name="ig_url_photo" class="form-control" id="ig_url_photo" value="<?php echo $ig_url_photo; ?>" style="width:96%;margin-top:5px;display:inline-block;" placeholder="Instagram URL Photo" /></div>
+											<?php	
+											} ?>
 										</div>
 									</div>
 									<?php } ?>

@@ -3353,16 +3353,16 @@ body.alt #footer {
 
 
 /*instagram*/
-.actions-ig-follow-account{
+.actions-instagram-follow-account{
 	background-image:url('../img/actions/instagram/instagram-follow1.png') !important;
 }
-.actions-ig-like-photo{
+.actions-instagram-like-photo{
 	background-image:url('../img/actions/instagram/instagram-like-photo.png') !important;
 }
-.actions-ig-follow-account-small span{
+.actions-instagram-follow-account-small span{
 	background-image:url('../img/actions/instagram/instagram-follow1-small.png') !important;
 }
-.actions-ig-like-photo-small span{
+.actions-instagram-like-photo-small span{
 	background-image:url('../img/actions/instagram/instagram-like-photo-small.png') !important;
 }
 

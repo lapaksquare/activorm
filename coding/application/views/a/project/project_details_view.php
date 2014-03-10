@@ -662,6 +662,17 @@
 													$class = "actions-twet-to-small";
 													$url_string = base_url() . 'actions/trigger_actions?' . $url;
 													break; 
+													
+												//instagram
+												case "instagram-follow" :
+													$class = "actions-instagram-follow-account-small";
+													$url_string = base_url() . 'actions/trigger_actions?' . $url;
+													break; 	
+													
+												case "instagram-like" :
+													$class = "actions-instagram-like-photo-small";
+													$url_string = base_url() . 'actions/trigger_actions?' . $url;
+													break; 		
 											}
 											// <span class="active"><i class="check"></i></span>
 										?>
