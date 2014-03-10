@@ -46,7 +46,9 @@ class Search extends MY_Controller{
 			$uri_page
 		);
 		
-		$this->search_model->registerKeyword($this->q);
+		if (!empty($this->q)){
+			$this->search_model->registerKeyword($this->q);
+		}
 		
 		$this->data['menu'] = 'search';
 		$css = array();

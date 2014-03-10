@@ -839,7 +839,20 @@ class Project extends MY_Controller{
 	
 	function project_overview(){
 		$this->load->model('project_model');
-		$this->project = $this->project_model->getProject('pp.project_uri', $this->segments[2]);
+		
+		$this->project = $this->scache->read('cache#project#' . $this->segments[2]);
+		
+		if (empty($this->project)){
+		
+			$this->project = $this->project_model->getProject('pp.project_uri', $this->segments[2]);
+			
+			$this->project = json_encode( $this->project );
+			$this->scache->write('cache#project#' . $this->segments[2], $this->project, 60 * 60 * 24);
+			
+		}	
+		
+		$this->project = json_decode($this->project);		
+			
 		if (empty($this->project) || empty($this->segments[2]) || $this->project->project_active == 0) redirect(base_url() . '404');
 		
 		$project_id = $this->project->project_id;
@@ -874,7 +887,15 @@ class Project extends MY_Controller{
 		$this->data['project_actions'] = $this->project_model->checkProjectActions($project_id, $account_id);
 		
 		// project prize
-		$this->data['project_prize'] = $this->project_model->getProjectPrice($project_id);
+		$project_prize = $this->scache->read('cache#getProjectPrice#' . $project_id);
+		if (empty($project_prize)){
+			$project_prize = $this->project_model->getProjectPrice($project_id);
+			
+			$project_prize = json_encode( $project_prize );
+			$this->scache->write('cache#getProjectPrice#' . $project_id, $project_prize, 60 * 60 * 24);
+		}
+		$project_prize = json_decode($project_prize);		
+		$this->data['project_prize'] = $project_prize;
 		
 		// jumlah tiket
 		$this->load->model('tiket_model');
@@ -885,8 +906,37 @@ class Project extends MY_Controller{
 		
 		// get social media account current
 		$this->load->model('socialmedia_model');
-		$this->data['socialmedia'] = $socialmedia = $this->socialmedia_model->socialmedia_connect($account_id_project);
 		
+		$socialmediaconnect = $this->scache->read('cache#socialmedia_connect#' . $account_id_project);
+		if (empty($socialmediaconnect)){
+			$socialmedia = $this->socialmedia_model->socialmedia_connect($account_id_project);
+			$socialmedia_cols = array();
+			foreach($socialmedia as $k=>$v){
+				$socialmedia_name = $link = "";
+				$social_page_active = $v->social_page_active;
+				if ($k == "facebook" && !empty($social_page_active)){
+					$social_page_active = json_decode($social_page_active);
+					$socialmedia_name = $social_page_active->name;
+					$link = "http://www.facebook.com/" . $social_page_active->id;
+				}else if ($k == "twitter"){
+					$social_data = json_decode($v->social_data);
+					$socialmedia_name = $social_data->name;
+					$link = "http://www.twitter.com/" . $social_data->screen_name;
+				}
+				$socialmedia_cols[$k] = array(
+					'link' => $link,
+					'icon' => $k,
+					'name' => ucfirst( $socialmedia_name )
+				);
+			}
+			
+			$socialmediaconnect = json_encode( $socialmedia_cols );
+			$this->scache->write('cache#socialmedia_connect#' . $account_id_project, $socialmediaconnect, 60 * 60 * 24);
+			
+		}
+		$socialmediaconnect = json_decode($socialmediaconnect);
+		$this->data['socialmedia'] = $socialmediaconnect;
+				
 		// butuh required
 		$socialmedia_user = $this->socialmedia_model->socialmedia_connect($account_id);
 		$socialmedia_required = $socialmedia_account_required = array();
@@ -953,9 +1003,17 @@ class Project extends MY_Controller{
 		// project comment
 		$this->load->model('comment_model');
 		$this->data['comments'] = $this->comment_model->getComment($project_id);
+		$this->data['total_comments'] = $this->comment_model->total_comment;
 		
 		// project photos
-		$this->project_photos = $this->project_model->getProjectPhotos($project_id);
+		$this->project_photos = $this->scache->read('cache#getProjectPhotos#' . $project_id);
+		if (empty($this->project_photos)){
+			$this->project_photos = $this->project_model->getProjectPhotos($project_id);
+			
+			$this->project_photos = json_encode( $this->project_photos );
+			$this->scache->write('cache#getProjectPhotos#' . $project_id, $this->project_photos, 60 * 60 * 24);
+		}
+		$this->project_photos = json_decode($this->project_photos);		
 		$metaImage = $this->project->project_primary_photo;
 		if (!empty($this->project_photos)){
 			$metaImage = $this->project_photos[0]->photo_file;
@@ -966,8 +1024,11 @@ class Project extends MY_Controller{
 		echo '</pre>';
 		die();
 		*/
-		
-		$this->data['freeplan'] = $this->project_model->getCountFreePlan($this->access->member_account->account_id);
+		$freeplan = 0;
+		if (!empty($this->access->member_account->account_id)){
+			$freeplan = $this->project_model->getCountFreePlan($this->access->member_account->account_id);
+		}
+		$this->data['freeplan'] = $freeplan;
 				
 		// og meta
 		$this->data['title'] = $this->project->project_name;
@@ -1134,6 +1195,7 @@ class Project extends MY_Controller{
 		
 		$this->load->model('project_analytic_model');
 		
+		/*
 		if ($account_id != $account_id_project){
 			$ip_address = $this->input->ip_address();
 			$project_analytic = $this->project_analytic_model->checkProjectAnalytic($project_id, $ip_address);
@@ -1152,7 +1214,7 @@ class Project extends MY_Controller{
 				'ip_address' => $ip_address
 			);
 			$this->project_analytic_model->addProjectAnalytic($data);
-		}
+		}*/
 		
 		if (!empty($_SERVER['HTTP_REFERER'])){
 			

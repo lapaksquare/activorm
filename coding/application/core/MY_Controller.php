@@ -70,7 +70,6 @@ class MY_Controller extends CI_Controller{
 			'<link href="'.cdn_url().'css/settings.css" rel="stylesheet" type="text/css">',
 			'<link href="'.cdn_url().'css/activorm.css" rel="stylesheet" type="text/css">',
 			'<link href="'.cdn_url().'css/pagination.css" rel="stylesheet" type="text/css">',
-			'<link rel="shortcut icon" href="'.cdn_url().'img/75x75.png">'
 		);
 		
 		if (!empty($css)) $css = array_merge($default_css, $css);
@@ -88,8 +87,41 @@ class MY_Controller extends CI_Controller{
 		if (!empty($js)) $js = array_merge($default_js, $js);
 		else $js = $default_js;
 		
-		$this->data['css_tags'] = implode('', $css);
-		$this->data['js_tags'] = implode('', $js);
+		$collect_js = array();
+		foreach($js as $k=>$v){
+			preg_match('/src="([^"]+)"/', $v, $matches);
+			$collect_js[] = str_replace(cdn_url(), "", $matches[1]);
+		}
+
+		/*
+		echo '<pre>';
+		print_r( $collect_js );
+		echo '</pre>';
+		
+		echo '<br /><br />';
+		*/
+		
+		$collect_css = array();
+		foreach($css as $k=>$v){
+			preg_match('/href="([^"]+)"/', $v, $matches);
+			$collect_css[] = str_replace(cdn_url(), "", $matches[1]);
+		}
+		
+		/*
+		echo '<pre>';
+		print_r( $collect_css );
+		echo '</pre>';
+		*/
+		
+		//$this->data['css_tags'] = implode('', $css);
+		//$this->data['js_tags'] = implode('', $js);
+		/*<link rel="stylesheet" href="<?php echo $css_tags; ?>">
+		 * <script type="text/javascript" src="<?php echo $js_tags; ?>"></script>
+		 * */
+		
+		$this->data['css_tags'] = '<link rel="stylesheet" href="' . cdn_url() . 'min/?f=' . implode(',', $collect_css) . '" />';
+		$this->data['js_tags'] = '<script type="text/javascript" src="' . cdn_url() . 'min/?f=' . implode(',', $collect_js) . '"></script>';
+		
 		$this->data['meta_tags'] = $default_meta;
 		$this->data['title'] = $title . " - " . default_title;
 	}

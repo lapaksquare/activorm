@@ -927,7 +927,7 @@
 									
 								?>	
 								
-								<li class="clearfix comment">
+								<li class="clearfix comment" id="comment" data-cid="<?php echo $comment->comment_id; ?>">
 									<div class="comment-avatar">
 										<img class="img-responsive" src="<?php echo cdn_url() . $photo; ?>" alt="<?php echo $comment->account_name; ?>" />
 									</div>
@@ -1127,6 +1127,14 @@
 								 */ ?>
 								  
 							<!-- .list-comments --></ul>
+							
+							
+							<?php if ($total_comments > 10){ ?>
+							<div class="load-more" id="load-more">
+								<a href="#" class="btn btn-default btn-blue" data-tc="<?php echo $total_comments; ?>" data-pid="<?php echo $this->project->project_id; ?>" style="display:block;">Load More</a>
+							</div>
+							<?php } ?>
+							
 						<!-- .entry-comments --></div>
 						
 							
@@ -1176,19 +1184,9 @@
 							
 							<?php 
 							foreach($socialmedia as $k=>$v){
-								$socialmedia_name = $link = "";
-								$social_page_active = $v->social_page_active;
-								if ($k == "facebook" && !empty($social_page_active)){
-									$social_page_active = json_decode($social_page_active);
-									$socialmedia_name = $social_page_active->name;
-									$link = "http://www.facebook.com/" . $social_page_active->id;
-								}else if ($k == "twitter"){
-									$social_data = json_decode($v->social_data);
-									$socialmedia_name = $social_data->name;
-									$link = "http://www.twitter.com/" . $social_data->screen_name;
-								}
+								if (empty($v->link) || empty($v->name)) continue;
 							?>
-							<li class="col-sm-12 col-xs-6"><a href="<?php echo $link; ?>" target="_blank"><i class="icon-<?php echo $k; ?>"></i> <?php echo ucfirst( $socialmedia_name ); ?></a></li>
+							<li class="col-sm-12 col-xs-6"><a href="<?php echo $v->link; ?>" target="_blank"><i class="icon-<?php echo $v->icon; ?>"></i> <?php echo $v->name; ?></a></li>
 							<?php
 							}
 							?>

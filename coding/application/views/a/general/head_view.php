@@ -13,6 +13,8 @@
 		<meta name="robots" content="index, follow" />
 		<link rel="canonical" href="<?php echo current_url(); ?>"/>
 
+		<link rel="shortcut icon" href="<?php echo cdn_url(); ?>img/75x75.png">
+
 		<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <?php echo $css_tags; ?>
 

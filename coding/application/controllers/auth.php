@@ -26,7 +26,13 @@ class Auth extends MY_Controller {
 
 		// extract fb
 		$this->dataFB = $this->access->facebook->api('/me');				
-
+		
+		if (empty($this->dataFB['email'])){
+			$this->session->set_userdata('message_register_login_error', 1);
+			$this->session->set_userdata('message_login_error', "Please allow or click 'Okay' to allow Activorm to access your public profile, email address, to post to Facebook and to manage your pages. We will never post any content without your permission.");
+			redirect(base_url());
+		}
+		
 		$this->load->model('account_model');
 		$user = $this->account_model->getAccount("ma.account_email", $this->dataFB['email']);
 		

@@ -162,3 +162,32 @@ $('#modal-project-redeem-confirmation').delegate('#cancel-btn', 'click', functio
 	return false;
 });
 
+$('#load-more').delegate('a', 'click', function(){
+	var el = $(this);
+	if (el.data('working')) return false;
+	el.data('working', true);
+	
+	el.text('Loading...');
+	
+	var tc = el.attr('data-tc');
+	var cid = $('#list-comments').find('li#comment').last().attr('data-cid');
+	var pid = el.attr('data-pid');
+	$.post('/ajax/getProjectComment', {
+		cid : cid,
+		pid : pid
+	}, function(data){
+		
+		$('#list-comments').append(data);
+		
+		el.data('working', false);		
+		var curr_len = $('#list-comments').find('li#comment').length;
+		if (tc == curr_len){
+			el.remove();
+		}
+		
+		el.text('Load More');
+		
+	}, 'html');
+
+	return false;
+});

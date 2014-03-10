@@ -199,6 +199,13 @@ class Welcome extends CI_Controller {
 		print_r($data);
 		echo '</pre>';
 	}
+
+	function regex_src(){
+		preg_match('/href="([^"]+)"/', '<link href="'.cdn_url().'css/settings.css" rel="stylesheet" type="text/css">', $matches);
+		echo '<pre>';
+		print_r($matches);
+		echo '</pre>';
+	}
 	
 }
 
