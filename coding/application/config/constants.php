@@ -104,6 +104,18 @@ if (ENVIRONMENT == "production"){
 }
 
 
+/* API INSTAGRAM */
+if (ENVIRONMENT == "production"){
+	define('INSTAGRAM_CLIENT_ID', 'c46c88e5c2b6435d803146350644cfd0');
+	define('INSTAGRAM_CLIENT_SECRET', 'a65830e5441e4e6c98aff32beea6c91e');
+	define('INSTAGRAM_CALLBACK', 'http://activorm.com/auth/instagram_connect');
+}else{
+	define('INSTAGRAM_CLIENT_ID', 'c5a14099eab24a6fb79a53d3fc808900');
+	define('INSTAGRAM_CLIENT_SECRET', 'deda9e32ced245778b62021f53c02287');
+	define('INSTAGRAM_CALLBACK', 'http://activorm.local/auth/instagram_connect');
+}
+
+
 /*NOMOR REKENING*/
 define('REK_BCA', 1);
 define('BCA_REKENING_NOMOR', '7090258791');
