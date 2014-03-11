@@ -16,7 +16,29 @@ class Account_model extends CI_Model{
 		
 		$sql = "
 		SELECT
-		ma.* 
+		ma.account_id,
+		ma.account_type,
+		ma.account_name,
+		ma.account_email,
+		ma.account_password,
+		ma.account_temp_password,
+		ma.account_primary_photo,
+		ma.city_id,
+		ma.zip_code,
+		ma.gender,
+		ma.birthday,
+		ma.phone_number,
+		ma.card_number,
+		ma.address,
+		ma.province_id,
+		ma.kabupaten_id,
+		ma.kecamatan_id,
+		ma.kelurahan_id,
+		ma.account_live,
+		ma.account_active,
+		ma.verification_code,
+		ma.register_step,
+		ma.hash
 		FROM member__account ma
 		WHERE 1
 		$where_account_type
@@ -46,7 +68,29 @@ class Account_model extends CI_Model{
 		
 		$sql = "
 		SELECT
-		ma.* 
+		ma.account_id,
+		ma.account_type,
+		ma.account_name,
+		ma.account_email,
+		ma.account_password,
+		ma.account_temp_password,
+		ma.account_primary_photo,
+		ma.city_id,
+		ma.zip_code,
+		ma.gender,
+		ma.birthday,
+		ma.phone_number,
+		ma.card_number,
+		ma.address,
+		ma.province_id,
+		ma.kabupaten_id,
+		ma.kecamatan_id,
+		ma.kelurahan_id,
+		ma.account_live,
+		ma.account_active,
+		ma.verification_code,
+		ma.register_step,
+		ma.hash
 		FROM member__account ma
 		WHERE 1
 		$where_account_type

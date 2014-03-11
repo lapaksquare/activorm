@@ -75,7 +75,19 @@
         </thead>
         <tbody>
         	
-        	<?php foreach($members as $k=>$v){ ?>
+        	<?php /*
+        	echo '<pre>';
+			print_r($members);
+        	echo '</pre>'; */
+        	foreach($members as $k=>$v){ 
+        		
+				if ($v->cek_free_plan == 0){
+					$jml_free_plan = 3;
+				}else{
+					$jml_free_plan = ($v->jml_free_plan <= 0) ? 0 : $v->jml_free_plan;
+				}
+				
+        		?>
           <tr>
             <td><?php echo $v->business_id; ?> </td>
             <td><?php echo $v->account_id; ?></td>
@@ -84,7 +96,7 @@
             <td><span id="cu_point"><?php echo $v->point; ?></span> Point
             	<hr style="margin:8px 0 3px;" />
             	<?php 
-            	$jml_free_plan = ($v->jml_free_plan <= 0) ? 0 : $v->jml_free_plan;
+            	//$jml_free_plan = ($v->jml_free_plan <= 0) ? 0 : $v->jml_free_plan;
             	?>
             	<small><?php echo $jml_free_plan; ?> Project Free Left</small>
             	</td>

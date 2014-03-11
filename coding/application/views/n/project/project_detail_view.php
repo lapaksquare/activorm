@@ -52,7 +52,16 @@
 	    	<div class="panel panel-default">
 			  <div class="panel-body">
 			    <ul style="margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;">
-			    	<li><?php echo $this->project->jml_free_plan; ?> Project free left</li>
+			    	
+			    	<?php 
+			    	if ($this->project->cek_free_plan == 0){
+						$jml_free_plan = 3;
+					}else{
+						$jml_free_plan = ($this->project->jml_free_plan <= 0) ? 0 : $this->project->jml_free_plan;
+					}
+			    	?>
+			    	
+			    	<li><?php echo $jml_free_plan; ?> Project free left</li>
 			    	<li>Jumlah Point : <?php echo $this->project->jml_point; ?> Point</li>
 			    </ul>
 			  </div>

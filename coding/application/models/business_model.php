@@ -17,7 +17,20 @@ class Business_model extends CI_Model{
 		
 		$sql = "
 		SELECT
-		bp.* 
+		bp.business_id,
+		bp.business_name,
+		bp.business_uri,
+		bp.business_description,
+		bp.business_billing_address,
+		bp.business_needs,
+		bp.contact_person,
+		bp.contact_number,
+		bp.position_inthe_company,
+		bp.website,
+		bp.merchant_logo,
+		bp.business_live,
+		bp.business_active,
+		bp.show_homepage
 		FROM business__profile bp
 		$rel_join
 		WHERE 1

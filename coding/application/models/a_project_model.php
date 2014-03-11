@@ -95,7 +95,8 @@ class A_project_model extends CI_Model{
 		bp.business_name,
 		brm.account_id,
 		IFNULL(mp.point, 0) jml_point,
-		IFNULL(pf.jml_free, 0) jml_free_plan
+		IFNULL(pf.jml_free, 0) jml_free_plan,
+		IFNULL(pf.account_id, 0) cek_free_plan
 		FROM
 		project__profile pp
 		JOIN business__profile bp ON

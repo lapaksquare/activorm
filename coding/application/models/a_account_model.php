@@ -95,7 +95,8 @@ class A_account_model extends CI_Model{
 			ma.account_email,
 			ma.account_live,
 			IFNULL(mp.point, 0) point,
-			IFNULL(pf.jml_free, 0) jml_free_plan
+			IFNULL(pf.jml_free, 0) jml_free_plan,
+			IFNULL(pf.account_id, 0) cek_free_plan
 			FROM
 			business__profile bp
 			JOIN business__rel_member brm ON
