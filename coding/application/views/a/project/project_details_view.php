@@ -142,11 +142,11 @@
 										//if ( ($server_start >= $server_end && $server_start <= $tiket_enddate) || $this->input->get_post('tiketstart') == 1 ){
 										if (
 											$project_period < $project_now || 
-											in_array($this->project->project_live, array('Draft', 'Offline')) ||
+											in_array($this->project->project_live, array('Draft', 'Offline', 'Closed')) ||
 											!empty($project_win_tiket)
 										){	
 											//redirect(base_url() . '404');
-											if ($project_period < $project_now || !empty($project_win_tiket)) { $stoped = 1;
+											if ($project_period < $project_now || !empty($project_win_tiket) || $this->project->project_live == "Closed") { $stoped = 1;
 									?>
 									
 									<h4 class="project_details_h4">The Project has Ended</h4>		
