@@ -43,7 +43,12 @@ class Actions extends MY_Controller {
 				$type_step = $v->type_step;
 				list($type_step) = explode("_", $v->type_step);
 				
-				//echo $type_step;die();
+				/*
+				echo $type_step;
+				echo '<pre>';
+				print_r($v);
+				echo '</pre>';
+				die();*/
 				
 				switch($type_step){
 					
@@ -89,6 +94,20 @@ class Actions extends MY_Controller {
 							$message = "Oops you already did this action with the same account before.";
 						}
 						break; 
+					
+					// instagram
+					case "instagram-follow" :
+						$return = $this->checkInstagramFollow($v); 
+						if ($return == 0){
+							$message = "Follow Instagram Account action failed caused by session timeout or you follow your own account. Please try again.";
+						}
+						break;
+					case "instagram-like" :
+						$return = $this->checkInstagramLikePhoto($v); 
+						if ($return == 0){
+							$message = "Like Instagram failed caused by session timeout or you missed to hit Like button before continue. Please try again.";
+						}
+						break;
 						
 				}
 				
@@ -302,6 +321,75 @@ class Actions extends MY_Controller {
 		
 		die();	
 		*/
+	}
+
+	function checkInstagramFollow($data){
+		$this->load->library('instagram_library');
+		
+		// set user's accesstoken (can be received after authentication)
+		$this->instagram_library->instagram->setAccessToken($data->access_token);
+		 
+		// follow user (snoopdogg)
+		$result = $this->instagram_library->instagram->modifyRelationship('follow', $data->user->id);
+		 
+		// receive the list of users this user follows
+		//$follows = $this->instagram_library->instagram->getUserFollows();
+		
+		/*
+		echo '<pre>';
+		print_r($result);
+		echo '</pre>';
+		*/
+		
+		//die();
+		
+		// log
+		$this->addLogData(array(
+			'account_id' => $this->session->userdata('account_id'),
+			'log_name' => 'checkInstagramFollow - InstagramFollow',
+			'log_detail' => json_encode($result)
+		));		
+		
+		if ($result->meta->code === 200) {
+			return 1;
+		}
+		
+		return 0;
+	}
+	
+	function checkInstagramLikePhoto($data){
+		$this->load->library('instagram_library');
+		
+		// set user's accesstoken (can be received after authentication)
+		$this->instagram_library->instagram->setAccessToken($data->social_oauth_data->access_token);
+		 
+		// follow user (snoopdogg)
+		$id = $data->photo_data->media_id;
+		$result = $this->instagram_library->instagram->likeMedia($id);
+		 
+		// receive the list of users this user follows
+		//$follows = $this->instagram_library->instagram->getUserFollows();
+		
+		/*
+		echo '<pre>';
+		print_r($result);
+		echo '</pre>';
+	
+		die();
+		*/
+			
+		// log
+		$this->addLogData(array(
+			'account_id' => $this->session->userdata('account_id'),
+			'log_name' => 'checkInstagramLikePhoto - InstagramLikePhoto',
+			'log_detail' => json_encode($result)
+		));		
+		
+		if ($result->meta->code === 200) {
+			return 1;
+		}
+		
+		return 0;
 	}
 
 	function premium(){

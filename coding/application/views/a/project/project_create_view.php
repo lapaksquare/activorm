@@ -530,7 +530,10 @@
 												$ig_url_photo = (!empty($project_actions_data_arr[$a]->photo_url)) ? $project_actions_data_arr[$a]->photo_url : "";
 												
 											?>
-											<div><input type="text" name="ig_url_photo" class="form-control" id="ig_url_photo" value="<?php echo $ig_url_photo; ?>" style="width:96%;margin-top:5px;display:inline-block;" placeholder="Instagram URL Photo" /></div>
+											<div>
+												<input type="text" name="ig_url_photo" class="form-control" id="ig_url_photo" value="<?php echo $ig_url_photo; ?>" style="width:96%;margin-top:5px;display:inline-block;margin-bottom:1px;" placeholder="Instagram URL Photo" />
+												<p class="help-block" style="margin-top: 0;font-size: 13px;">Ex: <a href="http://instagram.com/p/iI-CpnRO1g/" target="_blank">http://instagram.com/p/iI-CpnRO1g/</a></p>
+											</div>
 											<?php	
 											} ?>
 										</div>

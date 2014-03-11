@@ -710,6 +710,15 @@
 											<?php if ($check_active == 0){ ?>
 											</a>
 											<?php } ?>
+											
+											<?php if ($type_step == "instagram-like"){ 
+												$this->load->view('a/project/project_instagram_photo_view', array(
+													'photo' => $v->photo_data->url
+												));
+												?>
+											<a href="#" class="btn-view-photo" id="btn-view-photo-instagram">View Photo</a>
+											<?php } ?>
+											
 										</li>
 										<?php	
 										} 

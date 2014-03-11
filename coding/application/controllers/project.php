@@ -871,18 +871,22 @@ class Project extends MY_Controller{
 	function project_overview(){
 		$this->load->model('project_model');
 		
-		$this->project = $this->scache->read('cache#project#' . $this->segments[2]);
+		$this->project = $this->scache->read('c#p#' . $this->segments[2]);
+		
+		//print_r($this->project);
 		
 		if (empty($this->project)){
 		
 			$this->project = $this->project_model->getProject('pp.project_uri', $this->segments[2]);
 			
 			$this->project = json_encode( $this->project );
-			$this->scache->write('cache#project#' . $this->segments[2], $this->project, 60 * 60 * 24);
+			$this->scache->write('c#p#' . $this->segments[2], $this->project, 60 * 60 * 24);
 			
 		}	
 		
 		$this->project = json_decode($this->project);		
+		//echo '======';	
+		//print_r($this->project);die();	
 			
 		if (empty($this->project) || empty($this->segments[2]) || $this->project->project_active == 0) redirect(base_url() . '404');
 		

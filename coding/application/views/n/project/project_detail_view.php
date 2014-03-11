@@ -225,6 +225,16 @@
 	     					</div>
 	     					<br /><br />
 	     				<?php
+	     				}else if ($v->type_step == "instagram-like"){
+	     				?>
+	     					<br />
+	     					<div>
+	     					<input type="hidden" name="project_id" id="project_id" value="<?php echo $this->project->project_id; ?>" />
+	     					<input type="hidden" name="type" id="type" value="<?php echo $v->type_step; ?>" />
+	     					<input class="form-control" name="ig_url_photo" id="ig_url_photo" type="text" style="margin-bottom:8px;" value="<?php echo $v->photo_url; ?>" />
+	     					</div>
+	     					<br /><br />
+	     				<?php
 	     				}
 	     				?>
 	     				
