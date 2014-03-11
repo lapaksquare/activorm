@@ -45,6 +45,7 @@ class A_project_model extends CI_Model{
 		
 		pp.project_id,
 		pp.project_name,
+		pp.project_uri,
 		bp.business_id,
 		bp.business_name,
 		pp.project_live,

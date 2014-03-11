@@ -207,6 +207,10 @@ class Welcome extends CI_Controller {
 		echo '</pre>';
 	}
 	
+	function p(){
+		echo phpinfo();
+	}
+	
 }
 
 /* End of file welcome.php */

@@ -89,7 +89,7 @@
         		?>
         	<tr>
         		<td><?php echo date("d M Y, H:i", strtotime($v->project_posted)); ?></td>
-        		<td><?php echo ucwords($v->project_name); ?></td>
+        		<td><a href="<?php echo base_url(); ?>project/<?php echo $v->project_uri; ?>?Preview=1" target="_blank"><?php echo ucwords($v->project_name); ?></a></td>
         		<td><?php echo ucwords($v->business_name); ?></td>
         		<td>
         			<?php if ($project_live == "Online"){ ?>
