@@ -109,6 +109,10 @@ if (ENVIRONMENT == "production"){
 	define('INSTAGRAM_CLIENT_ID', 'c46c88e5c2b6435d803146350644cfd0');
 	define('INSTAGRAM_CLIENT_SECRET', 'a65830e5441e4e6c98aff32beea6c91e');
 	define('INSTAGRAM_CALLBACK', 'http://activorm.com/auth/instagram_connect');
+}else if (ENVIRONMENT == "development_server"){
+	define('INSTAGRAM_CLIENT_ID', 'fc7debc3994b4ceebb28be6ba5ce592c');
+	define('INSTAGRAM_CLIENT_SECRET', '7d337191d6194f31a1f21b3829def5d6');
+	define('INSTAGRAM_CALLBACK', 'http://master18.activorm.com/auth/instagram_connect');	
 }else{
 	define('INSTAGRAM_CLIENT_ID', 'c5a14099eab24a6fb79a53d3fc808900');
 	define('INSTAGRAM_CLIENT_SECRET', 'deda9e32ced245778b62021f53c02287');
