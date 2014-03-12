@@ -195,41 +195,43 @@
 										
 									}else{
 										
+										if (empty($project_win_tiket)){
 										
-										if (empty($this->project->project_file_data)){
-											
-			?>
-			
-											<div class="widget-actions-completed">
-												<div>
-													<h3>Thank You!</h3>
-													<span>Please check your ticket at <br />Activorm website.</span>
-													<a href="<?php echo base_url(); ?>tickets" target="_blank" class="btn-see-tiket">CHECK YOUR TICKET</a>	
-													<span>Or <a href="<?php echo base_url(); ?>prize" target="_blank">See Another Project</a></span>	
+											if (empty($this->project->project_file_data)){
+												
+				?>
+				
+												<div class="widget-actions-completed">
+													<div>
+														<h3>Thank You!</h3>
+														<span>Please check your ticket at <br />Activorm website.</span>
+														<a href="<?php echo base_url(); ?>tickets" target="_blank" class="btn-see-tiket">CHECK YOUR TICKET</a>	
+														<span>Or <a href="<?php echo base_url(); ?>prize" target="_blank">See Another Project</a></span>	
+													</div>
 												</div>
-											</div>
-			
-			<?php								
-											
-										}else{
-											
-											
-			?>
-			
-											<div class="widget-actions-completed">
-												<div>
-													<h3>Thank You!</h3>
-													<span>Please check your ticket at <br />Activorm website.</span>
-													<a href="<?php echo base_url(); ?>download?h=<?php echo sha1($this->project->project_id.$account_id.SALT); ?>&p=<?php echo $this->project->project_id; ?>&a=<?php echo $account_id; ?>" target="_blank" class="btn-see-tiket">CHECK YOUR TICKET</a>	
-													<span>Or <a href="<?php echo base_url(); ?>prize" target="_blank">See Another Project</a></span>	
+				
+				<?php								
+												
+											}else{
+												
+												
+				?>
+				
+												<div class="widget-actions-completed">
+													<div>
+														<h3>Thank You!</h3>
+														<span>Please check your ticket at <br />Activorm website.</span>
+														<a href="<?php echo base_url(); ?>download?h=<?php echo sha1($this->project->project_id.$account_id.SALT); ?>&p=<?php echo $this->project->project_id; ?>&a=<?php echo $account_id; ?>" target="_blank" class="btn-see-tiket">CHECK YOUR TICKET</a>	
+														<span>Or <a href="<?php echo base_url(); ?>prize" target="_blank">See Another Project</a></span>	
+													</div>
 												</div>
-											</div>
-			
-			<?php
+				
+				<?php
+												
+												
+											}
 											
-											
-										}
-										
+										}										
 										
 									}
 	
@@ -426,6 +428,25 @@
 					$wins .= ucwords( $v->account_name );
 				}
 				
+				if ($this->project->project_id == 116){
+				
+			?>
+			
+			<div class="widget-action-winner">
+				<div class="widget-action-winner-container">
+					<h3>Congratulations!</h3>
+					<span>This project has been closed. Check out the Winners <a href="http://koreanupdates.com/2014/03/12/pengumuman-100-jjangers-for-ku4mazing4nniversary/" target="_blank" style="color:#f9ec31;">here</a>.</span>
+					<?php if (!empty($account_id)){ ?>
+					<a href="<?php echo base_url(); ?>tickets" target="_blank" class="btn-see-tiket">CHECK YOUR TICKET</a>	
+					<?php } ?>
+				</div>
+				<a href="<?php echo base_url(); ?>prize" target="_blank" class="btn-join-project">JOIN ANOTHER PROJECT</a>	
+			</div>
+			
+			<?php	
+					
+				}else{
+				
 			?>
 			
 			<div class="widget-action-winner">
@@ -433,11 +454,16 @@
 					<h3>Congratulations!</h3>
 					<span>The Winner of This Project is</span>
 					<span class="winneris"><?php echo $wins; ?></span>
+					<?php if (!empty($account_id)){ ?>
+					<a href="<?php echo base_url(); ?>tickets" target="_blank" class="btn-see-tiket">CHECK YOUR TICKET</a>	
+					<?php } ?>
 				</div>
 				<a href="<?php echo base_url(); ?>prize" target="_blank" class="btn-join-project">JOIN ANOTHER PROJECT</a>	
 			</div>
 			
 			<?php	
+				
+				}
 				
 			}
 

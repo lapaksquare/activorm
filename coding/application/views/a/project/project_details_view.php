@@ -758,15 +758,37 @@
 								$wins .= ucwords( $v->account_name );
 							}
 							
+							if ($this->project->project_id == 116){
+								
+						?>
+							
+						<div class="wizard-project">
+							<div class="wizard-step step-4">
+								<h2>This project has been closed. Check out the Winners <a href="http://koreanupdates.com/2014/03/12/pengumuman-100-jjangers-for-ku4mazing4nniversary/" target="_blank" style="color:#f9ec31;">here</a>. Congratulations!</h2>
+								<?php if (!empty($account_id)){ ?>
+								<a class="btn btn-big btn-yellow" href="<?php echo base_url(); ?>tickets">Check Your Ticket</a>
+								<?php } ?>
+							</div>
+						<!-- .wizard-project --></div>	
+						
+						<?php		
+								
+							}else{
+							
 						?>
 						
 						<div class="wizard-project">
 							<div class="wizard-step step-4">
 								<h2>This project has been closed and <br />the winner is <b style="color:#f8ed31;"><?php echo $wins; ?></b>, Congratulations!</h2>
+								<?php if (!empty($account_id)){ ?>
+								<a class="btn btn-big btn-yellow" href="<?php echo base_url(); ?>tickets">Check Your Ticket</a>
+								<?php } ?>
 							</div>
 						<!-- .wizard-project --></div>
 						
 						<?php	
+						
+							}
 							
 						}
 						
