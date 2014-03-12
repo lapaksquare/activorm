@@ -199,6 +199,7 @@ class Tiket_model extends CI_Model{
 		project__tiket pt
 		WHERE 1
 		AND pt.tiket_barcode = ?
+		AND pt.iswin = 1
 		";
 		return $this->db->query($sql, array($tiket_barcode))->row();
 	}

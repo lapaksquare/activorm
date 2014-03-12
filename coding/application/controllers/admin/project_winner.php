@@ -80,6 +80,9 @@ class Project_winner extends MY_Admin_Access{
 		$this->data['member_winner'] = $member_winner;
 		
 		$jml_winner = $this->jml_winner = $this->project->jml_winner;
+		
+		//echo $jml_winner . '<br />' . count($member_winner);die();
+		
 		$limit = (count($member_winner) == 0) ? $jml_winner : ($jml_winner - count($member_winner));		
 				
 		$winner = $this->a_project_model->getRandomMemberWinner($project_id, $this->project->account_id, $limit);
