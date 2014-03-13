@@ -245,6 +245,7 @@ class Project extends MY_Controller{
 					$errors[] = "Share Twitter Format must be (120 Character)";
 				}
 			}
+			
 			//print_r($errors);die();
 			
 			//if ($validateProjectName == 1){
@@ -477,7 +478,8 @@ class Project extends MY_Controller{
 				if (!empty($actions_step_data)){
 					$project_actions_data = json_decode( $actions_step_data );
 					foreach($project_actions_data as $k=>$v){
-						$project_actions_data_arr[$v->type_step] = $v;
+						if (property_exists($v, "type_step"))
+							$project_actions_data_arr[$v->type_step] = $v;
 					}
 				}
 				$this->load->library('scache');
@@ -489,7 +491,8 @@ class Project extends MY_Controller{
 				
 				if (empty($actions_step_data)){
 					//$errors[] = 'Terjadi kesalahan dalam Social Media Connect. Koneksi '. $this->type_social . ' Anda mengalami masalah. Periksa kembali di menu <a href="'.base_url().'settings/socialmedia" target="_blank">Settings</a>.';
-					$errors[] = 'You must connect Facebook, Twitter to proceed this project. Connect your Social Network Account at <a href="'.base_url().'settings/socialmedia" target="_blank">Settings</a> or Something Error config social connect social media.';
+					$errors[] = 'You must connect Facebook, Twitter to proceed this project. Connect your Social Network Account at <a href="'.base_url().'settings/socialmedia" target="_blank">Settings</a>';
+					$errors[] = 'Something Error, Please check again actions that you choose.';
 				}else if (count($project_actions_data) < 3 || count($project_actions_data) >= 4){
 					$errors[] = 'You have to pick 3 Actions to create this project.';
 				}
@@ -625,6 +628,8 @@ class Project extends MY_Controller{
 		$break = 0;
 		
 		$this->type_social = '';
+		
+		if (empty($actions_step)) return array();
 		
 		foreach($actions_step as $k=>$v){
 			switch($k){

@@ -486,7 +486,7 @@
 								$project_actions_data_arr = json_decode( $project_actions_data_arr_session );
 							}
 							
-							echo '<pre>';print_r($project_actions_data_arr);echo '</pre>';
+							//echo '<pre>';print_r($project_actions_data_arr);echo '</pre>';
 														
 							foreach($actiondata as $k=>$v){
 							?>
@@ -527,12 +527,12 @@
 												
 												//echo '<pre>';print_r($project_actions_data_arr[$a]);echo '</pre>';
 												
-												$ig_url_photo = (!empty($project_actions_data_arr[$a]->photo_url)) ? $project_actions_data_arr[$a]->photo_url : "";
+												$ig_url_photo = (!empty($project_actions_data_arr[$a]) && property_exists($project_actions_data_arr[$a], "photo_url")) ? $project_actions_data_arr[$a]->photo_url : "";
 												
 											?>
 											<div>
 												<input type="text" name="ig_url_photo" class="form-control" id="ig_url_photo" value="<?php echo $ig_url_photo; ?>" style="width:96%;margin-top:5px;display:inline-block;margin-bottom:1px;" placeholder="Instagram URL Photo" />
-												<p class="help-block" style="margin-top: 0;font-size: 13px;">Ex: <a href="http://instagram.com/p/iI-CpnRO1g/" target="_blank">http://instagram.com/p/iI-CpnRO1g/</a></p>
+												<p class="help-block" style="margin-top: 0;font-size: 13px;">*) Must be filled.<br />Ex: <a href="http://instagram.com/p/iI-CpnRO1g/" target="_blank">http://instagram.com/p/iI-CpnRO1g/</a></p>
 											</div>
 											<?php	
 											} ?>
