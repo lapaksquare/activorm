@@ -436,9 +436,6 @@
 				<div class="widget-action-winner-container">
 					<h3>Congratulations!</h3>
 					<span>This project has been closed. Check out the Winners <a href="http://koreanupdates.com/2014/03/12/pengumuman-100-jjangers-for-ku4mazing4nniversary/" target="_blank" style="color:#f9ec31;">here</a>.</span>
-					<?php if (!empty($account_id)){ ?>
-					<a href="<?php echo base_url(); ?>tickets" target="_blank" class="btn-see-tiket">CHECK YOUR TICKET</a>	
-					<?php } ?>
 				</div>
 				<a href="<?php echo base_url(); ?>prize" target="_blank" class="btn-join-project">JOIN ANOTHER PROJECT</a>	
 			</div>
@@ -454,9 +451,6 @@
 					<h3>Congratulations!</h3>
 					<span>The Winner of This Project is</span>
 					<span class="winneris"><?php echo $wins; ?></span>
-					<?php if (!empty($account_id)){ ?>
-					<a href="<?php echo base_url(); ?>tickets" target="_blank" class="btn-see-tiket">CHECK YOUR TICKET</a>	
-					<?php } ?>
 				</div>
 				<a href="<?php echo base_url(); ?>prize" target="_blank" class="btn-join-project">JOIN ANOTHER PROJECT</a>	
 			</div>
