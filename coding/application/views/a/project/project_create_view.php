@@ -486,7 +486,7 @@
 								$project_actions_data_arr = json_decode( $project_actions_data_arr_session );
 							}
 							
-							//echo '<pre>';print_r($project_actions_data_arr);echo '</pre>';
+							echo '<pre>';print_r($project_actions_data_arr);echo '</pre>';
 														
 							foreach($actiondata as $k=>$v){
 							?>
