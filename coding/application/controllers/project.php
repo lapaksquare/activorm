@@ -840,6 +840,8 @@ class Project extends MY_Controller{
 	function project_overview(){
 		$this->load->model('project_model');
 		
+		if (empty($this->segments[2])) redirect(base_url() . '404');
+		
 		$this->project = $this->scache->read('cache#project#' . $this->segments[2]);
 		
 		if (empty($this->project)){
