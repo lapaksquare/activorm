@@ -21,10 +21,71 @@ body{
 	background-color:#fff;
 }
 
+.tutorial-inner-container{
+	width:100%;
+	height:818px;
+	position:relative;
+	overflow:hidden;
+}
+
+.tutorial-inner-container .section.bl-scale-down{
+	-webkit-transform: scale(0.5);
+	-moz-transform: scale(0.5);
+	-ms-transform: scale(0.5);
+	transform: scale(0.5);
+	opacity: 0;
+	z-index: 1000;
+}
+
 .tutorial-container{
 	border-bottom:38px solid #83b0ab;
-	position:relative;
+	position:absolute;
+	-webkit-transform: translateY(0);
+	-webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0s linear 0.5s;
+	-moz-transform: translateY(0);
+	-moz-transition: -moz-transform 0.5s ease-in-out, opacity 0s linear 0.5s;
+	transform: translateY(0);
+	transition: transform 0.5s ease-in-out, opacity 0s linear 0.5s;
+	-ms-transform: translateY(0);
+	
+	width: 100%;
+	top: 0;
+	left: 0;
+	height: 818px;
+	background-color:#fff;
+	z-index: 0;
+	
 }
+
+.tutorial-container-t1{
+	height:700px;
+	position:absolute;
+	top:100%;
+	left:0;
+	width:100%;
+	background-color:#fff;
+	z-index: 0;
+	opacity: 0;
+	-webkit-transform: translateY(0);
+	-webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0s linear 0.5s;
+	-moz-transform: translateY(0);
+	-moz-transition: -moz-transform 0.5s ease-in-out, opacity 0s linear 0.5s;
+	transform: translateY(0);
+	transition: transform 0.5s ease-in-out, opacity 0s linear 0.5s;
+	-ms-transform: translateY(0);
+}
+.ttt-show{
+	z-index: 1000;
+	opacity: 1;
+	-webkit-transform: translateY(-116%);
+	-webkit-transition: -webkit-transform 0.5s ease-in-out;
+	-moz-transform: translateY(-116%);
+	-moz-transition: -moz-transform 0.5s ease-in-out;
+	transform: translateY(-116%);
+	transition: transform 0.5s ease-in-out;
+	-ms-transform: translateY(-116%);
+}
+
 .head-tutorial{
 	text-align:center;
 	margin-left:-20px;
@@ -46,6 +107,7 @@ body{
 	right:150px;
 }
 .orang-container .text{
+	position:absolute;
 	text-align:center;
 	font-family:GothamMedium;
 	font-size:24px;
@@ -56,6 +118,14 @@ body{
 	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
 	-moz-transition: -moz-transform 0.3s, opacity 0.3s;
 	transition: transform 0.3s, opacity 0.3s;
+}
+.orang1 .text{
+	top: -120px;
+	left: 100px;
+}
+.orang2 .text{
+	top: -120px;
+	right: 100px;
 }
 .orang-container .text span{
 	font-family:GothamBold;
@@ -129,4 +199,62 @@ body{
 	-webkit-transform: translateX(-50%) translateY(-50%) scale(1);
 	-moz-transform: translateX(-50%) translateY(-50%) scale(1);
 	transform: translateX(-50%) translateY(-50%) scale(1);
+}
+
+
+.btn-remove {
+	opacity: 0.4;
+	width: 28px;
+	height: 28px;
+	border-radius:50%;
+	line-height:26px;
+	position: absolute;
+	top: 10px;
+	right: 30px;
+	background: #999;
+	text-align: center;
+	cursor: pointer;
+}
+.btn-remove:before {
+	content: 'x';
+	font-size:20px;
+	color: #fff;
+	font-weight: 400;
+	font-family: Arial, sans-serif;
+}
+
+
+.tutorial-container-t1-body{
+	width:940px;
+	margin:0 auto;
+}
+.menu-tutorial{
+	border-bottom:3px solid #3fa99f;
+}
+.menu-tutorial ul{
+	margin:30px 0 20px 0;
+	padding:0;
+}
+.menu-tutorial ul li{
+	margin:0 52px;
+	text-align:center;
+	width:200px;
+	padding:8px 20px;
+	background-color:#0d8480;
+	color:#fff;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+	font-family:GothamNarrowMedium;
+}
+.menu-tutorial ul li.btn-active{
+	background-color:#cf5643;
+}
+
+.tutorial-body-str{
+	padding:20px 45px;
+}
+
+.img-ot{
+	display:none;
 }

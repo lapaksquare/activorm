@@ -16,6 +16,9 @@ class Tutorial extends MY_Controller{
 		$css = array(
 			'<link rel="stylesheet" type="text/css" href="'.cdn_url().'css/tutorial.css" />'
 		);
+		$js = array(
+			'<script type="text/javascript" src="'.cdn_url().'js/tutorial.js"></script>'
+		);
 		$this->_default_param($css, $js, $meta, $title);
 		$this->load->view('a/tutorial/tutorial_view', $this->data);
 	}
