@@ -27,7 +27,7 @@ $(function(){
 		var idmenu_tmp = el.attr('data-id');
 		if (idmenu == idmenu_tmp) return false;
 		idmenu = el.attr('data-id');
-		var c = el.closest('.tutorial-container-t1-body');
+		var c = el.closest('.menu-tutorial').next();
 		el.siblings().removeClass('btn-active');
 		el.addClass('btn-active');
 		$('.img-ot').fadeOut();

@@ -22,16 +22,16 @@
 	
 	<div class="section tutorial-container-t1" id="t_user">
 		
-		<div class="btn-remove" id="btn-remove"></div>
+		<div class="menu-tutorial" id="menu-tutorial-t1">
+			<ul>
+				<li class="btn-active" data-id="#img-ot1">Sign up & Activation</li>
+				<li data-id="#img-ot2">Join the project</li>
+				<li data-id="#img-ot3">Tickets</li>
+			</ul>
+			<div class="btn-remove" id="btn-remove"></div>
+		</div>
 		
 		<div class="tutorial-container-t1-body">
-			<div class="menu-tutorial" id="menu-tutorial-t1">
-				<ul>
-					<li class="btn-active" data-id="#img-ot1">Sign up & Activation</li>
-					<li data-id="#img-ot2">Join the project</li>
-					<li data-id="#img-ot3">Tickets</li>
-				</ul>
-			</div>
 			<div class="tutorial-body-str">
 				<img src="<?php echo cdn_url(); ?>images/tutorial/tuser1.jpg" class="img-ot1 img-ot" id="img-ot1" style="display:block;" />
 				<img src="<?php echo cdn_url(); ?>images/tutorial/tuser2.jpg" class="img-ot2 img-ot" id="img-ot2" />
@@ -43,16 +43,16 @@
 	
 	<div class="section tutorial-container-t1" id="t_business">
 		
-		<div class="btn-remove" id="btn-remove"></div>
+		<div class="menu-tutorial" id="menu-tutorial-t1">
+			<ul>
+				<li class="btn-active" data-id="#img-ot1">Business Registration</li>
+				<li data-id="#img-ot2">Social Media Connect</li>
+				<li data-id="#img-ot3">Create Project</li>
+			</ul>
+			<div class="btn-remove" id="btn-remove"></div>
+		</div>
 		
 		<div class="tutorial-container-t1-body">
-			<div class="menu-tutorial" id="menu-tutorial-t1">
-				<ul>
-					<li class="btn-active" data-id="#img-ot1">Business Registration</li>
-					<li data-id="#img-ot2">Social Media Connect</li>
-					<li data-id="#img-ot3">Create Project</li>
-				</ul>
-			</div>
 			<div class="tutorial-body-str">
 				<img src="<?php echo cdn_url(); ?>images/tutorial/tbusiness1.jpg" class="img-ot1 img-ot" id="img-ot1" style="display:block;" />
 				<img src="<?php echo cdn_url(); ?>images/tutorial/tbusiness2.jpg" class="img-ot2 img-ot" id="img-ot2" />

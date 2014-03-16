@@ -23,7 +23,7 @@ body{
 
 .tutorial-inner-container{
 	width:100%;
-	height:818px;
+	height:760px;
 	position:relative;
 	overflow:hidden;
 }
@@ -51,7 +51,7 @@ body{
 	width: 100%;
 	top: 0;
 	left: 0;
-	height: 818px;
+	height: 760px;
 	background-color:#fff;
 	z-index: 0;
 	
@@ -203,15 +203,14 @@ body{
 
 
 .btn-remove {
-	opacity: 0.4;
-	width: 28px;
-	height: 28px;
-	border-radius:50%;
-	line-height:26px;
+	opacity: .8;
+	width: 45px;
+	height: 45px;
+	line-height: 40px;
 	position: absolute;
-	top: 10px;
-	right: 30px;
-	background: #999;
+	top: 51px;
+	right: 0;
+	background: #d63333;
 	text-align: center;
 	cursor: pointer;
 }
@@ -229,26 +228,35 @@ body{
 	margin:0 auto;
 }
 .menu-tutorial{
-	border-bottom:3px solid #3fa99f;
+	text-align: center;
+	background: #eef4fa;
+	border-bottom: 1px solid #bfcad6;
+	height: 44px;
+	margin-top: 52px;
 }
 .menu-tutorial ul{
 	margin:30px 0 20px 0;
 	padding:0;
 }
 .menu-tutorial ul li{
-	margin:0 52px;
 	text-align:center;
-	width:200px;
-	padding:8px 20px;
-	background-color:#0d8480;
-	color:#fff;
-	border-radius:8px;
+	width:280px;
+	padding:8px 20px 7px;
+	background-color:#eef4fa;
+	color:#637485;
 	display:inline-block;
 	cursor:pointer;
 	font-family:GothamNarrowMedium;
+	margin-left: -4px;
+	border-bottom: 1px solid #bfcad6;
 }
 .menu-tutorial ul li.btn-active{
-	background-color:#cf5643;
+	background-color: #fff;
+	color: #d74025;
+	border-left: 1px solid #bfcad6;
+	border-right: 1px solid #bfcad6;
+	border-bottom: none;
+	padding:8px 20px;
 }
 
 .tutorial-body-str{
