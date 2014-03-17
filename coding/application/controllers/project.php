@@ -879,6 +879,9 @@ class Project extends MY_Controller{
 		$this->project = $this->scache->read('c#p#' . $this->segments[2]);
 		
 		//print_r($this->project);
+		if (empty($this->segments[2])) redirect(base_url() . '404');
+		
+		$this->project = $this->scache->read('cache#project#' . $this->segments[2]);
 		
 		if (empty($this->project)){
 		

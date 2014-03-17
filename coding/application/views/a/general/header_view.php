@@ -17,6 +17,9 @@
 						<a class="navbar-brand" href="<?php echo base_url(); ?>"><img src="<?php echo cdn_url(); ?>img/logo.png" alt="activorm" /></a>
 					</div>
 					
+						
+						
+					
 					<?php 
 					if (!empty($this->access->member_account)){
 					?>
@@ -26,7 +29,10 @@
 						<ul class="nav navbar-nav">
 						
 							<?php /*
-							<li><a href="<?php echo base_url(); ?>guestlist"><span class="navbar-gl">Guest List</span></a></li> */ ?>
+							<li><a href="<?php echo base_url(); ?>guestlist"><span class="navbar-gl">Guest List</span></a></li> */ ?>	
+							
+							<li><a href="<?php echo base_url(); ?>tutorial"><span class="navbar-gl">Tutorial</span></a></li>
+							
 						<?php 
 						if ($this->access->member_account->account_type == "business" || ( !empty($menu) && $menu == 'business' ) ){
 						?>
@@ -160,6 +166,8 @@
 							<?php /*
 							<li><a href="<?php echo base_url(); ?>guestlist"><span class="navbar-gl">Guest List</span></a></li>
 							*/ ?>
+							
+							<li><a href="<?php echo base_url(); ?>tutorial"><span class="navbar-gl">Tutorial</span></a></li>
 							
 						<?php 
 						if (!empty($menu) && $menu == 'business'){
