@@ -487,6 +487,7 @@
 							}
 							
 							//echo '<pre>';print_r($project_actions_data_arr);echo '</pre>';
+							$project_actions_data_arr = (array)$project_actions_data_arr;	
 														
 							foreach($actiondata as $k=>$v){
 							?>
