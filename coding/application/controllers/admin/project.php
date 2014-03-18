@@ -290,7 +290,7 @@ class Project extends MY_Admin_Access{
 					
 					/* PROJECT FREE PLAN COUNT */
 					$this->load->model('project_model');
-					if (empty($project->premium_plan_type)){
+					if ($project->premium_plan == 0){
 						$freeplan = $this->project_model->getCountFreePlan($aid);
 						$freeplan -= 1;
 						$this->project_model->updateCountFreePlan($aid, $freeplan);
