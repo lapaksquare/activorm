@@ -268,7 +268,7 @@ class Project extends MY_Controller{
 				$errors[] = "Terjadi kesalahan dalam pengaturan periode";
 			}
 			
-			if ($points_user < $points_balance && !empty($preview_btn)){
+			if ($premium_plan == 1 && $points_user < $points_balance && !empty($preview_btn)){
 				$errors[] = "You don't have enough balance, please <a href='".base_url()."dashboard/pointstopup'>Top Up</a>";
 			}
 			
