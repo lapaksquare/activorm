@@ -874,6 +874,8 @@ class Project extends MY_Controller{
 	}
 	
 	function project_overview(){
+		$this->load->library('instagram_library');
+		
 		$this->load->model('project_model');
 		
 		$this->project = $this->scache->read('c#p#' . $this->segments[2]);

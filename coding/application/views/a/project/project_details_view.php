@@ -694,7 +694,23 @@
 										?>
 										
 										<li class="col-sm-4">
+											
 											<?php if ($check_active == 0){ ?>
+												
+												
+												<?php if ($type_step == "instagram-like"){ 
+													$this->load->view('a/project/project_instagram_photo_view', array(
+														'photo' => $v->photo_data->url,
+														'link_act' => $url_string,
+														'media_id' => $v->photo_data->media_id,
+													));
+													?>
+												<?php /*<a href="#" class="btn-view-photo" id="btn-view-photo-instagram">View Photo</a>*/ ?>
+												<?php 
+													
+												} ?>
+												
+												
 											<a <?php echo $script; ?> href="<?php echo $url_string; ?>" data-id="<?php echo $v->type_step; ?>-container" <?php if ($script == ""){ ?>id="<?php echo $v->type_step; ?>-btn" <?php } ?>>
 											<?php } ?>
 												<div class="step-ico <?php echo $class; ?>">
@@ -711,13 +727,7 @@
 											</a>
 											<?php } ?>
 											
-											<?php if ($type_step == "instagram-like"){ 
-												$this->load->view('a/project/project_instagram_photo_view', array(
-													'photo' => $v->photo_data->url
-												));
-												?>
-											<a href="#" class="btn-view-photo" id="btn-view-photo-instagram">View Photo</a>
-											<?php } ?>
+											
 											
 										</li>
 										<?php	
