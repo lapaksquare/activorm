@@ -877,24 +877,24 @@ class Project extends MY_Controller{
 		$this->load->library('instagram_library');
 		
 		$this->load->model('project_model');
-		
-		$this->project = $this->scache->read('c#p#' . $this->segments[2]);
-		
+				
 		//print_r($this->project);
 		if (empty($this->segments[2])) redirect(base_url() . '404');
 		
-		$this->project = $this->scache->read('cache#project#' . $this->segments[2]);
+		//$this->project = $this->scache->read('cache#project#' . $this->segments[2]);
+		$this->project = $this->cache->get('c#p#' . $this->segments[2]);
 		
 		if (empty($this->project)){
 		
 			$this->project = $this->project_model->getProject('pp.project_uri', $this->segments[2]);
 			
-			$this->project = json_encode( $this->project );
-			$this->scache->write('c#p#' . $this->segments[2], $this->project, 60 * 60 * 24);
+			//$this->project = json_encode( $this->project );
+			//$this->scache->write('c#p#' . $this->segments[2], $this->project, 60 * 60 * 24);
+			$this->cache->write($this->project, 'c#p#' . $this->segments[2], 60 * 60 * 24);
 			
 		}	
 		
-		$this->project = json_decode($this->project);		
+		//$this->project = json_decode($this->project);		
 		//echo '======';	
 		//print_r($this->project);die();	
 			
@@ -932,14 +932,16 @@ class Project extends MY_Controller{
 		$this->data['project_actions'] = $this->project_model->checkProjectActions($project_id, $account_id);
 		
 		// project prize
-		$project_prize = $this->scache->read('cache#getProjectPrice#' . $project_id);
+		//$project_prize = $this->scache->read('cache#getProjectPrice#' . $project_id);
+		$project_prize = $this->cache->get('cache#getProjectPrice#' . $project_id);
 		if (empty($project_prize)){
 			$project_prize = $this->project_model->getProjectPrice($project_id);
 			
-			$project_prize = json_encode( $project_prize );
-			$this->scache->write('cache#getProjectPrice#' . $project_id, $project_prize, 60 * 60 * 24);
+			//$project_prize = json_encode( $project_prize );
+			//$this->scache->write('cache#getProjectPrice#' . $project_id, $project_prize, 60 * 60 * 24);
+			$this->cache->write($project_prize, 'cache#getProjectPrice#' . $project_id, 60 * 60 * 24);
 		}
-		$project_prize = json_decode($project_prize);		
+		//$project_prize = json_decode($project_prize);		
 		$this->data['project_prize'] = $project_prize;
 		
 		// jumlah tiket
@@ -952,7 +954,8 @@ class Project extends MY_Controller{
 		// get social media account current
 		$this->load->model('socialmedia_model');
 		
-		$socialmediaconnect = $this->scache->read('cache#socialmedia_connect#' . $account_id_project);
+		//$socialmediaconnect = $this->scache->read('cache#socialmedia_connect#' . $account_id_project);
+		$socialmediaconnect = $this->cache->get('cache#socialmedia_connect#' . $account_id_project);
 		if (empty($socialmediaconnect)){
 			$socialmedia = $this->socialmedia_model->socialmedia_connect($account_id_project);
 			$socialmedia_cols = array();
@@ -980,15 +983,17 @@ class Project extends MY_Controller{
 				);
 			}
 			
+			$socialmediaconnect = $socialmedia_cols;
+			
 			//echo '<pre>';print_r($socialmedia_cols);echo '</pre>';die();
 			
-			$socialmediaconnect = json_encode( $socialmedia_cols );
-			$this->scache->write('cache#socialmedia_connect#' . $account_id_project, $socialmediaconnect, 60 * 60 * 24);
-			
+			//$socialmediaconnect = json_encode( $socialmedia_cols );
+			//$this->scache->write('cache#socialmedia_connect#' . $account_id_project, $socialmediaconnect, 60 * 60 * 24);
+			$this->cache->write($socialmediaconnect, 'cache#socialmedia_connect#' . $account_id_project, 60 * 60 * 24);
 		}
-		$socialmediaconnect = json_decode($socialmediaconnect);
+		//$socialmediaconnect = json_decode($socialmediaconnect);
 		$this->data['socialmedia'] = $socialmediaconnect;
-				
+								
 		// butuh required
 		$socialmedia_user = $this->socialmedia_model->socialmedia_connect($account_id);
 		$socialmedia_required = $socialmedia_account_required = array();
@@ -1066,14 +1071,16 @@ class Project extends MY_Controller{
 		$this->data['total_comments'] = $this->comment_model->total_comment;
 		
 		// project photos
-		$this->project_photos = $this->scache->read('cache#getProjectPhotos#' . $project_id);
+		//$this->project_photos = $this->scache->read('cache#getProjectPhotos#' . $project_id);
+		$this->project_photos = $this->cache->get('cache#getProjectPhotos#' . $project_id);
 		if (empty($this->project_photos)){
 			$this->project_photos = $this->project_model->getProjectPhotos($project_id);
 			
-			$this->project_photos = json_encode( $this->project_photos );
-			$this->scache->write('cache#getProjectPhotos#' . $project_id, $this->project_photos, 60 * 60 * 24);
+			//$this->project_photos = json_encode( $this->project_photos );
+			//$this->scache->write('cache#getProjectPhotos#' . $project_id, $this->project_photos, 60 * 60 * 24);
+			$this->cache->write($this->project_photos, 'cache#getProjectPhotos#' . $project_id, 60 * 60 * 24);
 		}
-		$this->project_photos = json_decode($this->project_photos);		
+		//$this->project_photos = json_decode($this->project_photos);		
 		$metaImage = $this->project->project_primary_photo;
 		if (!empty($this->project_photos)){
 			$metaImage = $this->project_photos[0]->photo_file;

@@ -1230,9 +1230,9 @@
 							
 							<?php 
 							foreach($socialmedia as $k=>$v){
-								if (empty($v->link) || empty($v->name)) continue;
+								if (empty($v['link']) || empty($v['name'])) continue;
 							?>
-							<li class="col-sm-12 col-xs-6"><a href="<?php echo $v->link; ?>" target="_blank"><i class="icon-<?php echo $v->icon; ?>"></i> <?php echo $v->name; ?></a></li>
+							<li class="col-sm-12 col-xs-6"><a href="<?php echo $v['link']; ?>" target="_blank"><i class="icon-<?php echo $v['icon']; ?>"></i> <?php echo $v['name']; ?></a></li>
 							<?php
 							}
 							?>
@@ -1256,12 +1256,16 @@
 <?php $this->load->view('a/project/project_modal_thankyou_view', $this->data); ?>					
 <?php }else{
 	
+	if (!empty($this->access->business_account->business_id) && !empty($this->project->business_id)){
+	
 	if ($this->project->business_id == $this->access->business_account->business_id){
 	
 ?>
 <?php $this->load->view('a/project/project_topup_view', $this->data); ?>					
 <?php	
 
+	}
+	
 	}
 
 } ?>

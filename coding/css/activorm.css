@@ -3800,18 +3800,18 @@ body.alt #footer {
 }
 #modal-instagram-photo .modal-body{
 	padding: 5px 30px 30px;
-	border-bottom: 2px solid #c7c7c7;
+	border-bottom: 1px solid #c7c7c7;
 }
 #modal-instagram-photo .close{
 	position: absolute;
-	top: 1px;
-	left: 0px;
-	border-radius: 10px 0 0 0;
+	top: 8px;
+	right: 5px;
 }
 #modal-instagram-photo .modal-footer{
 	background: #fff;
 	border-radius: 0 0 10px 10px;
 	margin-top:0;
+	height: 71px;
 }
 #modal-instagram-photo .instagram-act-container{
 	text-align:left;
@@ -3825,10 +3825,12 @@ body.alt #footer {
 	font-weight: bold;
 	padding-left: 24px;
 	float:left;
-	margin-top: 10px;
+	margin-top: 5px;
 }
 .ig-btn-like{
 	float:right;
+	position: relative;
+	top: -5px;
 }
 .ig-btn-like a i{
 	background-image:url('../img/like-ig.png');
