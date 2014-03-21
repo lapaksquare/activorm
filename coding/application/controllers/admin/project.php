@@ -98,6 +98,7 @@ class Project extends MY_Admin_Access{
 		$project_tags = $this->input->get_post('project_tags');
 		$project_live = $this->input->get_post('project_live');
 		$project_active = $this->input->get_post('project_active');
+		$jml_winner = $this->input->get_post('jml_winner');
 		/*input ==== end =====*/
 		
 		if (!empty($update)){
@@ -128,6 +129,10 @@ class Project extends MY_Admin_Access{
 			
 			if ($period < 7 || $period > 30){
 				$errors[] = "Terjadi kesalahan dalam pengaturan periode";
+			}
+			
+			if (empty($jml_winner) || $jml_winner < 1){
+				$errors[] = "Jumlah pemenang harus > 0";
 			}
 			
 			$this->load->library('util');
@@ -281,7 +286,8 @@ class Project extends MY_Admin_Access{
 					'project_tags' => $project_tags,
 					'project_live' => $project_live,
 					'project_active' => $project_active,
-					'project_actions_data' => $actions_string
+					'project_actions_data' => $actions_string,
+					'jml_winner' => $jml_winner
 				);
 				
 				if (!empty($project) && in_array($project->project_live, array('Offline', 'Draft', 'Closed')) && $project_live == "Online"){

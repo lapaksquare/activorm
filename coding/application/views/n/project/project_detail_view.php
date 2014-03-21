@@ -271,6 +271,13 @@
 	  </div>    
 	  
 	  <div class="form-group">
+	    <label for="project_tags" class="col-sm-2 control-label">Jumlah Winner</label>
+	    <div class="col-sm-10">
+	     	<input type="text" class="form-control" id="jml_winner" name="jml_winner" value="<?php echo $this->project->jml_winner; ?>" />
+	    </div>
+	  </div>    
+	  
+	  <div class="form-group">
 	    <label for="project_live" class="col-sm-2 control-label">Project Live</label>
 	    <div class="col-sm-10" >
 	    	
