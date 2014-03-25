@@ -56,6 +56,8 @@ class Tiket_model extends CI_Model{
 			bp.business_id = pp.business_id
 		WHERE 1
 		AND pt.account_id = ?
+		
+		GROUP BY pt.project_id
 		ORDER BY pt.lastupdate DESC
 		" . $limited;
 		
