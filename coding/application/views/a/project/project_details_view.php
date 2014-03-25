@@ -662,6 +662,17 @@
 													$class = "actions-twet-to-small";
 													$url_string = base_url() . 'actions/trigger_actions?' . $url;
 													break; 
+													
+												//instagram
+												case "instagram-follow" :
+													$class = "actions-instagram-follow-account-small";
+													$url_string = base_url() . 'actions/trigger_actions?' . $url;
+													break; 	
+													
+												case "instagram-like" :
+													$class = "actions-instagram-like-photo-small";
+													$url_string = base_url() . 'actions/trigger_actions?' . $url;
+													break; 		
 											}
 											// <span class="active"><i class="check"></i></span>
 										?>
@@ -683,7 +694,23 @@
 										?>
 										
 										<li class="col-sm-4">
+											
 											<?php if ($check_active == 0){ ?>
+												
+												
+												<?php if ($type_step == "instagram-like"){ 
+													$this->load->view('a/project/project_instagram_photo_view', array(
+														'photo' => $v->photo_data->url,
+														'link_act' => $url_string,
+														'media_id' => $v->photo_data->media_id,
+													));
+													?>
+												<?php /*<a href="#" class="btn-view-photo" id="btn-view-photo-instagram">View Photo</a>*/ ?>
+												<?php 
+													
+												} ?>
+												
+												
 											<a <?php echo $script; ?> href="<?php echo $url_string; ?>" data-id="<?php echo $v->type_step; ?>-container" <?php if ($script == ""){ ?>id="<?php echo $v->type_step; ?>-btn" <?php } ?>>
 											<?php } ?>
 												<div class="step-ico <?php echo $class; ?>">
@@ -699,6 +726,9 @@
 											<?php if ($check_active == 0){ ?>
 											</a>
 											<?php } ?>
+											
+											
+											
 										</li>
 										<?php	
 										} 
@@ -1200,9 +1230,9 @@
 							
 							<?php 
 							foreach($socialmedia as $k=>$v){
-								if (empty($v->link) || empty($v->name)) continue;
+								if (empty($v['link']) || empty($v['name'])) continue;
 							?>
-							<li class="col-sm-12 col-xs-6"><a href="<?php echo $v->link; ?>" target="_blank"><i class="icon-<?php echo $v->icon; ?>"></i> <?php echo $v->name; ?></a></li>
+							<li class="col-sm-12 col-xs-6"><a href="<?php echo $v['link']; ?>" target="_blank"><i class="icon-<?php echo $v['icon']; ?>"></i> <?php echo $v['name']; ?></a></li>
 							<?php
 							}
 							?>
@@ -1226,12 +1256,16 @@
 <?php $this->load->view('a/project/project_modal_thankyou_view', $this->data); ?>					
 <?php }else{
 	
+	if (!empty($this->access->business_account->business_id) && !empty($this->project->business_id)){
+	
 	if ($this->project->business_id == $this->access->business_account->business_id){
 	
 ?>
 <?php $this->load->view('a/project/project_topup_view', $this->data); ?>					
 <?php	
 
+	}
+	
 	}
 
 } ?>

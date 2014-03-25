@@ -63,7 +63,8 @@
 					if (empty($register_temp) || (!empty($register_temp) && ($register_temp['step'] == 1))){
 					?>
 					<div id="user-signup" class="modal-body" style="display:block;">
-						<h4 class="modal-title">Signup for Activorm</h4>
+						<h4 class="modal-title" style="margin-bottom: 0;">Signup for Activorm</h4>
+						<h5 style="margin-top: 5px;font-weight: normal;font-size: 14px;margin-bottom: 30px;">If you sign up as Merchant/Business <a href="<?php echo base_url(); ?>business/register">click here</a></h5>
 						
 						<?php 
 						$message_register_error = $this->session->userdata('message_register_error');

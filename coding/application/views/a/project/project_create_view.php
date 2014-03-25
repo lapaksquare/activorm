@@ -453,6 +453,20 @@
 										'label' => 'Tweet #hashtag',
 										'icon' => 'actions-twitter-tweet-hashtag'
 									)
+								),
+								'instagram' => array(
+									'instagram-follow' => array(
+										'value' => 'instagram-follow',
+										'name' => 'actions_step[instagram-follow]',
+										'label' => 'Follow @ {brand name}',
+										'icon' => 'actions-instagram-follow-account'
+									),
+									'instagram-like' => array(
+										'value' => 'instagram-like',
+										'name' => 'actions_step[instagram-like]',
+										'label' => 'Like Photo',
+										'icon' => 'actions-instagram-like-photo'
+									)
 								)
 							);
 							
@@ -473,6 +487,7 @@
 							}
 							
 							//echo '<pre>';print_r($project_actions_data_arr);echo '</pre>';
+							$project_actions_data_arr = (array)$project_actions_data_arr;	
 														
 							foreach($actiondata as $k=>$v){
 							?>
@@ -482,6 +497,8 @@
 								<div class="row">
 									
 									<?php foreach($v as $a=>$b){ 
+										
+										//echo '<pre>';print_r($b);echo '</pre>';
 										
 										//if (!empty($project_actions_data_arr[$a]) && !empty($project_actions_data_arr[$a]->custom_actions)) continue;
 										
@@ -506,8 +523,20 @@
 											
 											?>	
 												
-											<div>#<input type="textbox" name="project_hashtags" class="form-control" id="project_hashtags" value="<?php echo $project_hashtags; ?>" style="width:96%;margin-top:5px;display:inline-block;" placeholder="Insert Hashtag" /></div>
-											<?php } ?>
+											<div>#<input type="text" name="project_hashtags" class="form-control" id="project_hashtags" value="<?php echo $project_hashtags; ?>" style="width:96%;margin-top:5px;display:inline-block;" placeholder="Insert Hashtag" /></div>
+											<?php }else if ($a == "instagram-like"){
+												
+												//echo '<pre>';print_r($project_actions_data_arr[$a]);echo '</pre>';
+												
+												$ig_url_photo = (!empty($project_actions_data_arr[$a]) && property_exists($project_actions_data_arr[$a], "photo_url")) ? $project_actions_data_arr[$a]->photo_url : "";
+												
+											?>
+											<div>
+												<input type="text" name="ig_url_photo" class="form-control" id="ig_url_photo" value="<?php echo $ig_url_photo; ?>" style="width:96%;margin-top:5px;display:inline-block;margin-bottom:1px;" placeholder="Instagram URL Photo" />
+												<p class="help-block" style="margin-top: 0;font-size: 13px;">*) Must be filled.<br />Ex: <a href="http://instagram.com/p/iI-CpnRO1g/" target="_blank">http://instagram.com/p/iI-CpnRO1g/</a></p>
+											</div>
+											<?php	
+											} ?>
 										</div>
 									</div>
 									<?php } ?>

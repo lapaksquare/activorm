@@ -191,3 +191,10 @@ $('#load-more').delegate('a', 'click', function(){
 
 	return false;
 });
+
+
+$('#instagram-like-btn').click(function(){
+	var el = $(this);
+	$('#modal-instagram-photo').modal('show');
+	return false;
+});

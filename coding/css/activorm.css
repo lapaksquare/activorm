@@ -3352,8 +3352,19 @@ body.alt #footer {
 }
 
 
-
-
+/*instagram*/
+.actions-instagram-follow-account{
+	background-image:url('../img/actions/instagram/instagram-follow1.png') !important;
+}
+.actions-instagram-like-photo{
+	background-image:url('../img/actions/instagram/instagram-like-photo.png') !important;
+}
+.actions-instagram-follow-account-small span{
+	background-image:url('../img/actions/instagram/instagram-follow1-small.png') !important;
+}
+.actions-instagram-like-photo-small span{
+	background-image:url('../img/actions/instagram/instagram-like-photo-small.png') !important;
+}
 
 
 .benefits {
@@ -3735,4 +3746,100 @@ body.alt #footer {
 }
 .pricing-panel ul.pf li{
 	background-image:url('../img/premiumplan3.png');
+}
+
+
+.btn-view-photo{
+	margin: 0 3px;
+	padding: 0 5px;
+	line-height: 20px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	
+	color: #333 !important;
+	font-size:11px;
+	
+	border: 1px solid #ccc;
+	color: #333;
+	box-shadow: 0 1px 0 rgba(0,0,0,.05);
+	background-image: -moz-linear-gradient(bottom,#f6f6f6 0,#fcfcfc 100%);
+	background-image: -ms-linear-gradient(bottom,#f6f6f6 0,#fcfcfc 100%);
+	background-image: -o-linear-gradient(bottom,#f6f6f6 0,#fcfcfc 100%);
+	background-image: -webkit-linear-gradient(bottom,#f6f6f6 0,#fcfcfc 100%);
+	background-image: linear-gradient(to top,#f6f6f6 0,#fcfcfc 100%);
+	
+	position:absolute;
+	top:8px;
+	right:15px;
+}
+.btn-view-photo:hover{
+	border-color: #bfbfbf;
+	box-shadow: 0 1px 0 rgba(0,0,0,.10);
+}
+
+.btn-view-photo:focus{
+	border: 1px solid #ccc;
+	color: #333;
+	box-shadow: 0 1px 0 rgba(0,0,0,.05);
+	background-image: -moz-linear-gradient(bottom,#f6f6f6 0,#fcfcfc 100%);
+	background-image: -ms-linear-gradient(bottom,#f6f6f6 0,#fcfcfc 100%);
+	background-image: -o-linear-gradient(bottom,#f6f6f6 0,#fcfcfc 100%);
+	background-image: -webkit-linear-gradient(bottom,#f6f6f6 0,#fcfcfc 100%);
+	background-image: linear-gradient(to top,#f6f6f6 0,#fcfcfc 100%);
+}
+
+
+#modal-instagram-photo{
+	padding-bottom:50px;
+}
+#modal-instagram-photo .modal-content{
+	padding-bottom: 0px;
+	width: 520px;
+	height: 588px;
+	background:#e9e9e9;
+}
+#modal-instagram-photo .modal-body{
+	padding: 5px 30px 30px;
+	border-bottom: 1px solid #c7c7c7;
+}
+#modal-instagram-photo .close{
+	position: absolute;
+	top: 8px;
+	right: 5px;
+}
+#modal-instagram-photo .modal-footer{
+	background: #fff;
+	border-radius: 0 0 10px 10px;
+	margin-top:0;
+	height: 71px;
+}
+#modal-instagram-photo .instagram-act-container{
+	text-align:left;
+	padding: 0 15px;
+	clear:both;
+}
+.ig-count-like{
+	background:url('../img/like-ig.png') no-repeat 0 2px;
+	color: #333;
+	font-size: 13px;
+	font-weight: bold;
+	padding-left: 24px;
+	float:left;
+	margin-top: 5px;
+}
+.ig-btn-like{
+	float:right;
+	position: relative;
+	top: -5px;
+}
+.ig-btn-like a i{
+	background-image:url('../img/like-ig.png');
+	background-position:center right;
+	background-repeat:no-repeat;
+	width:18px;
+	height:17px;
+	display:inline-block;
+	position: relative;
+	top: 3px;
+	margin-right: 8px;
 }

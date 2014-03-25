@@ -10,13 +10,14 @@ class Home extends MY_Controller{
 	
 	function index(){
 		
-		$product_prize = $this->scache->read('cache#product_prize#');
-		$featured_type = $this->scache->read('cache#featured_type#');
+		//$product_prize = $this->scache->read('cache#product_prize#');
+		//$featured_type = $this->scache->read('cache#featured_type#');
+		$product_prize = $this->cache->get('cache#product_prize#');
+		$featured_type = $this->cache->get('cache#featured_type#');
 		
 		$this->load->model('featured_model');
 		
 		if (empty($product_prize)){
-		
 			$data_featured = $this->featured_model->getFeaturedData('featured__homepage_prize');
 			$product_prize = array();
 			if (!empty($data_featured)){
@@ -45,23 +46,24 @@ class Home extends MY_Controller{
 				$featured_type = 3;
 			}
 			
-			$product_prize = json_encode( $product_prize );
-			$this->scache->write('cache#product_prize#', $product_prize, 60 * 60 * 24);
-			$this->scache->write('cache#featured_type#', $featured_type, 60 * 60 * 24);
+			//$product_prize = json_encode( $product_prize );
+			//$this->scache->write('cache#product_prize#', $product_prize, 60 * 60 * 24);
+			//$this->scache->write('cache#featured_type#', $featured_type, 60 * 60 * 24);
+			$this->cache->write($product_prize, 'cache#product_prize#', 60 * 60 * 24);
+			$this->cache->write($featured_type, 'cache#featured_type#', 60 * 60 * 24);
 			
 		}
-		
-		$product_prize = json_decode($product_prize);		
-						
+				
+		//$product_prize = json_decode($product_prize);			
 		$this->data['product_prize'] = $product_prize;
 		$this->data['featured_type'] = $featured_type;
 		
 		$this->load->model('business_model');
 		
-		$merchants = $this->scache->read('cache#merchants#');
+		//$merchants = $this->scache->read('cache#merchants#');
+		$merchants = $this->cache->get('cache#merchants#');
 		
 		if (empty($merchants)){
-		
 			$data_featured = $this->featured_model->getFeaturedData('featured__homepage_logomerchant');
 			$merchants = array();
 			if (!empty($data_featured)){
@@ -77,12 +79,13 @@ class Home extends MY_Controller{
 				$merchants = $this->business_model->getMerchantHomePage();
 			}
 			
-			$merchants = json_encode( $merchants );
-			$this->scache->write('cache#merchants#', $merchants, 60 * 60 * 24);
+			//$merchants = json_encode( $merchants );
+			//$this->scache->write('cache#merchants#', $merchants, 60 * 60 * 24);
+			$this->cache->write($merchants, 'cache#merchants#', 60 * 60 * 24);
 			
 		}
 		
-		$merchants = json_decode($merchants);		
+		//$merchants = json_decode($merchants);		
 				
 		$this->data['merchants'] = $merchants;
 		

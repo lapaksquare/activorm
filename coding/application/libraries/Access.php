@@ -9,11 +9,13 @@ class Access {
 	}
 
 	function accessUser(){
+		$account_id = $this->ci->session->userdata('account_id');
+		
+		//$fbauth = $this->ci->session->userdata('fbauth');
+		
 		$this->ci->load->library('facebook_library');
 		$this->ci->facebook_library->connection();
 		$this->facebook = $this->ci->facebook_library->facebook;
-		
-		$account_id = $this->ci->session->userdata('account_id');
 		
 		$this->user = $this->facebook->getUser();
 		//$accessToken = $this->facebook->getAccessToken();

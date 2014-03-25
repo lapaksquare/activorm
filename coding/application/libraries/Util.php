@@ -32,6 +32,17 @@ class Util {
 	    fclose($fp); 
 	    return $fullpath;
 	}
+	
+	//Alternative Image Saving Using cURL seeing as allow_url_fopen is disabled - bummer
+	function getDataUrl($url){
+	    $ch = curl_init ($url);
+	    curl_setopt($ch, CURLOPT_HEADER, 0);
+	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	    curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+	    $rawdata=curl_exec($ch);
+	    curl_close ($ch);
+		return $rawdata;
+	}
 
 	function create_code( $length = 7, $type = 'text' ) {
 		if( $type == 'number' ) $chars = "023456789";

@@ -98,6 +98,7 @@ class Project extends MY_Admin_Access{
 		$project_tags = $this->input->get_post('project_tags');
 		$project_live = $this->input->get_post('project_live');
 		$project_active = $this->input->get_post('project_active');
+		$jml_winner = $this->input->get_post('jml_winner');
 		/*input ==== end =====*/
 		
 		if (!empty($update)){
@@ -128,6 +129,10 @@ class Project extends MY_Admin_Access{
 			
 			if ($period < 7 || $period > 30){
 				$errors[] = "Terjadi kesalahan dalam pengaturan periode";
+			}
+			
+			if (empty($jml_winner) || $jml_winner < 1){
+				$errors[] = "Jumlah pemenang harus > 0";
 			}
 			
 			$this->load->library('util');
@@ -281,7 +286,8 @@ class Project extends MY_Admin_Access{
 					'project_tags' => $project_tags,
 					'project_live' => $project_live,
 					'project_active' => $project_active,
-					'project_actions_data' => $actions_string
+					'project_actions_data' => $actions_string,
+					'jml_winner' => $jml_winner
 				);
 				
 				if (!empty($project) && in_array($project->project_live, array('Offline', 'Draft', 'Closed')) && $project_live == "Online"){
@@ -398,6 +404,15 @@ class Project extends MY_Admin_Access{
 				$this->type_social = 'twitter';
 				break;
 					
+			// for instagram step
+			case "instagram-follow" :
+				$act = $this->instagram_step($k, $account_id, 0);
+				$this->type_social = 'instagram';
+				break;
+			case "instagram-like" :
+				$act = $this->instagram_step($k, $account_id, 0);
+				$this->type_social = 'instagram';
+				break;		
 		}
 		
 		return $act;
@@ -512,6 +527,52 @@ class Project extends MY_Admin_Access{
 					'social_oauth_data' => $social_oauth_data
 				);
 				$return['type_name'] = "Tweet to @ " . $socialmedia_name;
+				break;
+		}
+		if ($custom > 0) $key = $key . "_customactions";
+		$return['type_step'] = $key;
+		return $return;
+	}
+
+	function instagram_step($key, $account_id_selected = 0, $custom = 0){
+		$this->load->model('socialmedia_model');
+		if ($account_id_selected == 0){
+			$account_id = $this->session->userdata('account_id');
+		}else{
+			$account_id = $account_id_selected;
+		}
+		$socialmedia = $this->socialmedia_model->getSocialMediaConnect($account_id, 'instagram');
+		
+		if (empty($socialmedia) || empty($socialmedia->social_oauth_data)){
+			return array();
+		}
+		
+		$social_oauth_data = (array) json_decode( $socialmedia->social_oauth_data );
+		
+		$c = array();
+		$url_photo_input = "";
+		if ($key == "instagram-like"){
+			$url_photo_input = $this->input->get_post('ig_url_photo');
+			$url_photo = "http://api.instagram.com/oembed?url=" . $url_photo_input;
+			$this->load->library('util');
+			$c = $this->util->getDataUrl($url_photo);
+			$c = (array) json_decode($c);
+			if (empty($c)) return array();
+		}
+		
+		$return = array();
+		switch($key){
+			case "instagram-follow" :
+				$return = (array) json_decode( $socialmedia->social_data );
+				$socialmedia_name = $return['user']->username; //"Activorm"; //$return['screen_name'];
+				$return['social_oauth_data'] = $social_oauth_data;
+				$return['type_name'] = "Follow Instagram @ " . $socialmedia_name;
+				break;
+			case "instagram-like" :
+				$return['photo_url'] = $url_photo_input;
+				$return['photo_data'] = $c;
+				$return['social_oauth_data'] = $social_oauth_data;
+				$return['type_name'] = "Like Instagram Photo";
 				break;
 		}
 		if ($custom > 0) $key = $key . "_customactions";
