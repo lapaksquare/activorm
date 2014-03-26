@@ -112,6 +112,10 @@ class Access {
 	function remove_session_admin(){
 		$this->ci->session->unset_userdata('account_admin');
 	}
+   
+   function remove_session_sales(){
+		$this->ci->session->unset_userdata('account_sales');
+	}
 	
 	/* ACCESS SOCIAL MEDIA*/
 	

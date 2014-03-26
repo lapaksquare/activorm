@@ -78,7 +78,7 @@ $urls = array(
 	'business', 'contact', 'dashboard', 'email', 'errors', 'home', 
 	'planspricing', 'press', 'prize', 'project', 'report', 'search',
 	'settings', 'terms', 'testimonial', 'tickets', 'welcome', 'cron', 
-	'admin', 'api', 'download', 'tutorial'
+	'admin', 'sales', 'api', 'download', 'tutorial'
 );
 
 if (!in_array($url_parts_str, $urls)) {    
@@ -97,6 +97,8 @@ $route['prize/(.*)'] = 'prize/index/$1';
 $route['guestlist'] = 'about/guestlist';
 
 $route['admin'] = 'admin/login';
+
+$route['sales'] = 'sales/login';
 
 $route['download'] = 'download/index';
 
