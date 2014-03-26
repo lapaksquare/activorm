@@ -14,9 +14,9 @@ class Home extends MY_Controller{
 		//$featured_type = $this->scache->read('cache#featured_type#');
 		$product_prize = $this->cache->get('cache#product_prize#');
 		$featured_type = $this->cache->get('cache#featured_type#');
-		
+				
 		$this->load->model('featured_model');
-		
+				
 		if (empty($product_prize)){
 			$data_featured = $this->featured_model->getFeaturedData('featured__homepage_prize');
 			$product_prize = array();
@@ -45,7 +45,7 @@ class Home extends MY_Controller{
 				$product_prize = $this->prize_model->getProductPrize(16);
 				$featured_type = 3;
 			}
-			
+						
 			//$product_prize = json_encode( $product_prize );
 			//$this->scache->write('cache#product_prize#', $product_prize, 60 * 60 * 24);
 			//$this->scache->write('cache#featured_type#', $featured_type, 60 * 60 * 24);

@@ -203,12 +203,8 @@ class Project_model extends CI_Model{
 		if ($nolimit == FALSE){
 			$limited = " LIMIT " . $this->start . " , " .$this->limit;
 		}
-		
-		$sql = "
-		SELECT
-		SQL_CALC_FOUND_ROWS
-		pp.*,
-		pphx.photo_id,
+		/*
+		 * pphx.photo_id,
 		pphx.photo_file
 		FROM
 		project__profile pp
@@ -222,6 +218,13 @@ class Project_model extends CI_Model{
 			ORDER BY pph.photo_id ASC
 			LIMIT 1
 		) pphx ON pphx.project_id = pp.project_id
+		 * */
+		$sql = "
+		SELECT
+		SQL_CALC_FOUND_ROWS
+		pp.*
+		FROM
+		project__profile pp
 		WHERE 1
 		AND pp.business_id = ?
 		AND pp.project_active = 1

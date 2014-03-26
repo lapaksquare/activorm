@@ -290,6 +290,8 @@ class Project extends MY_Admin_Access{
 					'jml_winner' => $jml_winner
 				);
 				
+				$this->cache->delete('c#p#' . $project->project_uri);
+				
 				if (!empty($project) && in_array($project->project_live, array('Offline', 'Draft', 'Closed')) && $project_live == "Online"){
 					$dataProject['project_period'] = date('Y-m-d H:i:s', strtotime("+" . $period . " days"));
 					$dataProject['project_period_int'] = $period;

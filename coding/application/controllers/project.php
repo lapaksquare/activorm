@@ -1360,6 +1360,8 @@ class Project extends MY_Controller{
 				'project_point' => $project_budget
 			), $pid);
 			
+			$this->cache->delete('c#p#' . $this->project->project_uri);
+				
 		}
 		redirect($redirect);
 	}
