@@ -119,7 +119,7 @@ class MY_Controller extends CI_Controller{
 		 * <script type="text/javascript" src="<?php echo $js_tags; ?>"></script>
 		 * */
 		
-		$this->data['css_tags'] = '<link rel="stylesheet" href="' . cdn_url() . 'min/?f=' . implode(',', $collect_css) . '" />';
+		$this->data['css_tags'] = implode(' ', $css); //'<link rel="stylesheet" href="' . cdn_url() . 'min/?f=' . implode(',', $collect_css) . '" />';
 		$this->data['js_tags'] = '<script type="text/javascript" src="' . cdn_url() . 'min/?f=' . implode(',', $collect_js) . '"></script>';
 		
 		$this->data['meta_tags'] = $default_meta;
