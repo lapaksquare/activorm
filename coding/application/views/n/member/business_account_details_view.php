@@ -287,10 +287,15 @@
 	    <div class="col-sm-10" >
 	    	<?php 
 	    	
+	    	//echo '<pre>';print_r($this->socialmedia);echo '</pre>';
+	    	
 	    	$facebook_url = "";
 	    	if (!empty($this->socialmedia['facebook'])){
-	    		$data = json_decode($this->socialmedia['facebook']->social_data);
-				$facebook_url = (!empty($data)) ? 'FACEBOOK LINK : <a href="http://facebook.com/'.$data->id.'" target="_blank">LINK</a>' : "";	
+	    		//$data = json_decode($this->socialmedia['facebook']->social_data);
+				//$facebook_url = (!empty($data)) ? 'FACEBOOK LINK : <a href="http://facebook.com/'.$data->id.'" target="_blank">LINK</a>' : "";	
+				
+				$data = json_decode($this->socialmedia['facebook']->social_page_active);
+				$facebook_url = (!empty($data)) ? 'FACEBOOK FanPage : <a href="http://facebook.com/'.$data->id.'" target="_blank">LINK</a>' : "";	
 	    	}
 			$twitter_url = $twitter_followers_count = "";
 			if (!empty($this->socialmedia['twitter'])){
@@ -298,8 +303,13 @@
 				$twitter_url = (!empty($data)) ? 'TWITTER LINK : <a href="http://twitter.com/'.$data->screen_name.'" target="_blank">LINK</a>' : "";
 				$twitter_followers_count = (!empty($data)) ? '<br />TWITTER Followers Count : '.$data->followers_count : 0;
 			}
+			$ig_url = "";
+			if (!empty($this->socialmedia['instagram'])){
+				$data = json_decode($this->socialmedia['instagram']->social_data);
+				$ig_url = (!empty($data)) ? 'IG LINK : <a href="http://instagram.com/'.$data->user->username.'" target="_blank">LINK</a>' : "";
+			}
 			
-			echo $facebook_url . " <br /> " . $twitter_url;
+			echo $facebook_url . " <br /> " . $twitter_url . " <br /> " . $ig_url;
 	    	
 	    	?>
 	    </div>

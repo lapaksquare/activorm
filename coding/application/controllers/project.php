@@ -122,6 +122,7 @@ class Project extends MY_Controller{
 				'<script src="'.cdn_url().'js/jquery.simplyCountable.js"></script>',
 				'<script src="'.cdn_url().'js/jquery.sharrre-1.3.4.min.js"></script>',
 				'<script type="text/javascript" src="'.cdn_url().'js/nivoslider/jquery.nivo.slider.js"></script>',
+				'<script src="'.cdn_url().'js/project_timer.js"></script>',
 				'<script src="'.cdn_url().'js/project_details.js"></script>',
 				'<script src="'.cdn_url().'js/project_steps.js"></script>'
 			);

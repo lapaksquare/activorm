@@ -5,6 +5,7 @@
 	<div class="widget">
 		
 		<?php 
+		$script_timer = 0;
 		$photo = $this->project->project_primary_photo;
 		$photo = $this->mediamanager->getPhotoUrl($photo, "300x300");
 		?>
@@ -48,47 +49,15 @@
 				$class_time = "time-ended";
 			}else{
 				
+				$script_timer = 1;
+				
 			?>
-			
-			
+						
 						<script type="text/javascript">
-							var server_end = <?php echo $server_end * 1000; ?>;
-							var server_start = <?php echo $server_start * 1000; ?>;
-							var client = new Date().getTime();
-							var end = server_end - server_start + client;
-							var _second = 1000;
-							var _minute = _second * 60;
-							var _hour = _minute * 60;
-							var _day = _hour * 24;
-							var timer;
-							function showCountdown(){
-								var now = new Date();
-								var distance = end - now;
-								if (distance < 0){
-									clearInterval(showCountdown);
-									window.location = window.location;
-									//document.getElementById('countdown_container').style.display = "none";
-								}
-								var days = Math.floor(distance / _day);
-								var hours = Math.floor( (distance % _day) / _hour );
-								var total_hours = (days * 24) + hours;
-								var minutes = Math.floor( (distance % _hour) / _minute );
-								var seconds = Math.floor( (distance % _minute) / _second );
-								
-								var days_html = document.getElementById('hari');
-								var hours_html = document.getElementById('jam');
-								var menit_html = document.getElementById('menit');
-								//var detik_html = document.getElementById('detik');
-								
-								days_html.innerHTML = days;
-								hours_html.innerHTML = hours;
-								menit_html.innerHTML = minutes;
-								//detik_html.innerHTML = seconds;
-							}
-							timer = setInterval(showCountdown, 10);
-						</script>
-			
-			
+    						var $server_start = <?php echo $server_start; ?>;
+    						var $server_end = <?php echo $server_end; ?>;
+    					</script>
+
 			<?php	
 				
 			}
@@ -541,5 +510,9 @@
 	</div>
 	
 </body>
+
+<script type="text/javascript">
+	var $script_timer = <?php echo $script_timer ?>;
+</script>
 
 <?php $this->load->view('a/general/footer_widget_view', $this->data); ?>
