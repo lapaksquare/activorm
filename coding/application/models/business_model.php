@@ -137,6 +137,29 @@ class Business_model extends CI_Model{
 		return $this->db->query($sql)->result();
 	}
 	
+	function getAllMerchantByPhotoMerchant(){
+		$sql = "
+		SELECT
+		bp.business_name,
+		bp.business_uri,
+		bp.merchant_logo
+		FROM
+		business__profile bp
+		JOIN business__rel_member brm ON
+			brm.business_id = bp.business_id
+		JOIN member__account ma ON
+			ma.account_id = brm.account_id
+		WHERE 1
+		AND ma.account_type = 'business'
+		AND ma.account_active = 1
+		AND ma.account_live = 'Online'
+		AND bp.merchant_logo IS NOT NULL
+		GROUP BY bp.business_id
+		ORDER BY bp.business_name ASC
+		";
+		return $this->db->query($sql)->result();
+	}
+	
 }
 
 ?>

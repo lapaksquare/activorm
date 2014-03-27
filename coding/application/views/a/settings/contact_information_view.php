@@ -103,9 +103,10 @@
 										<input type="file" name="account_avatar" class="real-file" style="display:none;" />
 										<div class="row">
 											<div class="col-xs-8">
+											<label style="color: #b3b3b3;font-size: 1.8rem;">Upload Logo</label>
 											<input type="text" placeholder="Choose an Image" class="form-control form-light fake-file" />
 											</div>
-											<div class="col-xs-4">
+											<div class="col-xs-4" style="margin-top:31px;">
 												<a class="btn btn-green" onclick="$('.real-file').click();">Browse</a>
 											</div>
 											
@@ -455,7 +456,7 @@
 										<input type="file" name="account_avatar" class="real-file" style="display:none;" />
 										<div class="row">
 											<div class="col-xs-8">
-											<label style="color: #b3b3b3;">Upload Logo</label>
+											<label style="color: #b3b3b3;font-size: 1.8rem;">Upload Logo</label>
 											<input type="text" placeholder="Choose an Image" class="form-control form-light fake-file" />
 											</div>
 											<div class="col-xs-4" style="margin-top:31px;">

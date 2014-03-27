@@ -3843,3 +3843,19 @@ body.alt #footer {
 	top: 3px;
 	margin-right: 8px;
 }
+
+
+.merchants{
+}
+.merchant-item{
+	width:185px;
+	height:90px;
+}
+.merchants a{
+	width: 185px;
+	height: 90px;
+	margin-right: 34px;
+	margin-left: 20px;
+	margin-bottom: 40px;
+	display: inline-block;
+}

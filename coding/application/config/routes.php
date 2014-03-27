@@ -78,7 +78,7 @@ $urls = array(
 	'business', 'contact', 'dashboard', 'email', 'errors', 'home', 
 	'planspricing', 'press', 'prize', 'project', 'report', 'search',
 	'settings', 'terms', 'testimonial', 'tickets', 'welcome', 'cron', 
-	'admin', 'api', 'download', 'tutorial'
+	'admin', 'api', 'download', 'tutorial', 'merchant'
 );
 
 if (!in_array($url_parts_str, $urls)) {    
