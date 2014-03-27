@@ -18,7 +18,8 @@ class Login extends MY_Sales{
 			"",
 			"",
 			"Login - Activorm Connect");
-		$this->load->view('s/login/login_view', $this->data);
+         
+		$this->initiate($this->data);
 	}
 	
 	function logout(){

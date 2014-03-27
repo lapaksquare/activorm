@@ -233,7 +233,7 @@ class MY_Sales extends CI_Controller {
 		if (!empty($meta)) $default_meta = implode("", $meta);
 		
 		$default_css = array(
-         '<link href="'.cdn_url().'css/sales/bootstrap.css" rel="stylesheet" type="text/css">',
+         '<link href="'.cdn_url().'css/sales/bootstrap.min.css" rel="stylesheet" type="text/css">',
 			'<link href="'.cdn_url().'css/pagination.css" rel="stylesheet" type="text/css">',
 			'<link href="'.cdn_url().'css/sales/style.css" rel="stylesheet" type="text/css">',
       );
@@ -255,6 +255,9 @@ class MY_Sales extends CI_Controller {
 		$this->data['title'] = $title . " | " . default_title;
 	}
 	
+   function initiate($data){
+      $this->load->view('s/template', $data);
+   }
 }
 
 class MY_Sales_Access extends MY_Sales {

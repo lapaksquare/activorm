@@ -22,7 +22,8 @@ class Home extends MY_Sales_Access{
 			"",
 			"",
 			"Home - Activorm Connect");
-		$this->load->view('s/home/home_view', $this->data);
+		
+      $this->initiate($this->data);
 	}
 	
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){
