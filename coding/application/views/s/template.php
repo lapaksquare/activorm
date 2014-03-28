@@ -10,10 +10,11 @@
 <div class="container-fluid notification">
 </div>
 
-<?php if($this->data['menu'] == 'home'){ ?>
-<div class="container-fluid team">
-</div>
-<?php } ?>
+<?php
+   if($this->data['menu'] == 'home'){
+      $this->load->view('s/home/team_view', $this->data);
+   }
+?>
 
 <div class="container-fluid content">
    <div class="row">

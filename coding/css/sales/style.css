@@ -254,10 +254,14 @@ body{
 
 .content-sales{
    background-color:#eef3f6;
+   margin-bottom: -99999px;
+   padding-bottom: 99999px;
 }
 .nav-sales{
    background-color:#303941;
    padding:0px;
+   margin-bottom: -99999px;
+   padding-bottom: 99999px;
 }
 
 .border-radius-5{
@@ -271,10 +275,6 @@ body{
    -webkit-border-radius:10px;
 }
 
-[class*="col-"]{
-    margin-bottom: -99999px;
-    padding-bottom: 99999px;
-}
 .row {
     overflow: hidden;
     margin-right:0px;

@@ -1,0 +1,34 @@
+.team{
+   background:#1ab99b;
+   padding-bottom:15px;
+}
+.team h3{
+   margin:0px;
+   padding:5px 15px;
+   font-size:2rem;
+   color:#abf5e7;
+   font-weight:bold;
+   text-transform:uppercase;
+   letter-spacing:0.6rem;
+}
+
+.team_box{
+   padding:5px;
+   background-color:#10987e;
+}
+.team [class*='col-']{
+   padding:0px;
+}
+
+.team_member_box{
+   height:100px;
+   padding:10px;
+   background-color:#1ab99b;
+   border:1px solid #10987e;
+}
+
+.team_self_box{
+   height:200px;
+   padding:10px;
+   background-color:#10987e;
+}
