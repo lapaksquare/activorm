@@ -268,5 +268,23 @@ $(function(){
 			return false;
 		});
 		
+		$('#project_photo').uploadify({
+			'queueSizeLimit' : 3,
+			'formData'     : {
+				'timestamp' : $ts,
+				'token'     : $t
+			},
+			'fileTypeDesc' : 'Image Files',
+        	'fileTypeExts' : '*.jpg; *.png',
+		    'removeCompleted' : false,
+			'height' : 30,
+			'swf'      : base_url + '/js/uploadify/uploadify.swf',
+			'uploader' : '/ajax/uploadify',
+			/*'onQueueComplete' : function(queueData) {
+				console.log(queueData);
+            	alert('files were successfully uploaded.');
+      		}*/
+		});
+		
 	});
 });

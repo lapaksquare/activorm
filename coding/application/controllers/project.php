@@ -37,12 +37,14 @@ class Project extends MY_Controller{
 			$this->data['submenu'] = 'create';
 			
 			$css = array(
-				'<link href="'.cdn_url().'css/jquery.tagbox.css" rel="stylesheet">'
+				'<link href="'.cdn_url().'css/jquery.tagbox.css" rel="stylesheet">',
+				'<link href="'.cdn_url().'js/uploadify/uploadify.css" rel="stylesheet">'
 			);
 			$js = array(
 				'<script src="'.cdn_url().'js/bootstrap-slider.min.js"></script>',
 				'<script src="'.cdn_url().'js/jquery.simplyCountable.js"></script>',
 				'<script src="'.cdn_url().'js/jquery.tagbox.js"></script>',
+				'<script src="'.cdn_url().'js/uploadify/jquery.uploadify.js"></script>',
 				'<script src="'.cdn_url().'js/create_project.js"></script>'
 			);
 		
@@ -361,6 +363,25 @@ class Project extends MY_Controller{
 			
 			
 			// UPLOAD IMAGES =================== start ============================
+			/*LIKE*/
+			$verifyToken = $this->input->get_post('t');
+			$this->load->model('photo_model');
+			$photos = $this->photo_model->getPhotoTemp($verifyToken, $business_id);
+			$images_uploaded = array();
+			if (!empty($photos)){
+				$this->photo_model->setPhotoTempNonActive($verifyToken, $business_id);
+				$photos = explode("/:/", $photos);
+				$project_primary_photo = $photos[0];
+				$dataProject['project_primary_photo'] = $project_primary_photo;
+				$photo_thumb = cdn_url() . $this->mediamanager->getPhotoUrl($project_primary_photo, "200x200");
+				foreach($photos as $k=>$v){
+					$images_uploaded[$k]['file_name'] = $v;
+				}
+			}else{
+				$errors[] = 'You have to upload a Project Image in jpg/jpeg, gif, or png smaller than 2 MB, dimension are limited to 200x200 pixels image';
+			}
+			
+			/*
 			$config['upload_path'] = './images/project/';
 			$config['allowed_types'] = 'jpg|jpeg|png';
 			$config['max_size']	= '2024';
@@ -391,7 +412,7 @@ class Project extends MY_Controller{
 					$errors[] = 'You have to upload a Project Image in jpg/jpeg, gif, or png smaller than 2 MB, dimension are limited to 200x200 pixels image';
 				}
 				
-			}
+			}*/
 			
 			/* =================== SINGEL UPLOAD =======================
 			$uploaded = $this->upload->do_upload('project_photo');
@@ -558,7 +579,7 @@ class Project extends MY_Controller{
 						$primary_photo = 0;
 						$this->project_model->addProjectPhoto(array(
 							'project_id' => $project_id,
-							'photo_file' => 'images/project/'. $v['file_name'],
+							'photo_file' => /*'images/project/'.*/ $v['file_name'],
 							'primary_photo' => $primary_photo
 						));
 					}

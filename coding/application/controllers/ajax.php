@@ -373,6 +373,42 @@ class Ajax extends MY_Controller {
 		$this->load->view('a/project/ajax_comment_view', $this->data);
 	}
 	
+	function uploadify(){
+		$targetFolderTemp = 'images/project/'; // Relative to the root
+		$targetFolder = '/images/project'; // Relative to the root
+		$timestamp = $this->input->get_post('timestamp');
+		$token = $this->input->get_post('token');
+		$verifyToken = sha1($timestamp . SALT);
+		$business_id = $this->session->userdata('business_id');
+		
+		if (!empty($_FILES) && $token == $verifyToken) {
+			$tempFile = $_FILES['Filedata']['tmp_name'];
+			$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
+			$imgName =  sha1($_FILES['Filedata']['name'] . SALT) . '.jpg';
+			$targetFile = rtrim($targetPath,'/') . '/' . $imgName;
+			
+			// Validate the file type
+			$fileTypes = array('jpg','jpeg','gif','png'); // File extensions
+			$fileParts = pathinfo($_FILES['Filedata']['name']);
+			
+			if (in_array($fileParts['extension'],$fileTypes)) {
+				
+				$this->load->model('photo_model');
+				$data = array(
+					'business_id' => $business_id,
+					'token' => $verifyToken,
+					'photo' => $targetFolderTemp . $imgName
+				);
+				$this->photo_model->addPhotoTemp($data);
+				
+				move_uploaded_file($tempFile,$targetFile);
+				echo '1';
+			} else {
+				echo 'Invalid file type.';
+			}
+		}
+	}
+	
 }
 
 ?>

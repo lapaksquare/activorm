@@ -1,4 +1,8 @@
 <?php $this->load->view('a/general/header_view', $this->data); ?>
+	
+<?php 
+$ts = time();
+?>	
 		
 		<?php 
 		if ($this->step_create == 1){
@@ -245,7 +249,12 @@
 										<?php /*
 										<input type="text" placeholder="Choose an Image" class="form-control form-light fake-file" /> */ ?>
 										
+										<?php /*
 										<input type="file" name="project_photo[]" class="real-file" multiple="true" />
+										*/ ?>
+										
+										<div id="queue"></div>
+										<input id="project_photo" name="project_photo" type="file" multiple="true" />
 										
 									</div>
 									
@@ -903,6 +912,8 @@
 						<input type="button" class="btn btn-green pull-right" value="Submit" name="submit-btn-createproject" id="submit-btn-create-s" style="display:none;" />
 						*/ ?>
 						
+						<input type="hidden" name="ts" id="ts" value="<?php echo $ts; ?>" />
+						<input type="hidden" name="t" id="t" value="<?php echo sha1($ts . SALT); ?>" />
 						<input type="submit" class="btn btn-blue pull-right" value="Save Draft" name="save-draft" />
 						
 						<?php /*
@@ -920,6 +931,10 @@
 		<?php 
 		}
 		?>
-		
+
+<script type="text/javascript">
+	var $ts = '<?php echo $ts; ?>';
+	var $t = '<?php echo sha1($ts . SALT); ?>';
+</script>		
 
 <?php $this->load->view('a/general/footer_view', $this->data); ?>
