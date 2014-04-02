@@ -393,20 +393,43 @@ class Ajax extends MY_Controller {
 			
 			if (in_array($fileParts['extension'],$fileTypes)) {
 				
+				$photo = $targetFolderTemp . $imgName;
 				$this->load->model('photo_model');
 				$data = array(
 					'business_id' => $business_id,
 					'token' => $verifyToken,
-					'photo' => $targetFolderTemp . $imgName
+					'photo' => $photo
 				);
-				$this->photo_model->addPhotoTemp($data);
+				$photo_id = $this->photo_model->addPhotoTemp($data);
 				
 				move_uploaded_file($tempFile,$targetFile);
-				echo '1';
+				
+				$data['photo_id'] = $photo_id;
+				echo json_encode($data);
+				
+				//echo "{'business_id':'$business_id','token':'$verifyToken','photo':'$photo','photo_id':'$photo_id'}";
+				
+				//echo '1';
 			} else {
 				echo 'Invalid file type.';
 			}
 		}
+	}
+
+	function uploadify_delete(){
+		$response = 0;
+		$d = $this->input->get_post('d');
+		if (!empty($d)){
+			$this->load->model('photo_model');
+			$d = json_decode($d);
+			if (property_exists($d, "photo_id") || property_exists($d, "business_id") || property_exists($d, "token")){
+				$p = $this->photo_model->getPhotoTempByPhotoId($d->photo_id, $d->business_id, $d->token);	
+				$response = 1;
+			}
+		}
+		echo json_encode(array(
+			'response' => $response
+		));
 	}
 	
 }

@@ -119,7 +119,7 @@ $config['charset'] = 'UTF-8';
 |
 */
 $config['enable_hooks'] = TRUE;
-$config['enable_profiling'] = (ENVIRONMENT == "production") ? FALSE : TRUE;
+$config['enable_profiling'] = FALSE; //(ENVIRONMENT == "production") ? FALSE : TRUE;
 
 /*
 |--------------------------------------------------------------------------

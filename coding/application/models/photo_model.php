@@ -4,6 +4,7 @@ class Photo_model extends CI_Model{
 	
 	function addPhotoTemp($data){
 		$this->db->insert('project__photo_temp', $data);
+		return $this->db->insert_id();
 	}
 	
 	function getPhotoTemp($token, $business_id){
@@ -32,6 +33,18 @@ class Photo_model extends CI_Model{
 		AND business_id = ?
 		";
 		$this->db->query($sql, array($token, $business_id));
+	}
+	
+	function getPhotoTempByPhotoId($photo_id, $business_id, $token){
+		$sql = "
+		UPDATE project__photo_temp SET
+		isactive = 1
+		WHERE 1
+		AND tid = ?
+		AND business_id = ?
+		AND token = ?
+		";
+		$this->db->query($sql, array($photo_id, $business_id, $token));
 	}
 	
 }
