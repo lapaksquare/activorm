@@ -41,6 +41,7 @@ class Mediamanager {
          $width_pr = $width;
          $height_pr = $height;
       
+         /*
 			if ($crop == 1){
 				  $img = getimagesize($filename);
 
@@ -73,24 +74,24 @@ class Mediamanager {
 				  if ($y < 0) $y = 0;
 				  $config['x_axis'] = $x;
 				  $config['y_axis'] = $y;
-              */
 			}
+         */
 			
 			$config['image_library'] = 'gd2';
 			$config['source_image']	= $filename;
 			$config['create_thumb'] = FALSE;
-			$config['maintain_ratio'] = TRUE;
+			$config['maintain_ratio'] = $crop == 1 ? FALSE : TRUE;
 			$config['width']	 = $width_pr;
 			$config['height']	= $height_pr;
 			$config['new_image'] = $file_exists;
 			
 			$this->ci->load->library('image_lib', $config); 
 			
-			if ($crop == 0) 
+			//if ($crop == 0) 
             $this->ci->image_lib->resize();
-			if ($crop == 1) {
-            $this->ci->image_lib->crop();
-         }
+			//if ($crop == 1) {
+         //   $this->ci->image_lib->crop();
+         //}
 		//}
 		
 		return $file_exists;

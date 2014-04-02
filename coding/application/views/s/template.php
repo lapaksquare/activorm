@@ -17,7 +17,7 @@
 ?>
 
 <div class="container-fluid content">
-   <div class="row">
+   <div class="row content-row">
    
       <div class="col-sm-2 col-md-3 nav-sales">
          <?php $this->load->view('s/general/navbar_view', $this->data); ?>

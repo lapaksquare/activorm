@@ -13,22 +13,27 @@
 }
 
 .team_box{
-   padding:5px;
+   padding-top:10px;
+   padding-bottom:10px;
    background-color:#10987e;
-}
-.team [class*='col-']{
-   padding:0px;
 }
 
 .team_member_box{
-   height:100px;
-   padding:10px;
    background-color:#1ab99b;
    border:1px solid #10987e;
 }
 
 .team_self_box{
    height:200px;
-   padding:10px;
    background-color:#10987e;
+}
+
+.member-avatar,
+.member-info{
+   padding-top:10px;
+   padding-bottom:10px;
+   text-align:center;
+}
+.member-avatar img{
+   margin:0 auto;
 }

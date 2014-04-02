@@ -1,8 +1,10 @@
 <div class="container-fluid team">
-   <h3>Team</h3>
+   <div class="row">
+      <h3>Team</h3>
+   </div>
 <?php    $teams = $this->data['teams']; ?>
 <?php    foreach($teams as $team) { ?>
-   <div id="team-<?php echo $team->team_id; ?>" class="team_box">
+   <div id="team-<?php echo $team->team_id; ?>" class="row team_box">
 <?php    
             $members = $team->members;
             $is_self_leader = $team->leader->account_id == $this->account_sales->account_id;
@@ -16,17 +18,16 @@
             $self_row_item_count = $count < $self_row_max * $self_row_item_max ? $count : $self_row_max * $self_row_item_max;
             $self_row_count      = ceil($self_row_item_count / $self_row_item_max);
 ?>
-      <div class="row">
-         <div class="col-sm-3">
-            <div class="team_self_box <?php echo $is_self_leader ? 'leader' : ''; ?>">a
-            </div>
+      <div class="col-sm-3">
+         <div class="team_self_box <?php echo $is_self_leader ? 'leader' : ''; ?>">a
          </div>
-         <div class="col-sm-9">
+      </div>
+      <div class="col-sm-9">
 <?php
             for($row = 0; $row < $self_row_count; $row++){
                $item_count = 0;
 ?>
-            <div class="row">
+         <div class="row">
 <?php 
                $row_max_item_max  = ($row + 1) * $self_row_item_max;
                $row_max_item_real = $row_max_item_max < $self_row_item_count ? $self_row_item_max : $self_row_item_count - $row * $self_row_item_max;
@@ -34,22 +35,28 @@
                   $member = $members[$row * $self_row_item_max + $col];
                   
                   $photo = (empty($member->account_primary_photo)) ? 'img/user-default.gif' : $member->account_primary_photo;
-                  $photo = $this->mediamanager->getPhotoUrl($photo, "34x34", 1);
+                  $photo = $this->mediamanager->getPhotoUrl($photo, "80x80", 1);
 ?>
-               <div class="col-sm-<?php echo 12 / $self_row_item_max; ?>">
-                  <div class="team_member_box <?php echo $member->team_role; ?>">
-                     <img src="<?php echo cdn_url() . $photo; ?>" alt="<?php echo $member->account_name; ?>" />
+            <div class="col-sm-<?php echo 12 / $self_row_item_max; ?>">
+               <div class="row"> 
+                  <div class="team_member_box <?php echo $member->team_role; ?> clearfix">
+                     <div class="col-sm-6 member-avatar">
+                        <img class="img-responsive img-circle" src="<?php echo cdn_url() . $photo; ?>" alt="<?php echo $member->account_name; ?>" />
+                     </div>
+                     <div class="col-sm-6 member-info">
+                     </div>
+                     
                      <?php //print_r($member); ?>
                   </div>
                </div>
+            </div>
 <?php 
                }
 ?>
-            </div>
+         </div>
 <?php 
             } 
 ?>
-         </div>
       </div>
    </div>
 <?php    } ?>

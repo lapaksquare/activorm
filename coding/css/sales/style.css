@@ -1,3 +1,9 @@
+/* workaround for container-fluid class which somehow is missing */
+.container-fluid{
+   padding-left:15px;
+   padding-right:15px;
+}
+
 .lp-header h2{
 	margin-top:0;
 }
@@ -52,6 +58,10 @@
 
 .content-medium{
 	padding-bottom:15px;
+}
+
+.content-row{
+   overflow:hidden;
 }
 
 .td-sidebar.affix,
@@ -273,10 +283,4 @@ body{
    border-radius:10px;
    -moz-border-radius:10px;
    -webkit-border-radius:10px;
-}
-
-.row {
-    overflow: hidden;
-    margin-right:0px;
-    margin-left:0px;
 }
