@@ -23,12 +23,25 @@ class Home extends MY_Sales_Access{
 */      
       // GET TEAM DATA
       $this->load->model('s_team_model', 'team');
+      
       $teams = $this->team->getTeamByAccount($this->account_sales->account_id);
       foreach($teams as $t){
          if(empty($t->team_name)) $t->team_name = "Team $t->team_id";
          
-         $t->leader   = $this->team->getTeamLeader($t->team_id);
-         $t->members  = $this->team->getTeamMembersExclude($t->team_id, array($this->account_sales->account_id));
+         $leader = $this->team->getTeamLeader($t->team_id);
+         $members = $this->team->getTeamMembersExclude($t->team_id, array($this->account_sales->account_id));
+
+         $items = array();
+         
+         if(!empty($leader) && $leader->account_id != $this->account_sales->account_id){
+            array_push($items, $leader);
+         }
+         
+         if(!empty($members)){
+            $items = array_merge($items, $members);
+         }
+         
+         $t->members = $items;
       }
             
       // PUT TO PAGE
@@ -63,7 +76,7 @@ class Home extends MY_Sales_Access{
 		
       $this->initiate($this->data);
 	}
-	
+   
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){
 		/*$default_css = array(
 		);
