@@ -290,6 +290,7 @@ class Payment extends MY_Admin_Access{
 			$account_id = $this->input->get_post('account_id');
 			$point_id = $this->input->get_post('point_id');
 			$quantity = $this->input->get_post('quantity');
+			$totalamount = $this->input->get_post('totalamount');
 			
 			$this->load->model('a_account_model');
 			$accounts = $this->a_account_model->getMemberByAccountId($account_id);
@@ -301,8 +302,12 @@ class Payment extends MY_Admin_Access{
 			
 			if ($quantity > 0){
 				$point = $this->point_model->getPointByPointId($point_id);
-				$total_price = $quantity * $point->point_price;
-				$order_total_price += $total_price;
+				//$total_price = $quantity * $point->point_price;
+				//$order_total_price += $total_price;
+				
+				$total_price = $totalamount;
+				$order_total_price = $totalamount;
+				
 				$point_expired = $point->point_period * 31;
 				$order_cart_detail[$point_id] = array(
 					'order_name' => 'Order ' . $point->point_name,
