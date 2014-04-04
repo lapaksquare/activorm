@@ -91,7 +91,11 @@
 				'payment_completed' => array(
 					'name' => 'Completed',
 					'url' => base_url() . 'admin/payment?order_status=completed'
-				)
+				),
+				'payment_order_manual' => array(
+					'name' => 'Payment Order Manual',
+					'url' => base_url() . 'admin/payment/ordermanual'
+				),
 			)
 		),
 		'rangking' => array(

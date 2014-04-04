@@ -262,6 +262,123 @@ class Payment extends MY_Admin_Access{
 		}
 	}
 	
+	function ordermanual(){
+		$this->load->model('a_featured_model');
+		$this->data['business'] = $this->a_featured_model->getBusinessAll();
+		
+		$this->load->model('point_model');
+		$this->data['points'] = $this->point_model->getPointProfileActive();
+		
+		$this->data['menu'] = 'payment';
+		$this->data['menu_child'] = 'payment_order_manual';
+		$this->_default_param(
+			"",
+			array(
+				'<script type="text/javascript" src="'.cdn_url().'js/a_topuppoint.js"></script>'
+			),
+			"",
+			"Payment Order Manual - Activorm Connect");
+		$this->load->view('n/payment/order_manual_view', $this->data);
+	}
+	
+	function submit_ordermanual(){
+		$this->load->model('point_model');
+		$this->load->model('order_model');
+		
+		$order = $this->input->get_post('order');
+		if (!empty($order)){
+			$account_id = $this->input->get_post('account_id');
+			$point_id = $this->input->get_post('point_id');
+			$quantity = $this->input->get_post('quantity');
+			
+			$this->load->model('a_account_model');
+			$accounts = $this->a_account_model->getMemberByAccountId($account_id);
+			
+			$errors = array();
+			$order_cart = array();
+			$order_cart_detail = array();
+			$order_total_price = 0;
+			
+			if ($quantity > 0){
+				$point = $this->point_model->getPointByPointId($point_id);
+				$total_price = $quantity * $point->point_price;
+				$order_total_price += $total_price;
+				$point_expired = $point->point_period * 31;
+				$order_cart_detail[$point_id] = array(
+					'order_name' => 'Order ' . $point->point_name,
+					'order_name_detail' => 'Order ' . $point->point_name,
+					'point_id' => $point->point_id,
+					'point' => $point->point,
+					'point_expired' => date('Y-m-d H:i:s', strtotime('+'. $point_expired .' days')),
+					'order_qty' => $quantity,
+					'order_price' => $point->point_price,
+					'order_total_price' => $total_price,
+					'order_detail_status' => 'active'
+				);
+			}
+			
+			if (empty($order_cart_detail)){
+				$errors[] = 'Something error when send your data.';
+			}
+			if ($account_id <= 0){
+				$errors[] = 'Anda harus memilih salah satu Business Account yang tersedia.';
+			}
+			
+			$order_barcode = "";
+			if (!empty($order_cart_detail)){
+				$service_charge = 5/100 * $order_total_price;
+				$gov_charge = 10/100 * $order_total_price;
+				$total_payment = $order_total_price + $service_charge + $gov_charge;
+					
+				$this->load->library('util');	
+				$barcode1 = 'POIN'; //$this->util->create_code(4, "text");
+				$barcode2 = $this->util->create_code(4, "number");	
+				$order_barcode = $barcode1 . $barcode2;	
+				$order_cart = array(
+					'order_barcode' => $order_barcode,
+					'order_status' => 'checkout',
+					'account_id' => $account_id,
+					'service_charge' => $service_charge,
+					'gov_charge' => $gov_charge,
+					'order_total_price' => $total_payment,
+					'order_datetime' => date('Y-m-d H:i:s'),
+					'order_expired' => date('Y-m-d H:i:s', strtotime('+7 days')),
+					'notes_point' => 0//$note_topup_amount
+				);	
+			}
+			
+			if (count($errors) > 0){
+				$this->session->set_userdata('pointtopup_error', 1);
+			}else{
+				
+				$order_id = $this->order_model->addOrderCart($order_cart);
+				
+				foreach($order_cart_detail as $k=>$v){
+					$v['order_id'] = $order_id;
+					$this->order_model->addOrderCartDetail($v);
+				}
+				
+				$order_cart = $this->order_model->getDataOrderCart($order_barcode);
+				$order_cart_detail = $this->order_model->getDataOrderCartDetail($order_id);
+				
+				// sending email
+				$dataEmail = array(
+					'account_email' => $accounts->account_email,
+					'email_subject' => 'INVOICE #' . $order_barcode,
+					'email_tmpl' => 'invoice_view',
+					'order_cart' => $order_cart,
+					'order_cart_detail' => $order_cart_detail
+				);
+				$this->sending_email($dataEmail);
+				
+				$this->session->set_userdata('pointtopup_error', 2);
+				$this->session->set_userdata('pointtopup_success_msg', 'Orderan nya berhasil diproses. Silahkan <a href="'.base_url().'admin/payment/details?o='.$order_barcode.'&h='.sha1($order_barcode . SALT).'" target="_blank">Klik ini</a> untuk melihat detailnya.');
+			}
+			
+		}
+		redirect(base_url() . 'admin/payment/ordermanual');
+	}
+	
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){
 		/*$default_css = array(
 		);

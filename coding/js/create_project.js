@@ -290,6 +290,10 @@ $(function(){
       			if (response == true || response == "true"){
       				
       				$('#' + file.id).attr('data-j', data);
+      				var obj = JSON.parse(data);
+      				//console.log(obj);
+      				
+      				$('#' + file.id).find('img').attr('src', base_url + obj.photo_resize);
       				
       			}
       			

@@ -100,6 +100,37 @@ class Ajax extends MY_Controller {
 		echo json_encode($data);
 	}
 
+	function checkPointTopUpManual(){
+		$this->load->model('point_model');
+		$pid = $this->input->get_post('pid');
+		$qty = $this->input->get_post('qty');
+		$total_amount = 0;
+		$data = array();
+
+		$point = $this->point_model->getPointByPointId($pid);
+		$price = $qty * $point->point_price;
+		$total_amount = $price;
+		$data = array(
+			'isok' => 1,
+			'price' => $price,
+			'total_amount' => $total_amount,
+			'total_amount_string' => 'IDR ' . number_format($total_amount, 2, ",", ".")
+		);
+		
+		$service_charge = 5/100 * $total_amount;
+		$gov_charge = 10/100 * $total_amount;
+		$total_payment = $total_amount + $service_charge + $gov_charge;
+		
+		$data['service_charge'] = $service_charge;
+		$data['service_charge_string'] = 'IDR ' . number_format($service_charge, 2, ",", ".");
+		$data['gov_charge'] = $gov_charge;
+		$data['gov_charge_string'] = 'IDR ' . number_format($gov_charge, 2, ",", ".");
+		$data['total_payment'] = $total_payment;
+		$data['total_payment_string'] = 'IDR ' . number_format($total_payment, 2, ",", ".");
+		
+		echo json_encode($data);
+	}
+
 
 
 	// invitation_submit only
@@ -404,7 +435,9 @@ class Ajax extends MY_Controller {
 				
 				move_uploaded_file($tempFile,$targetFile);
 				
+				$photo_resize = $this->mediamanager->getPhotoUrl($photo, "200x200");
 				$data['photo_id'] = $photo_id;
+				$data['photo_resize'] = $photo_resize;
 				echo json_encode($data);
 				
 				//echo "{'business_id':'$business_id','token':'$verifyToken','photo':'$photo','photo_id':'$photo_id'}";

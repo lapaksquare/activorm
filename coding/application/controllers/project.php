@@ -313,7 +313,7 @@ class Project extends MY_Controller{
 				$redirect = base_url() . 'project/edit/' . $project_uri;
 			} else if ($preview_btn == "Preview"){
 				$project_live = "Draft";
-				if (!empty($project_uri)) $redirect = base_url() . 'project/' . $project_uri;
+				if (!empty($project_uri)) $redirect = base_url() . 'project/' . $project_uri . '?Preview=1';
 			} else if ($save_draft == "Save Draft"){
 				$project_live = "Draft";
 				$redirect = base_url() . 'project/edit/' . $project_uri;
@@ -377,8 +377,14 @@ class Project extends MY_Controller{
 				foreach($photos as $k=>$v){
 					$images_uploaded[$k]['file_name'] = $v;
 				}
-			}else{
-				$errors[] = 'You have to upload a Project Image in jpg/jpeg, gif, or png smaller than 2 MB, dimension are limited to 200x200 pixels image';
+			}
+			//else{
+				//$errors[] = 'You have to upload a Project Image in jpg/jpeg, gif, or png smaller than 2 MB, dimension are limited to 200x200 pixels image';
+			//}
+			if ($type == "create"){
+				if (empty($photos) || empty($images_uploaded)){
+					$errors[] = 'You have to upload a Project Image in jpg/jpeg, gif, or png smaller than 2 MB, dimension are limited to 200x200 pixels image';
+				}
 			}
 			
 			/*

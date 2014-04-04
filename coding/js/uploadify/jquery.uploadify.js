@@ -659,7 +659,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 					<div class="cancel">\
 						<a href="javascript:$(\'#${instanceID}\').uploadify(\'cancel\', \'${fileID}\')">X</a>\
 					</div>\
-					<span class="fileName">${fileName} (${fileSize})</span><span class="data"></span>\
+					<span class="fileName"><img />${fileName} (${fileSize})</span><span class="data"></span>\
 					<div class="uploadify-progress">\
 						<div class="uploadify-progress-bar"><!--Progress Bar--></div>\
 					</div>\

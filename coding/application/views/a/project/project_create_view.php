@@ -1,4 +1,4 @@
-<?php $this->load->view('a/general/header_view', $this->data); ?>
+<?php $this->load->view('a/general/header_view', $this->data); ?>			
 	
 <?php 
 $ts = time();
@@ -103,6 +103,10 @@ $ts = time();
 		}else if ($this->step_create == 2){
 		?>
 		
+		<div class="pop-warning">
+			<p style="margin-bottom:0;">We just update a new feature for Photos Upload. Please refresh this page several times to clear browser cache.</p>
+		</div>
+				
 		<div id="main" class="container">
 
 			<div class="page-header">

@@ -186,6 +186,18 @@ class Ajax extends CI_Controller {
 		));
 	}
 	
+	function getTotalAmountOrderManual(){
+		$total_amount = $this->input->get_post('v');
+		$service_charge = 5 * $total_amount / 100;
+		$goverment_tax = 10 * $total_amount / 100;
+		$total_payment = $total_amount + $service_charge + $goverment_tax;
+		echo json_encode(array(
+			'service_charge_string' => 'IDR ' . number_format($service_charge, 2, ",", "."),
+			'gov_charge_string' => 'IDR ' . number_format($goverment_tax, 2, ",", "."),
+			'total_payment_string' => 'IDR ' . number_format($total_payment, 2, ",", ".")
+		));
+	}
+	
 }
 
 ?>

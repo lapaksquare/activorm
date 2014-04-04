@@ -47,6 +47,10 @@
 									$social_data = json_decode($v->social_data);
 									$socialmedia_name = $social_data->name;
 									$link = "http://www.twitter.com/" . $social_data->screen_name;
+								}else if ($k == "instagram"){
+									$social_data = json_decode($v->social_data);
+									$socialmedia_name = $social_data->user->full_name;
+									$link = "http://www.instagram.com/" . $social_data->user->username;
 								}
 							?>
 							<li class="col-sm-12 col-xs-6"><a href="<?php echo $link; ?>" target="_blank"><i class="icon-<?php echo $k; ?>"></i> <?php echo ucfirst( $socialmedia_name ); ?></a></li>

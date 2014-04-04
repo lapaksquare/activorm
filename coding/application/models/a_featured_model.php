@@ -6,9 +6,12 @@ class A_featured_model extends CI_Model{
 		$sql = "
 		SELECT
 		bp.business_id,
-		bp.business_name
+		bp.business_name,
+		brm.account_id
 		FROM
 		business__profile bp
+		JOIN business__rel_member brm ON
+			brm.business_id = bp.business_id
 		WHERE 1
 		AND bp.business_live = 'Online'
 		AND bp.business_active = 1
