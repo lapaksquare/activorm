@@ -11,7 +11,7 @@ class Test extends MY_Sales_Access{
 	function index(){
       $this->load->library('pchart');
       
-      $this->pchart->ding();
+      $this->pchart->dong();
 	}
    
 	function _default_param($css = array(), $js = array(), $meta = array(), $title = ""){
