@@ -224,13 +224,34 @@ body{
    color:#ffffff;
 }
 .navbar .navbar-nav > li > a{
-   color:#ffffff;
+   color:#ffffff !important;
+   background:transparent !important;
 }
 .navbar .navbar-nav > li > a:hover{
-   color:#1ab99b;
+   color:#1ab99b !important;
 }
 .navbar .navbar-collapse{
    border-color:#828282;
+}
+
+.navbar .dropdown-menu{
+   background-color:#eef3f6;
+}
+.navbar .dropdown > a{
+   padding-top:10px;
+   padding-bottom:10px;
+}
+
+@media (max-width:767px){
+   .navbar-default .navbar-nav .dropdown-menu > li > a,
+   .navbar-default .navbar-nav .open .dropdown-menu > li > a{
+      color:#ffffff;
+   }
+   
+   .navbar-default .navbar-nav .dropdown-menu > li > a:hover,
+   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover{
+      color:#1ab99b;
+   }
 }
 
 .nav-sales-panel{

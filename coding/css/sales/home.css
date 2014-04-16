@@ -1,5 +1,5 @@
 .team{
-   background:#1ab99b;
+   background:#10987e;
 }
 .team h3{
    margin:0px;
@@ -12,46 +12,14 @@
 }
 
 .team-box{
-   padding-top:10px;
-   padding-bottom:10px;
+   padding-bottom:5px;
    background-color:#10987e;
 }
 
 .team-member-box{
-   display:table;
-   width:100%;
    background-color:#1ab99b;
    border:1px solid #10987e;
-}
-
-.team-self-box{
-   position:relative;
-   background-color:#10987e;
-   padding-bottom:50px;
-}
-.team-self-box img{
-   margin:0 auto;
-   margin-bottom:15px;
-}
-.team-self-box span{
-   font-size:2.2rem;
-   font-weight:bold;
-   color:#3cdaa7;
-}
-.team-select-box{
-   bottom:10px;
-   left:0px;
-   position:absolute;
-   width:100%;
-   text-align:center;
-}
-
-#teamSelect{
-   border:0;
-   background:#1ab99b;
-   padding:5px 10px;
-   color:#10987e;
-   font-weight:bold;
+   border:1px solid #10987e;
 }
 
 .member-avatar,
