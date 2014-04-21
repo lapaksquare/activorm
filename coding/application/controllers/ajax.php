@@ -412,17 +412,17 @@ class Ajax extends MY_Controller {
 		$verifyToken = sha1($timestamp . SALT);
 		$business_id = $this->session->userdata('business_id');
 		
-		if (!empty($_FILES) && $token == $verifyToken) {
+		if (!empty($_FILES) && $token == $verifyToken && !empty($business_id)) {
 			$tempFile = $_FILES['Filedata']['tmp_name'];
 			$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
 			$imgName =  sha1($_FILES['Filedata']['name'] . SALT) . '.jpg';
 			$targetFile = rtrim($targetPath,'/') . '/' . $imgName;
 			
 			// Validate the file type
-			$fileTypes = array('jpg','jpeg','gif','png'); // File extensions
+			$fileTypes = array('jpg','jpeg','gif','png', 'JPG', 'PNG', 'GIF', 'JPEG'); // File extensions
 			$fileParts = pathinfo($_FILES['Filedata']['name']);
 			
-			if (in_array($fileParts['extension'],$fileTypes)) {
+			if (in_array(strtolower( $fileParts['extension'] ),$fileTypes)) {
 				
 				$photo = $targetFolderTemp . $imgName;
 				$this->load->model('photo_model');

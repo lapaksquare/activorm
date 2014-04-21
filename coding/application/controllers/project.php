@@ -381,6 +381,7 @@ class Project extends MY_Controller{
 			//else{
 				//$errors[] = 'You have to upload a Project Image in jpg/jpeg, gif, or png smaller than 2 MB, dimension are limited to 200x200 pixels image';
 			//}
+			
 			if ($type == "create"){
 				if (empty($photos) || empty($images_uploaded)){
 					$errors[] = 'You have to upload a Project Image in jpg/jpeg, gif, or png smaller than 2 MB, dimension are limited to 200x200 pixels image';

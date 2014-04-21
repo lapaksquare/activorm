@@ -219,10 +219,10 @@ class Welcome extends CI_Controller {
 	
 	function p(){
 		//echo phpinfo();
-		$targetFolder = 'images/project'; // Relative to the root
-		$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
-		$targetFile = rtrim($targetPath,'/') . '/' . sha1("ANTON" . SALT) . '.jpg';
-		echo $targetFile;
+		//$targetFolder = 'images/project'; // Relative to the root
+		//$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
+		//$targetFile = rtrim($targetPath,'/') . '/' . sha1("ANTON" . SALT) . '.jpg';
+		//echo $targetFile;
 	}
 	
 }

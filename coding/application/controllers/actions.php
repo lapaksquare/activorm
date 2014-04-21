@@ -99,7 +99,7 @@ class Actions extends MY_Controller {
 					case "instagram-follow" :
 						$return = $this->checkInstagramFollow($v); 
 						if ($return == 0){
-							$message = "Follow Instagram Account action failed caused by session timeout or you follow your own account. Please try again.";
+							$message = "Follow Instagram Account action failed caused by session timeout or you follow your own account or Client request limit reached. Please try again.";
 						}
 						break;
 					case "instagram-like" :
@@ -119,17 +119,19 @@ class Actions extends MY_Controller {
 			$this->session->set_userdata('message_project_actions_error', $message);
 		}else{
 			$this->session->set_userdata('message_project_actions_success', 'Action succeed!');
+			
+			
+			$account_id = $this->access->member_account->account_id; //$this->session->userdata('account_id');
+			$this->project_model->registerActions($projectid, $account_id, $actions+1, $return);
+			
+			//if ($this->project->redeem_tiket_merchant == 0){
+				$generate_tiket = $this->generateTiket($projectid, $account_id);
+			//}
+			
+			// project analytic
+			//$this->project_analytic($projectid, $account_id, $this->project->account_id);
+			
 		}
-		
-		$account_id = $this->access->member_account->account_id; //$this->session->userdata('account_id');
-		$this->project_model->registerActions($projectid, $account_id, $actions+1, $return);
-		
-		//if ($this->project->redeem_tiket_merchant == 0){
-			$generate_tiket = $this->generateTiket($projectid, $account_id);
-		//}
-		
-		// project analytic
-		//$this->project_analytic($projectid, $account_id, $this->project->account_id);
 		
 		redirect($ref);
 		
@@ -350,7 +352,7 @@ class Actions extends MY_Controller {
 			'log_detail' => json_encode($result)
 		));		
 		
-		if ($result->meta->code === 200) {
+		if (!empty($result) && property_exists($result, "meta") && $result->meta->code === 200) {
 			return 1;
 		}
 		

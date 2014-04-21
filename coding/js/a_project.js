@@ -94,3 +94,17 @@ $('#actions_container').delegate('#btn-action-edit-fb', 'click', function(){
 	
 	return false;
 });
+
+$('#premium_plan').bind('click', function(){
+	var el = $(this);
+	if (el.data('working')) return false;
+	el.data('working', true);
+	
+	if (el.is(':checked')){
+		$('#premium_plan_container').show();
+	}else{
+		$('#premium_plan_container').hide();
+	}
+	
+	el.data('working', false);
+});

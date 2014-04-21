@@ -62,6 +62,8 @@ class Project extends MY_Admin_Access{
 		$this->load->model('a_project_model');
 		$this->project = $this->a_project_model->getProjectDetail($project_id);
 		
+		//echo '<pre>';print_r($this->project);echo '</pre>';
+		
 		$this->load->model('project_model');
 		$this->project_photos = $this->project_model->getProjectPhotos($project_id);
 		
@@ -99,6 +101,28 @@ class Project extends MY_Admin_Access{
 		$project_live = $this->input->get_post('project_live');
 		$project_active = $this->input->get_post('project_active');
 		$jml_winner = $this->input->get_post('jml_winner');
+		
+		/* OPT PREMIUM ==== START ==== */
+		$premium_plan_int = 0;
+		$project_plan_type_string = "";
+		$premium_plan = $this->input->get_post('premium_plan');
+		if (!empty($premium_plan)){
+			$project_plan_type_string = "PREMIUM100K";
+			$premium_plan_int = 1;
+		}
+		$opt_premium = $this->input->get_post('opt_premium');
+		$facebook_format = $this->input->get_post('facebook_format');
+		$twitter_format = $this->input->get_post('twitter_format');
+		$redeem_tiket_merchant = 0;
+		if ($opt_premium == "redeem_tiket"){
+			$redeem_tiket_merchant = 1;
+		}
+		/* OPT PREMIUM ==== END ==== */
+		
+		$this->load->model('point_model');
+		$points_user = $this->point_model->getAccountPoint($aid);
+		$points_balance = 100;
+		
 		/*input ==== end =====*/
 		
 		if (!empty($update)){
@@ -203,6 +227,58 @@ class Project extends MY_Admin_Access{
 			
 			/******** end VALIDASI */ 	
 			
+			
+			
+			/*allow share*/
+			if (!empty($opt_premium) && $opt_premium == "allow-share"){
+				// fb 140	
+				if (strlen($facebook_format) <= 0 || strlen($facebook_format) > 140){
+					$errors[] = "Share Facebook Format must be (140 Character)";
+				}
+				// tw 120	
+				if (strlen($twitter_format) <= 0 || strlen($twitter_format) > 120){
+					$errors[] = "Share Twitter Format must be (120 Character)";
+				}
+			}
+			
+			
+			if ($opt_premium == "direct-tickets"){
+			// UPLOAD FILE =================== start ============================
+			$config['upload_path'] = './images/project_data/';
+			$config['allowed_types'] = 'jpg|jpeg|png|pdf';
+			$config['encrypt_name'] = true;
+			$config['max_size']	= '2024';
+			
+			$this->load->library('upload', $config);
+						
+			$uploaded = $this->upload->do_upload('attach_file');
+			$project_file_data = "";
+			if ($uploaded){
+				//$error = $this->upload->display_errors();
+				$data = $this->upload->data();
+				//print_r($data);die();
+				//print_r($error);
+				
+				$project_file_data = 'images/project_data/' . $data['file_name'];
+								
+				//$dataProject['project_file_data'] = $project_file_data;
+				
+			}else{
+				
+				if (!empty($_FILES['attach_file']['name'])){
+					$errors[] = 'There is an error while uploading file. File must be in PDF/JPG/PNG format. Please try again.';
+				}
+				
+			}			
+			// UPLOAD FILE =================== end ============================
+			}
+			
+			
+			if ($premium_plan_int == 1 && $points_user < $points_balance){
+				$errors[] = "You don't have enough balance, please <a href='".base_url()."dashboard/pointstopup' target='_blank'>Top Up</a>";
+			}
+			
+			
 			if (count($errors) > 0){
 				
 				$this->session->set_userdata('a_message_error', $errors);
@@ -287,8 +363,35 @@ class Project extends MY_Admin_Access{
 					'project_live' => $project_live,
 					'project_active' => $project_active,
 					'project_actions_data' => $actions_string,
-					'jml_winner' => $jml_winner
+					'jml_winner' => $jml_winner,
+					'redeem_tiket_merchant' => $redeem_tiket_merchant
 				);
+				
+				$dataProject['project_file_data'] = "";
+				if (!empty($project_file_data)) {
+					$dataProject['project_file_data'] = $project_file_data;
+				}
+				
+				$dataProject['social_format_data'] = "";
+				if ($opt_premium == "allow-share"){
+					$dataProject['social_format_data'] = json_encode( array(
+						'facebook_format' => $facebook_format,
+						'twitter_format' => $twitter_format
+					) );
+				}
+				
+				$dataProject['premium_plan_type'] = "";
+				if ($premium_plan_int == 1){
+					$dataProject['premium_plan_type'] = $project_plan_type_string;
+				}
+				
+				if ($premium_plan_int == 0){
+					$dataProject['project_file_data'] = "";
+					$dataProject['social_format_data'] = "";
+					$dataProject['premium_plan_type'] = "";
+					$dataProject['redeem_tiket_merchant'] = "";
+				}
+				
 				
 				$this->cache->delete('c#p#' . $project->project_uri);
 				

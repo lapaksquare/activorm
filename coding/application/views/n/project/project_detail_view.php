@@ -330,6 +330,117 @@
 	      </select>
 	    </div>
 	  </div>
+	  
+	  
+	  <hr />
+	  
+	  <?php 
+	  $premium_plan = $this->project->premium_plan;
+	  $premium_plan_checked = (!empty($premium_plan) && $premium_plan == 1) ? "checked='checked'" : "";
+	  ?>
+	  <div class="checkbox">
+		  <label>
+		    <input type="checkbox" value="premium_plan" name="premium_plan" id="premium_plan" <?php echo $premium_plan_checked; ?>>
+		    <b>Premium Plan Feature (Ask Our Representative for Assistance to Use These Features)</b>
+		  </label>
+	  </div>
+	  
+	  <div class="premium_plan_container" id="premium_plan_container" 
+	  <?php if (!empty($premium_plan) && $premium_plan == 1){ ?>
+	  style="display:block;"
+	  <?php }else{ ?>
+	  style="display:none;"	
+	  <?php } ?>	
+	  >
+	  
+		  <ul class="list-unstyled upgrade-options" id="upgrade-options" style="display:block;">
+		  	
+		  	<?php 
+			$social_format_data_checked = $social_format_data = '';
+			if (!empty($this->project->social_format_data)){
+				$social_format_data = json_decode( $this->project->social_format_data );
+				$social_format_data_checked = '';
+				if (property_exists($social_format_data, 'facebook_format') || (property_exists($social_format_data, 'twitter_format'))){
+					if (!empty($social_format_data->facebook_format) || !empty($social_format_data->twitter_format)){
+						$social_format_data_checked = 'checked="checked"';
+					}
+				}
+			}
+			?>
+		  	
+		  	<li>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="opt_premium" id="opt_premium" value="allow-share" <?php echo $social_format_data_checked; ?>>
+				    Allow fans to share more about your business to get more tickets (max 3 tickets)
+				  </label>
+				</div>
+				<div class="sub-options">
+					<div class="form-group">
+					    <label for="facebook_format" class="col-sm-2 control-label">Share Facebook Format (140 Character)</label>
+					    <div class="col-sm-10">
+					     	<input type="text" class="form-control" id="facebook_format" name="facebook_format" value="<?php echo (property_exists($social_format_data, 'facebook_format')) ? $social_format_data->facebook_format : ''; ?>" />
+					    </div>
+					</div>
+					<div class="form-group">
+					    <label for="twitter_format" class="col-sm-2 control-label">Share Twitter Format (120 Character)</label>
+					    <div class="col-sm-10">
+					     	<input type="text" class="form-control" id="twitter_format" name="twitter_format" value="<?php echo (property_exists($social_format_data, 'twitter_format')) ? $social_format_data->twitter_format : ''; ?>" />
+					    </div>
+					</div>  
+				</div>
+			</li>
+			
+			<?php 
+			$project_file_data_checked = $project_file_data = '';
+			if (!empty($this->project->project_file_data)){
+				$project_file_data = $this->project->project_file_data;
+				$project_file_data_checked = 'checked="checked"';
+			}
+			?>
+			
+			<li>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="opt_premium" id="opt_premium" value="direct-tickets" <?php echo $project_file_data_checked; ?>>
+				    Direct tickets/price for completed actions (e.g voucher images or ebook PDF)
+				  </label>
+				  <?php if (!empty($project_file_data)){ ?><p style="margin-left:42px;">Your file/voucher : <a href="<?php echo cdn_url() . $project_file_data; ?>" target="_blank">Click here</p><?php } ?></a>
+				</div>
+				<div class="sub-options">
+					<div class="form-group">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-10">
+							<input type="file" name="attach_file" class="real-file" />
+						</div>	
+					</div>	
+				</div>		
+			</li>
+			
+			<?php 
+			$redeem_tiket_checked = '';
+			if (!empty($this->project->redeem_tiket_merchant)){
+				$redeem_tiket_checked = 'checked="checked"';
+			}
+			
+			//$business_id = $this->project->business_id;
+			//if (in_array($business_id, array(1, 7, 72))){
+			?>
+			
+			<li>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="opt_premium" id="opt_premium" value="redeem_tiket" <?php echo $redeem_tiket_checked; ?>>
+				    Redeem Prize by Merchant
+				  </label>
+				</div>	
+			</li>
+		  </ul>	
+	  
+	  </div>		  
+	  
+	  <hr />
+	  
 	
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">

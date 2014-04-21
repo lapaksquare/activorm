@@ -794,7 +794,7 @@ $ts = time();
 					?>
 					
 					
-					<h2 class="step-title">Premium Plan Feature</h2>
+					<h2 class="step-title">Premium Plan Feature (Ask Our Representative for Assistance to Use These Features)</h2>
 					
 					
 					<?php /*

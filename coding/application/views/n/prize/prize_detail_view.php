@@ -163,7 +163,9 @@
 	    	<input type="hidden" name="ppid" value="<?php echo (!empty($this->prize)) ? $this->prize->project_id : ""; ?>" />
 	    	<input type="hidden" name="h" value="<?php echo (!empty($this->prize)) ? sha1($this->prize->prize_id . $this->prize->project_id . SALT) : ""; ?>" />
 	        <input type="submit" class="btn btn-default" name="submit" id="submit" value="Submit" />
+	        <?php if (!empty($this->prize->prize_id)){ ?>
 	        <a class="btn" id="delete_prize" href="<?php echo base_url(); ?>admin/prize/deleteprize?p=<?php echo $this->prize->prize_id; ?>&pid=<?php echo $this->prize->project_id; ?>&h=<?php echo sha1($this->prize->prize_id.$this->prize->project_id.SALT); ?>">Delete Prize</a>
+	        <?php } ?>
 	    </div>
 	  </div>
 	</form>
