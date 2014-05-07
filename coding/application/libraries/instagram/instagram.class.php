@@ -197,7 +197,7 @@ class Instagram {
    * @param integer $user                 Target user ID
    * @return mixed
    */
-  public function modifyRelationship($action, $user) {
+  public function modifyRelationship($action, $user) { /*$user = "518524410";*/
     if (true === in_array($action, $this->_actions) && isset($user)) {
       return $this->_makeCall('users/' . $user . '/relationship', true, array('action' => $action), 'POST');
     }
@@ -440,6 +440,11 @@ class Instagram {
     
     $apiCall = self::API_URL . $function . $authMethod . (('GET' === $method) ? $paramString : null);
     
+	//echo $paramString;
+	//echo ltrim($paramString, '&');die();
+	//echo $method;die();
+	//print_r($params);die();
+	
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $apiCall);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json'));
@@ -449,7 +454,7 @@ class Instagram {
     
     if ('POST' === $method) {
       curl_setopt($ch, CURLOPT_POST, count($params));
-      curl_setopt($ch, CURLOPT_POSTFIELDS, ltrim($paramString, '&'));
+      curl_setopt($ch, CURLOPT_POSTFIELDS, /*ltrim($paramString, '&')*/ $params );
     } else if ('DELETE' === $method) {
       curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
     }
@@ -460,6 +465,10 @@ class Instagram {
     }
     curl_close($ch);
     
+	/*echo $function;
+	print_r($params);
+	print_r($jsonData);die();*/
+	
     return json_decode($jsonData);
   }
 

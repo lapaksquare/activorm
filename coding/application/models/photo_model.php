@@ -47,6 +47,29 @@ class Photo_model extends CI_Model{
 		$this->db->query($sql, array($photo_id, $business_id, $token));
 	}
 	
+	function deleteAjaxPhotoByPhotoId($photo_id){
+		$sql = "
+		UPDATE project__photo_temp SET
+		isactive = 1
+		WHERE 1
+		AND tid = ?
+		";
+		$this->db->query($sql, array($photo_id));
+	}
+	
+	function getCountPhotoByToken($token){
+		$sql = "
+		SELECT
+		IFNULL(count(ppt.tid),0) jml_photo
+		FROM
+		project__photo_temp ppt
+		WHERE 1
+		AND ppt.token = ?
+		AND ppt.isactive = 0
+		";
+		return $this->db->query($sql, array($token))->row()->jml_photo;
+	}
+	
 }
 
 ?>

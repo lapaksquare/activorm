@@ -465,6 +465,95 @@ class Ajax extends MY_Controller {
 		));
 	}
 	
+	function delete_ajax_image(){
+		$this->load->model('photo_model');
+		$photo_id = $this->input->get_post('pid');
+		$photo_id_hash = $this->input->get_post('pidh');
+		$photo_id_hash_ori = sha1($photo_id . SALT);
+		if ($photo_id_hash != $photo_id_hash_ori){
+			echo json_encode(array(
+				'response' => 0
+			));
+		}else{
+			
+			$this->photo_model->deleteAjaxPhotoByPhotoId($photo_id);
+			
+			echo json_encode(array(
+				'response' => 1
+			));
+			
+		}
+	}
+	
+	function getExtension($str){
+		$i = strrpos($str,".");
+		if (!$i) { return ""; }
+		$l = strlen($str) - $i;
+		$ext = substr($str,$i+1,$l);
+		return $ext;
+	}
+	
+	function upload_ajax_image(){
+		$timestamp = $this->input->get_post('timestamp');
+		$token = $this->input->get_post('token');
+		$verifyToken = sha1($timestamp . SALT);
+		$business_id = $this->session->userdata('business_id');
+		$uploaddir = 'images/project/';
+		$valid_formats = array("jpg", "png", "jpeg");
+		
+		$this->load->model('photo_model');
+		$cek_jml_image = $this->photo_model->getCountPhotoByToken($verifyToken);
+		if ($cek_jml_image >= 3 || count($_FILES['project_photo']['name']) > 3){
+			
+			echo '<div class="alert alert-danger">Upload Project Image (Max. 3 Images)</div>';
+			
+		}else{
+		
+			foreach ($_FILES['project_photo']['name'] as $name => $value){
+				$filename = stripslashes($_FILES['project_photo']['name'][$name]);
+				$size = filesize($_FILES['project_photo']['tmp_name'][$name]);
+				$ext = $this->getExtension($filename);
+				$ext = strtolower($ext);
+				if(in_array($ext,$valid_formats)){
+					if ($size < (2000*1024)){ //max 2mb
+						$image_name = time() . $filename; 
+						$newname = $uploaddir.$image_name; 
+						
+						if (move_uploaded_file($_FILES['project_photo']['tmp_name'][$name], $newname)) { 
+							
+							$data = array(
+								'business_id' => $business_id,
+								'token' => $verifyToken,
+								'photo' => $newname
+							);
+							$photo_id = $this->photo_model->addPhotoTemp($data);
+							
+							$photo_resize = $this->mediamanager->getPhotoUrl($newname, "200x200");
+							/*$data['photo_id'] = $photo_id;
+							$data['photo_resize'] = $photo_resize;
+							echo json_encode($data);*/
+							
+							echo '<div class="project-thumbnail">';
+							echo "<img src='".cdn_url().$photo_resize."' class='img-thumbnail'>"; 
+							echo '<a href="#" id="delete_photo" data-pid="'.$photo_id.'" data-h="'.sha1($photo_id . SALT).'"><span class="glyphicon glyphicon-remove"></span></a>';
+							echo '</div>';
+							
+						}else{ 
+							echo '<div class="alert alert-danger">You have exceeded the size limit! so moving unsuccessful! </div>'; 
+						} 
+					}else{ 
+						echo '<div class="alert alert-danger">Max Size 2MB</div>'; 
+					} 	
+						
+				}else{ 
+					echo '<div class="alert alert-danger">Unknown extension!</div>'; 
+				} 
+			}
+
+		}
+
+	}
+	
 }
 
 ?>

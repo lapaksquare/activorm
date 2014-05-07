@@ -326,10 +326,21 @@ class Actions extends MY_Controller {
 	}
 
 	function checkInstagramFollow($data){
+		$account_id = $this->session->userdata('account_id');
+		$this->load->model('socialmedia_model');
+		$socialmedia = $this->socialmedia_model->getSocialMediaConnect($account_id, 'instagram');
+		
+		if (empty($account_id) || empty($socialmedia)) return 0;
+		
+		$social_oauth_data = json_decode( $socialmedia->social_oauth_data );
+		$access_token = $social_oauth_data->access_token;
+		
+		//echo '<pre>';print_r($socialmedia);echo '</pre>';die();
+		
 		$this->load->library('instagram_library');
 		
 		// set user's accesstoken (can be received after authentication)
-		$this->instagram_library->instagram->setAccessToken($data->access_token);
+		$this->instagram_library->instagram->setAccessToken($access_token);
 		 
 		// follow user (snoopdogg)
 		$result = $this->instagram_library->instagram->modifyRelationship('follow', $data->user->id);
@@ -360,10 +371,19 @@ class Actions extends MY_Controller {
 	}
 	
 	function checkInstagramLikePhoto($data){
+		$account_id = $this->session->userdata('account_id');
+		$this->load->model('socialmedia_model');
+		$socialmedia = $this->socialmedia_model->getSocialMediaConnect($account_id, 'instagram');
+		
+		if (empty($account_id) || empty($socialmedia)) return 0;
+		
+		$social_oauth_data = json_decode( $socialmedia->social_oauth_data );
+		$access_token = $social_oauth_data->access_token;
+		
 		$this->load->library('instagram_library');
 		
 		// set user's accesstoken (can be received after authentication)
-		$this->instagram_library->instagram->setAccessToken($data->social_oauth_data->access_token);
+		$this->instagram_library->instagram->setAccessToken( /*$data->social_oauth_data->access_token*/ $access_token);
 		 
 		// follow user (snoopdogg)
 		$id = $data->photo_data->media_id;

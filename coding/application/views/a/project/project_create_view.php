@@ -134,7 +134,7 @@ $ts = time();
 			}
 			?>
 
-			<form action="<?php echo base_url(); ?>project/submit_createproject" method="post" enctype="multipart/form-data">
+			<form action="<?php echo base_url(); ?>project/submit_createproject" method="post" enctype="multipart/form-data" id="createprojectform" name="createprojectform">
 				
 				<div id="step-1" class="box step">
 					
@@ -249,16 +249,24 @@ $ts = time();
 							<div class="form-group file-upload" style="margin:0;">
 								
 								<div class="row">
-									<div class="col-xs-5">
+									<div class="col-xs-12">
 										<?php /*
 										<input type="text" placeholder="Choose an Image" class="form-control form-light fake-file" /> */ ?>
 										
 										<?php /*
 										<input type="file" name="project_photo[]" class="real-file" multiple="true" />
-										*/ ?>
+										
 										
 										<div id="queue"></div>
-										<input id="project_photo" name="project_photo" type="file" multiple="true" />
+										*/ ?>
+										
+										
+										<div id="imageloadbutton"> 
+											<input id="project_photo" name="project_photo[]" type="file" multiple="true" />
+										</div>
+										<div class="loader_ajax_photo" id="imageloadstatus" style="display:none;"><img src="<?php echo cdn_url(); ?>img/ajax-loader.gif" /></div>
+										
+										<div id="queue" class="project_photo-queue"></div>
 										
 									</div>
 									
@@ -346,9 +354,11 @@ $ts = time();
 				<!-- #step-3 --></div>
 
 				<div id="step-4" class="box step">
-					<h2 class="step-title">Step 4: <span class="green">Describe Prize</span></h2>
+					<h2 class="step-title">Step 4: <span class="green">Prize Category<?php /*Describe Prize*/ ?></span></h2>
 
 					<div class="row">
+						
+						<?php /*
 						<div class="col-sm-9">
 							<div class="form-group">
 								<?php 
@@ -363,7 +373,7 @@ $ts = time();
 								<input type="text" name="project_prize" placeholder="e.g. MAP Gift Voucher 250K" class="form-control form-light" value="<?php echo $project_prize; ?>" />
 								<p class="help-block"><strong>Example:</strong> Minimum 5 characters.</p>
 							</div>
-						</div>
+						</div> */ ?>
 
 						<div class="col-sm-3">
 							<div class="form-group">
@@ -721,7 +731,7 @@ $ts = time();
 				<!-- #step-5 --></div>
 
 				<div id="step-6" class="box step">
-					<h2 class="step-title">Step 6: <span class="green">Terms & Condition</span></h2>
+					<h2 class="step-title">Step 6: <span class="green">Prize Description</span></h2>
 
 					<div class="row">
 						<div class="col-sm-9">
@@ -905,7 +915,7 @@ $ts = time();
 						?>
 						<input type="hidden" name="pid" id="pid" value="<?php echo $pid; ?>" />
 						<input type="hidden" name="pid_hash" id="pid_hash" value="<?php echo $hash; ?>" />
-						<input type="submit" class="btn btn-blue pull-right" value="Preview" name="preview-btn" />
+						<input type="submit" class="btn btn-blue pull-right" value="Preview" name="preview-btn" id="preview-btn" />
 						
 						<?php /*
 						<input type="submit" class="btn btn-green pull-right" value="Submit" name="submit-btn" id="submit-btn" />
@@ -918,7 +928,7 @@ $ts = time();
 						
 						<input type="hidden" name="ts" id="ts" value="<?php echo $ts; ?>" />
 						<input type="hidden" name="t" id="t" value="<?php echo sha1($ts . SALT); ?>" />
-						<input type="submit" class="btn btn-blue pull-right" value="Save Draft" name="save-draft" />
+						<input type="submit" class="btn btn-blue pull-right" value="Save Draft" name="save-draft" id="save-draft" />
 						
 						<?php /*
 						<input type="submit" class="btn btn-blue pull-right" value="Continue" name="premium-submit-draft" id="premium-submit-draft" 						

@@ -89,6 +89,9 @@ class Home extends MY_Controller{
 				
 		$this->data['merchants'] = $merchants;
 		
+		$this->load->model('banner_model');
+		$this->banners = $this->banner_model->getBannerActive();
+		
 		$this->data['menu'] = 'home';
 		$css = array();
 		$js = array();

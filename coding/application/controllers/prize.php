@@ -101,6 +101,9 @@ class Prize extends MY_Controller{
 		// analytic
 		$this->project_analytic($this->prize_profile->prize_id);
 		
+		$this->load->model('banner_model');
+		$this->banners = $this->banner_model->getBannerActive();
+		
 		//echo '<pre>';
 		//print_r($this->project_prize);
 		//echo '</pre>';

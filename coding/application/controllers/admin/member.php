@@ -429,6 +429,8 @@ class Member extends MY_Admin_Access{
 				$errors[] = "Something error with key hash.";
 			}
 			
+			
+			/*
 			if ($account_province == 0){
 				$errors[] = "Province can't be emptied";
 			}
@@ -441,6 +443,8 @@ class Member extends MY_Admin_Access{
 				$errors[] = "Kecamatan can't be emptied";
 			}
 			$this->session->set_userdata('account_kecamatan', $account_kecamatan);
+			*/
+			
 			//if ($account_kelurahan == 0){
 			//	$errors[] = "Kelurahan can't be emptied";
 			//}
@@ -474,25 +478,33 @@ class Member extends MY_Admin_Access{
 			}
 			$this->session->set_userdata('contact_number', $account_number);
 			
+			/*
 			if (strlen($account_address) < 4){
 				$errors[] = "Billing Address must contain minimum 4 characters.";
 			}
 			$this->session->set_userdata('business_billing_address', $account_address);
+			*/
 			
+			/*
 			if (strlen($account_description) < 50){
 				$errors[] = "Please describe your Business in minimum 50 characters.";
 			}
 			$this->session->set_userdata('business_description', $account_description);
+			*/
 			
+			/*
 			if (strlen($account_need) < 5){
 				$errors[] = "Business Needs must contain minimum 5 characters.";
 			}
 			$this->session->set_userdata('business_needs', $account_need);
+			*/
 			
+			/*
 			if (empty($account_position)){
 				$errors[] = "Please insert your Position in the Company.";
 			}
 			$this->session->set_userdata('position_inthe_company', $account_position);
+			*/
 			
 			$this->load->library('util');
 			$business_uri = $this->util->url_slug($account_name);
@@ -502,13 +514,14 @@ class Member extends MY_Admin_Access{
 				$errors[] = 'Your Business Name has been taken.';
 			}
 			
+			/*
 			if (!empty($website) && trim($website) != "http://"){
 				$validateWebsite = $this->validate->valid_url($website);
 				if ($validateWebsite == FALSE){
 					$errors[] = 'Please insert the correct website URL link.';
 				}
 			}
-			
+			*/
 			
 			
 			// ACCOUNT AVATAR ========================= START ==================================

@@ -15,7 +15,81 @@
 		left: 50%;
 		margin-left: -80px;
 	}
-</style>		
+</style>	
+
+
+		<div id="banner" class="block" style="background:#000;">
+
+			<?php /*	
+			<img class="img-responsive" src="<?php echo cdn_url(); ?>img/bg-header-projects.png" alt="#" style="margin:0 auto;" /> */ ?>
+			
+			<div class="bs-slide-container">
+				<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="overflow:hidden;height:234px;">
+					
+					<?php /*
+				  <!-- Indicators -->
+				  <ol class="carousel-indicators">
+				    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+				    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+				    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+				    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+				    <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+				  </ol> */ ?>
+				
+				  <!-- Wrapper for slides -->
+				  <div class="carousel-inner">
+				  	
+				  	<?php 
+				  	foreach($this->banners as $k=>$v){
+				  		$class = ($k == 0) ? 'active' : '';
+				  	?>
+				  	<div class="item <?php echo $class; ?>">
+				  		<a href="<?php echo $v->banner_link; ?>">
+				      <img src="<?php echo cdn_url() . $v->banner_image; ?>" alt="<?php echo $v->banner_name; ?>" />
+				      	</a>
+				    </div>
+				    <?php 
+					}
+				    ?>
+				    
+				    <?php /*
+				    <div class="item">
+				      <img src="http://bejanamu.local/img/b1.jpg" alt="b1" />
+				    </div>
+				    <div class="item">
+				      <img src="http://bejanamu.local/img/b2.jpg" alt="b1"/>
+				    </div>
+				    <div class="item">
+				      <img src="http://bejanamu.local/img/b3.jpg" alt="b1" />
+				    </div>
+				    <div class="item">
+				      <img src="http://bejanamu.local/img/b4.jpg" alt="b1" />
+				    </div>
+				    <div class="item">
+				      <img src="http://bejanamu.local/img/b5.jpg" alt="b1" />
+				    </div> */ ?>
+				    
+				  </div>
+				
+				  <!-- Controls -->
+				  <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+				    <span class="glyphicon glyphicon-chevron-left"></span>
+				  </a>
+				  <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+				    <span class="glyphicon glyphicon-chevron-right"></span>
+				  </a>
+				</div>
+			</div>
+			
+		<!-- #banner -->
+		</div>
+
+
+
+
+
+
+	
 		
 		<?php 
 		if (empty($this->access->member_account)){

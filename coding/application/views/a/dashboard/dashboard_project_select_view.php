@@ -464,7 +464,7 @@
 							<table class="table table-activorm table-align-alt">
 								<thead>
 									<tr>
-										<th width="25%">Rangking</th>
+										<th width="25%">Ranking</th>
 										<th width="75%">Interest</th>
 									</tr>
 								</thead>

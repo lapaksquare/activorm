@@ -38,13 +38,14 @@ class Project extends MY_Controller{
 			
 			$css = array(
 				'<link href="'.cdn_url().'css/jquery.tagbox.css" rel="stylesheet">',
-				'<link href="'.cdn_url().'js/uploadify/uploadify.css" rel="stylesheet">'
+				//'<link href="'.cdn_url().'js/uploadify/uploadify.css" rel="stylesheet">'
 			);
 			$js = array(
 				'<script src="'.cdn_url().'js/bootstrap-slider.min.js"></script>',
 				'<script src="'.cdn_url().'js/jquery.simplyCountable.js"></script>',
 				'<script src="'.cdn_url().'js/jquery.tagbox.js"></script>',
-				'<script src="'.cdn_url().'js/uploadify/jquery.uploadify.js"></script>',
+				//'<script src="'.cdn_url().'js/uploadify/jquery.uploadify.js"></script>',
+				'<script src="'.cdn_url().'js/jquery.wallform.js"></script>',
 				'<script src="'.cdn_url().'js/create_project.js"></script>'
 			);
 		
@@ -253,16 +254,17 @@ class Project extends MY_Controller{
 			
 			//if ($validateProjectName == 1){
 			if (strlen($project_name) < 5){	
-				$errors[] = "Project Prize must contain words only. Minimum 5 characters.";
+				$errors[] = "Project Title must contain words only. Minimum 5 characters.";
 			}
 			//if ($validateProjectPrize == 1){
 			//	$errors[] = "Project Prize must contain words only (you may not use special characters e.g. - , > , % , $). Minimum 5 characters.";
 			//}
+			/*
 			if (strlen($project_prize) < 5){
 				$errors[] = "Project Prize must contain words only. Minimum 5 characters.";
-			}
+			}*/
 			if (strlen($project_description) <= 0 || strlen($project_description) > 500){
-				$errors[] = "Project Description must be filled. Max 500 characters.";
+				$errors[] = "Terms & Condition must be filled. Max 500 characters.";
 			}
 			//if (empty($actions_step) || count($actions_step) <= 0 || count($actions_step) > 3){
 			//	$errors[] = "You have to pick 3 Actions to create this project.";

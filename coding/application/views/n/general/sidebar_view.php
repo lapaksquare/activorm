@@ -110,6 +110,10 @@
 			'name' => 'Graph',
 			'url' => base_url() . 'admin/graph',
 		),
+		'banner' => array(
+			'name' => 'Banner',
+			'url' => base_url() . 'admin/banner',
+		),
 	);
 	
 	?>
