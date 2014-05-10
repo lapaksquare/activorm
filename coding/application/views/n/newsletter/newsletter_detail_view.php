@@ -84,6 +84,14 @@
 	    <label for="newsletter_body" class="col-sm-2 control-label">Newsletter Body</label>
 	    <div class="col-sm-10">
 	      <?php 
+	      
+	      $utm = array(
+		  	'utm_source' => 'campaign_source',
+		  	'utm_medium' => 'campaign_medium',
+		  	'utm_campaign' => 'campaign name'
+		  );
+		  $utm_query = http_build_query($utm);
+	      
 	      $newsletter_tmpl = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -106,7 +114,7 @@
 							<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
 								<tr>
 									<td width="300" style="border-collapse: collapse;color: #fff;font-size: 14px;">
-										<a href="http://activorm.com" style="color: #20b396;">
+										<a href="http://activorm.com?'.$utm_query.'" style="color: #20b396;">
 											<img class="image_fix" src="http://activorm.com/img/email/img/logo.png" alt="activorm" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;border: none;display: block;">
 										</a>
 									</td>
@@ -137,7 +145,7 @@
 																									
 													<td style="border-collapse: collapse;width: 25%;padding: 5px 5px 15px;text-align: center;">
 														<div class="prize-logo" style="width: 100%;height: 95px;margin: 0 0 10px;display: table;vertical-align: middle;background: #fff;border-radius: 10px;">
-															<span style="display: table-cell;vertical-align: middle;"><a href="http://activorm.com/project/menangkan-alfabet-varsity-jacket-dari-tees-co-id" target="_blank"><img src="http://activorm.com/images/email/email-prize-tees-jaket.png" alt="Tees.co.id" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;"></a></span>
+															<span style="display: table-cell;vertical-align: middle;"><a href="http://activorm.com/project/menangkan-alfabet-varsity-jacket-dari-tees-co-id?'.$utm_query.'" target="_blank"><img src="http://activorm.com/images/email/email-prize-tees-jaket.png" alt="Tees.co.id" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;"></a></span>
 														</div>
 														<p style="margin: 0 10px;color: #4c4c4d;font-size: 10px;line-height: 1.4;">Alfabet Varsity Jacket<br><b>Tees.co.id</b></p>
                                                     </td>
@@ -145,7 +153,7 @@
 													
 												   <td style="border-collapse: collapse;width: 25%;padding: 5px 5px 15px;text-align: center;">
 														<div class="prize-logo" style="width: 100%;height: 95px;margin: 0 0 10px;display: table;vertical-align: middle;background: #fff;border-radius: 10px;">
-															<span style="display: table-cell;vertical-align: middle;"><a href="http://activorm.com/project/win-a-gift-voucher-idr-100k-from-espa-spa-reflexiology" target="_blank"><img src="http://activorm.com/images/email/email-prize-espa-babor.png" alt="ESPA" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;"></a></span>
+															<span style="display: table-cell;vertical-align: middle;"><a href="http://activorm.com/project/win-a-gift-voucher-idr-100k-from-espa-spa-reflexiology?'.$utm_query.'" target="_blank"><img src="http://activorm.com/images/email/email-prize-espa-babor.png" alt="ESPA" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;"></a></span>
 														</div>
 														<p style="margin: 0 10px;color: #4c4c4d;font-size: 10px;line-height: 1.4;">Gift Voucher 100K<br><b>ESPA</b></p>
                                                     </td>
@@ -153,7 +161,7 @@
 																										
 													<td style="border-collapse: collapse;width: 25%;padding: 5px 5px 15px;text-align: center;">
 														<div class="prize-logo" style="width: 100%;height: 95px;margin: 0 0 10px;display: table;vertical-align: middle;background: #fff;border-radius: 10px;">
-															<span style="display: table-cell;vertical-align: middle;"><a href="http://activorm.com/project/menangkan-pancake-duren-ajiieb-6pcs" target="_blank"><img src="http://activorm.com/images/email/email-prize-tokocondet-pancake-durian.png" alt="Tokocondet.com" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;"></a></span>
+															<span style="display: table-cell;vertical-align: middle;"><a href="http://activorm.com/project/menangkan-pancake-duren-ajiieb-6pcs?'.$utm_query.'" target="_blank"><img src="http://activorm.com/images/email/email-prize-tokocondet-pancake-durian.png" alt="Tokocondet.com" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;"></a></span>
 														</div>
 														<p style="margin: 0 10px;color: #4c4c4d;font-size: 10px;line-height: 1.4;">Durian Pancake<br><b>Tokocondet.com</b></p>
                                                     </td>
@@ -171,10 +179,10 @@
 																							</table>
 											
 											<p style="margin: 1em 0;"><strong>Tees.co.id</strong> adalah tempat dimana kamu bisa menemukan beragam produk kaos dan kanvas dengan desain unik yang bisa kamu beli dengan harga terjangkau. <strong>ESPA</strong> menyediakan treatment paling efektif untuk perawatan kulit dengan harga terjangkau. <strong>Tokocondet.com</strong> menjual segala barang impor dari timur tengah dengan kemudahan dalam berbelanja, serta pengiriman yang cepat .</p>
-                                            <p style="margin: 1em 0;">Jangan lewatkan kesempatan untuk memenangkan hadiah-hadiah menarik lainnya di <strong><a href="http://activorm.com/" target="_blank" style="color: #20b396;">Activorm</a></strong>. Kalian hanya perlu melakukan 3 Engagement-Actions seperti Like Facebook Fanpage, Follow Twitter, atau Share. </p>
-                                            <p style="margin: 1em 0;">Untuk teman-teman yang ingin bergabung di Activorm sebagai merchant atau business account, kamu bisa mendaftarkan brand atau bisnis tersebut di <strong><a href="http://www.activorm.com/business/register" style="color: #20b396;">www.activorm.com/business/register</a></strong></p>
+                                            <p style="margin: 1em 0;">Jangan lewatkan kesempatan untuk memenangkan hadiah-hadiah menarik lainnya di <strong><a href="http://activorm.com/?'.$utm_query.'" target="_blank" style="color: #20b396;">Activorm</a></strong>. Kalian hanya perlu melakukan 3 Engagement-Actions seperti Like Facebook Fanpage, Follow Twitter, atau Share. </p>
+                                            <p style="margin: 1em 0;">Untuk teman-teman yang ingin bergabung di Activorm sebagai merchant atau business account, kamu bisa mendaftarkan brand atau bisnis tersebut di <strong><a href="http://www.activorm.com/business/register?utm_source=campaign_source&utm_medium=campaign_medium&utm_campaign=campaign%20name" style="color: #20b396;">www.activorm.com/business/register</a></strong></p>
 											<p style="margin: 1em 0;"><strong>Good luck!</strong></p>
-											<p class="signup" style="margin: 40px 0 -60px;"><a class="button" href="http://activorm.com" style="color: #fff;padding: 10px 30px;display: inline-block;font-size: 18px;font-weight: bold;text-decoration: none;background: #20b396;border-bottom: 2px solid #1fa88c;border-radius: 5px;">Go To Activorm</a></p>
+											<p class="signup" style="margin: 40px 0 -60px;"><a class="button" href="http://activorm.com?'.$utm_query.'" style="color: #fff;padding: 10px 30px;display: inline-block;font-size: 18px;font-weight: bold;text-decoration: none;background: #20b396;border-bottom: 2px solid #1fa88c;border-radius: 5px;">Go To Activorm</a></p>
 										
 									</div></td>
 								</tr>

@@ -24,9 +24,16 @@
 				  	<?php 
 				  	foreach($this->banners as $k=>$v){
 				  		$class = ($k == 0) ? 'active' : '';
+						
+						$utm = array(
+							'utm_source' => 'banner_ads',
+							'utm_medium' => 'banner',
+							'utm_campaign' => $v->banner_name
+						);
+						
 				  	?>
 				  	<div class="item <?php echo $class; ?>">
-				  		<a href="<?php echo $v->banner_link; ?>">
+				  		<a href="<?php echo $v->banner_link; ?>?<?php echo http_build_query($utm); ?>">
 				      <img src="<?php echo cdn_url() . $v->banner_image; ?>" alt="<?php echo $v->banner_name; ?>" />
 				      	</a>
 				    </div>

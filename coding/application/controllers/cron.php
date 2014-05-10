@@ -1000,6 +1000,7 @@ ORDER BY `pp`.`project_name`  DESC
 		
 		$results = $this->db->query($sql)->result();
 		
+		$emails_record = array();
 		if (!empty($results)){
 			
 			foreach($results as $k=>$v){
@@ -1080,6 +1081,7 @@ ORDER BY `pp`.`project_name`  DESC
 						continue;
 					}
 					
+					$emails_record[] = $email;
 					$data = array(
 						'subject_email' => $subject,
 						'email' => $email
@@ -1093,12 +1095,19 @@ ORDER BY `pp`.`project_name`  DESC
 			
 		}
 		
+		if (!empty($emails_record)){
+			$emails_record_str = implode(", ", $emails_record);
+			$this->db->insert("log__email_newsletter", array(
+				'log_email' => $emails_record_str
+			));
+		}
+		
 		// update newsletter expired
 		$sql = "
 		UPDATE newsletter SET
 		status = 'Offline'
 		WHERE 1
-		AND newsletter_sending_schedule < DATE_FORMAT( NOW( ) ,  '%Y-%m-%d' ) 
+		AND newsletter_sending_schedule <= DATE_FORMAT( NOW( ) ,  '%Y-%m-%d' ) 
 		AND status =  'Online'
 		";
 		$this->db->query($sql);
