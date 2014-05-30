@@ -57,6 +57,7 @@ class Newsletter extends MY_Admin_Access{
 				'<link rel="stylesheet" type="text/css" href="'.cdn_url().'css/bootstrap.datepicker.css" />'
 			),
 			array(
+				'<script src="'.cdn_url().'js/jquery.simplyCountable.js"></script>',
 				'<script src="'.cdn_url().'js/jquery.editinplace.js"></script>',
 				'<script src="'.cdn_url().'js/bootstrap.datepicker.js"></script>',
 				'<script src="'.cdn_url().'js/a_newsletter.js"></script>',

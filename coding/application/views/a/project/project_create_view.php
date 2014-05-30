@@ -327,7 +327,7 @@ $ts = time();
 
 					<div class="row slider-progress">
 						<div class="col-sm-6">
-							<span class="slider-label label-left">7 d</span>
+							<span class="slider-label label-left">3 d</span>
 							<span class="slider-label label-right">30 d</span>
 
 							<?php 
@@ -345,7 +345,7 @@ $ts = time();
 							$project_period = (empty($project_period)) ? 20 : $project_period;
 							?>
 
-							<input name="project_period" id="project-period" data-slider-id="slider-period" type="text" data-slider-min="7" data-slider-max="30" data-slider-step="1" data-slider-value="<?php echo $project_period; ?>" value="<?php echo $project_period; ?>" />
+							<input name="project_period" id="project-period" data-slider-id="slider-period" type="text" data-slider-min="3" data-slider-max="30" data-slider-step="1" data-slider-value="<?php echo $project_period; ?>" value="<?php echo $project_period; ?>" />
 							<p class="help-block"><strong>Tips:</strong> <em>your project may valid for maximum 30 days</em></p>
 
 							<div class="slider-start"></div>

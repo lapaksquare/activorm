@@ -114,6 +114,10 @@
 			'name' => 'Banner',
 			'url' => base_url() . 'admin/banner',
 		),
+		'trafficpage' => array(
+			'name' => 'Traffic Page / Ads',
+			'url' => base_url() . 'admin/trafficpage',
+		),
 	);
 	
 	?>

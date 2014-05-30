@@ -142,16 +142,17 @@ class Project extends MY_Admin_Access{
 				$errors[] = "Project Title must contain words only (you may not use special characters e.g. - , > , % , $). Minimum 5 characters.";
 			}
 			
+			/*
 			$validateProjectPrize = $this->validate->validateName($describe_prize);
 			if (strlen($describe_prize) < 5){
 				$errors[] = "Project Prize must contain words only. Minimum 5 characters.";
-			}
+			}*/
 			
 			if (strlen($describe_project) <= 0 || strlen($describe_project) > 500){
 				$errors[] = "Project Description must be filled. Max 500 characters.";
 			}
 			
-			if ($period < 7 || $period > 30){
+			if ($period < 3 || $period > 30){
 				$errors[] = "Terjadi kesalahan dalam pengaturan periode";
 			}
 			

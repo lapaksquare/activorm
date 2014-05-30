@@ -15,7 +15,7 @@ class Auth extends MY_Controller {
 	// register untuk facebook =================================================
 	function register_facebook(){
 		
-		set_time_limit(1000000);
+		//set_time_limit(1000000);
 	
 		// datang dari facebook
 		$state = $this->input->get_post('state');
@@ -51,7 +51,7 @@ class Auth extends MY_Controller {
 			));
 			
 			// ip address
-			$this->access->logIpAddress($user->account_id);										
+			//$this->access->logIpAddress($user->account_id);										
 								
 			// fb user interests									
 			$this->fb_user_interest();						
@@ -213,7 +213,7 @@ class Auth extends MY_Controller {
 				$this->access->register_session($account_id, $register_temp);
 				
 				// ip address
-				$this->access->logIpAddress($account_id);
+				//$this->access->logIpAddress($account_id);
 				
 				// send email
 				$this->sending_email($dataUser);
@@ -407,7 +407,7 @@ class Auth extends MY_Controller {
 				}
 				
 				// ip address
-				$this->access->logIpAddress($user->account_id);
+				//$this->access->logIpAddress($user->account_id);
 				
 				if ($user->account_live == "Offline"){
 							

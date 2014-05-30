@@ -40,3 +40,9 @@ $('#preview').click(function(){
 	});
 	return false;
 });
+
+$('#newsletter_subject').simplyCountable({
+	counter: '#counter_description span',
+	maxCount: 140,
+	strictMax: true
+});

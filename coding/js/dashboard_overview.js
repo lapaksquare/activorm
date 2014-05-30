@@ -36,7 +36,6 @@ function drawChart() {
 			textStyle: {fontSize: 14},
 			},
 		chartArea: {left:0, top:0, width:"90%", height:"80%"},
-		colors: ['#19b99a', '#d35828', '#f4ed32'],
 		pieSliceText: 'none',
 	};
 	var options3 = {

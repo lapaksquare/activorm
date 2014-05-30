@@ -269,7 +269,7 @@ class Project extends MY_Controller{
 			//if (empty($actions_step) || count($actions_step) <= 0 || count($actions_step) > 3){
 			//	$errors[] = "You have to pick 3 Actions to create this project.";
 			//}
-			if ($project_period < 7 || $project_period > 30){
+			if ($project_period < 3 || $project_period > 30){
 				$errors[] = "Terjadi kesalahan dalam pengaturan periode";
 			}
 			

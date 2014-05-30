@@ -134,5 +134,7 @@ define('MANDIRI_REKENING_CABANG', 'KCP Rantai Mulia Kencana MANDIRI');
 define('GA_CLIENT_ID', '802492281133.apps.googleusercontent.com');
 define('GA_CLIENT_SECRET', 'COpdo3DmaYhTFOmQ3pgwBphK');
 
+define('LIMIT_EMAIL_SENDING', 50);
+
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

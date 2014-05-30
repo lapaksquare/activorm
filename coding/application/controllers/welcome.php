@@ -224,6 +224,38 @@ class Welcome extends CI_Controller {
 		//$targetFile = rtrim($targetPath,'/') . '/' . sha1("ANTON" . SALT) . '.jpg';
 		//echo $targetFile;
 	}
+
+	function n(){
+		$this->load->view('email/newsletter/newsletter4_new');
+		
+		/*
+		//die();
+		// sending email
+		require_once APPPATH.'libraries/swiftmailer/swift_required.php';
+		$transport = Swift_MailTransport::newInstance();
+		//Create the message
+        $message = Swift_Message::newInstance();
+		//Give the message a subject
+		
+		$email = $this->input->get_post('email');
+		$email = (empty($email)) ? array("junaidyanton@hotmail.com", "lapaksquare@gmail.com") : $email;
+		
+		$subject = "Testing Email";
+		
+		$data = $this->load->view('email/newsletter/newsletter4_new', array(), true);
+
+        $message->setSubject($subject)
+                ->setFrom(array('info@activorm.com' => 'Activorm'))
+                ->setTo($email)
+                ->addPart($data, 'text/html')
+        ;
+		//Create the Mailer using your created Transport
+        $mailer = Swift_Mailer::newInstance($transport);
+        
+        //Send the message
+        $result = $mailer->send($message);
+		*/
+	}
 	
 }
 

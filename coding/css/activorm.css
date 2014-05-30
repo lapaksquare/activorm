@@ -3895,3 +3895,333 @@ body.alt #footer {
 .carousel-inner>.item>img, .carousel-inner>.item>a>img{
 	margin:0 auto;
 }
+
+
+
+
+
+
+
+
+#dashboard_data_confirm td{
+	font-size:15px !important;
+	vertical-align:middle;
+}
+.form-deals .form-group{
+	margin-bottom:18px;
+}
+.table-deal-transfer tr td{
+	border-top:0 !important;
+	background-color:white !important;
+	text-align:left;
+	padding-left:0 !important;
+	padding-right:0 !important;
+}
+.table-deal-transfer tr td.deal_price{
+	text-align:right;
+}
+.table-deal-transfer tr td.deal_price span{
+	font-size:18px;
+	color:#1bb899;
+}
+.deal_tranfer_info{
+	text-align:center;
+	font-size:14px;
+	color:#969696;
+	margin-top:10px;
+	border-top: 1px dashed #e8e8e8;
+	border-bottom: 1px dashed #e8e8e8;
+	padding-top:15px;
+	padding-bottom:15px;
+}
+.deal_tranfer_info img{
+	padding:10px 0;
+}
+.deal_tranfer_info span{
+	color:#333;
+	font-weight:bold;
+	text-decoration:underline;
+}
+.deal_transfer_footer{
+	padding-top:3px;
+}
+.deal_transfer_footer .pull-left{
+	color:#969696;
+	font-size:14px;
+	line-height:1.4;
+	padding-top:12px;
+}
+.deal_transfer_footer .pull-left i{
+	display:block;
+}
+
+
+/* Added May 21, 2014 - Deals */
+
+/* Breadcrumb */
+.breadcrumb {
+	margin: 0 0 50px;
+	padding: 0 0 12px;
+	font-size: 14px;
+	font-size: 1.4rem;
+	background: none;
+	border-bottom: 1px solid #dadfe2;
+	border-radius: 0;
+	}
+.breadcrumb > li + li:before {
+	padding: 0 8px 0 5px;
+	content: "\003e";
+	color: #4c4c4d;
+	}
+.breadcrumb > .active {
+	color: #4c4c4d;
+	}
+
+/* Deals */
+.deals .row {
+	margin-right: -20px;
+	margin-left: -20px;
+	}
+.deals [class^="col-"],
+.deals [class*=" col-"] {
+	padding-right: 20px;
+	padding-left: 20px;
+	}
+.deal-box {
+	margin: 0 0 60px;
+	padding: 0;
+	background: #fff;
+	box-shadow: 0 0 1px 0 #ddd;
+	-webkit-border-radius: 5px;
+	   -moz-border-radius: 5px;
+			border-radius: 5px;
+	}
+.deal-title {
+	width: 100%;
+	height: 65px;
+	margin: 0;
+	padding: 10px 15px;
+	display: table;
+	}
+.deal-title span {
+	display: table-cell;
+	font-size: 18px;
+	font-size: 1.8rem;
+	text-align: center;
+	line-height: 1.2;
+	vertical-align: middle;
+	}
+.deal-thumb {
+	height: 195px;
+	position: relative;
+	}
+.deal-thumb img {
+	width: 100%;
+	height: 100%;
+	}
+.deal-sale {
+	top: 15px;
+	left: -10px;
+	width: 86px;
+	height: 51px;
+	padding: 5px 15px 5px 0;
+	position: absolute;
+	color: #fff;
+	font-size: 12px;
+	font-size: 1.2rem;
+	font-weight: 500;
+	text-align: center;
+	line-height: 1.1;
+	background: url('../img/ribbon-sale.png') no-repeat;
+	}
+.deal-sale strong {
+	display: block;
+	font-size: 18px;
+	font-size: 1.8rem;
+	}
+.deal-excerpt {
+	margin: 0 -20px 0 0;
+	padding: 15px 0 15px 15px;
+	display: block;
+	font-size: 11px;
+	font-size: 1.1rem;
+	line-height: 1.3;
+	}
+.deal-prices {
+	margin: 0 0 0 -20px;
+	padding: 15px;
+	color: #a09f9f;
+	font-size: 16px;
+	font-size: 1.6rem;
+	line-height: 1.2;
+	text-align: center;
+	}
+.deal-prices strong {
+	display: block;
+	color: #e47e26;
+	font-size: 22px;
+	font-size: 2.2rem;
+	}
+.deal-time {
+	height: 50px;
+	padding: 8px 10px 8px 55px;
+	color: #fff;
+	font-size: 11px;
+	font-size: 1.1rem;
+	line-height: 1.1;
+	background: #35495d url('../img/ico-time.png') no-repeat 15px 10px;
+	border-bottom-left-radius: 5px;
+	}
+.deal-time strong {
+	display: block;
+	font-size: 20px;
+	font-size: 2rem;
+	}
+a.deal-more {
+	height: 50px;
+	margin-left: -40px;
+	padding: 5px 10px;
+	display: block;
+	color: #fff;
+	font-size: 22px;
+	font-size: 2.2rem;
+	text-align: center;
+	background: #26b99a;
+	border-bottom-right-radius: 5px;
+	}
+
+/* Single Deal */
+.deal-action {
+	width: 550px;
+	height: 130px;
+	margin: 0 0 5px -20px;
+	padding: 15px 45px 15px 25px;
+	background: url('../img/ribbon-deal-action.png') no-repeat;
+	}
+.deal-content {
+	padding: 20px;
+	font-size: 16px;
+	font-size: 1.6rem;
+	line-height: 1.4;
+	}
+.deal-share {
+	margin: 0 0 0 -10px;
+	padding: 0 0 0 5px;
+	list-style: none;
+	}
+.deal-share li {
+	margin: 0 2px;
+	display: inline-block;
+	}
+.deal-meta {
+	margin: 0 20px;
+	padding: 10px 0;
+	border: solid #ccc;
+	border-width: 1px 0;
+	}
+.deal-meta [class^="col-"],
+.deal-meta [class*=" col-"] {
+	padding-right: 0;
+	padding-left: 0;
+	}
+.deal-single {
+	margin-bottom: 50px;
+	}
+.deal-single .deal-title {
+	padding: 15px 30px;
+	}
+.deal-single .deal-title span {
+	font-size: 26px;
+	font-size: 2.6rem;
+	}
+.deal-single .deal-time {
+	height: auto;
+	margin-right: 15px;
+	padding: 0 15px;
+	color: #919191;
+	font-size: 14px;
+	font-size: 1.4rem;
+	font-weight: 600;
+	line-height: 1.3;
+	background: none;
+	border-right: 1px solid #ccc;
+	border-radius: 0;
+	}
+.deal-single .deal-time strong {
+	color: #1bb899;
+	font-size: 30px;
+	font-size: 3rem;
+	letter-spacing: -2px;
+	}
+.deal-single .deal-sale {
+	top: auto;
+	left: auto;
+	width: auto;
+	height: auto;
+	padding: 0 15px 0 0;
+	position: relative;
+	color: #919191;
+	font-size: 14px;
+	font-size: 1.4rem;
+	font-weight: 600;
+	text-align: left;
+	line-height: 1.3;
+	background: none;
+	border-right: 1px solid #ccc;
+	}
+.deal-single .deal-sale strong {
+	color: #4d4b4c;
+	font-size: 30px;
+	font-size: 3rem;
+	letter-spacing: -2px;
+	}
+.deal-single .deal-prices {
+	margin: 5px;
+	padding: 0;
+	color: #fff;
+	font-size: 25px;
+	font-size: 2.5rem;
+	text-align: left;
+	}
+.deal-single .deal-prices strong {
+	color: #fff;
+	font-size: 42px;
+	font-size: 4.2rem;
+	letter-spacing: -1px;
+	}
+.deal-single .btn {
+	margin: 20px 0 0 -30px;
+	font-size: 25px;
+	font-size: 2.5rem;
+	}
+
+/* Related Deals */
+.related-deals .block-subtitle {
+	margin-bottom: 20px;
+	font-size: 20px;
+	font-size: 2rem;
+	text-align: left;
+	}
+.related-deals .deal-thumb {
+	height: 145px;
+	}
+.related-deals .deal-title {
+	width: auto;
+	height: auto;
+	padding: 15px;
+	display: block;
+	font-size: 16px;
+	font-size: 1.6rem;
+	line-height: 1.2;
+	}
+.related-deals .deal-prices {
+	margin: 0;
+	padding: 0 15px 15px;
+	font-size: 14px;
+	font-size: 1.4rem;
+	text-align: left;
+	}
+.related-deals .deal-prices strong {
+	font-size: 20px;
+	font-size: 2rem;
+	}

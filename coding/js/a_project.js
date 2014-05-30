@@ -1,7 +1,7 @@
 $("#period_slider").slider({
     orientation: "horizontal",
     range: "min",
-    min: 7,
+    min: 3,
     value: $("#period_hidden").val(),
     max: 30,
     slide: function (event, ui) {

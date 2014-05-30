@@ -985,7 +985,12 @@ ORDER BY `pp`.`project_name`  DESC
 		
 	/**** CRON SEND EMAIL NEWSLETTER NEW PROJECT 
 	 * CHECK PER DAY JAM 10:00 ****/	
-	function sendNewsletterNewProject_EmailDaily_10AM(){
+	// sendNewsletterNewProject_EmailDaily_10AM_10MENIT
+	function sendNewsletterNewProject_EmailDaily_10AM_10MENIT(){
+		
+		$this->randomsleep();
+		
+		$limit = LIMIT_EMAIL_SENDING;
 		
 		$sql = "
 		SELECT
@@ -993,17 +998,21 @@ ORDER BY `pp`.`project_name`  DESC
 		FROM newsletter ns
 		WHERE 1
 		AND ns.newsletter_sending_schedule = DATE_FORMAT(NOW(),'%Y-%m-%d')
+		AND DATE_FORMAT(NOW(),'%H:%i') >= '10:00'
 		AND ns.status = 'Online'
 		AND ns.newsletter_subject != ''
 		AND ns.newsletter_body != ''
 		";
 		
 		$results = $this->db->query($sql)->result();
-		
-		$emails_record = array();
+				
+		$this->load->model('account_model');		
+				
 		if (!empty($results)){
 			
 			foreach($results as $k=>$v){
+				
+				$startend = $v->startend;
 			
 				$emails = array();
 			
@@ -1012,14 +1021,18 @@ ORDER BY `pp`.`project_name`  DESC
 							
 					$sql = "
 					SELECT
+					ma.account_id,
 					ma.account_email
 					FROM
 					member__account ma
 					WHERE 1
+					AND ma.account_id > $startend
 					AND ma.account_type = 'business'
+					AND ma.account_email <> ''
 					AND ma.account_active = 1
 					AND ma.account_live = 'Online'
 					ORDER BY ma.account_id ASC
+					LIMIT $limit
 					";
 					$emails = $this->db->query($sql)->result_array();	
 								
@@ -1028,14 +1041,18 @@ ORDER BY `pp`.`project_name`  DESC
 				
 					$sql = "
 					SELECT
+					ma.account_id,
 					ma.account_email
 					FROM
 					member__account ma
 					WHERE 1
+					AND ma.account_id > $startend
 					AND ma.account_type = 'user'
+					AND ma.account_email <> ''
 					AND ma.account_active = 1
 					AND ma.account_live = 'Online'
 					ORDER BY ma.account_id ASC
+					LIMIT $limit
 					";
 					$emails = $this->db->query($sql)->result_array();
 				
@@ -1044,13 +1061,17 @@ ORDER BY `pp`.`project_name`  DESC
 					
 					$sql = "
 					SELECT
+					ma.account_id,
 					ma.account_email
 					FROM
 					member__account ma
 					WHERE 1
+					AND ma.account_id > $startend
+					AND ma.account_email <> ''
 					AND ma.account_active = 1
 					AND ma.account_live = 'Online'
 					ORDER BY ma.account_id ASC
+					LIMIT $limit
 					";
 					$emails = $this->db->query($sql)->result_array();
 				
@@ -1071,7 +1092,11 @@ ORDER BY `pp`.`project_name`  DESC
 				
 				$subject = $v->newsletter_subject;
 				$tmpl = $v->newsletter_body;	
-										
+							
+				$emails_record = array();			
+							
+				$startend_end = 0;			
+																								
 				foreach($emails as $a=>$b){
 							
 					$email = $b['account_email'];	
@@ -1087,31 +1112,63 @@ ORDER BY `pp`.`project_name`  DESC
 						'email' => $email
 					);
 					
-					$this->sending_email($data, $tmpl, "text");	
+					$emailReady = 1;
+					if (!empty($b['account_id'])){
+						$startend_end = $b['account_id'];
+						$emailReady = $this->account_model->isFollowEmail($b['account_id']);
+					}
+					
+					if ($emailReady == 1){
+						$this->sending_email($data, $tmpl, "text");	
+					}
 						
+				}
+								
+				if (!empty($emails_record)){
+										
+					$newsletter_id = $v->newsletter_id;
+					// update newsletter expired
+					$sql = "
+					UPDATE newsletter SET
+					startend = ?
+					WHERE 1
+					AND newsletter_id = ?
+					AND status =  'Online'
+					";
+					$this->db->query($sql, array($startend_end, $newsletter_id));	
+					
+					$emails_record_str = implode(", ", $emails_record);
+					$this->db->insert("log__email_newsletter", array(
+						'log_email' => $emails_record_str
+					));
+					
+				}else{
+					
+					$newsletter_id = $v->newsletter_id;
+					// update newsletter expired
+					$sql = "
+					UPDATE newsletter SET
+					status = 'Offline'
+					WHERE 1
+					AND newsletter_id = ?
+					AND status =  'Online'
+					";
+					$this->db->query($sql, array($newsletter_id));	
+					
 				}
 				
 			}
 			
 		}
 		
-		if (!empty($emails_record)){
-			$emails_record_str = implode(", ", $emails_record);
-			$this->db->insert("log__email_newsletter", array(
-				'log_email' => $emails_record_str
-			));
-		}
-		
-		// update newsletter expired
-		$sql = "
-		UPDATE newsletter SET
-		status = 'Offline'
-		WHERE 1
-		AND newsletter_sending_schedule <= DATE_FORMAT( NOW( ) ,  '%Y-%m-%d' ) 
-		AND status =  'Online'
-		";
-		$this->db->query($sql);
-		
+	}
+
+	function randomsleep()
+	{
+		 $sleep = rand(11, 61);
+		 echo "Sleeping for " . $sleep . " seconds";
+		 sleep($sleep);
+		 $this->db->reconnect();
 	}
 		
 }

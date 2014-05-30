@@ -75,8 +75,11 @@
 	  <div class="form-group">
 	    <label for="newsletter_subject" class="col-sm-2 control-label">Newsletter Subject</label>
 	    <div class="col-sm-10">
-	      <input type="text" class="form-control" id="newsletter_subject" name="newsletter_subject" 
-	      value="<?php echo (!empty($this->newsletter)) ? $this->newsletter->newsletter_subject : ""; ?>" />
+	      <input type="text" class="form-control description_limiter" id="newsletter_subject" name="newsletter_subject" 
+	      value="<?php echo (!empty($this->newsletter)) ? $this->newsletter->newsletter_subject : ""; ?>" 
+	      autocomplete="off"
+	      />
+	      <p class="help-block" id="counter_description"><span>140</span> characters</p>
 	    </div>
 	  </div>
 	  
@@ -86,12 +89,12 @@
 	      <?php 
 	      
 	      $utm = array(
-		  	'utm_source' => 'campaign_source',
-		  	'utm_medium' => 'campaign_medium',
+		  	'utm_source' => 'newsletter',
+		  	'utm_medium' => 'email',
 		  	'utm_campaign' => 'campaign name'
 		  );
 		  $utm_query = http_build_query($utm);
-	      
+	      /*
 	      $newsletter_tmpl = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -180,7 +183,7 @@
 											
 											<p style="margin: 1em 0;"><strong>Tees.co.id</strong> adalah tempat dimana kamu bisa menemukan beragam produk kaos dan kanvas dengan desain unik yang bisa kamu beli dengan harga terjangkau. <strong>ESPA</strong> menyediakan treatment paling efektif untuk perawatan kulit dengan harga terjangkau. <strong>Tokocondet.com</strong> menjual segala barang impor dari timur tengah dengan kemudahan dalam berbelanja, serta pengiriman yang cepat .</p>
                                             <p style="margin: 1em 0;">Jangan lewatkan kesempatan untuk memenangkan hadiah-hadiah menarik lainnya di <strong><a href="http://activorm.com/?'.$utm_query.'" target="_blank" style="color: #20b396;">Activorm</a></strong>. Kalian hanya perlu melakukan 3 Engagement-Actions seperti Like Facebook Fanpage, Follow Twitter, atau Share. </p>
-                                            <p style="margin: 1em 0;">Untuk teman-teman yang ingin bergabung di Activorm sebagai merchant atau business account, kamu bisa mendaftarkan brand atau bisnis tersebut di <strong><a href="http://www.activorm.com/business/register?utm_source=campaign_source&utm_medium=campaign_medium&utm_campaign=campaign%20name" style="color: #20b396;">www.activorm.com/business/register</a></strong></p>
+                                            <p style="margin: 1em 0;">Untuk teman-teman yang ingin bergabung di Activorm sebagai merchant atau business account, kamu bisa mendaftarkan brand atau bisnis tersebut di <strong><a href="http://www.activorm.com/business/register?utm_source=newsletter&utm_medium=email&utm_campaign=campaign%20name" style="color: #20b396;">www.activorm.com/business/register</a></strong></p>
 											<p style="margin: 1em 0;"><strong>Good luck!</strong></p>
 											<p class="signup" style="margin: 40px 0 -60px;"><a class="button" href="http://activorm.com?'.$utm_query.'" style="color: #fff;padding: 10px 30px;display: inline-block;font-size: 18px;font-weight: bold;text-decoration: none;background: #20b396;border-bottom: 2px solid #1fa88c;border-radius: 5px;">Go To Activorm</a></p>
 										
@@ -267,7 +270,127 @@
 </td></tr></table>
 
 </body>
-</html>';
+</html>';*/
+
+		$newsletter_tmpl = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title></title>
+
+</head>
+<body style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #4c4c4d;font-size: 16px;font-family: "Myriad Pro", Arial, Helvetica, sans-serif;line-height: 1.6;">
+
+<div style="background:url(http://activorm.com/img/bar_small.png); background-repeat: repeat-x; background-position: top left;width:100%;height:8px;display:block;"></div>
+
+<table id="table-background" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
+	<tr>
+		<td align="center" style="border-collapse: collapse;">
+        	<table class="table-main" width="600" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;margin: 50px 0;">
+				<thead class="header">
+					<tr>
+						<td class="container" style="border-collapse: collapse;padding: 15px 40px;color: #fff;font-size: 14px;border-top-left-radius: 10px;border-top-right-radius: 10px;">
+							<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
+								<tr>
+									<td width="600" style="border-collapse: collapse;color: #fff;font-size: 14px;" align="center">
+										<a href="'.base_url().'?'.$utm_query.'" style="color: #20b396;">
+											<img src="'.cdn_url().'img/logo_invoice.png" />
+										</a>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</thead>
+
+
+				<tbody class="main">
+	                <tr>
+						<td class="container" style="border-collapse: collapse;padding: 0 40px;">
+							<table class="section" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;margin-bottom: 70px;">
+								<tr>
+									<td style="border-collapse: collapse;">
+										<div class="content" style="margin: 0 -40px;padding: 10px 40px 10px;text-align: left;background: #fff;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
+											<h1 class="content-title" style="margin: 20px 0;padding:25px;font-size: 30px;line-height: 1.2;border-bottom: 1px solid #b5b5b5;border-top: 1px solid #b5b5b5;color: #676767;text-align:center;font-weight:normal;">Wow! You can easily get awesome prizes below!....</h1>
+											
+											<table class="prize" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;width: 100%;margin: 30px 0px 20px;">
+																											
+													<tr>												
+																										
+													<td style="border-collapse: collapse;width: 240px;height:335px;padding: 5px 5px 15px;text-align: center;">
+														<div style="border:1px solid #ececec;border-bottom:4px solid #ececec;width:230;">
+															<img src="'.cdn_url().'img/img-newsletter4.jpg" alt="" width="100%" />
+															<p style="text-align:center;line-height:1.4;margin:8px 0 10px;"><a href="'.base_url().'?'.$utm_query.'" style="text-decoration:none;color:#454545;font-size:18px;"><b>Sun Glasses 2122</b><span style="display:block;color:#868686;font-size:14px;">by Curiostowear</span></a></p>
+														</div>
+                                                    </td>
+													
+													<td style="border-collapse: collapse;width: 240px;height:335px;padding: 5px 5px 15px;text-align: center;">
+														<div style="border:1px solid #ececec;border-bottom:4px solid #ececec;width:230;">
+															<img src="'.cdn_url().'img/img-newsletter4.jpg" alt="" width="100%" />
+															<p style="text-align:center;line-height:1.4;margin:8px 0 10px;"><a href="'.base_url().'?'.$utm_query.'" style="text-decoration:none;color:#454545;font-size:18px;"><b>Sun Glasses 2122</b><span style="display:block;color:#868686;font-size:14px;">by Curiostowear</span></a></p>
+														</div>
+                                                    </td>
+														
+													</tr>	
+													
+													<tr>
+														
+													<td style="border-collapse: collapse;width: 240px;height:335px;padding: 5px 5px 15px;text-align: center;">
+														<div style="border:1px solid #ececec;border-bottom:4px solid #ececec;width:230;">
+															<img src="'.cdn_url().'img/img-newsletter4.jpg" alt="" width="100%" />
+															<p style="text-align:center;line-height:1.4;margin:8px 0 10px;"><a href="'.base_url().'?'.$utm_query.'" style="text-decoration:none;color:#454545;font-size:18px;"><b>Sun Glasses 2122</b><span style="display:block;color:#868686;font-size:14px;">by Curiostowear</span></a></p>
+														</div>
+                                                    </td>
+                                                    
+                                                    <td style="border-collapse: collapse;width: 240px;height:335px;padding: 5px 5px 15px;text-align: center;">
+														<div style="border:1px solid #ececec;border-bottom:4px solid #ececec;width:230;">
+															<img src="'.cdn_url().'img/img-newsletter4.jpg" alt="" width="100%" />
+															<p style="text-align:center;line-height:1.4;margin:8px 0 10px;"><a href="'.base_url().'?'.$utm_query.'" style="text-decoration:none;color:#454545;font-size:18px;"><b>Sun Glasses 2122</b><span style="display:block;color:#868686;font-size:14px;">by Curiostowear</span></a></p>
+														</div>
+                                                    </td>	
+														
+													</tr>																							
+																							
+																							</table>
+											
+											<p style="margin: 1em 0;text-align:center;font-size:18px;">loren ipsum sit domet ajegile and somewhrehouse  of ther rule by the way how meeet your always in my dream how dare you</p>
+											<p class="signup" style="margin: 20px 0 -20px;text-align:center;"><a class="button" href="'.base_url().'?'.$utm_query.'" style="color: #fff;padding: 10px 30px;display: inline-block;font-size: 18px;font-weight: bold;text-decoration: none;background: #20b396;border-bottom: 4px solid #199b87;border-radius: 5px;font-weight:normal;">Go to Activorm</a></p>
+											
+										
+									</div></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+
+					</tbody>
+					
+					
+					<tfoot class="footer footer-dark" style="text-align: center;">
+					<tr>
+						<td class="container" style="border-collapse: collapse;padding: 30px;color: #fff;font-size: 14px;background: #34495c;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
+							
+							<ul class="social" style="list-style:none;margin:0 0 20px;padding:0;">
+								<li class="facebook" style="list-style:none;display:inline;"><img src="'.cdn_url().'img/icon_social_small_fb.png" style="margin-top:-4px;" /><a href="https://www.facebook.com/activorm" style="text-decoration:none;color:white;font-size:14px;font-weight:normal;vertical-align:top;padding-right:70px;padding-left:8px;">Activorm</a></li>
+								<li class="twitter" style="list-style:none;display:inline;"><img src="'.cdn_url().'img/icon_social_small_tw.png" style="margin-top:-4px;" /><a href="https://twitter.com/Activorm" style="text-decoration:none;color:white;font-size:14px;font-weight:normal;vertical-align:top;padding-right:70px;padding-left:8px;">@Activorm</a></li>
+								<li class="instagram" style="list-style:none;display:inline;"><img src="'.cdn_url().'img/icon_social_small_ig.png" style="margin-top:-4px;" /><a href="http://instagram.com/activorm" style="text-decoration:none;color:white;font-size:14px;font-weight:normal;vertical-align:top;padding-right:0px;padding-left:8px;">Activorm</a></li>
+							</ul>
+							
+							&copy; 2013 Activorm. All rights reserved.
+						</td>
+					</tr>
+				</tfoot>
+					
+				</table>
+</td></tr></table>
+
+</body>
+</html>';	
+			
+			
+
 	      ?>
 	      
 	      

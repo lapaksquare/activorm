@@ -514,7 +514,7 @@ class Settings extends MY_Controller{
 			//if (empty($fbauth)){
 			//	redirect(base_url() . 'auth/facebook_connect_ref');
 			//}
-			set_time_limit(1000000);
+			//set_time_limit(1000000);
 			$facebook_pages = $this->manageFacebookPages();
 		}
 		$this->data['facebook_pages'] = $facebook_pages;

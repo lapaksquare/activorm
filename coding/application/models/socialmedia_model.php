@@ -20,7 +20,14 @@ class Socialmedia_model extends CI_Model{
 	function socialmedia_connect($account_id){
 		$sql = "
 		SELECT
-		cs.*
+		cs.social_id,
+		cs.account_id,
+		cs.social_name,
+		cs.social_data,
+		cs.social_oauth_data,
+		cs.social_page_data,
+		cs.social_page_active,
+		cs.social_active
 		FROM
 		connect__socialmedia cs
 		WHERE 1
@@ -44,7 +51,14 @@ class Socialmedia_model extends CI_Model{
 	function getSocialMediaConnect($account_id, $type){
 		$sql = "
 		SELECT
-		cs.*
+		cs.social_id,
+		cs.account_id,
+		cs.social_name,
+		cs.social_data,
+		cs.social_oauth_data,
+		cs.social_page_data,
+		cs.social_page_active,
+		cs.social_active
 		FROM
 		connect__socialmedia cs
 		WHERE 1

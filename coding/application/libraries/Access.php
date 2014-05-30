@@ -73,7 +73,7 @@ class Access {
 		
 		$account_id = $this->ci->account_model->insertAccount($dataUser);
 		
-		$this->logIpAddress($account_id);
+		//$this->logIpAddress($account_id);
 		
 		// masukkan data log fb di database
 		$dataLogSocialMedia['account_id'] = $account_id;
